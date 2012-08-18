@@ -29,12 +29,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.Header;
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
@@ -71,9 +74,12 @@ class ApiCall {
     /** RunDeck HTTP header for the auth-token (in case of token-based authentication) */
     private static final transient String AUTH_TOKEN_HEADER = "X-RunDeck-Auth-Token";
 
+    /** RunDeck HTTP header for the setting session cookie (in case of session-based authentication) */
+    private static final transient String COOKIE_HEADER = "Cookie";
+
     /** {@link RundeckClient} instance holding the RunDeck url and the credentials */
     private final RundeckClient client;
-
+    
     /**
      * Build a new instance, linked to the given RunDeck client
      * 
@@ -115,12 +121,14 @@ class ApiCall {
      * @see #testLoginAuth()
      * @see #testTokenAuth()
      */
-    public void testAuth() throws RundeckApiLoginException, RundeckApiTokenException {
-        if (client.getToken() != null) {
+    public String testAuth() throws RundeckApiLoginException, RundeckApiTokenException {
+        String sessionID = null;
+        if (client.getToken() != null || client.getSessionID() != null) {
             testTokenAuth();
         } else {
-            testLoginAuth();
+            sessionID = testLoginAuth();
         }
+        return sessionID;
     }
 
     /**
@@ -129,13 +137,15 @@ class ApiCall {
      * @throws RundeckApiLoginException if the login fails
      * @see #testAuth()
      */
-    public void testLoginAuth() throws RundeckApiLoginException {
+    public String testLoginAuth() throws RundeckApiLoginException {
+        String sessionID = null;
         HttpClient httpClient = instantiateHttpClient();
         try {
-            login(httpClient);
+            sessionID = login(httpClient);
         } finally {
             httpClient.getConnectionManager().shutdown();
         }
+        return sessionID;
     }
 
     /**
@@ -191,6 +201,24 @@ class ApiCall {
         return response;
     }
 
+    /**
+     * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
+     * API call without appending the API_ENDPOINT to the URL.
+     * 
+     * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
+     * @return a new {@link InputStream} instance, not linked with network resources
+     * @throws RundeckApiException in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    public InputStream getNonApi(ApiPathBuilder apiPath) throws RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException {
+        ByteArrayInputStream response = execute(new HttpGet(client.getUrl() + apiPath));
+        response.reset();
+
+        return response;
+    }
+    
     /**
      * Execute an HTTP POST request to the RunDeck instance, on the given path. We will login first, and then execute
      * the API call. At the end, the given parser will be used to convert the response to a more useful result object.
@@ -268,7 +296,7 @@ class ApiCall {
         try {
             // we only need to manually login in case of login-based authentication
             // note that in case of token-based auth, the auth (via an HTTP header) is managed by an interceptor.
-            if (client.getToken() == null) {
+            if (client.getToken() == null && client.getSessionID() == null) {
                 login(httpClient);
             }
 
@@ -300,8 +328,9 @@ class ApiCall {
 
             // check the response code (should be 2xx, even in case of error : error message is in the XML result)
             if (response.getStatusLine().getStatusCode() / 100 != 2) {
-                if (response.getStatusLine().getStatusCode() == 403 && client.getToken() != null) {
-                    throw new RundeckApiTokenException("Invalid Token ! Got HTTP response '" + response.getStatusLine()
+                if (response.getStatusLine().getStatusCode() == 403 && 
+                        (client.getToken() != null || client.getSessionID() != null)) {
+                    throw new RundeckApiTokenException("Invalid Token or sessionID ! Got HTTP response '" + response.getStatusLine()
                                                        + "' for " + request.getURI());
                 } else {
                     throw new RundeckApiException("Invalid HTTP response '" + response.getStatusLine() + "' for "
@@ -331,9 +360,9 @@ class ApiCall {
      * @param httpClient pre-instantiated
      * @throws RundeckApiLoginException if the login failed
      */
-    private void login(HttpClient httpClient) throws RundeckApiLoginException {
+    private String login(HttpClient httpClient) throws RundeckApiLoginException {
         String location = client.getUrl() + "/j_security_check";
-
+        String sessionID = null;
         while (true) {
             HttpPost postLogin = new HttpPost(location);
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -345,6 +374,20 @@ class ApiCall {
             try {
                 postLogin.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
                 response = httpClient.execute(postLogin);
+                Header cookieHeader = response.getFirstHeader("Set-Cookie");
+                if(cookieHeader != null){
+                    String cookieStr = cookieHeader.getValue();
+                    if(cookieStr != null){
+                        int i1 = cookieStr.indexOf("JSESSIONID=");
+                        if(i1 >= 0){
+                            cookieStr = cookieStr.substring(i1 +  "JSESSIONID=".length());
+                            int i2 = cookieStr.indexOf(";");
+                            if(i2 >= 0){
+                                sessionID = cookieStr.substring(0, i2);
+                            }
+                        }
+                    }
+                }
             } catch (IOException e) {
                 throw new RundeckApiLoginException("Failed to post login form on " + location, e);
             }
@@ -380,6 +423,7 @@ class ApiCall {
             }
             break;
         }
+        return sessionID;
     }
 
     /**
@@ -426,6 +470,11 @@ class ApiCall {
             public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
                 if (client.getToken() != null) {
                     request.addHeader(AUTH_TOKEN_HEADER, client.getToken());
+                    //System.out.println("httpClient adding token header");
+                }
+                else if(client.getSessionID() != null) {
+                    request.addHeader(COOKIE_HEADER, "JSESSIONID="+client.getSessionID());
+                    //System.out.println("httpClient adding session header, sessionID="+client.getSessionID());
                 }
             }
         });

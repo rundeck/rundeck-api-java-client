@@ -40,6 +40,7 @@ import org.rundeck.api.domain.RundeckNode;
 import org.rundeck.api.domain.RundeckProject;
 import org.rundeck.api.domain.RundeckSystemInfo;
 import org.rundeck.api.domain.RundeckExecution.ExecutionStatus;
+import org.rundeck.api.domain.RundeckOutput;
 import org.rundeck.api.parser.AbortParser;
 import org.rundeck.api.parser.ExecutionParser;
 import org.rundeck.api.parser.HistoryParser;
@@ -50,6 +51,7 @@ import org.rundeck.api.parser.NodeParser;
 import org.rundeck.api.parser.ProjectParser;
 import org.rundeck.api.parser.StringParser;
 import org.rundeck.api.parser.SystemInfoParser;
+import org.rundeck.api.parser.OutputParser;
 import org.rundeck.api.util.AssertUtil;
 import org.rundeck.api.util.ParametersUtil;
 
@@ -61,7 +63,7 @@ import org.rundeck.api.util.ParametersUtil;
  * <br>
  * Usage : <br>
  * <code>
- * <pre class="prettyprint">
+ * <pre>
  * // using login-based authentication :
  * RundeckClient rundeck = new RundeckClient("http://localhost:4440", "admin", "admin");
  * // or for a token-based authentication :
@@ -87,7 +89,7 @@ public class RundeckClient implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** Version of the API supported */
-    public static final transient int API_VERSION = 2;
+    public static final transient int API_VERSION = 5;
 
     /** End-point of the API */
     public static final transient String API_ENDPOINT = "/api/" + API_VERSION;
@@ -109,6 +111,8 @@ public class RundeckClient implements Serializable {
 
     /** Password to use for authentication on the RunDeck instance (if not using token-based auth) */
     private final String password;
+    
+    private String sessionID;
 
     /**
      * Instantiate a new {@link RundeckClient} for the RunDeck instance at the given url, using login-based
@@ -131,22 +135,38 @@ public class RundeckClient implements Serializable {
     }
 
     /**
-     * Instantiate a new {@link RundeckClient} for the RunDeck instance at the given url, using token-based
-     * authentication.
+     * Instantiate a new {@link RundeckClient} for the RunDeck instance at the given url, 
+     * using token-based or session-based authentication. Either token or sessionID must be valid
      * 
      * @param url of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
      * @param token to use for authentication on the RunDeck instance
+     * @param sessionID to use for session authentication on the RunDeck instance
+     * @param useToken should be true if using token, false if using sessionID
      * @throws IllegalArgumentException if the url or token is blank (null, empty or whitespace)
      */
-    public RundeckClient(String url, String token) throws IllegalArgumentException {
+    public RundeckClient(String url, String token, String sessionID, boolean useToken) throws IllegalArgumentException {
         super();
-        AssertUtil.notBlank(url, "The RunDeck URL is mandatory !");
-        AssertUtil.notBlank(token, "The RunDeck auth-token is mandatory !");
+        AssertUtil.notBlank(url, "The RunDeck URL is mandatory !");        
+        if(useToken){
+            AssertUtil.notBlank(token, "Token is mandatory!");      
+            this.token = token;
+            this.sessionID = null;
+        }
+        else {
+            AssertUtil.notBlank(sessionID, "sessionID is mandatory!");      
+            this.sessionID = sessionID;
+            this.token = null;
+        }
         this.url = url;
-        this.token = token;
         this.login = null;
         this.password = null;
     }
+
+
+    public RundeckClient(String url, String token) throws IllegalArgumentException {
+        this(url, token, null, true);
+    }
+
 
     /**
      * Try to "ping" the RunDeck instance to see if it is alive
@@ -160,11 +180,12 @@ public class RundeckClient implements Serializable {
     /**
      * Test the authentication on the RunDeck instance.
      * 
+     * @return sessionID if doing username+password login and it succeeded
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      */
-    public void testAuth() throws RundeckApiLoginException, RundeckApiTokenException {
-        new ApiCall(this).testAuth();
+    public String testAuth() throws RundeckApiLoginException, RundeckApiTokenException {
+        return (new ApiCall(this)).testAuth();
     }
 
     /**
@@ -366,7 +387,7 @@ public class RundeckClient implements Serializable {
         AssertUtil.notBlank(filename, "filename is mandatory to export a job !");
         InputStream inputStream = exportJobs(format, project, jobFilter, groupPath, jobIds);
         FileUtils.writeByteArrayToFile(new File(filename), IOUtils.toByteArray(inputStream));
-    }
+    }         
 
     /**
      * Export the definitions of all jobs that belongs to the given project
@@ -2293,6 +2314,104 @@ public class RundeckClient implements Serializable {
                                      new NodeParser("project/node"));
     }
 
+    /**
+     * Get the output of a job execution
+     * 
+     * @param id of the execution - mandatory
+     * @return an {@link InputStream} instance, not linked to any network resources - won't be null
+     * @throws RundeckApiException in case of error when calling the API (non-existent name or project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the name or project is blank (null, empty or whitespace)
+     */
+    public InputStream getOutput(String executionId) throws RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+        AssertUtil.notBlank(executionId, "the execution id is mandatory to get execution output !");
+        return new ApiCall(this).getNonApi(new ApiPathBuilder("/execution/downloadOutput/", executionId));
+    }
+
+    /**
+     * Get the html page of the user's profile
+     * 
+     * @param username - mandatory
+     * @return an {@link InputStream} instance, not linked to any network resources - won't be null
+     * @throws RundeckApiException in case of error when calling the API (non-existent name or project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the name or project is blank (null, empty or whitespace)
+     */
+    public InputStream getProfilePage(String username) throws RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+        AssertUtil.notBlank(username, "the username is mandatory to get profile page !");
+        return new ApiCall(this).getNonApi(new ApiPathBuilder("/user/profile?login=", username));
+    }
+
+
+    /**
+     * Generate a new token and get the result page (which is the html page of the user's profile)
+     * 
+     * @param username - mandatory
+     * @return an {@link InputStream} instance, not linked to any network resources - won't be null
+     * @throws RundeckApiException in case of error when calling the API (non-existent name or project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the name or project is blank (null, empty or whitespace)
+     */
+    public InputStream generateToken(String username) throws RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+        AssertUtil.notBlank(username, "the username is mandatory to generate the token");
+        return new ApiCall(this).getNonApi(new ApiPathBuilder("/user/generateApiToken?login=", username));
+    }
+
+    
+    /**
+     * Get the execution output of the given job
+     * 
+     * @param executionId identifier of the execution - mandatory
+     * @param offset byte offset to read from in the file. 0 indicates the beginning.
+     * @param lastlines nnumber of lines to retrieve from the end of the available output. If specified it will override the offset value and return only the specified number of lines at the end of the log.
+     * @param lastmod epoch datestamp in milliseconds, return results only if modification changed since the specified date OR if more data is available at the given offset
+     * @param maxlines maximum number of lines to retrieve forward from the specified offset.
+     * @return {@link RundeckOutput}
+     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckOutput getJobExecutionOutput(Long executionId, int offset, int lastlines, long lastmod, int maxlines)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
+        return new ApiCall(this).get(new ApiPathBuilder("/execution/", executionId.toString(), "/output.xml").param("offset", offset)
+                                                                                      .param("lastlines", lastlines)
+                                                                                      .param("lastmod", lastmod)
+                                                                                      .param("maxlines", maxlines),
+                                     new OutputParser("result/output"));
+    }
+
+    
+    /**
+     * Get the execution output of the given job
+     * 
+     * @param jobId identifier of the job - mandatory
+     * @param offset byte offset to read from in the file. 0 indicates the beginning.
+     * @param lastmod epoch datestamp in milliseconds, return results only if modification changed since the specified date OR if more data is available at the given offset
+     * @param maxlines maximum number of lines to retrieve forward from the specified offset.
+     * @return {@link RundeckOutput}
+     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckOutput getJobExecutionOutput(Long executionId, int offset, long lastmod, int maxlines)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
+        return new ApiCall(this).get(new ApiPathBuilder("/execution/", executionId.toString(), "/output.xml").param("offset", offset)
+                                                                                      .param("lastmod", lastmod)
+                                                                                      .param("maxlines", maxlines),
+                                     new OutputParser("result/output"));
+    }
+
+    
     /*
      * System Info
      */
@@ -2318,24 +2437,31 @@ public class RundeckClient implements Serializable {
     }
 
     /**
-     * @return the auth-token used for authentication on the RunDeck instance (null if using login-based auth)
+     * @return the auth-token used for authentication on the RunDeck instance (null if using login-based or session-based auth)
      */
     public String getToken() {
         return token;
     }
 
     /**
-     * @return the login used for authentication on the RunDeck instance (null if using token-based auth)
+     * @return the login used for authentication on the RunDeck instance (null if using token-based or session-based auth)
      */
     public String getLogin() {
         return login;
     }
 
     /**
-     * @return the password used for authentication on the RunDeck instance (null if using token-based auth)
+     * @return the password used for authentication on the RunDeck instance (null if using token-based or session-based auth)
      */
     public String getPassword() {
         return password;
+    }
+
+    /**
+     * @return the sessionID used for authentication on the RunDeck instance (null if using login-based or token-based auth)
+     */
+    public String getSessionID() {
+        return sessionID;
     }
 
     @Override

@@ -4,11 +4,11 @@ interactions:
 - recorded: 2011-09-18T16:04:45.973Z
   request:
     method: GET
-    uri: http://rundeck.local:4440/api/2/projects
+    uri: http://rundeck.local:4440/api/5/projects
     headers:
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 2
+      User-Agent: RunDeck API Java Client 5
       X-RunDeck-Auth-Token: PVnN5K3OPc5vduS3uVuVnEsD57pDC5pd
   response:
     status: 200
@@ -17,4 +17,4 @@ interactions:
       Expires: Thu, 01 Jan 1970 00:00:00 GMT
       Server: Jetty(6.1.21)
       Set-Cookie: JSESSIONID=mxrbh6byhvxt;Path=/
-    body: <result success='true' apiversion='2'><projects count='1'><project><name>test</name><description></description></project></projects></result>
+    body: <result success='true' apiversion='5'><projects count='1'><project><name>test</name><description></description></project></projects></result>
