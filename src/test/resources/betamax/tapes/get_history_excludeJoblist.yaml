@@ -1,0 +1,23 @@
+!tape
+name: get_history_excludeJoblist
+interactions:
+- recorded: 2012-08-24T21:55:44.759Z
+  request:
+    method: POST
+    uri: http://rundeck.local:4440/api/5/history?project=demo
+    headers:
+      Content-Length: '66'
+      Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+      Host: rundeck.localtest:8080
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 960412PR40dRREU5d87S2Ce2OeddD5c1
+    body: 'excludeJobListFilter=malk/blah&excludeJobListFilter=malk/blah2'
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=hgu6yb4dpooy;Path=/rundeck
+    body: <result success='true' apiversion='5'><events count='2' total='2' max='20' offset='0'><event starttime='1345766449947' endtime='1345766451261'><title>fliff</title><status>succeeded</status><summary>echo there i was not even counting it</summary><node-summary succeeded='1' failed='0' total='1'/><user>admin</user><project>demo</project><date-started>2012-08-24T00:00:49Z</date-started><date-ended>2012-08-24T00:00:51Z</date-ended><job id='f2dd438a-17cb-4c2d-8c0c-d03b2b601c67'/><execution id='4'/></event><event starttime='1345764097165' endtime='1345764097283'><title>malk/blah3</title><status>succeeded</status><summary>echo aljdsf</summary><node-summary succeeded='1' failed='0' total='1'/><user>admin</user><project>demo</project><date-started>2012-08-23T23:21:37Z</date-started><date-ended>2012-08-23T23:21:37Z</date-ended><job id='1f8236b9-160b-4c5b-877a-e64409a3998d'/><execution id='3'/></event></events></result>

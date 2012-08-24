@@ -16,11 +16,17 @@
 package org.rundeck.api;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.NameValuePair;
+import org.apache.http.entity.mime.FormBodyPart;
+import org.apache.http.message.BasicNameValuePair;
 import org.rundeck.api.util.ParametersUtil;
 
 /**
@@ -35,6 +41,7 @@ class ApiPathBuilder {
 
     /** When POSTing, we can add attachments */
     private final Map<String, InputStream> attachments;
+    private final List<NameValuePair> form = new ArrayList<NameValuePair>();
 
     /** Marker for using the right separator between parameters ("?" or "&") */
     private boolean firstParamDone = false;
@@ -72,6 +79,61 @@ class ApiPathBuilder {
             append(key);
             append("=");
             append(ParametersUtil.urlEncode(value));
+        }
+        return this;
+    }
+
+    /**
+     * Append the given parameter (key and value). This will only append the parameter if it is not blank (null, empty
+     * or whitespace), and make sure to add the right separator ("?" or "&") before. The key and value will be separated
+     * by the "=" character. Also, the value will be url-encoded.
+     *
+     * @param key of the parameter. Must not be null or empty
+     * @param value of the parameter. May be null/empty/blank. Will be url-encoded.
+     * @return this, for method chaining
+     */
+    public ApiPathBuilder param(final String key, final Collection<String> values) {
+        for(final String value: values){
+            if (StringUtils.isNotBlank(value)) {
+                appendSeparator();
+                append(key);
+                append("=");
+                append(ParametersUtil.urlEncode(value));
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Append multiple values for the given Form field. This will be appended if it is not blank (null, empty
+     * or whitespace).  The form field values will only be used for a "post" request
+     *
+     * @param key of the field name. Must not be null or empty
+     * @param values of the field. May be null/empty/blank. Will be url-encoded.
+     * @return this, for method chaining
+     */
+    public ApiPathBuilder field(final String key, final Collection<String> values) {
+        if (null!=values) {
+            for(final String value: values){
+                if (StringUtils.isNotBlank(value)) {
+                    form.add(new BasicNameValuePair(key, value));
+                }
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Append a single value for the given Form field. This will be appended if it is not blank (null, empty
+     * or whitespace).  The form field values will only be used for a "post" request
+     *
+     * @param key of the field name. Must not be null or empty
+     * @param value of the field. May be null/empty/blank. Will be url-encoded.
+     * @return this, for method chaining
+     */
+    public ApiPathBuilder field(final String key, final String value) {
+        if (StringUtils.isNotBlank(value)) {
+            form.add(new BasicNameValuePair(key, value));
         }
         return this;
     }
@@ -216,4 +278,10 @@ class ApiPathBuilder {
         }
     }
 
+    /**
+     * Form fields for POST request
+     */
+    public List<NameValuePair> getForm() {
+        return form;
+    }
 }

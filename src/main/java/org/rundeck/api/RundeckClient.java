@@ -2065,7 +2065,7 @@ public class RundeckClient implements Serializable {
      */
     public RundeckHistory getHistory(String project) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException, IllegalArgumentException {
-        return getHistory(project, null, null, null, null, null, null, null, null);
+        return getHistory(project, null, null,(String) null, (String) null, null, null, null, null);
     }
 
     /**
@@ -2083,7 +2083,7 @@ public class RundeckClient implements Serializable {
      */
     public RundeckHistory getHistory(String project, Long max, Long offset) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return getHistory(project, null, null, null, null, null, null, max, offset);
+        return getHistory(project, null, null, (String)null, (String)null, null, null, max, offset);
     }
 
     /**
@@ -2181,7 +2181,7 @@ public class RundeckClient implements Serializable {
      */
     public RundeckHistory getHistory(String project, Date begin, Date end) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return getHistory(project, null, null, null, null, begin, end, null, null);
+        return getHistory(project, null, null, (String)null, (String)null, begin, end, null, null);
     }
 
     /**
@@ -2201,7 +2201,7 @@ public class RundeckClient implements Serializable {
      */
     public RundeckHistory getHistory(String project, Date begin, Date end, Long max, Long offset)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return getHistory(project, null, null, null, null, begin, end, max, offset);
+        return getHistory(project, null, null, (String)null, (String) null, begin, end, max, offset);
     }
 
     /**
@@ -2229,15 +2229,63 @@ public class RundeckClient implements Serializable {
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(project, "project is mandatory to get the history !");
         return new ApiCall(this).get(new ApiPathBuilder("/history").param("project", project)
-                                                                   .param("jobIdFilter", jobId)
-                                                                   .param("reportIdFilter", reportId)
-                                                                   .param("userFilter", user)
-                                                                   .param("recentFilter", recent)
-                                                                   .param("begin", begin)
-                                                                   .param("end", end)
-                                                                   .param("max", max)
-                                                                   .param("offset", offset),
+                                         .param("jobIdFilter", jobId)
+                                         .param("reportIdFilter", reportId)
+                                         .param("userFilter", user)
+                                         .param("recentFilter", recent)
+                                         .param("begin", begin)
+                                         .param("end", end)
+                                         .param("max", max)
+                                         .param("offset", offset),
                                      new HistoryParser("result/events"));
+    }
+
+    /**
+     * Get the (events) history for the given project
+     *
+     * @param project         name of the project - mandatory
+     * @param includeJobNames list of job names ("group/name") to include results for
+     * @param excludeJobNames list of job names ("group/name") to exclude results for
+     * @param user            include only events created by the given user - optional
+     * @param recent          include only events matching the given period of time. Format : "XY", where X is an
+     *                        integer, and Y is one of : "h" (hour), "d" (day), "w" (week), "m" (month), "y" (year).
+     *                        Example : "2w" (= last 2 weeks), "5d" (= last 5 days), etc. Optional.
+     * @param begin           date for the earlier events to retrieve - optional
+     * @param end             date for the latest events to retrieve - optional
+     * @param max             number of results to return - optional (default to 20)
+     * @param offset          the 0-indexed offset for the first result to return - optional (default to O)
+     *
+     * @return a {@link RundeckHistory} instance - won't be null
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace)
+     */
+    public RundeckHistory getHistory(String project,
+                                     String user,
+                                     String recent,
+                                     List<String> includeJobNames,
+                                     List<String> excludeJobNames,
+                                     Date begin,
+                                     Date end,
+                                     Long max,
+                                     Long offset)
+        throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(project, "project is mandatory to get the history !");
+        final ApiPathBuilder builder = new ApiPathBuilder("/history").param("project", project)
+            .field("jobListFilter", includeJobNames)
+            .field("excludeJobListFilter", excludeJobNames)
+            .param("userFilter", user)
+            .param("recentFilter", recent)
+            .param("begin", begin)
+            .param("end", end)
+            .param("max", max)
+            .param("offset", offset);
+
+
+        return new ApiCall(this).post(builder, new HistoryParser("result/events"));
     }
 
     /*

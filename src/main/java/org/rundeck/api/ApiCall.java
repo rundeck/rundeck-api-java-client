@@ -18,6 +18,7 @@ package org.rundeck.api;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.ProxySelector;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -235,11 +236,21 @@ class ApiCall {
         HttpPost httpPost = new HttpPost(client.getUrl() + RundeckClient.API_ENDPOINT + apiPath);
 
         // POST a multi-part request, with all attachments
-        MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-        for (Entry<String, InputStream> attachment : apiPath.getAttachments().entrySet()) {
-            entity.addPart(attachment.getKey(), new InputStreamBody(attachment.getValue(), attachment.getKey()));
+        if(apiPath.getAttachments().size()>0){
+            MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+            for (Entry<String, InputStream> attachment : apiPath.getAttachments().entrySet()) {
+                entity.addPart(attachment.getKey(), new InputStreamBody(attachment.getValue(), attachment.getKey()));
+            }
+            httpPost.setEntity(entity);
+        }else if(apiPath.getForm().size()>0){
+            try {
+                httpPost.setEntity(new UrlEncodedFormEntity(apiPath.getForm(), HTTP.UTF_8));
+            } catch (UnsupportedEncodingException e) {
+                throw new RundeckApiException("Unsupported encoding: " + e.getMessage(), e);
+            }
+        }else {
+            throw new IllegalArgumentException("No Form or Multipart entity for POST content-body");
         }
-        httpPost.setEntity(entity);
 
         return execute(httpPost, parser);
     }
