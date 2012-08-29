@@ -105,7 +105,7 @@ public class RundeckClientTest {
     @Betamax(tape = "get_history_user",
              match = {MatchRule.uri, MatchRule.method, MatchRule.path, MatchRule.query })
     public void getHistoryUser() throws Exception {
-        final RundeckHistory test = client.getHistory("demo", "bob", (String)null, (List)null, null, null, null, null, null);
+        final RundeckHistory test = client.getHistory("demo", "bob", (String)null, (List)null, null, null, null, 1L, 0L);
         Assert.assertEquals(1, test.getCount());
         Assert.assertEquals(20, test.getMax());
         Assert.assertEquals(0, test.getOffset());
