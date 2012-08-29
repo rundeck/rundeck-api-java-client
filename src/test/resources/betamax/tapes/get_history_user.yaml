@@ -1,0 +1,22 @@
+!tape
+name: get_history_user
+interactions:
+- recorded: 2012-08-24T21:37:50.531Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/history?project=demo&userFilter=bob
+    headers:
+      Content-Length: '52'
+      Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+      Host: rundeck.localtest:8080
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 960412PR40dRREU5d87S2Ce2OeddD5c1
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=118zw5docyvss;Path=/rundeck
+    body: <result success='true' apiversion='5'><events count='1' total='1' max='20' offset='0'><event starttime='1345764091112' endtime='1345764091345'><title>malk/blah2</title><status>succeeded</status><summary>echo aljdsf</summary><node-summary succeeded='1' failed='0' total='1'/><user>bob</user><project>demo</project><date-started>2012-08-23T23:21:31Z</date-started><date-ended>2012-08-23T23:21:31Z</date-ended><job id='fffff'/><execution id='2'/></event></events></result>

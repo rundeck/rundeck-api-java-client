@@ -219,6 +219,30 @@ class ApiCall {
 
         return response;
     }
+
+    /**
+     * Execute an HTTP POST or GET request to the RunDeck instance, on the given path, depend ing of the {@link
+     * ApiPathBuilder} contains POST content or not (attachments or Form data). We will login first, and then execute
+     * the API call. At the end, the given parser will be used to convert the response to a more useful result object.
+     *
+     * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
+     * @param parser  used to parse the response
+     *
+     * @return the result of the call, as formatted by the parser
+     *
+     * @throws RundeckApiException      in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    public <T> T postOrGet(ApiPathBuilder apiPath, XmlNodeParser<T> parser) throws RundeckApiException,
+                                                                                   RundeckApiLoginException,
+                                                                                   RundeckApiTokenException {
+        if (apiPath.hasPostContent()) {
+            return post(apiPath, parser);
+        } else {
+            return get(apiPath, parser);
+        }
+    }
     
     /**
      * Execute an HTTP POST request to the RunDeck instance, on the given path. We will login first, and then execute

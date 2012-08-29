@@ -2284,8 +2284,7 @@ public class RundeckClient implements Serializable {
             .param("max", max)
             .param("offset", offset);
 
-
-        return new ApiCall(this).post(builder, new HistoryParser("result/events"));
+        return new ApiCall(this).postOrGet(builder, new HistoryParser("result/events"));
     }
 
     /*

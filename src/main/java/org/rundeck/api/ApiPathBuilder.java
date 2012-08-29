@@ -284,4 +284,11 @@ class ApiPathBuilder {
     public List<NameValuePair> getForm() {
         return form;
     }
+
+    /**
+     * Return true if there are any Attachments or Form data for a POST request.
+     */
+    public boolean hasPostContent() {
+        return getAttachments().size() > 0 || getForm().size() > 0;
+    }
 }

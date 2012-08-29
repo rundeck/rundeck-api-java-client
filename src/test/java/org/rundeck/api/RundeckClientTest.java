@@ -101,6 +101,24 @@ public class RundeckClientTest {
         Assert.assertEquals(Arrays.asList("fliff", "malk/blah3"), names);
     }
 
+    @Test
+    @Betamax(tape = "get_history_user",
+             match = {MatchRule.uri, MatchRule.method, MatchRule.path, MatchRule.query })
+    public void getHistoryUser() throws Exception {
+        final RundeckHistory test = client.getHistory("demo", "bob", (String)null, (List)null, null, null, null, null, null);
+        Assert.assertEquals(1, test.getCount());
+        Assert.assertEquals(20, test.getMax());
+        Assert.assertEquals(0, test.getOffset());
+        Assert.assertEquals(1, test.getTotal());
+        final List<RundeckEvent> events = test.getEvents();
+        Assert.assertEquals(1, events.size());
+        final List<String> names = new ArrayList<String>();
+        for (final RundeckEvent event : events) {
+            names.add(event.getUser());
+        }
+        Assert.assertEquals(Arrays.asList("bob"), names);
+    }
+
     @Before
     public void setUp() throws Exception {
         // not that you can put whatever here, because we don't actually connect to the RunDeck instance
