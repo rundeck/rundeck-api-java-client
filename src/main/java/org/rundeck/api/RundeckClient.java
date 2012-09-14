@@ -52,6 +52,7 @@ import org.rundeck.api.parser.ProjectParser;
 import org.rundeck.api.parser.StringParser;
 import org.rundeck.api.parser.SystemInfoParser;
 import org.rundeck.api.parser.OutputParser;
+import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.AssertUtil;
 import org.rundeck.api.util.ParametersUtil;
 
@@ -2008,8 +2009,34 @@ public class RundeckClient implements Serializable {
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(jobId, "jobId is mandatory to get the executions of a job !");
         return new ApiCall(this).get(new ApiPathBuilder("/job/", jobId, "/executions").param("status", status)
-                                                                                      .param("max", max)
-                                                                                      .param("offset", offset),
+                                         .param("max", max)
+                                         .param("offset", offset),
+                                     new ListParser<RundeckExecution>(new ExecutionParser(),
+                                                                      "result/executions/execution"));
+    }
+
+    /**
+     * Get executions based on query parameters
+     *
+     * @param query query parameters for the request
+     * @param max number of results to return - optional (null for all)
+     * @param offset the 0-indexed offset for the first result to return - optional
+     * @return a {@link List} of {@link RundeckExecution} : might be empty, but won't be null
+     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public List<RundeckExecution> getExecutions(ExecutionQuery query, Long max, Long offset)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        if(!query.notBlank()){
+            throw new IllegalArgumentException("Some execution query parameter must be set");
+        }
+        AssertUtil.notBlank(query.getProject(),"project is required for execution query");
+        return new ApiCall(this).get(new ApiPathBuilder("/executions")
+                                         .param(new ExecutionQueryParameters(query))
+                                         .param("max", max)
+                                         .param("offset", offset),
                                      new ListParser<RundeckExecution>(new ExecutionParser(),
                                                                       "result/executions/execution"));
     }

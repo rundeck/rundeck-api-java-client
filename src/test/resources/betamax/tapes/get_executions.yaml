@@ -1,0 +1,249 @@
+!tape
+name: get_executions
+interactions:
+- recorded: 2012-09-14T22:04:13.134Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?jobFilter=test+job&project=blah&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=zjp992wmk8is;Path=/
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='33' href='http://Venkman.local:4440/execution/follow/33' status='succeeded'><user>admin</user><date-started unixtime='1347660078157'>2012-09-14T22:01:18Z</date-started><date-ended unixtime='1347660078425'>2012-09-14T22:01:18Z</date-ended><job id='4cfdfc23-be50-4a23-b291-b8a98897813b'><name>test job</name><group></group><project>blah</project><description></description></job><description>echo this is a test</description><argstring/></execution><execution id='30' href='http://Venkman.local:4440/execution/follow/30' status='aborted'><user>admin</user><date-started unixtime='1347581285308'>2012-09-14T00:08:05Z</date-started><date-ended unixtime='1347581288381'>2012-09-14T00:08:08Z</date-ended><abortedby>admin</abortedby><job id='c545bdba-c823-4fa8-bbfd-3364e8cc8ba5'><name>test job2</name><group></group><project>blah</project><description>a description to test</description></job><description>echo this is a test [... 2 steps]</description><argstring/></execution></executions></result>
+- recorded: 2012-09-14T22:04:13.220Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&descFilter=a+description&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='30' href='http://Venkman.local:4440/execution/follow/30' status='aborted'><user>admin</user><date-started unixtime='1347581285308'>2012-09-14T00:08:05Z</date-started><date-ended unixtime='1347581288381'>2012-09-14T00:08:08Z</date-ended><abortedby>admin</abortedby><job id='c545bdba-c823-4fa8-bbfd-3364e8cc8ba5'><name>test job2</name><group></group><project>blah</project><description>a description to test</description></job><description>echo this is a test [... 2 steps]</description><argstring/></execution><execution id='29' href='http://Venkman.local:4440/execution/follow/29' status='succeeded'><user>admin</user><date-started unixtime='1347581230410'>2012-09-14T00:07:10Z</date-started><date-ended unixtime='1347581250696'>2012-09-14T00:07:30Z</date-ended><job id='c545bdba-c823-4fa8-bbfd-3364e8cc8ba5'><name>test job2</name><group></group><project>blah</project><description>a description to test</description></job><description>echo this is a test [... 2 steps]</description><argstring/></execution></executions></result>
+- recorded: 2012-09-14T22:04:13.342Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&begin=2012-09-13T17%3A06%3A18Z&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='34' href='http://Venkman.local:4440/execution/follow/34' status='succeeded'><user>admin</user><date-started unixtime='1347660234844'>2012-09-14T22:03:54Z</date-started><date-ended unixtime='1347660234934'>2012-09-14T22:03:54Z</date-ended><job id='62a26001-b9fe-430a-8ba1-92cf04c10bba'><name>bonkers job</name><group></group><project>blah</project><description></description></job><description>echo why</description><argstring/></execution><execution id='33' href='http://Venkman.local:4440/execution/follow/33' status='succeeded'><user>admin</user><date-started unixtime='1347660078157'>2012-09-14T22:01:18Z</date-started><date-ended unixtime='1347660078425'>2012-09-14T22:01:18Z</date-ended><job id='4cfdfc23-be50-4a23-b291-b8a98897813b'><name>test job</name><group></group><project>blah</project><description></description></job><description>echo this is a test</description><argstring/></execution></executions></result>
+- recorded: 2012-09-14T22:04:13.404Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&end=2012-09-13T17%3A06%3A18Z&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='27' href='http://Venkman.local:4440/execution/follow/27' status='failed'><user>admin</user><date-started unixtime='1347040723674'>2012-09-07T17:58:43Z</date-started><date-ended unixtime='1347040726021'>2012-09-07T17:58:46Z</date-ended><job id='cf054831-6e1f-47c0-9382-5b1898aeaf2e'><name>local su test</name><group></group><project>blah</project><description></description></job><description>echo hi [... 2 steps]</description><argstring/></execution><execution id='26' href='http://Venkman.local:4440/execution/follow/26' status='failed'><user>admin</user><date-started unixtime='1347040599288'>2012-09-07T17:56:39Z</date-started><date-ended unixtime='1347040600629'>2012-09-07T17:56:40Z</date-ended><job id='cf054831-6e1f-47c0-9382-5b1898aeaf2e'><name>local su test</name><group></group><project>blah</project><description></description></job><description>echo hi [... 2 steps]</description><argstring/></execution></executions></result>
+- recorded: 2012-09-14T22:04:13.460Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&excludeJobIdListFilter=123&excludeJobIdListFilter=456&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='34' href='http://Venkman.local:4440/execution/follow/34' status='succeeded'><user>admin</user><date-started unixtime='1347660234844'>2012-09-14T22:03:54Z</date-started><date-ended unixtime='1347660234934'>2012-09-14T22:03:54Z</date-ended><job id='62a26001-b9fe-430a-8ba1-92cf04c10bba'><name>bonkers job</name><group></group><project>blah</project><description></description></job><description>echo why</description><argstring/></execution><execution id='33' href='http://Venkman.local:4440/execution/follow/33' status='succeeded'><user>admin</user><date-started unixtime='1347660078157'>2012-09-14T22:01:18Z</date-started><date-ended unixtime='1347660078425'>2012-09-14T22:01:18Z</date-ended><job id='4cfdfc23-be50-4a23-b291-b8a98897813b'><name>test job</name><group></group><project>blah</project><description></description></job><description>echo this is a test</description><argstring/></execution></executions></result>
+- recorded: 2012-09-14T22:04:13.525Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&jobListFilter=fruit%2Fmango&jobListFilter=fruit%2Flemon&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='32' href='http://Venkman.local:4440/execution/follow/32' status='failed'><user>admin</user><date-started unixtime='1347644775513'>2012-09-14T17:46:15Z</date-started><date-ended unixtime='1347644775663'>2012-09-14T17:46:15Z</date-ended><job id='1f4415d7-3b52-4fc8-ba42-b6ac97508bff'><name>lemon</name><group>fruit</group><project>blah</project><description></description></job><description>echo lemon lemon [... 2 steps]</description><argstring/></execution><execution id='31' href='http://Venkman.local:4440/execution/follow/31' status='succeeded'><user>admin</user><date-started unixtime='1347644746884'>2012-09-14T17:45:46Z</date-started><date-ended unixtime='1347644747204'>2012-09-14T17:45:47Z</date-ended><job id='d9fc5ee6-f1db-4d24-8808-feda18345bab'><name>mango</name><group>fruit</group><project>blah</project><description></description></job><description>echo mango mango</description><argstring/></execution></executions></result>
+- recorded: 2012-09-14T22:04:13.575Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&excludeJobListFilter=a%2Fpath%2Fjob1&excludeJobListFilter=path%2Fto%2Fjob2&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='34' href='http://Venkman.local:4440/execution/follow/34' status='succeeded'><user>admin</user><date-started unixtime='1347660234844'>2012-09-14T22:03:54Z</date-started><date-ended unixtime='1347660234934'>2012-09-14T22:03:54Z</date-ended><job id='62a26001-b9fe-430a-8ba1-92cf04c10bba'><name>bonkers job</name><group></group><project>blah</project><description></description></job><description>echo why</description><argstring/></execution><execution id='33' href='http://Venkman.local:4440/execution/follow/33' status='succeeded'><user>admin</user><date-started unixtime='1347660078157'>2012-09-14T22:01:18Z</date-started><date-ended unixtime='1347660078425'>2012-09-14T22:01:18Z</date-ended><job id='4cfdfc23-be50-4a23-b291-b8a98897813b'><name>test job</name><group></group><project>blah</project><description></description></job><description>echo this is a test</description><argstring/></execution></executions></result>
+- recorded: 2012-09-14T22:04:13.631Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&jobIdListFilter=1f4415d7-3b52-4fc8-ba42-b6ac97508bff&jobIdListFilter=d9fc5ee6-f1db-4d24-8808-feda18345bab&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='32' href='http://Venkman.local:4440/execution/follow/32' status='failed'><user>admin</user><date-started unixtime='1347644775513'>2012-09-14T17:46:15Z</date-started><date-ended unixtime='1347644775663'>2012-09-14T17:46:15Z</date-ended><job id='1f4415d7-3b52-4fc8-ba42-b6ac97508bff'><name>lemon</name><group>fruit</group><project>blah</project><description></description></job><description>echo lemon lemon [... 2 steps]</description><argstring/></execution><execution id='31' href='http://Venkman.local:4440/execution/follow/31' status='succeeded'><user>admin</user><date-started unixtime='1347644746884'>2012-09-14T17:45:46Z</date-started><date-ended unixtime='1347644747204'>2012-09-14T17:45:47Z</date-ended><job id='d9fc5ee6-f1db-4d24-8808-feda18345bab'><name>mango</name><group>fruit</group><project>blah</project><description></description></job><description>echo mango mango</description><argstring/></execution></executions></result>
+- recorded: 2012-09-14T22:04:13.682Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&groupPath=fruit&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='32' href='http://Venkman.local:4440/execution/follow/32' status='failed'><user>admin</user><date-started unixtime='1347644775513'>2012-09-14T17:46:15Z</date-started><date-ended unixtime='1347644775663'>2012-09-14T17:46:15Z</date-ended><job id='1f4415d7-3b52-4fc8-ba42-b6ac97508bff'><name>lemon</name><group>fruit</group><project>blah</project><description></description></job><description>echo lemon lemon [... 2 steps]</description><argstring/></execution><execution id='31' href='http://Venkman.local:4440/execution/follow/31' status='succeeded'><user>admin</user><date-started unixtime='1347644746884'>2012-09-14T17:45:46Z</date-started><date-ended unixtime='1347644747204'>2012-09-14T17:45:47Z</date-ended><job id='d9fc5ee6-f1db-4d24-8808-feda18345bab'><name>mango</name><group>fruit</group><project>blah</project><description></description></job><description>echo mango mango</description><argstring/></execution></executions></result>
+- recorded: 2012-09-14T22:04:13.735Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&groupPathExact=fruit&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='32' href='http://Venkman.local:4440/execution/follow/32' status='failed'><user>admin</user><date-started unixtime='1347644775513'>2012-09-14T17:46:15Z</date-started><date-ended unixtime='1347644775663'>2012-09-14T17:46:15Z</date-ended><job id='1f4415d7-3b52-4fc8-ba42-b6ac97508bff'><name>lemon</name><group>fruit</group><project>blah</project><description></description></job><description>echo lemon lemon [... 2 steps]</description><argstring/></execution><execution id='31' href='http://Venkman.local:4440/execution/follow/31' status='succeeded'><user>admin</user><date-started unixtime='1347644746884'>2012-09-14T17:45:46Z</date-started><date-ended unixtime='1347644747204'>2012-09-14T17:45:47Z</date-ended><job id='d9fc5ee6-f1db-4d24-8808-feda18345bab'><name>mango</name><group>fruit</group><project>blah</project><description></description></job><description>echo mango mango</description><argstring/></execution></executions></result>
+- recorded: 2012-09-14T22:04:13.785Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?jobExactFilter=test+job&project=blah&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='33' href='http://Venkman.local:4440/execution/follow/33' status='succeeded'><user>admin</user><date-started unixtime='1347660078157'>2012-09-14T22:01:18Z</date-started><date-ended unixtime='1347660078425'>2012-09-14T22:01:18Z</date-ended><job id='4cfdfc23-be50-4a23-b291-b8a98897813b'><name>test job</name><group></group><project>blah</project><description></description></job><description>echo this is a test</description><argstring/></execution><execution id='28' href='http://Venkman.local:4440/execution/follow/28' status='succeeded'><user>admin</user><date-started unixtime='1347579864863'>2012-09-13T23:44:24Z</date-started><date-ended unixtime='1347579865110'>2012-09-13T23:44:25Z</date-ended><job id='4cfdfc23-be50-4a23-b291-b8a98897813b'><name>test job</name><group></group><project>blah</project><description></description></job><description>echo this is a test</description><argstring/></execution></executions></result>
+- recorded: 2012-09-14T22:04:13.836Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&loglevelFilter=INFO&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='34' href='http://Venkman.local:4440/execution/follow/34' status='succeeded'><user>admin</user><date-started unixtime='1347660234844'>2012-09-14T22:03:54Z</date-started><date-ended unixtime='1347660234934'>2012-09-14T22:03:54Z</date-ended><job id='62a26001-b9fe-430a-8ba1-92cf04c10bba'><name>bonkers job</name><group></group><project>blah</project><description></description></job><description>echo why</description><argstring/></execution><execution id='33' href='http://Venkman.local:4440/execution/follow/33' status='succeeded'><user>admin</user><date-started unixtime='1347660078157'>2012-09-14T22:01:18Z</date-started><date-ended unixtime='1347660078425'>2012-09-14T22:01:18Z</date-ended><job id='4cfdfc23-be50-4a23-b291-b8a98897813b'><name>test job</name><group></group><project>blah</project><description></description></job><description>echo this is a test</description><argstring/></execution></executions></result>
+- recorded: 2012-09-14T22:04:13.883Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&recentFilter=1h&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='34' href='http://Venkman.local:4440/execution/follow/34' status='succeeded'><user>admin</user><date-started unixtime='1347660234844'>2012-09-14T22:03:54Z</date-started><date-ended unixtime='1347660234934'>2012-09-14T22:03:54Z</date-ended><job id='62a26001-b9fe-430a-8ba1-92cf04c10bba'><name>bonkers job</name><group></group><project>blah</project><description></description></job><description>echo why</description><argstring/></execution><execution id='33' href='http://Venkman.local:4440/execution/follow/33' status='succeeded'><user>admin</user><date-started unixtime='1347660078157'>2012-09-14T22:01:18Z</date-started><date-ended unixtime='1347660078425'>2012-09-14T22:01:18Z</date-ended><job id='4cfdfc23-be50-4a23-b291-b8a98897813b'><name>test job</name><group></group><project>blah</project><description></description></job><description>echo this is a test</description><argstring/></execution></executions></result>
+- recorded: 2012-09-14T22:04:13.930Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&statusFilter=succeeded&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='34' href='http://Venkman.local:4440/execution/follow/34' status='succeeded'><user>admin</user><date-started unixtime='1347660234844'>2012-09-14T22:03:54Z</date-started><date-ended unixtime='1347660234934'>2012-09-14T22:03:54Z</date-ended><job id='62a26001-b9fe-430a-8ba1-92cf04c10bba'><name>bonkers job</name><group></group><project>blah</project><description></description></job><description>echo why</description><argstring/></execution><execution id='33' href='http://Venkman.local:4440/execution/follow/33' status='succeeded'><user>admin</user><date-started unixtime='1347660078157'>2012-09-14T22:01:18Z</date-started><date-ended unixtime='1347660078425'>2012-09-14T22:01:18Z</date-ended><job id='4cfdfc23-be50-4a23-b291-b8a98897813b'><name>test job</name><group></group><project>blah</project><description></description></job><description>echo this is a test</description><argstring/></execution></executions></result>
+- recorded: 2012-09-17T22:46:10.886Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&adhoc=true&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=rqe6ggvlwr6p;Path=/
+    body: <result success='true' apiversion='5'><executions count='2'><execution id='20' href='http://Venkman.local:4440/execution/follow/20' status='failed'><user>admin</user><date-started unixtime='1347040226204'>2012-09-07T17:50:26Z</date-started><date-ended unixtime='1347040226462'>2012-09-07T17:50:26Z</date-ended><description>echo hi</description><argstring/></execution><execution id='19' href='http://Venkman.local:4440/execution/follow/19' status='failed'><user>admin</user><date-started unixtime='1347040211345'>2012-09-07T17:50:11Z</date-started><date-ended unixtime='1347040211602'>2012-09-07T17:50:11Z</date-ended><description>echo hi</description><argstring/></execution></executions></result>
+- recorded: 2012-09-17T23:02:35.883Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/executions?project=blah&abortedbyFilter=admin&max=2&offset=0
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=1ciy2jy8y2agx;Path=/
+    body: <result success='true' apiversion='5'><executions count='1'><execution id='30' href='http://Venkman.local:4440/execution/follow/30' status='aborted'><user>admin</user><date-started unixtime='1347581285308'>2012-09-14T00:08:05Z</date-started><date-ended unixtime='1347581288381'>2012-09-14T00:08:08Z</date-ended><abortedby>admin</abortedby><job id='c545bdba-c823-4fa8-bbfd-3364e8cc8ba5'><name>test job2</name><group></group><project>blah</project><description>a description to test</description></job><description>echo this is a test [... 2 steps]</description><argstring/></execution></executions></result>

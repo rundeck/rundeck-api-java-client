@@ -17,6 +17,7 @@ package org.rundeck.api;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import betamax.MatchRule;
@@ -26,10 +27,13 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.rundeck.api.domain.RundeckEvent;
+import org.rundeck.api.domain.RundeckExecution;
 import org.rundeck.api.domain.RundeckHistory;
 import org.rundeck.api.domain.RundeckProject;
 import betamax.Betamax;
 import betamax.Recorder;
+import org.rundeck.api.query.ExecutionQuery;
+
 
 /**
  * Test the {@link RundeckClient}. Uses betamax to unit-test HTTP requests without a live RunDeck instance.
@@ -117,6 +121,106 @@ public class RundeckClientTest {
             names.add(event.getUser());
         }
         Assert.assertEquals(Arrays.asList("bob"), names);
+    }
+
+    @Test
+    @Betamax(tape = "get_executions",
+             mode = TapeMode.READ_ONLY,
+             match = {MatchRule.uri, MatchRule.headers, MatchRule.method, MatchRule.path, MatchRule.query})
+    public void getExecutions() throws Exception {
+
+        RundeckClient client = new RundeckClient("http://rundeck.local:4440", "0UUNkeRp4d58EDeCs7S6UdODp334DvK9");
+
+
+        final String projectName = "blah";
+        final List<RundeckExecution> jobTest = client.getExecutions(ExecutionQuery.builder()
+                                                                        .project(projectName)
+                                                                        .job("test job")
+                                                                        .build(),
+                                                                    2L,
+                                                                    0L);
+        Assert.assertEquals(2, jobTest.size());
+        final List<RundeckExecution> descriptionTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                .project(projectName)
+                                                                                .description("a description")
+                                                                                .build(), 2L, 0L);
+        Assert.assertEquals(2, descriptionTest.size());
+        final List<RundeckExecution> abortedbyTest = client.getExecutions(ExecutionQuery.builder()
+                                                                              .project(projectName)
+                                                                              .abortedby("admin")
+                                                                              .build(),
+                                                                          2L,
+                                                                          0L);
+        Assert.assertEquals(1, abortedbyTest.size());
+        final List<RundeckExecution> beginTest = client.getExecutions(ExecutionQuery.builder()
+                                                                          .project(projectName)
+                                                                          .begin(new Date(1347581178168L))
+                                                                          .build(), 2L, 0L);
+        Assert.assertEquals(2, beginTest.size());
+        final List<RundeckExecution> endTest = client.getExecutions(ExecutionQuery.builder()
+                                                                        .project(projectName)
+                                                                        .end(new Date(1347581178168L))
+                                                                        .build(), 2L, 0L);
+        Assert.assertEquals(2, endTest.size());
+        final List<String> excludeJobIdList = Arrays.asList("123", "456");
+        final List<RundeckExecution> excludeJobIdListTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                     .project(projectName)
+                                                                                     .excludeJobIdList(excludeJobIdList)
+                                                                                     .build(), 2L, 0L);
+        Assert.assertEquals(2, excludeJobIdListTest.size());
+        final List<String> jobList = Arrays.asList("fruit/mango", "fruit/lemon");
+        final List<RundeckExecution> jobListTest = client.getExecutions(ExecutionQuery.builder()
+                                                                            .project(projectName)
+                                                                            .jobList(jobList)
+                                                                            .build(), 2L, 0L);
+        Assert.assertEquals(2, jobListTest.size());
+        final List<String> excludeJobList = Arrays.asList("a/path/job1", "path/to/job2");
+        final List<RundeckExecution> excludeJobListTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                   .project(projectName)
+                                                                                   .excludeJobList(excludeJobList)
+                                                                                   .build(), 2L, 0L);
+        Assert.assertEquals(2, excludeJobListTest.size());
+        final List<String> list = Arrays.asList("1f4415d7-3b52-4fc8-ba42-b6ac97508bff",
+                                                "d9fc5ee6-f1db-4d24-8808-feda18345bab");
+        final List<RundeckExecution> jobIdListTest = client.getExecutions(ExecutionQuery.builder()
+                                                                              .project(projectName)
+                                                                              .jobIdList(list)
+                                                                              .build(), 2L, 0L);
+        Assert.assertEquals(2, jobIdListTest.size());
+        final List<RundeckExecution> groupPathTest = client.getExecutions(ExecutionQuery.builder()
+                                                                              .project(projectName)
+                                                                              .groupPath("fruit")
+                                                                              .build(),
+                                                                          2L,
+                                                                          0L);
+        Assert.assertEquals(2, groupPathTest.size());
+        final List<RundeckExecution> groupPathExactTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                   .project(projectName)
+                                                                                   .groupPathExact("fruit")
+                                                                                   .build(), 2L, 0L);
+        Assert.assertEquals(2, groupPathExactTest.size());
+        final List<RundeckExecution> jobExactTest = client.getExecutions(ExecutionQuery.builder()
+                                                                             .project(projectName)
+                                                                             .jobExact("test job")
+                                                                             .build(),
+                                                                         2L,
+                                                                         0L);
+        Assert.assertEquals(2, jobExactTest.size());
+
+        final List<RundeckExecution> recentTest = client.getExecutions(ExecutionQuery.builder()
+                                                                           .project(projectName)
+                                                                           .recent("1h").build(), 2L, 0L);
+        Assert.assertEquals(2, recentTest.size());
+        final List<RundeckExecution> statusTest = client.getExecutions(ExecutionQuery.builder()
+                                                                           .project(projectName)
+                                                                           .status(RundeckExecution.ExecutionStatus.SUCCEEDED)
+                                                                           .build(), 2L, 0L);
+        Assert.assertEquals(2, statusTest.size());
+        final List<RundeckExecution> adhocTest = client.getExecutions(ExecutionQuery.builder()
+                                                                           .project(projectName)
+                                                                           .adhoc(true)
+                                                                           .build(), 2L, 0L);
+        Assert.assertEquals(2, adhocTest.size());
     }
 
     @Before

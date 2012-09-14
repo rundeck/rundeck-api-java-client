@@ -25,13 +25,12 @@ import java.util.Map;
 import java.util.Properties;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.NameValuePair;
-import org.apache.http.entity.mime.FormBodyPart;
 import org.apache.http.message.BasicNameValuePair;
 import org.rundeck.api.util.ParametersUtil;
 
 /**
  * Builder for API paths
- * 
+ *
  * @author Vincent Behar
  */
 class ApiPathBuilder {
@@ -49,7 +48,7 @@ class ApiPathBuilder {
     /**
      * Build a new instance, for the given "path" (the "path" is the part before the parameters. The path and the
      * parameters are separated by a "?")
-     * 
+     *
      * @param paths elements of the path
      */
     public ApiPathBuilder(String... paths) {
@@ -65,10 +64,24 @@ class ApiPathBuilder {
     }
 
     /**
+     * Visit a {@link BuildsParameters} and add the parameters
+     */
+    public ApiPathBuilder param(BuildsParameters params) {
+        params.buildParameters(this, false);
+        return this;
+    }
+    /**
+     * Visit a {@link BuildsParameters} and add the parameters
+     */
+    public ApiPathBuilder field(BuildsParameters params) {
+        params.buildParameters(this, true);
+        return this;
+    }
+    /**
      * Append the given parameter (key and value). This will only append the parameter if it is not blank (null, empty
      * or whitespace), and make sure to add the right separator ("?" or "&") before. The key and value will be separated
      * by the "=" character. Also, the value will be url-encoded.
-     * 
+     *
      * @param key of the parameter. Must not be null or empty
      * @param value of the parameter. May be null/empty/blank. Will be url-encoded.
      * @return this, for method chaining
@@ -142,7 +155,7 @@ class ApiPathBuilder {
      * Append the given parameter (key and value). This will only append the parameter if it is not null, and make sure
      * to add the right separator ("?" or "&") before. The key and value will be separated by the "=" character. Also,
      * the value will be converted to lower-case.
-     * 
+     *
      * @param key of the parameter. Must not be null or empty
      * @param value of the parameter. May be null
      * @return this, for method chaining
@@ -157,7 +170,7 @@ class ApiPathBuilder {
     /**
      * Append the given parameter (key and value). This will only append the parameter if it is not null, and make sure
      * to add the right separator ("?" or "&") before. The key and value will be separated by the "=" character.
-     * 
+     *
      * @param key of the parameter. Must not be null or empty
      * @param value of the parameter. May be null
      * @return this, for method chaining
@@ -172,7 +185,7 @@ class ApiPathBuilder {
     /**
      * Append the given parameter (key and value). This will only append the parameter if it is not null, and make sure
      * to add the right separator ("?" or "&") before. The key and value will be separated by the "=" character.
-     * 
+     *
      * @param key of the parameter. Must not be null or empty
      * @param value of the parameter. May be null
      * @return this, for method chaining
@@ -187,7 +200,7 @@ class ApiPathBuilder {
     /**
      * Append the given parameter (key and value). This will only append the parameter if it is not null, and make sure
      * to add the right separator ("?" or "&") before. The key and value will be separated by the "=" character.
-     * 
+     *
      * @param key of the parameter. Must not be null or empty
      * @param value of the parameter. May be null
      * @return this, for method chaining
@@ -202,7 +215,7 @@ class ApiPathBuilder {
     /**
      * Append the given parameter (key and value). This will only append the parameter if it is not null, and make sure
      * to add the right separator ("?" or "&") before. The key and value will be separated by the "=" character.
-     * 
+     *
      * @param key of the parameter. Must not be null or empty
      * @param value of the parameter. May be null
      * @return this, for method chaining
@@ -216,7 +229,7 @@ class ApiPathBuilder {
 
     /**
      * Append the given node filters, only if it is not null/empty
-     * 
+     *
      * @param nodeFilters may be null/empty
      * @return this, for method chaining
      * @see ParametersUtil#generateNodeFiltersString(Properties)
@@ -233,7 +246,7 @@ class ApiPathBuilder {
     /**
      * When POSTing a request, add the given {@link InputStream} as an attachment to the content of the request. This
      * will only add the stream if it is not null.
-     * 
+     *
      * @param name of the attachment. Must not be null or empty
      * @param stream. May be null
      * @return this, for method chaining
@@ -259,7 +272,7 @@ class ApiPathBuilder {
 
     /**
      * Append the given string
-     * 
+     *
      * @param str to append
      */
     private void append(String str) {
@@ -290,5 +303,20 @@ class ApiPathBuilder {
      */
     public boolean hasPostContent() {
         return getAttachments().size() > 0 || getForm().size() > 0;
+    }
+
+    /**
+     * BuildsParameters can add URL or POST parameters to an {@link ApiPathBuilder}
+     *
+     * @author Greg Schueler <a href="mailto:greg@dtosolutions.com">greg@dtosolutions.com</a>
+     */
+    public static interface BuildsParameters {
+        /**
+         * Add the parameters or form fields to the ApiPathBuilder
+         *
+         * @param builder the builder
+         * @param doPost  if true, use form fields, otherwise use query parameters
+         */
+        public boolean buildParameters(ApiPathBuilder builder, boolean doPost);
     }
 }
