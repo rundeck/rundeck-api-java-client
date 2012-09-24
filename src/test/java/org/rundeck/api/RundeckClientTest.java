@@ -140,6 +140,27 @@ public class RundeckClientTest {
                                                                     2L,
                                                                     0L);
         Assert.assertEquals(2, jobTest.size());
+        final List<RundeckExecution> jobExactTest = client.getExecutions(ExecutionQuery.builder()
+                                                                             .project(projectName)
+                                                                             .jobExact("test job")
+                                                                             .build(),
+                                                                         2L,
+                                                                         0L);
+        Assert.assertEquals(2, jobExactTest.size());
+        final List<RundeckExecution> excludeJobTest = client.getExecutions(ExecutionQuery.builder()
+                                                                        .project(projectName)
+                                                                        .excludeJob("test job")
+                                                                        .build(),
+                                                                    2L,
+                                                                    0L);
+        Assert.assertEquals(2, excludeJobTest.size());
+        final List<RundeckExecution> excludeJobExactTest = client.getExecutions(ExecutionQuery.builder()
+                                                                             .project(projectName)
+                                                                             .excludeJobExact("test job")
+                                                                             .build(),
+                                                                         2L,
+                                                                         0L);
+        Assert.assertEquals(2, excludeJobExactTest.size());
         final List<RundeckExecution> descriptionTest = client.getExecutions(ExecutionQuery.builder()
                                                                                 .project(projectName)
                                                                                 .description("a description")
@@ -199,13 +220,19 @@ public class RundeckClientTest {
                                                                                    .groupPathExact("fruit")
                                                                                    .build(), 2L, 0L);
         Assert.assertEquals(2, groupPathExactTest.size());
-        final List<RundeckExecution> jobExactTest = client.getExecutions(ExecutionQuery.builder()
-                                                                             .project(projectName)
-                                                                             .jobExact("test job")
-                                                                             .build(),
-                                                                         2L,
-                                                                         0L);
-        Assert.assertEquals(2, jobExactTest.size());
+
+        final List<RundeckExecution> excludeGroupPathTest = client.getExecutions(ExecutionQuery.builder()
+                                                                              .project(projectName)
+                                                                              .excludeGroupPath("fruit")
+                                                                              .build(),
+                                                                          2L,
+                                                                          0L);
+        Assert.assertEquals(2, excludeGroupPathTest.size());
+        final List<RundeckExecution> excliudeGroupPathExactTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                   .project(projectName)
+                                                                                   .excludeGroupPathExact("fruit")
+                                                                                   .build(), 2L, 0L);
+        Assert.assertEquals(2, excliudeGroupPathExactTest.size());
 
         final List<RundeckExecution> recentTest = client.getExecutions(ExecutionQuery.builder()
                                                                            .project(projectName)

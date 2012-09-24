@@ -46,9 +46,13 @@ class ExecutionQueryParameters extends QueryParameterBuilder {
 
         seen |= visit("jobFilter", query.getJob(), doPost, builder);
         seen |= visit("jobExactFilter", query.getJobExact(), doPost, builder);
+        seen |= visit("excludeJobFilter", query.getExcludeJob(), doPost, builder);
+        seen |= visit("excludeJobExactFilter", query.getExcludeJobExact(), doPost, builder);
         seen |= visit("project", query.getProject(), doPost, builder);
         seen |= visit("groupPath", query.getGroupPath(), doPost, builder);
         seen |= visit("groupPathExact", query.getGroupPathExact(), doPost, builder);
+        seen |= visit("excludeGroupPath", query.getExcludeGroupPath(), doPost, builder);
+        seen |= visit("excludeGroupPathExact", query.getExcludeGroupPathExact(), doPost, builder);
         seen |= visit("descFilter", query.getDescription(), doPost, builder);
         seen |= visit("userFilter", query.getUser(), doPost, builder);
         if(null!=query.getAdhoc()){

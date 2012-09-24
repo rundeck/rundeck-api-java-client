@@ -48,9 +48,13 @@ public class ExecutionQuery  {
     private String recent;
     private String job;
     private String jobExact;
+    private String excludeJob;
+    private String excludeJobExact;
     private String project;
     private String groupPath;
     private String groupPathExact;
+    private String excludeGroupPath;
+    private String excludeGroupPathExact;
     private String user;
     private String description;
     private Boolean adhoc;
@@ -70,9 +74,13 @@ public class ExecutionQuery  {
         this.recent = query.getRecent();
         this.job = query.getJob();
         this.jobExact = query.getJobExact();
+        this.excludeJob = query.getExcludeJob();
+        this.excludeJobExact = query.getExcludeJobExact();
         this.project = query.getProject();
         this.groupPath = query.getGroupPath();
         this.groupPathExact = query.getGroupPathExact();
+        this.excludeGroupPath = query.getExcludeGroupPath();
+        this.excludeGroupPathExact = query.getExcludeGroupPathExact();
         this.description = query.getDescription();
         this.user = query.getUser();
         this.adhoc = query.getAdhoc();
@@ -87,8 +95,12 @@ public class ExecutionQuery  {
                !StringUtils.isBlank(recent) ||
                !StringUtils.isBlank(job) ||
                !StringUtils.isBlank(jobExact) ||
+               !StringUtils.isBlank(excludeJob) ||
+               !StringUtils.isBlank(excludeJobExact) ||
                !StringUtils.isBlank(groupPath) ||
                !StringUtils.isBlank(groupPathExact) ||
+               !StringUtils.isBlank(excludeGroupPath) ||
+               !StringUtils.isBlank(excludeGroupPathExact) ||
                !StringUtils.isBlank(description) ||
                //boolean
                (null!=adhoc) ||
@@ -176,6 +188,22 @@ public class ExecutionQuery  {
 
     public Boolean getAdhoc() {
         return adhoc;
+    }
+
+    public String getExcludeJob() {
+        return excludeJob;
+    }
+
+    public String getExcludeJobExact() {
+        return excludeJobExact;
+    }
+
+    public String getExcludeGroupPath() {
+        return excludeGroupPath;
+    }
+
+    public String getExcludeGroupPathExact() {
+        return excludeGroupPathExact;
     }
 
 
@@ -276,6 +304,21 @@ public class ExecutionQuery  {
             query.jobExact = exact;
             return this;
         }
+        /**
+         * Job name filter to exclude, which can match any part of the name
+         */
+        public Builder excludeJob(String job) {
+            query.excludeJob = job;
+            return this;
+        }
+
+        /**
+         * Job exact name filter to exclude, much match exactly
+         */
+        public Builder excludeJobExact(String exact) {
+            query.excludeJobExact = exact;
+            return this;
+        }
 
         /**
          * Project name
@@ -294,10 +337,25 @@ public class ExecutionQuery  {
         }
 
         /**
-         * Exact group path match
+         * Exact group path to include
          */
         public Builder groupPathExact(String exact) {
             query.groupPathExact = exact;
+            return this;
+        }
+        /**
+         * Group path or super path, which will exclude any jobs within the subtree.
+         */
+        public Builder excludeGroupPath(String excludeGroupPath) {
+            query.excludeGroupPath = excludeGroupPath;
+            return this;
+        }
+
+        /**
+         * Exact group path to exclude
+         */
+        public Builder excludeGroupPathExact(String excludeGroupPathExact) {
+            query.excludeGroupPathExact = excludeGroupPathExact;
             return this;
         }
 
