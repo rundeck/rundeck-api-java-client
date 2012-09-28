@@ -41,19 +41,10 @@ import org.rundeck.api.domain.RundeckProject;
 import org.rundeck.api.domain.RundeckSystemInfo;
 import org.rundeck.api.domain.RundeckExecution.ExecutionStatus;
 import org.rundeck.api.domain.RundeckOutput;
-import org.rundeck.api.parser.AbortParser;
-import org.rundeck.api.parser.ExecutionParser;
-import org.rundeck.api.parser.HistoryParser;
-import org.rundeck.api.parser.JobParser;
-import org.rundeck.api.parser.JobsImportResultParser;
-import org.rundeck.api.parser.ListParser;
-import org.rundeck.api.parser.NodeParser;
-import org.rundeck.api.parser.ProjectParser;
-import org.rundeck.api.parser.StringParser;
-import org.rundeck.api.parser.SystemInfoParser;
-import org.rundeck.api.parser.OutputParser;
+import org.rundeck.api.parser.*;
 import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.AssertUtil;
+import org.rundeck.api.util.PagedResults;
 import org.rundeck.api.util.ParametersUtil;
 
 /**
@@ -2027,18 +2018,21 @@ public class RundeckClient implements Serializable {
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
      */
-    public List<RundeckExecution> getExecutions(ExecutionQuery query, Long max, Long offset)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        if(!query.notBlank()){
+    public PagedResults<RundeckExecution> getExecutions(ExecutionQuery query, Long max, Long offset)
+        throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        if (!query.notBlank()) {
             throw new IllegalArgumentException("Some execution query parameter must be set");
         }
-        AssertUtil.notBlank(query.getProject(),"project is required for execution query");
+        AssertUtil.notBlank(query.getProject(), "project is required for execution query");
         return new ApiCall(this).get(new ApiPathBuilder("/executions")
                                          .param(new ExecutionQueryParameters(query))
                                          .param("max", max)
                                          .param("offset", offset),
-                                     new ListParser<RundeckExecution>(new ExecutionParser(),
-                                                                      "result/executions/execution"));
+                                     new PagedResultParser<RundeckExecution>(
+                                         new ListParser<RundeckExecution>(new ExecutionParser(), "execution"),
+                                         "result/executions"
+                                     )
+        );
     }
 
     /**
