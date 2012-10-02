@@ -29,6 +29,8 @@ import org.junit.Test;
 import org.rundeck.api.domain.RundeckEvent;
 import org.rundeck.api.domain.RundeckExecution;
 import org.rundeck.api.domain.RundeckHistory;
+import org.rundeck.api.domain.RundeckJobDelete;
+import org.rundeck.api.domain.RundeckJobDeleteBulk;
 import org.rundeck.api.domain.RundeckProject;
 import betamax.Betamax;
 import betamax.Recorder;
@@ -284,6 +286,60 @@ public class RundeckClientTest {
                                                                                   .build(), 1L, 2L);
         //invalid value for count
         assertPageResults(test3, 2, -1, -1, -1, -1);
+    }
+    @Test
+    @Betamax(tape = "bulk_delete")
+    public void bulkDelete() throws Exception {
+        RundeckClient client = new RundeckClient("http://rundeck.local:4440", "PP4s4SdCRO6KUoNPd1D303Dc304ORN87");
+
+        final RundeckJobDeleteBulk deleteTest
+            = client.deleteJobs(Arrays.asList("0ce457b5-ba84-41ca-812e-02b31da355a4"));
+        Assert.assertTrue(deleteTest.isAllsuccessful());
+        Assert.assertEquals(1, deleteTest.getRequestCount());
+        Assert.assertEquals(1, deleteTest.getResults().size());
+
+        final RundeckJobDelete delete = deleteTest.getResults().get(0);
+        Assert.assertTrue(delete.isSuccessful());
+        Assert.assertNull(delete.getError());
+        Assert.assertNull(delete.getErrorCode());
+        Assert.assertNotNull(delete.getMessage());
+        Assert.assertEquals("0ce457b5-ba84-41ca-812e-02b31da355a4", delete.getId());
+    }
+    @Test
+    @Betamax(tape = "bulk_delete_dne")
+    public void bulkDeleteFailDNE() throws Exception {
+        RundeckClient client = new RundeckClient("http://rundeck.local:4440", "PP4s4SdCRO6KUoNPd1D303Dc304ORN87");
+
+        final RundeckJobDeleteBulk deleteTest
+            = client.deleteJobs(Arrays.asList("does-not-exist"));
+        Assert.assertFalse(deleteTest.isAllsuccessful());
+        Assert.assertEquals(1, deleteTest.getRequestCount());
+        Assert.assertEquals(1, deleteTest.getResults().size());
+
+        final RundeckJobDelete delete = deleteTest.getResults().get(0);
+        Assert.assertFalse(delete.isSuccessful());
+        Assert.assertNotNull(delete.getError());
+        Assert.assertEquals("notfound",delete.getErrorCode());
+        Assert.assertNull(delete.getMessage());
+        Assert.assertEquals("does-not-exist", delete.getId());
+    }
+    @Test
+    @Betamax(tape = "bulk_delete_unauthorized")
+    public void bulkDeleteFailUnauthorized() throws Exception {
+        RundeckClient client = new RundeckClient("http://rundeck.local:4440", "PP4s4SdCRO6KUoNPd1D303Dc304ORN87");
+
+        final RundeckJobDeleteBulk deleteTest
+            = client.deleteJobs(Arrays.asList("3a6d16be-4268-4d26-86a9-cebc1781f768"));
+        Assert.assertFalse(deleteTest.isAllsuccessful());
+        Assert.assertEquals(1, deleteTest.getRequestCount());
+        Assert.assertEquals(1, deleteTest.getResults().size());
+
+        final RundeckJobDelete delete = deleteTest.getResults().get(0);
+        Assert.assertFalse(delete.isSuccessful());
+        Assert.assertNotNull(delete.getError());
+        Assert.assertEquals("unauthorized",delete.getErrorCode());
+        Assert.assertNull(delete.getMessage());
+        Assert.assertEquals("3a6d16be-4268-4d26-86a9-cebc1781f768", delete.getId());
     }
 
     private void assertPageResults(PagedResults<RundeckExecution> jobTest,

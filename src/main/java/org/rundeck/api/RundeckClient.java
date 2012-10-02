@@ -30,17 +30,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.rundeck.api.RundeckApiException.RundeckApiLoginException;
 import org.rundeck.api.RundeckApiException.RundeckApiTokenException;
-import org.rundeck.api.domain.RundeckAbort;
-import org.rundeck.api.domain.RundeckExecution;
-import org.rundeck.api.domain.RundeckHistory;
-import org.rundeck.api.domain.RundeckJob;
-import org.rundeck.api.domain.RundeckJobsImportMethod;
-import org.rundeck.api.domain.RundeckJobsImportResult;
-import org.rundeck.api.domain.RundeckNode;
-import org.rundeck.api.domain.RundeckProject;
-import org.rundeck.api.domain.RundeckSystemInfo;
+import org.rundeck.api.domain.*;
 import org.rundeck.api.domain.RundeckExecution.ExecutionStatus;
-import org.rundeck.api.domain.RundeckOutput;
 import org.rundeck.api.parser.*;
 import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.AssertUtil;
@@ -785,6 +776,24 @@ public class RundeckClient implements Serializable {
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(jobId, "jobId is mandatory to delete a job !");
         return new ApiCall(this).delete(new ApiPathBuilder("/job/", jobId), new StringParser("result/success/message"));
+    }
+    /**
+     * Delete multiple jobs, identified by the given IDs
+     *
+     * @param jobIds List of job IDS
+     * @return the bulk delete result
+     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckJobDeleteBulk deleteJobs(final List<String> jobIds) throws RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+        if (null == jobIds || 0 == jobIds.size()) {
+            throw new IllegalArgumentException("jobIds are mandatory to delete a job");
+        }
+        return new ApiCall(this).post(new ApiPathBuilder("/jobs/delete").field("ids",jobIds),
+                                        new BulkDeleteParser("result/deleteJobs"));
     }
 
     /**

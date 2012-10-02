@@ -1,0 +1,20 @@
+<result success='true' apiversion='5'>
+    <deleteJobs requestCount="14" allsuccessful="false">
+        <succeeded>
+            <deleteJobResult id="test1">
+                <message>Success</message>
+            </deleteJobResult>
+        </succeeded>
+        <failed>
+            <deleteJobResult id="test2" errorCode="failed">
+                <error>Failed</error>
+            </deleteJobResult>
+            <deleteJobResult id="test3" errorCode="unauthorized">
+                <error>Unauthorized</error>
+            </deleteJobResult>
+            <deleteJobResult id="test4" errorCode="notfound">
+                <error>Not found</error>
+            </deleteJobResult>
+        </failed>
+    </deleteJobs>
+</result>

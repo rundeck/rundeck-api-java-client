@@ -1,0 +1,23 @@
+!tape
+name: bulk_delete_dne
+interactions:
+- recorded: 2012-10-02T21:50:29.756Z
+  request:
+    method: POST
+    uri: http://rundeck.local:4440/api/5/jobs/delete
+    headers:
+      Content-Length: '18'
+      Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: PP4s4SdCRO6KUoNPd1D303Dc304ORN87
+    body: ''
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=lhr88kmfxmeg;Path=/
+    body: '<result success=''true'' apiversion=''5''><deleteJobs requestCount=''1'' allsuccessful=''false''><failed count=''1''><deleteJobResult id=''does-not-exist'' errorCode=''notfound''><error>Job ID does not exist: does-not-exist</error></deleteJobResult></failed></deleteJobs></result>'

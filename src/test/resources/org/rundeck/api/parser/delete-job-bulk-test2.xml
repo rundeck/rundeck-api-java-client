@@ -1,0 +1,12 @@
+<result success='true' apiversion='5'>
+    <deleteJobs requestCount="2" allsuccessful="true">
+        <succeeded>
+            <deleteJobResult id="test1">
+                <message>Success</message>
+            </deleteJobResult>
+            <deleteJobResult id="test2">
+                <message>Success</message>
+            </deleteJobResult>
+        </succeeded>
+    </deleteJobs>
+</result>
