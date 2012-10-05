@@ -57,6 +57,7 @@ public class ExecutionParser implements XmlNodeParser<RundeckExecution> {
             execution.setStatus(null);
         }
         execution.setDescription(StringUtils.trimToNull(execNode.valueOf("description")));
+        execution.setArgstring(StringUtils.trimToNull(execNode.valueOf("argstring")));
         execution.setStartedBy(StringUtils.trimToNull(execNode.valueOf("user")));
         execution.setAbortedBy(StringUtils.trimToNull(execNode.valueOf("abortedby")));
         String startedAt = StringUtils.trimToNull(execNode.valueOf("date-started/@unixtime"));

@@ -50,6 +50,7 @@ public class RundeckExecution implements Serializable {
     private String abortedBy;
 
     private String description;
+    private String argstring;
 
     /**
      * @return the duration of the execution in milliseconds (or null if the duration is still running, or has been
@@ -170,6 +171,7 @@ public class RundeckExecution implements Serializable {
     @Override
     public String toString() {
         return "RundeckExecution [id=" + id + ", description=" + description + ", url=" + url + ", status=" + status
+               + ", argstring=" + argstring
                + ", startedBy=" + startedBy + ", startedAt=" + startedAt + ", endedAt=" + endedAt
                + ", durationInSeconds=" + getDurationInSeconds() + ", abortedBy=" + abortedBy + ", job=" + job + "]";
     }
@@ -179,6 +181,7 @@ public class RundeckExecution implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((abortedBy == null) ? 0 : abortedBy.hashCode());
+        result = prime * result + ((argstring == null) ? 0 : argstring.hashCode());
         result = prime * result + ((description == null) ? 0 : description.hashCode());
         result = prime * result + ((endedAt == null) ? 0 : endedAt.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -203,6 +206,11 @@ public class RundeckExecution implements Serializable {
             if (other.abortedBy != null)
                 return false;
         } else if (!abortedBy.equals(other.abortedBy))
+            return false;
+        if (argstring == null) {
+            if (other.argstring != null)
+                return false;
+        } else if (!argstring.equals(other.argstring))
             return false;
         if (description == null) {
             if (other.description != null)
@@ -245,6 +253,17 @@ public class RundeckExecution implements Serializable {
         } else if (!url.equals(other.url))
             return false;
         return true;
+    }
+
+    /**
+     * the argument string for the execution
+     */
+    public String getArgstring() {
+        return argstring;
+    }
+
+    public void setArgstring(String argstring) {
+        this.argstring = argstring;
     }
 
     /**

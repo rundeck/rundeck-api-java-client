@@ -49,6 +49,7 @@ public class ExecutionParserTest {
         Assert.assertEquals(null, execution.getDuration());
         Assert.assertEquals(null, execution.getAbortedBy());
         Assert.assertEquals("ls ${option.dir}", execution.getDescription());
+        Assert.assertEquals("-arg1 value -arg2 value", execution.getArgstring());
 
         Assert.assertEquals("1", job.getId());
         Assert.assertEquals("ls", job.getName());
@@ -75,6 +76,7 @@ public class ExecutionParserTest {
         Assert.assertEquals("1 minute 4 seconds", execution.getDuration());
         Assert.assertEquals(null, execution.getAbortedBy());
         Assert.assertEquals("ls ${option.dir}", execution.getDescription());
+        Assert.assertEquals("-argA some -argB thing", execution.getArgstring());
 
         Assert.assertEquals("1", job.getId());
         Assert.assertEquals("ls", job.getName());
@@ -101,6 +103,7 @@ public class ExecutionParserTest {
         Assert.assertEquals("0 seconds", execution.getDuration());
         Assert.assertEquals(null, execution.getAbortedBy());
         Assert.assertEquals("w", execution.getDescription());
+        Assert.assertEquals("-monkey true", execution.getArgstring());
 
         Assert.assertNull(job);
     }
@@ -123,6 +126,7 @@ public class ExecutionParserTest {
         Assert.assertNull(execution.getDuration());
         Assert.assertNull(execution.getAbortedBy());
         Assert.assertNull(execution.getDescription());
+        Assert.assertNull(execution.getArgstring());
 
         Assert.assertNull(job);
     }
