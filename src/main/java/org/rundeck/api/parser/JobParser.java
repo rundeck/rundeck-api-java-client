@@ -58,6 +58,11 @@ public class JobParser implements XmlNodeParser<RundeckJob> {
         }
         job.setId(jobId);
 
+        String averageDuration = StringUtils.trimToNull(jobNode.valueOf("@averageDuration"));
+        if (averageDuration != null) {
+            job.setAverageDuration(Long.valueOf(averageDuration));
+        }
+
         // project is either a nested element of context, or just a child element
         Node contextNode = jobNode.selectSingleNode("context");
         if (contextNode != null) {

@@ -37,6 +37,8 @@ public class RundeckJob implements Serializable {
 
     private String description;
 
+    private long averageDuration = -1L;
+
     /**
      * @return the fullname : group + name (exact format is : "group/name")
      */
@@ -92,7 +94,7 @@ public class RundeckJob implements Serializable {
     @Override
     public String toString() {
         return "RundeckJob [id=" + id + ", name=" + name + ", group=" + group + ", project=" + project
-               + ", description=" + description + "]";
+               + ", description=" + description + ", averageDuration="+averageDuration+"]";
     }
 
     @Override
@@ -104,6 +106,7 @@ public class RundeckJob implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((project == null) ? 0 : project.hashCode());
+        result = prime * result + (int) (averageDuration ^ (averageDuration >>> 32));
         return result;
     }
 
@@ -141,7 +144,18 @@ public class RundeckJob implements Serializable {
                 return false;
         } else if (!project.equals(other.project))
             return false;
+        if (averageDuration != other.averageDuration) {
+            return false;
+        }
         return true;
     }
 
+
+    public long getAverageDuration() {
+        return averageDuration;
+    }
+
+    public void setAverageDuration(long averageDuration) {
+        this.averageDuration = averageDuration;
+    }
 }

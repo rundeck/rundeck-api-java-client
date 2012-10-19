@@ -42,4 +42,33 @@ public class JobParserTest {
         Assert.assertEquals("project-name", job.getProject());
     }
 
+    @Test
+    public void parseExecutionJob1() throws Exception {
+        InputStream input = getClass().getResourceAsStream("execution-running.xml");
+        Document document = ParserHelper.loadDocument(input);
+
+        RundeckJob job = new JobParser("result/executions/execution/job").parseXmlNode(document);
+
+        Assert.assertEquals("1", job.getId());
+        Assert.assertEquals("ls", job.getName());
+        Assert.assertEquals("list files", job.getDescription());
+        Assert.assertEquals("system", job.getGroup());
+        Assert.assertEquals("test", job.getProject());
+        Assert.assertEquals(10000L, job.getAverageDuration());
+    }
+    @Test
+    public void parseExecutionJob2() throws Exception {
+        InputStream input = getClass().getResourceAsStream("execution-succeeded.xml");
+        Document document = ParserHelper.loadDocument(input);
+
+        RundeckJob job = new JobParser("result/executions/execution/job").parseXmlNode(document);
+
+        Assert.assertEquals("1", job.getId());
+        Assert.assertEquals("ls", job.getName());
+        Assert.assertEquals("list files", job.getDescription());
+        Assert.assertEquals("system", job.getGroup());
+        Assert.assertEquals("test", job.getProject());
+        Assert.assertEquals(-1, job.getAverageDuration());
+    }
+
 }
