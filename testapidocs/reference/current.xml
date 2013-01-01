@@ -17,6 +17,123 @@
  visibility="public"
 >
 </constructor>
+<method name="bulkDelete"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="bulkDeleteFailDNE"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="bulkDeleteFailUnauthorized"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="getExecutions"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="getExecutionsPaging"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="getHistory"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="getHistoryExcludeJoblist"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="getHistoryJoblist"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="getHistoryUser"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
 <method name="getProjects"
  return="void"
  abstract="false"
@@ -87,6 +204,118 @@
 </exception>
 </method>
 <method name="parsePendingAbort"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+</class>
+<class name="BulkDeleteParserTest"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="BulkDeleteParserTest"
+ type="org.rundeck.api.parser.BulkDeleteParserTest"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="bulkParser"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="bulkParserAllsuccessful"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+</class>
+<class name="DeleteParserTest"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="DeleteParserTest"
+ type="org.rundeck.api.parser.DeleteParserTest"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="failedResult1"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="failedResult2"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="failedResult3"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="successfulResult"
  return="void"
  abstract="false"
  native="false"
@@ -258,6 +487,32 @@
  visibility="public"
 >
 </constructor>
+<method name="parseExecutionJob1"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="parseExecutionJob2"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
 <method name="parseJob"
  return="void"
  abstract="false"

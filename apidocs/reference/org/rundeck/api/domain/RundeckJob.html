@@ -149,6 +149,8 @@
     <li class="api apilevel-">
   <a href="../../../../org/rundeck/api/parser/package-summary.html">org.rundeck.api.parser</a></li>
     <li class="api apilevel-">
+  <a href="../../../../org/rundeck/api/query/package-summary.html">org.rundeck.api.query</a></li>
+    <li class="api apilevel-">
   <a href="../../../../org/rundeck/api/util/package-summary.html">org.rundeck.api.util</a></li>
               </ul><br/>
             </div> <!-- end packages -->
@@ -165,8 +167,12 @@
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckHistory.html">RundeckHistory</a></li>
           <li class="selected api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJob.html">RundeckJob</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobDelete.html">RundeckJobDelete</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobDeleteBulk.html">RundeckJobDeleteBulk</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobsImportResult.html">RundeckJobsImportResult</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckNode.html">RundeckNode</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckOutput.html">RundeckOutput</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html">RundeckOutputEntry</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckSystemInfo.html">RundeckSystemInfo</a></li>
       </ul>
@@ -179,6 +185,7 @@
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckEvent.EventStatus.html">RundeckEvent.EventStatus</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckExecution.ExecutionStatus.html">RundeckExecution.ExecutionStatus</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobsImportMethod.html">RundeckJobsImportMethod</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.RundeckLogLevel.html">RundeckOutputEntry.RundeckLogLevel</a></li>
       </ul>
     </li>
               
@@ -441,6 +448,22 @@ Summary:
             
             
             
+            long</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckJob.html#getAverageDuration()">getAverageDuration</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
             <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
@@ -450,7 +473,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -466,7 +489,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -482,7 +505,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -498,7 +521,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -514,7 +537,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -530,7 +553,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -541,6 +564,22 @@ Summary:
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckJob.html#hashCode()">hashCode</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckJob.html#setAverageDuration(long)">setAverageDuration</a></span>(long averageDuration)</nobr>
         
   </td></tr>
 
@@ -970,6 +1009,37 @@ From class
 </div>
 
 
+<A NAME="getAverageDuration()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        long
+      </span>
+      <span class="sympad">getAverageDuration</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
 <A NAME="getDescription()"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -1175,6 +1245,37 @@ From class
       </span>
       <span class="sympad">hashCode</span>
       <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setAverageDuration(long)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setAverageDuration</span>
+      <span class="normal">(long averageDuration)</span>
     </h4>
       <div class="api-level">
         <div>

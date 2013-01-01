@@ -13,331 +13,15 @@ javadoc proofread file: ./proof-read.txt
         Internal parsers for parsing the RunDeck responses.
 
 
+=== reference/org/rundeck/api/query/package-descr.html ===
+
+
 === reference/org/rundeck/api/util/package-descr.html ===
         Some utility classes.
 
 
 === reference/packages.html ===
         <p>See the documentation of the <a href="org/rundeck/api/RundeckClient.html">RundeckClient</a> class (main entry point of the API).</p>
-
-
-=== org/rundeck/api/domain/RundeckJobsImportResult.html ===
-        Result of importing some jobs into RunDeck
-CONSTRUCTOR: RundeckJobsImportResult
-METHOD: addFailedJob
-METHOD: addSkippedJob
-METHOD: addSucceededJob
-METHOD: equals
-METHOD: getFailedJobs
-METHOD: getSkippedJobs
-METHOD: getSucceededJobs
-METHOD: hashCode
-METHOD: toString
-
-
-=== org/rundeck/api/domain/RundeckAbort.html ===
-        Represents an abort of a
-        {@link ... RundeckExecution}
-CONSTRUCTOR: RundeckAbort
-METHOD: equals
-METHOD: getExecution
-METHOD: getStatus
-METHOD: hashCode
-METHOD: setExecution
-METHOD: setStatus
-METHOD: toString
-
-
-=== org/rundeck/api/domain/RundeckAbort.AbortStatus.html ===
-        The status of an abort
-ENUM: ABORTED
-ENUM: FAILED
-ENUM: PENDING
-METHOD: valueOf
-METHOD: values
-
-
-=== org/rundeck/api/domain/RundeckProject.html ===
-        Represents a RunDeck project
-CONSTRUCTOR: RundeckProject
-METHOD: equals
-METHOD: getDescription
-METHOD: getName
-METHOD: getResourceModelProviderUrl
-METHOD: hashCode
-METHOD: setDescription
-METHOD: setName
-METHOD: setResourceModelProviderUrl
-METHOD: toString
-
-
-=== org/rundeck/api/domain/RundeckNode.html ===
-        Represents a RunDeck node (server on which RunDeck can execute jobs and commands)
-CONSTRUCTOR: RundeckNode
-METHOD: equals
-METHOD: getDescription
-METHOD: getEditUrl
-METHOD: getHostname
-METHOD: getName
-METHOD: getOsArch
-METHOD: getOsFamily
-METHOD: getOsName
-METHOD: getOsVersion
-METHOD: getRemoteUrl
-METHOD: getTags
-METHOD: getType
-METHOD: getUsername
-METHOD: hashCode
-METHOD: setDescription
-METHOD: setEditUrl
-METHOD: setHostname
-METHOD: setName
-METHOD: setOsArch
-METHOD: setOsFamily
-METHOD: setOsName
-METHOD: setOsVersion
-METHOD: setRemoteUrl
-METHOD: setTags
-METHOD: setType
-METHOD: setUsername
-METHOD: toString
-
-
-=== org/rundeck/api/domain/RundeckHistory.html ===
-        Represents a portion of the RunDeck (events) history
-CONSTRUCTOR: RundeckHistory
-METHOD: addEvent
-METHOD: equals
-METHOD: getCount
-METHOD: getEvents
-METHOD: getMax
-METHOD: getOffset
-METHOD: getTotal
-METHOD: hashCode
-METHOD: setCount
-METHOD: setEvents
-METHOD: setMax
-METHOD: setOffset
-METHOD: setTotal
-METHOD: toString
-
-
-=== org/rundeck/api/domain/RundeckEvent.html ===
-        Represents a RunDeck event
-CONSTRUCTOR: RundeckEvent
-METHOD: equals
-METHOD: getAbortedBy
-METHOD: getDuration
-METHOD: getDurationInMillis
-METHOD: getDurationInSeconds
-METHOD: getEndedAt
-METHOD: getExecutionId
-METHOD: getJobId
-METHOD: getNodeSummary
-METHOD: getProject
-METHOD: getShortDuration
-METHOD: getStartedAt
-METHOD: getStatus
-METHOD: getSummary
-METHOD: getTitle
-METHOD: getUser
-METHOD: hashCode
-METHOD: isAdhoc
-METHOD: setAbortedBy
-METHOD: setEndedAt
-METHOD: setExecutionId
-METHOD: setJobId
-METHOD: setNodeSummary
-METHOD: setProject
-METHOD: setStartedAt
-METHOD: setStatus
-METHOD: setSummary
-METHOD: setTitle
-METHOD: setUser
-METHOD: toString
-
-
-=== org/rundeck/api/domain/RundeckEvent.NodeSummary.html ===
-        Summary for nodes
-CONSTRUCTOR: RundeckEvent.NodeSummary
-METHOD: equals
-METHOD: getFailed
-METHOD: getSucceeded
-METHOD: getTotal
-METHOD: hashCode
-METHOD: setFailed
-METHOD: setSucceeded
-METHOD: setTotal
-METHOD: toString
-
-
-=== org/rundeck/api/domain/RundeckEvent.EventStatus.html ===
-        The status of an event
-ENUM: ABORTED
-ENUM: FAILED
-ENUM: SUCCEEDED
-METHOD: valueOf
-METHOD: values
-
-
-=== org/rundeck/api/domain/RundeckSystemInfo.html ===
-        Represents the RunDeck system info
-CONSTRUCTOR: RundeckSystemInfo
-METHOD: equals
-METHOD: getActiveThreads
-METHOD: getBaseDir
-METHOD: getBuild
-METHOD: getCpuLoadAverage
-METHOD: getDate
-METHOD: getFreeMemoryInBytes
-METHOD: getJvmName
-METHOD: getJvmVendor
-METHOD: getJvmVersion
-METHOD: getMaxMemoryInBytes
-METHOD: getNode
-METHOD: getOsArch
-METHOD: getOsName
-METHOD: getOsVersion
-METHOD: getRunningJobs
-METHOD: getStartDate
-METHOD: getTotalMemoryInBytes
-METHOD: getUptime
-METHOD: getUptimeInMillis
-METHOD: getVersion
-METHOD: hashCode
-METHOD: setActiveThreads
-METHOD: setBaseDir
-METHOD: setBuild
-METHOD: setCpuLoadAverage
-METHOD: setDate
-METHOD: setFreeMemoryInBytes
-METHOD: setJvmName
-METHOD: setJvmVendor
-METHOD: setJvmVersion
-METHOD: setMaxMemoryInBytes
-METHOD: setNode
-METHOD: setOsArch
-METHOD: setOsName
-METHOD: setOsVersion
-METHOD: setRunningJobs
-METHOD: setStartDate
-METHOD: setTotalMemoryInBytes
-METHOD: setUptimeInMillis
-METHOD: setVersion
-METHOD: toString
-
-
-=== org/rundeck/api/domain/RundeckJob.html ===
-        Represents a RunDeck job
-CONSTRUCTOR: RundeckJob
-METHOD: equals
-METHOD: getDescription
-METHOD: getFullName
-METHOD: getGroup
-METHOD: getId
-METHOD: getName
-METHOD: getProject
-METHOD: hashCode
-METHOD: setDescription
-METHOD: setGroup
-METHOD: setId
-METHOD: setName
-METHOD: setProject
-METHOD: toString
-
-
-=== org/rundeck/api/domain/RundeckJobsImportMethod.html ===
-        The behavior when importing jobs (which may already exist).
-ENUM: CREATE
-ENUM: SKIP
-ENUM: UPDATE
-METHOD: valueOf
-METHOD: values
-
-
-=== org/rundeck/api/domain/RundeckExecution.html ===
-        Represents a RunDeck execution, usually triggered by an API call. An execution could be a
-        {@link ... RundeckJob}
-        execution or an "ad-hoc" execution.
-CONSTRUCTOR: RundeckExecution
-METHOD: equals
-METHOD: getAbortedBy
-METHOD: getDescription
-METHOD: getDuration
-METHOD: getDurationInMillis
-METHOD: getDurationInSeconds
-METHOD: getEndedAt
-METHOD: getId
-METHOD: getJob
-METHOD: getShortDuration
-METHOD: getStartedAt
-METHOD: getStartedBy
-METHOD: getStatus
-METHOD: getUrl
-METHOD: hashCode
-METHOD: setAbortedBy
-METHOD: setDescription
-METHOD: setEndedAt
-METHOD: setId
-METHOD: setJob
-METHOD: setStartedAt
-METHOD: setStartedBy
-METHOD: setStatus
-METHOD: setUrl
-METHOD: toString
-
-
-=== org/rundeck/api/domain/RundeckExecution.ExecutionStatus.html ===
-        The status of an execution
-ENUM: ABORTED
-ENUM: FAILED
-ENUM: RUNNING
-ENUM: SUCCEEDED
-METHOD: valueOf
-METHOD: values
-
-
-=== org/rundeck/api/NodeFiltersBuilder.html ===
-        Builder for node filters
-CONSTRUCTOR: NodeFiltersBuilder
-        Build a new instance. At the end, use
-        {@link ... toProperties()}
-        .
-METHOD: excludeHostname
-        Exclude nodes matching the given hostname
-METHOD: excludeName
-        Exclude nodes matching the given name
-METHOD: excludeOsArch
-        Exclude nodes matching the given OS-arch
-METHOD: excludeOsFamily
-        Exclude nodes matching the given OS-family
-METHOD: excludeOsName
-        Exclude nodes matching the given OS-name
-METHOD: excludeOsVersion
-        Exclude nodes matching the given OS-version
-METHOD: excludePrecedence
-        Whether exclusion filters take precedence (default to yes).
-METHOD: excludeTags
-        Exclude nodes matching the given tags
-METHOD: excludeType
-        Exclude nodes matching the given type
-METHOD: hostname
-        Include nodes matching the given hostname
-METHOD: name
-        Include nodes matching the given name
-METHOD: osArch
-        Include nodes matching the given OS-arch
-METHOD: osFamily
-        Include nodes matching the given OS-family
-METHOD: osName
-        Include nodes matching the given OS-name
-METHOD: osVersion
-        Include nodes matching the given OS-version
-METHOD: tags
-        Include nodes matching the given tags
-METHOD: toProperties
-METHOD: type
-        Include nodes matching the given type
 
 
 === org/rundeck/api/RundeckClient.html ===
@@ -348,7 +32,7 @@ METHOD: type
          <br>
          Usage : <br>
          <code>
-         <pre class="prettyprint">
+         <pre>
          // using login-based authentication :
          RundeckClient rundeck = new RundeckClient("http://localhost:4440", "admin", "admin");
          // or for a token-based authentication :
@@ -371,19 +55,22 @@ FIELD: API_ENDPOINT
 FIELD: API_VERSION
         Version of the API supported
 CONSTRUCTOR: RundeckClient
-        Instantiate a new
-        {@link ... RundeckClient}
-        for the RunDeck instance at the given url, using token-based
-         authentication.
 CONSTRUCTOR: RundeckClient
         Instantiate a new
         {@link ... RundeckClient}
         for the RunDeck instance at the given url, using login-based
          authentication.
+CONSTRUCTOR: RundeckClient
+        Instantiate a new
+        {@link ... RundeckClient}
+        for the RunDeck instance at the given url, 
+         using token-based or session-based authentication. Either token or sessionID must be valid
 METHOD: abortExecution
         Abort an execution (identified by the given ID). The execution should be running...
 METHOD: deleteJob
         Delete a single job, identified by the given ID
+METHOD: deleteJobs
+        Delete multiple jobs, identified by the given IDs
 METHOD: equals
 METHOD: exportJob
         Export the definition of a single job, identified by the given ID
@@ -416,8 +103,14 @@ METHOD: exportJobsToFile
 METHOD: findJob
         Find a job, identified by its project, group and name. Note that the groupPath is optional, as a job does not
          need to belong to a group (either pass null, or an empty string).
+METHOD: generateToken
+        Generate a new token and get the result page (which is the html page of the user's profile)
 METHOD: getExecution
         Get a single execution, identified by the given ID
+METHOD: getExecutions
+        Get executions based on query parameters
+METHOD: getHistory
+        Get the (events) history for the given project
 METHOD: getHistory
         Get the (events) history for the given project
 METHOD: getHistory
@@ -438,6 +131,10 @@ METHOD: getHistory
         Get the (events) history for the given project
 METHOD: getJob
         Get the definition of a single job, identified by the given ID
+METHOD: getJobExecutionOutput
+        Get the execution output of the given job
+METHOD: getJobExecutionOutput
+        Get the execution output of the given job
 METHOD: getJobExecutions
         Get the executions of the given job
 METHOD: getJobExecutions
@@ -463,7 +160,11 @@ METHOD: getNodes
         List all nodes that belongs to the given project
 METHOD: getNodes
         List nodes that belongs to the given project
+METHOD: getOutput
+        Get the output of a job execution
 METHOD: getPassword
+METHOD: getProfilePage
+        Get the html page of the user's profile
 METHOD: getProject
         Get the definition of a single project, identified by the given name
 METHOD: getProjects
@@ -472,6 +173,7 @@ METHOD: getRunningExecutions
         Get all running executions (for all projects)
 METHOD: getRunningExecutions
         Get the running executions for the given project
+METHOD: getSessionID
 METHOD: getSystemInfo
         Get system informations about the RunDeck server
 METHOD: getToken
@@ -662,19 +364,6 @@ METHOD: triggerJob
          end of the job execution)
 
 
-=== org/rundeck/api/OptionsBuilder.html ===
-        Builder for job options
-CONSTRUCTOR: OptionsBuilder
-        Build a new instance. Use
-        {@link ... addOption(Object, Object)}
-        to add some options, and then
-        {@link ... toProperties()}
-        when you're done !
-METHOD: addOption
-        Add an option
-METHOD: toProperties
-
-
 === org/rundeck/api/RundeckApiException.html ===
         A generic (unchecked) exception when using the RunDeck API
 CONSTRUCTOR: RundeckApiException
@@ -699,6 +388,62 @@ CONSTRUCTOR: RundeckApiException.RundeckApiTokenException
 CONSTRUCTOR: RundeckApiException.RundeckApiTokenException
 
 
+=== org/rundeck/api/OptionsBuilder.html ===
+        Builder for job options
+CONSTRUCTOR: OptionsBuilder
+        Build a new instance. Use
+        {@link ... addOption(Object, Object)}
+        to add some options, and then
+        {@link ... toProperties()}
+        when you're done !
+METHOD: addOption
+        Add an option
+METHOD: toProperties
+
+
+=== org/rundeck/api/NodeFiltersBuilder.html ===
+        Builder for node filters
+CONSTRUCTOR: NodeFiltersBuilder
+        Build a new instance. At the end, use
+        {@link ... toProperties()}
+        .
+METHOD: excludeHostname
+        Exclude nodes matching the given hostname
+METHOD: excludeName
+        Exclude nodes matching the given name
+METHOD: excludeOsArch
+        Exclude nodes matching the given OS-arch
+METHOD: excludeOsFamily
+        Exclude nodes matching the given OS-family
+METHOD: excludeOsName
+        Exclude nodes matching the given OS-name
+METHOD: excludeOsVersion
+        Exclude nodes matching the given OS-version
+METHOD: excludePrecedence
+        Whether exclusion filters take precedence (default to yes).
+METHOD: excludeTags
+        Exclude nodes matching the given tags
+METHOD: excludeType
+        Exclude nodes matching the given type
+METHOD: hostname
+        Include nodes matching the given hostname
+METHOD: name
+        Include nodes matching the given name
+METHOD: osArch
+        Include nodes matching the given OS-arch
+METHOD: osFamily
+        Include nodes matching the given OS-family
+METHOD: osName
+        Include nodes matching the given OS-name
+METHOD: osVersion
+        Include nodes matching the given OS-version
+METHOD: tags
+        Include nodes matching the given tags
+METHOD: toProperties
+METHOD: type
+        Include nodes matching the given type
+
+
 === org/rundeck/api/FileType.html ===
         All supported types of files.
 ENUM: XML
@@ -707,12 +452,388 @@ METHOD: valueOf
 METHOD: values
 
 
-=== org/rundeck/api/parser/AbortParser.html ===
-        Parser for a single
-        {@link ... RundeckAbort}
-CONSTRUCTOR: AbortParser
-CONSTRUCTOR: AbortParser
-METHOD: parseXmlNode
+=== org/rundeck/api/domain/RundeckSystemInfo.html ===
+        Represents the RunDeck system info
+CONSTRUCTOR: RundeckSystemInfo
+METHOD: equals
+METHOD: getActiveThreads
+METHOD: getBaseDir
+METHOD: getBuild
+METHOD: getCpuLoadAverage
+METHOD: getDate
+METHOD: getFreeMemoryInBytes
+METHOD: getJvmName
+METHOD: getJvmVendor
+METHOD: getJvmVersion
+METHOD: getMaxMemoryInBytes
+METHOD: getNode
+METHOD: getOsArch
+METHOD: getOsName
+METHOD: getOsVersion
+METHOD: getRunningJobs
+METHOD: getStartDate
+METHOD: getTotalMemoryInBytes
+METHOD: getUptime
+METHOD: getUptimeInMillis
+METHOD: getVersion
+METHOD: hashCode
+METHOD: setActiveThreads
+METHOD: setBaseDir
+METHOD: setBuild
+METHOD: setCpuLoadAverage
+METHOD: setDate
+METHOD: setFreeMemoryInBytes
+METHOD: setJvmName
+METHOD: setJvmVendor
+METHOD: setJvmVersion
+METHOD: setMaxMemoryInBytes
+METHOD: setNode
+METHOD: setOsArch
+METHOD: setOsName
+METHOD: setOsVersion
+METHOD: setRunningJobs
+METHOD: setStartDate
+METHOD: setTotalMemoryInBytes
+METHOD: setUptimeInMillis
+METHOD: setVersion
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckProject.html ===
+        Represents a RunDeck project
+CONSTRUCTOR: RundeckProject
+METHOD: equals
+METHOD: getDescription
+METHOD: getName
+METHOD: getResourceModelProviderUrl
+METHOD: hashCode
+METHOD: setDescription
+METHOD: setName
+METHOD: setResourceModelProviderUrl
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckOutputEntry.html ===
+        Represents a RunDeck output entry
+CONSTRUCTOR: RundeckOutputEntry
+METHOD: equals
+METHOD: getCommand
+METHOD: getLevel
+METHOD: getMessage
+METHOD: getNode
+METHOD: getTime
+METHOD: getUser
+METHOD: hashCode
+METHOD: setCommand
+METHOD: setLevel
+METHOD: setMessage
+METHOD: setNode
+METHOD: setTime
+METHOD: setUser
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckOutputEntry.RundeckLogLevel.html ===
+ENUM: CONFIG
+ENUM: FINEST
+ENUM: INFO
+ENUM: SEVERE
+ENUM: WARNING
+METHOD: valueOf
+METHOD: values
+
+
+=== org/rundeck/api/domain/RundeckOutput.html ===
+        Represents a RunDeck output
+CONSTRUCTOR: RundeckOutput
+METHOD: addLogEntry
+METHOD: equals
+METHOD: getExecDuration
+METHOD: getExecutionId
+METHOD: getLastModified
+METHOD: getLogEntries
+METHOD: getOffset
+METHOD: getPercentLoaded
+METHOD: getStatus
+METHOD: getTotalSize
+METHOD: hashCode
+METHOD: isCompleted
+METHOD: isEmpty
+METHOD: isExecCompleted
+METHOD: isHasFailedNodes
+METHOD: isUnmodified
+METHOD: setCompleted
+METHOD: setEmpty
+METHOD: setExecCompleted
+METHOD: setExecDuration
+METHOD: setExecutionId
+METHOD: setHasFailedNodes
+METHOD: setLastModified
+METHOD: setLogEntries
+METHOD: setOffset
+METHOD: setPercentLoaded
+METHOD: setStatus
+METHOD: setTotalSize
+METHOD: setUnmodified
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckNode.html ===
+        Represents a RunDeck node (server on which RunDeck can execute jobs and commands)
+CONSTRUCTOR: RundeckNode
+METHOD: equals
+METHOD: getDescription
+METHOD: getEditUrl
+METHOD: getHostname
+METHOD: getName
+METHOD: getOsArch
+METHOD: getOsFamily
+METHOD: getOsName
+METHOD: getOsVersion
+METHOD: getRemoteUrl
+METHOD: getTags
+METHOD: getType
+METHOD: getUsername
+METHOD: hashCode
+METHOD: setDescription
+METHOD: setEditUrl
+METHOD: setHostname
+METHOD: setName
+METHOD: setOsArch
+METHOD: setOsFamily
+METHOD: setOsName
+METHOD: setOsVersion
+METHOD: setRemoteUrl
+METHOD: setTags
+METHOD: setType
+METHOD: setUsername
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckJobsImportResult.html ===
+        Result of importing some jobs into RunDeck
+CONSTRUCTOR: RundeckJobsImportResult
+METHOD: addFailedJob
+METHOD: addSkippedJob
+METHOD: addSucceededJob
+METHOD: equals
+METHOD: getFailedJobs
+METHOD: getSkippedJobs
+METHOD: getSucceededJobs
+METHOD: hashCode
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckJobsImportMethod.html ===
+        The behavior when importing jobs (which may already exist).
+ENUM: CREATE
+ENUM: SKIP
+ENUM: UPDATE
+METHOD: valueOf
+METHOD: values
+
+
+=== org/rundeck/api/domain/RundeckJobDeleteBulk.html ===
+        RundeckJobDeleteBulk represents the result of a bulk job delete request and contains
+         a list of
+        {@link ... RundeckJobDelete}
+        objects.
+CONSTRUCTOR: RundeckJobDeleteBulk
+METHOD: getRequestCount
+        The number of job delete requests processed.
+METHOD: getResults
+METHOD: isAllsuccessful
+        True if all job delete requests were successful
+METHOD: iterator
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckJobDelete.html ===
+        RundeckJobDelete represents a result of a job delete request.
+CONSTRUCTOR: RundeckJobDelete
+METHOD: equals
+METHOD: getError
+        Error message if the job could not be deleted
+METHOD: getErrorCode
+        Error code string if there was a failure
+METHOD: getId
+        Job ID
+METHOD: getMessage
+        Success message if it was successful
+METHOD: hashCode
+METHOD: isSuccessful
+        True if the job was successfully deleted
+METHOD: setError
+METHOD: setErrorCode
+METHOD: setId
+METHOD: setMessage
+METHOD: setSuccessful
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckJob.html ===
+        Represents a RunDeck job
+CONSTRUCTOR: RundeckJob
+METHOD: equals
+METHOD: getAverageDuration
+METHOD: getDescription
+METHOD: getFullName
+METHOD: getGroup
+METHOD: getId
+METHOD: getName
+METHOD: getProject
+METHOD: hashCode
+METHOD: setAverageDuration
+METHOD: setDescription
+METHOD: setGroup
+METHOD: setId
+METHOD: setName
+METHOD: setProject
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckHistory.html ===
+        Represents a portion of the RunDeck (events) history
+CONSTRUCTOR: RundeckHistory
+METHOD: addEvent
+METHOD: equals
+METHOD: getCount
+METHOD: getEvents
+METHOD: getMax
+METHOD: getOffset
+METHOD: getTotal
+METHOD: hashCode
+METHOD: setCount
+METHOD: setEvents
+METHOD: setMax
+METHOD: setOffset
+METHOD: setTotal
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckExecution.html ===
+        Represents a RunDeck execution, usually triggered by an API call. An execution could be a
+        {@link ... RundeckJob}
+        execution or an "ad-hoc" execution.
+CONSTRUCTOR: RundeckExecution
+METHOD: equals
+METHOD: getAbortedBy
+METHOD: getArgstring
+        the argument string for the execution
+METHOD: getDescription
+METHOD: getDuration
+METHOD: getDurationInMillis
+METHOD: getDurationInSeconds
+METHOD: getEndedAt
+METHOD: getId
+METHOD: getJob
+METHOD: getShortDuration
+METHOD: getStartedAt
+METHOD: getStartedBy
+METHOD: getStatus
+METHOD: getUrl
+METHOD: hashCode
+METHOD: setAbortedBy
+METHOD: setArgstring
+METHOD: setDescription
+METHOD: setEndedAt
+METHOD: setId
+METHOD: setJob
+METHOD: setStartedAt
+METHOD: setStartedBy
+METHOD: setStatus
+METHOD: setUrl
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckExecution.ExecutionStatus.html ===
+        The status of an execution
+ENUM: ABORTED
+ENUM: FAILED
+ENUM: RUNNING
+ENUM: SUCCEEDED
+METHOD: valueOf
+METHOD: values
+
+
+=== org/rundeck/api/domain/RundeckEvent.html ===
+        Represents a RunDeck event
+CONSTRUCTOR: RundeckEvent
+METHOD: equals
+METHOD: getAbortedBy
+METHOD: getDuration
+METHOD: getDurationInMillis
+METHOD: getDurationInSeconds
+METHOD: getEndedAt
+METHOD: getExecutionId
+METHOD: getJobId
+METHOD: getNodeSummary
+METHOD: getProject
+METHOD: getShortDuration
+METHOD: getStartedAt
+METHOD: getStatus
+METHOD: getSummary
+METHOD: getTitle
+METHOD: getUser
+METHOD: hashCode
+METHOD: isAdhoc
+METHOD: setAbortedBy
+METHOD: setEndedAt
+METHOD: setExecutionId
+METHOD: setJobId
+METHOD: setNodeSummary
+METHOD: setProject
+METHOD: setStartedAt
+METHOD: setStatus
+METHOD: setSummary
+METHOD: setTitle
+METHOD: setUser
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckEvent.NodeSummary.html ===
+        Summary for nodes
+CONSTRUCTOR: RundeckEvent.NodeSummary
+METHOD: equals
+METHOD: getFailed
+METHOD: getSucceeded
+METHOD: getTotal
+METHOD: hashCode
+METHOD: setFailed
+METHOD: setSucceeded
+METHOD: setTotal
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckEvent.EventStatus.html ===
+        The status of an event
+ENUM: ABORTED
+ENUM: FAILED
+ENUM: SUCCEEDED
+METHOD: valueOf
+METHOD: values
+
+
+=== org/rundeck/api/domain/RundeckAbort.html ===
+        Represents an abort of a
+        {@link ... RundeckExecution}
+CONSTRUCTOR: RundeckAbort
+METHOD: equals
+METHOD: getExecution
+METHOD: getStatus
+METHOD: hashCode
+METHOD: setExecution
+METHOD: setStatus
+METHOD: toString
+
+
+=== org/rundeck/api/domain/RundeckAbort.AbortStatus.html ===
+        The status of an abort
+ENUM: ABORTED
+ENUM: FAILED
+ENUM: PENDING
+METHOD: valueOf
+METHOD: values
 
 
 === org/rundeck/api/parser/XmlNodeParser.html ===
@@ -724,19 +845,27 @@ METHOD: parseXmlNode
         {@link/Node}
 
 
-=== org/rundeck/api/parser/JobParser.html ===
+=== org/rundeck/api/parser/SystemInfoParser.html ===
         Parser for a single
-        {@link ... RundeckJob}
-CONSTRUCTOR: JobParser
-CONSTRUCTOR: JobParser
+        {@link ... RundeckSystemInfo}
+CONSTRUCTOR: SystemInfoParser
+CONSTRUCTOR: SystemInfoParser
 METHOD: parseXmlNode
 
 
-=== org/rundeck/api/parser/HistoryParser.html ===
+=== org/rundeck/api/parser/StringParser.html ===
         Parser for a single
-        {@link ... RundeckHistory}
-CONSTRUCTOR: HistoryParser
-CONSTRUCTOR: HistoryParser
+        {@link/String}
+CONSTRUCTOR: StringParser
+CONSTRUCTOR: StringParser
+METHOD: parseXmlNode
+
+
+=== org/rundeck/api/parser/ProjectParser.html ===
+        Parser for a single
+        {@link ... RundeckProject}
+CONSTRUCTOR: ProjectParser
+CONSTRUCTOR: ProjectParser
 METHOD: parseXmlNode
 
 
@@ -750,35 +879,22 @@ METHOD: loadDocument
         {@link/InputStream}
 
 
-=== org/rundeck/api/parser/StringParser.html ===
-        Parser for a single
-        {@link/String}
-CONSTRUCTOR: StringParser
-CONSTRUCTOR: StringParser
+=== org/rundeck/api/parser/PagedResultParser.html ===
+        PagedResultParser extracts paging data from an xpath node, and includes the List result from a ListParser
+CONSTRUCTOR: PagedResultParser
+        Create a PagedResultParser
 METHOD: parseXmlNode
 
 
-=== org/rundeck/api/parser/EventParser.html ===
-        Parser for a single
-        {@link ... RundeckEvent}
-CONSTRUCTOR: EventParser
-CONSTRUCTOR: EventParser
+=== org/rundeck/api/parser/OutputParser.html ===
+CONSTRUCTOR: OutputParser
+CONSTRUCTOR: OutputParser
 METHOD: parseXmlNode
 
 
-=== org/rundeck/api/parser/JobsImportResultParser.html ===
-        Parser for a single
-        {@link ... RundeckJobsImportResult}
-CONSTRUCTOR: JobsImportResultParser
-CONSTRUCTOR: JobsImportResultParser
-METHOD: parseXmlNode
-
-
-=== org/rundeck/api/parser/SystemInfoParser.html ===
-        Parser for a single
-        {@link ... RundeckSystemInfo}
-CONSTRUCTOR: SystemInfoParser
-CONSTRUCTOR: SystemInfoParser
+=== org/rundeck/api/parser/OutputEntryParser.html ===
+CONSTRUCTOR: OutputEntryParser
+CONSTRUCTOR: OutputEntryParser
 METHOD: parseXmlNode
 
 
@@ -798,6 +914,30 @@ CONSTRUCTOR: ListParser
 METHOD: parseXmlNode
 
 
+=== org/rundeck/api/parser/JobsImportResultParser.html ===
+        Parser for a single
+        {@link ... RundeckJobsImportResult}
+CONSTRUCTOR: JobsImportResultParser
+CONSTRUCTOR: JobsImportResultParser
+METHOD: parseXmlNode
+
+
+=== org/rundeck/api/parser/JobParser.html ===
+        Parser for a single
+        {@link ... RundeckJob}
+CONSTRUCTOR: JobParser
+CONSTRUCTOR: JobParser
+METHOD: parseXmlNode
+
+
+=== org/rundeck/api/parser/HistoryParser.html ===
+        Parser for a single
+        {@link ... RundeckHistory}
+CONSTRUCTOR: HistoryParser
+CONSTRUCTOR: HistoryParser
+METHOD: parseXmlNode
+
+
 === org/rundeck/api/parser/ExecutionParser.html ===
         Parser for a single
         {@link ... RundeckExecution}
@@ -806,12 +946,118 @@ CONSTRUCTOR: ExecutionParser
 METHOD: parseXmlNode
 
 
-=== org/rundeck/api/parser/ProjectParser.html ===
+=== org/rundeck/api/parser/EventParser.html ===
         Parser for a single
-        {@link ... RundeckProject}
-CONSTRUCTOR: ProjectParser
-CONSTRUCTOR: ProjectParser
+        {@link ... RundeckEvent}
+CONSTRUCTOR: EventParser
+CONSTRUCTOR: EventParser
 METHOD: parseXmlNode
+
+
+=== org/rundeck/api/parser/DeleteParser.html ===
+        DeleteParser is ...
+CONSTRUCTOR: DeleteParser
+CONSTRUCTOR: DeleteParser
+METHOD: parseXmlNode
+
+
+=== org/rundeck/api/parser/BulkDeleteParser.html ===
+        BulkDeleteParser is ...
+CONSTRUCTOR: BulkDeleteParser
+CONSTRUCTOR: BulkDeleteParser
+METHOD: parseXmlNode
+
+
+=== org/rundeck/api/parser/AbortParser.html ===
+        Parser for a single
+        {@link ... RundeckAbort}
+CONSTRUCTOR: AbortParser
+CONSTRUCTOR: AbortParser
+METHOD: parseXmlNode
+
+
+=== org/rundeck/api/query/ExecutionQuery.html ===
+        ExecutionQuery contains the query parameters for the /executions api, create one with the
+        {@link ... ExecutionQuery.Builder}
+        class, e.g.
+         using the
+        {@link ... builder()}
+        method.
+METHOD: builder
+        Create a Builder for an ExecutionQuery
+METHOD: getAbortedby
+METHOD: getAdhoc
+METHOD: getBegin
+METHOD: getDescription
+METHOD: getEnd
+METHOD: getExcludeGroupPath
+METHOD: getExcludeGroupPathExact
+METHOD: getExcludeJob
+METHOD: getExcludeJobExact
+METHOD: getExcludeJobIdList
+METHOD: getExcludeJobList
+METHOD: getGroupPath
+METHOD: getGroupPathExact
+METHOD: getJob
+METHOD: getJobExact
+METHOD: getJobIdList
+METHOD: getJobList
+METHOD: getProject
+METHOD: getRecent
+METHOD: getStatus
+METHOD: getUser
+METHOD: notBlank
+        Return true if some parameter is set
+
+
+=== org/rundeck/api/query/ExecutionQuery.Builder.html ===
+        Builder for ExecutionQueries
+CONSTRUCTOR: ExecutionQuery.Builder
+METHOD: abortedby
+        Username
+METHOD: adhoc
+        True to query only adhoc executions, false to query only Job executions, null for both
+METHOD: begin
+        Start date/time for execution completion time
+METHOD: build
+        Build the query
+METHOD: description
+        Job description match
+METHOD: end
+        End date/time for execution completion time
+METHOD: excludeGroupPath
+        Group path or super path, which will exclude any jobs within the subtree.
+METHOD: excludeGroupPathExact
+        Exact group path to exclude
+METHOD: excludeJob
+        Job name filter to exclude, which can match any part of the name
+METHOD: excludeJobExact
+        Job exact name filter to exclude, much match exactly
+METHOD: excludeJobIdList
+        List of job IDs to exclude from query
+METHOD: excludeJobList
+        List of job "group/name" to exclude from query
+METHOD: groupPath
+        Group path or super path, which will include any jobs within the subtree.
+METHOD: groupPathExact
+        Exact group path to include
+METHOD: job
+        Job name filter, which can match any part of the name
+METHOD: jobExact
+        Job exact name filter, much match exactly
+METHOD: jobIdList
+        List of job IDs to query
+METHOD: jobList
+        List of job "group/name" to query
+METHOD: project
+        Project name
+METHOD: recent
+        Recent time filter, in the for "XY", where X is a number, and Y
+         is one of: "h" (hour), "d" (day), "w" (week), "m" (month), "y" (year)
+METHOD: status
+        Execution status to query
+METHOD: user
+        Name of username that started the execution
 
 
 === org/rundeck/api/util/ParametersUtil.html ===
@@ -825,6 +1071,20 @@ METHOD: generateNodeFiltersString
          <code>"filter1=value1&filter2=value2"</code>.
 METHOD: urlEncode
         URL-encode the given string
+
+
+=== org/rundeck/api/util/PagedResults.html ===
+        PagedResults contains a List of a certain type, and paging information.
+METHOD: getCount
+        Number of items available in page
+METHOD: getMax
+        Max number of items returned in page
+METHOD: getOffset
+        Offset into all items
+METHOD: getResults
+        Results list
+METHOD: getTotal
+        Total items to be paged
 
 
 === org/rundeck/api/util/AssertUtil.html ===

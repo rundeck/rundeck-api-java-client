@@ -148,6 +148,8 @@
     <li class="api apilevel-">
   <a href="./org/rundeck/api/parser/package-summary.html">org.rundeck.api.parser</a></li>
     <li class="api apilevel-">
+  <a href="./org/rundeck/api/query/package-summary.html">org.rundeck.api.query</a></li>
+    <li class="api apilevel-">
   <a href="./org/rundeck/api/util/package-summary.html">org.rundeck.api.util</a></li>
               </ul><br/>
             </div> <!-- end packages -->
@@ -197,6 +199,8 @@
 
 <div class="jd-letterlist">
     <a href="#letter_A">A</a>
+    <a href="#letter_B">B</a>
+    <a href="#letter_D">D</a>
     <a href="#letter_E">E</a>
     <a href="#letter_F">F</a>
     <a href="#letter_H">H</a>
@@ -231,6 +235,32 @@
 </table>
 
 
+<h2 id="letter_B">B</h2>
+<table class="jd-sumtable">
+    
+    
+        <tr class="alt-color api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/rundeck/api/parser/BulkDeleteParser.html">BulkDeleteParser</a></td>
+            <td class="jd-descrcol" width="100%">BulkDeleteParser is ...&nbsp;</td>
+        </tr>
+    
+    
+</table>
+
+
+<h2 id="letter_D">D</h2>
+<table class="jd-sumtable">
+    
+    
+        <tr class="alt-color api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/rundeck/api/parser/DeleteParser.html">DeleteParser</a></td>
+            <td class="jd-descrcol" width="100%">DeleteParser is ...&nbsp;</td>
+        </tr>
+    
+    
+</table>
+
+
 <h2 id="letter_E">E</h2>
 <table class="jd-sumtable">
     
@@ -244,6 +274,19 @@
         <tr class=" api apilevel-" >
             <td class="jd-linkcol"><a href="./org/rundeck/api/parser/ExecutionParser.html">ExecutionParser</a></td>
             <td class="jd-descrcol" width="100%">Parser for a single <code><a href="./org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a></code>&nbsp;</td>
+        </tr>
+    
+    
+        <tr class="alt-color api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/rundeck/api/query/ExecutionQuery.html">ExecutionQuery</a></td>
+            <td class="jd-descrcol" width="100%">ExecutionQuery contains the query parameters for the /executions api, create one with the <code><a href="./org/rundeck/api/query/ExecutionQuery.Builder.html">ExecutionQuery.Builder</a></code> class, e.g.&nbsp;</td>
+        </tr>
+    
+    
+        <tr class=" api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/rundeck/api/query/ExecutionQuery.Builder.html">ExecutionQuery.Builder</a></td>
+            <td class="jd-descrcol" width="100%">Builder for ExecutionQueries
+&nbsp;</td>
         </tr>
     
     
@@ -337,11 +380,35 @@
         </tr>
     
     
+        <tr class=" api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/rundeck/api/parser/OutputEntryParser.html">OutputEntryParser</a></td>
+            <td class="jd-descrcol" width="100%">&nbsp;</td>
+        </tr>
+    
+    
+        <tr class="alt-color api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/rundeck/api/parser/OutputParser.html">OutputParser</a></td>
+            <td class="jd-descrcol" width="100%">&nbsp;</td>
+        </tr>
+    
+    
 </table>
 
 
 <h2 id="letter_P">P</h2>
 <table class="jd-sumtable">
+    
+    
+        <tr class="alt-color api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/rundeck/api/parser/PagedResultParser.html">PagedResultParser</a>&lt;T&gt;</td>
+            <td class="jd-descrcol" width="100%">PagedResultParser extracts paging data from an xpath node, and includes the List result from a ListParser&nbsp;</td>
+        </tr>
+    
+    
+        <tr class=" api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/rundeck/api/util/PagedResults.html">PagedResults</a>&lt;T&gt;</td>
+            <td class="jd-descrcol" width="100%">PagedResults contains a List of a certain type, and paging information.&nbsp;</td>
+        </tr>
     
     
         <tr class="alt-color api apilevel-" >
@@ -460,6 +527,19 @@
     
     
         <tr class="alt-color api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/rundeck/api/domain/RundeckJobDelete.html">RundeckJobDelete</a></td>
+            <td class="jd-descrcol" width="100%">RundeckJobDelete represents a result of a job delete request.&nbsp;</td>
+        </tr>
+    
+    
+        <tr class=" api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/rundeck/api/domain/RundeckJobDeleteBulk.html">RundeckJobDeleteBulk</a></td>
+            <td class="jd-descrcol" width="100%">RundeckJobDeleteBulk represents the result of a bulk job delete request and contains
+ a list of <code><a href="./org/rundeck/api/domain/RundeckJobDelete.html">RundeckJobDelete</a></code> objects.&nbsp;</td>
+        </tr>
+    
+    
+        <tr class="alt-color api apilevel-" >
             <td class="jd-linkcol"><a href="./org/rundeck/api/domain/RundeckJobsImportMethod.html">RundeckJobsImportMethod</a></td>
             <td class="jd-descrcol" width="100%">The behavior when importing jobs (which may already exist).&nbsp;</td>
         </tr>
@@ -478,12 +558,34 @@
     
     
         <tr class=" api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/rundeck/api/domain/RundeckOutput.html">RundeckOutput</a></td>
+            <td class="jd-descrcol" width="100%">Represents a RunDeck output
+ 
+&nbsp;</td>
+        </tr>
+    
+    
+        <tr class="alt-color api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/rundeck/api/domain/RundeckOutputEntry.html">RundeckOutputEntry</a></td>
+            <td class="jd-descrcol" width="100%">Represents a RunDeck output entry
+ 
+&nbsp;</td>
+        </tr>
+    
+    
+        <tr class=" api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/rundeck/api/domain/RundeckOutputEntry.RundeckLogLevel.html">RundeckOutputEntry.RundeckLogLevel</a></td>
+            <td class="jd-descrcol" width="100%">&nbsp;</td>
+        </tr>
+    
+    
+        <tr class="alt-color api apilevel-" >
             <td class="jd-linkcol"><a href="./org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></td>
             <td class="jd-descrcol" width="100%">Represents a RunDeck project&nbsp;</td>
         </tr>
     
     
-        <tr class="alt-color api apilevel-" >
+        <tr class=" api apilevel-" >
             <td class="jd-linkcol"><a href="./org/rundeck/api/domain/RundeckSystemInfo.html">RundeckSystemInfo</a></td>
             <td class="jd-descrcol" width="100%">Represents the RunDeck system info&nbsp;</td>
         </tr>

@@ -13,74 +13,11 @@ javadoc proofread file: ./proof-read.txt
 === reference/packages.html ===
 
 
-=== org/rundeck/api/parser/ExecutionParserTest.html ===
-        Test the
-        {@link/ExecutionParser}
-CONSTRUCTOR: ExecutionParserTest
-METHOD: parseAdhocExecution
-METHOD: parseMinimalistExecution
-METHOD: parseRunningExecution
-METHOD: parseSucceededExecution
-
-
-=== org/rundeck/api/parser/AbortParserTest.html ===
-        Test the
-        {@link/AbortParser}
-CONSTRUCTOR: AbortParserTest
-METHOD: parseFailedAbort
-METHOD: parsePendingAbort
-
-
-=== org/rundeck/api/parser/HistoryParserTest.html ===
-        Test the
-        {@link/HistoryParser}
-CONSTRUCTOR: HistoryParserTest
-METHOD: parseHistory
-
-
-=== org/rundeck/api/parser/ProjectParserTest.html ===
-        Test the
-        {@link/ProjectParser}
-CONSTRUCTOR: ProjectParserTest
-METHOD: parseProject
-
-
-=== org/rundeck/api/parser/JobsImportResultParserTest.html ===
-        Test the
-        {@link/JobsImportResultParser}
-CONSTRUCTOR: JobsImportResultParserTest
-METHOD: parseResult
-
-
-=== org/rundeck/api/parser/ListParserTest.html ===
-        Test the
-        {@link/ListParser}
-CONSTRUCTOR: ListParserTest
-METHOD: parseExecutions
-METHOD: parseJobs
-METHOD: parseNodes
-METHOD: parseProjects
-
-
-=== org/rundeck/api/parser/JobParserTest.html ===
-        Test the
-        {@link/JobParser}
-CONSTRUCTOR: JobParserTest
-METHOD: parseJob
-
-
 === org/rundeck/api/parser/SystemInfoParserTest.html ===
         Test the
         {@link/SystemInfoParser}
 CONSTRUCTOR: SystemInfoParserTest
 METHOD: parseProject
-
-
-=== org/rundeck/api/parser/NodeParserTest.html ===
-        Test the
-        {@link/NodeParser}
-CONSTRUCTOR: NodeParserTest
-METHOD: parseNode
 
 
 === org/rundeck/api/parser/StringParserTest.html ===
@@ -90,12 +27,11 @@ CONSTRUCTOR: StringParserTest
 METHOD: parseJob
 
 
-=== org/rundeck/api/parser/EventParserTest.html ===
+=== org/rundeck/api/parser/ProjectParserTest.html ===
         Test the
-        {@link/EventParser}
-CONSTRUCTOR: EventParserTest
-METHOD: parseAdhocEvent
-METHOD: parseSucceededEvent
+        {@link/ProjectParser}
+CONSTRUCTOR: ProjectParserTest
+METHOD: parseProject
 
 
 === org/rundeck/api/parser/ParserHelperTest.html ===
@@ -110,12 +46,86 @@ METHOD: loadSuccessDocument
         XML with an explicit "success" result should NOT throw an exception
 
 
-=== org/rundeck/api/util/ParametersUtilTest.html ===
+=== org/rundeck/api/parser/NodeParserTest.html ===
         Test the
-        {@link/ParametersUtil}
-CONSTRUCTOR: ParametersUtilTest
-METHOD: generateArgString
-METHOD: generateNodeFiltersString
+        {@link/NodeParser}
+CONSTRUCTOR: NodeParserTest
+METHOD: parseNode
+
+
+=== org/rundeck/api/parser/ListParserTest.html ===
+        Test the
+        {@link/ListParser}
+CONSTRUCTOR: ListParserTest
+METHOD: parseExecutions
+METHOD: parseJobs
+METHOD: parseNodes
+METHOD: parseProjects
+
+
+=== org/rundeck/api/parser/JobsImportResultParserTest.html ===
+        Test the
+        {@link/JobsImportResultParser}
+CONSTRUCTOR: JobsImportResultParserTest
+METHOD: parseResult
+
+
+=== org/rundeck/api/parser/JobParserTest.html ===
+        Test the
+        {@link/JobParser}
+CONSTRUCTOR: JobParserTest
+METHOD: parseExecutionJob1
+METHOD: parseExecutionJob2
+METHOD: parseJob
+
+
+=== org/rundeck/api/parser/HistoryParserTest.html ===
+        Test the
+        {@link/HistoryParser}
+CONSTRUCTOR: HistoryParserTest
+METHOD: parseHistory
+
+
+=== org/rundeck/api/parser/ExecutionParserTest.html ===
+        Test the
+        {@link/ExecutionParser}
+CONSTRUCTOR: ExecutionParserTest
+METHOD: parseAdhocExecution
+METHOD: parseMinimalistExecution
+METHOD: parseRunningExecution
+METHOD: parseSucceededExecution
+
+
+=== org/rundeck/api/parser/EventParserTest.html ===
+        Test the
+        {@link/EventParser}
+CONSTRUCTOR: EventParserTest
+METHOD: parseAdhocEvent
+METHOD: parseSucceededEvent
+
+
+=== org/rundeck/api/parser/DeleteParserTest.html ===
+        DeleteParserTest is ...
+CONSTRUCTOR: DeleteParserTest
+METHOD: failedResult1
+METHOD: failedResult2
+METHOD: failedResult3
+METHOD: successfulResult
+
+
+=== org/rundeck/api/parser/BulkDeleteParserTest.html ===
+        BulkDeleteParserTest is ...
+CONSTRUCTOR: BulkDeleteParserTest
+METHOD: bulkParser
+METHOD: bulkParserAllsuccessful
+
+
+=== org/rundeck/api/parser/AbortParserTest.html ===
+        Test the
+        {@link/AbortParser}
+CONSTRUCTOR: AbortParserTest
+METHOD: parseFailedAbort
+METHOD: parsePendingAbort
 
 
 === org/rundeck/api/RundeckClientTest.html ===
@@ -124,5 +134,23 @@ METHOD: generateNodeFiltersString
         . Uses betamax to unit-test HTTP requests without a live RunDeck instance.
 FIELD: recorder
 CONSTRUCTOR: RundeckClientTest
+METHOD: bulkDelete
+METHOD: bulkDeleteFailDNE
+METHOD: bulkDeleteFailUnauthorized
+METHOD: getExecutions
+METHOD: getExecutionsPaging
+        Test paging values from results
+METHOD: getHistory
+METHOD: getHistoryExcludeJoblist
+METHOD: getHistoryJoblist
+METHOD: getHistoryUser
 METHOD: getProjects
 METHOD: setUp
+
+
+=== org/rundeck/api/util/ParametersUtilTest.html ===
+        Test the
+        {@link/ParametersUtil}
+CONSTRUCTOR: ParametersUtilTest
+METHOD: generateArgString
+METHOD: generateNodeFiltersString
