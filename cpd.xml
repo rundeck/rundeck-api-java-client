@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pmd-cpd>
 <duplication lines="27" tokens="139">
-<file line="152" path="/Users/greg/devel/thirdparty/rundeck-api-java-client/src/main/java/org/rundeck/api/domain/RundeckEvent.java"/>
-<file line="137" path="/Users/greg/devel/thirdparty/rundeck-api-java-client/src/main/java/org/rundeck/api/domain/RundeckExecution.java"/>
+<file line="152" path="/Users/greg/devel/thirdparty/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/domain/RundeckEvent.java"/>
+<file line="137" path="/Users/greg/devel/thirdparty/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/domain/RundeckExecution.java"/>
 <codefragment>
 <![CDATA[
     }
@@ -36,8 +36,8 @@
 </codefragment>
 </duplication>
 <duplication lines="34" tokens="118">
-<file line="60" path="/Users/greg/devel/thirdparty/rundeck-api-java-client/src/main/java/org/rundeck/api/domain/RundeckEvent.java"/>
-<file line="59" path="/Users/greg/devel/thirdparty/rundeck-api-java-client/src/main/java/org/rundeck/api/domain/RundeckExecution.java"/>
+<file line="60" path="/Users/greg/devel/thirdparty/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/domain/RundeckEvent.java"/>
+<file line="59" path="/Users/greg/devel/thirdparty/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/domain/RundeckExecution.java"/>
 <codefragment>
 <![CDATA[
     public Long getDurationInMillis() {

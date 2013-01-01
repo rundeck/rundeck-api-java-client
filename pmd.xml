@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2012-12-31T17:10:18.111">
-<file name="/Users/greg/devel/thirdparty/rundeck-api-java-client/src/main/java/org/rundeck/api/ApiCall.java">
+<pmd version="4.2.5" timestamp="2012-12-31T17:47:21.962">
+<file name="/Users/greg/devel/thirdparty/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/ApiCall.java">
 <violation beginline="33" endline="33" begincolumn="1" endcolumn="37" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.apache.http.cookie.Cookie'
 </violation>
@@ -8,12 +8,12 @@ Avoid unused imports such as 'org.apache.http.cookie.Cookie'
 Avoid unused imports such as 'org.apache.http.client.CookieStore'
 </violation>
 </file>
-<file name="/Users/greg/devel/thirdparty/rundeck-api-java-client/src/main/java/org/rundeck/api/domain/RundeckOutput.java">
+<file name="/Users/greg/devel/thirdparty/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/domain/RundeckOutput.java">
 <violation beginline="8" endline="8" begincolumn="1" endcolumn="63" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api.domain" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.rundeck.api.domain.RundeckExecution.ExecutionStatus'
 </violation>
 </file>
-<file name="/Users/greg/devel/thirdparty/rundeck-api-java-client/src/main/java/org/rundeck/api/parser/BulkDeleteParser.java">
+<file name="/Users/greg/devel/thirdparty/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/parser/BulkDeleteParser.java">
 <violation beginline="28" endline="28" begincolumn="1" endcolumn="25" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api.parser" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.dom4j.Element'
 </violation>
@@ -21,17 +21,17 @@ Avoid unused imports such as 'org.dom4j.Element'
 Avoid empty catch blocks
 </violation>
 </file>
-<file name="/Users/greg/devel/thirdparty/rundeck-api-java-client/src/main/java/org/rundeck/api/parser/DeleteParser.java">
+<file name="/Users/greg/devel/thirdparty/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/parser/DeleteParser.java">
 <violation beginline="28" endline="28" begincolumn="1" endcolumn="25" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api.parser" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.dom4j.Element'
 </violation>
 </file>
-<file name="/Users/greg/devel/thirdparty/rundeck-api-java-client/src/main/java/org/rundeck/api/parser/OutputParser.java">
+<file name="/Users/greg/devel/thirdparty/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/parser/OutputParser.java">
 <violation beginline="10" endline="10" begincolumn="1" endcolumn="63" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api.parser" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.rundeck.api.domain.RundeckExecution.ExecutionStatus'
 </violation>
 </file>
-<file name="/Users/greg/devel/thirdparty/rundeck-api-java-client/src/main/java/org/rundeck/api/parser/PagedResultParser.java">
+<file name="/Users/greg/devel/thirdparty/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/parser/PagedResultParser.java">
 <violation beginline="112" endline="113" begincolumn="11" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.rundeck.api.parser" class="PagedResultParser" method="integerAttribute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
 Avoid empty catch blocks
 </violation>
