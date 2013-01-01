@@ -1,7 +1,7 @@
 
 Java client for the RunDeck REST API
 
-Documentation : http://vbehar.github.com/rundeck-api-java-client/
+Documentation : http://rundeck.github.com/rundeck-api-java-client/
 RunDeck Home : http://rundeck.org/
 
 LICENSE : The Apache Software License, Version 2.0
@@ -12,3 +12,6 @@ How to build :
 - run "mvn package"
 - either use the jar file in target/rundeck-api-java-client-VERSION.jar, or the jar file with all dependencies included in target/rundeck-api-java-client-VERSION-jar-with-dependencies.jar
 
+Credit : 
+
+Original rundeck-api-java-client project was created by Vincent Behar <http://vbehar.github.com>

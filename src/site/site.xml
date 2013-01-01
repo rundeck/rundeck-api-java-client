@@ -45,9 +45,9 @@
       <item name="JRuby" href="jruby.html" />
       <item name="Jython" href="jython.html" />
     </menu>
-    <menu name="Older versions">
+    <!-- <menu name="Older versions">
       <item name="1.x (RunDeck 1.2)" href="1.x/index.html" />
-    </menu>
+    </menu> -->
     <menu ref="reports" />
   </body>
 </project>

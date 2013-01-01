@@ -35,3 +35,24 @@ h2. RunDeck API version 2
 * Updating and Listing Resources for a Project - *TODO*
 * Refreshing Resources for a Project - *TODO*
 
+h2. RunDeck API version 3
+
+[Documentation of the RunDeck API version 3|http://rundeck.org/1.4.2/api/index.html]
+
+* (only updates to Resource endpoints) - *TODO*
+
+h2. RunDeck API version 4
+
+[Documentation of the RunDeck API version 4|http://rundeck.org/1.4.3/api/index.html]
+
+* Running Adhoc Script URLs - *TODO*
+
+h2. RunDeck API version 5
+
+[Documentation of the RunDeck API version 5|http://rundeck.org/1.4.4/api/index.html]
+
+* Bulk Job Delete - OK
+* Execution Output - OK
+* Execution Query - OK
+* History list query - OK
+

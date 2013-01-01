@@ -7,7 +7,7 @@ The library is hosted on the [Maven Central Repository|http://search.maven.org/]
 
 You can see all versions and download the files with this query : [g:"org.rundeck" AND a:"rundeck-api-java-client"|http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.rundeck%22%20AND%20a%3A%22rundeck-api-java-client%22].
 
-Alternatively, you can download [releases|https://oss.sonatype.org/content/repositories/releases/org/rundeck/rundeck-api-java-client/] or [snapshots|https://oss.sonatype.org/content/repositories/snapshots/org/rundeck/rundeck-api-java-client/] from [Sonatype Nexus OSS instance|https://oss.sonatype.org/] (which is then synchronized to Macen Central).
+Alternatively, you can download [releases|https://oss.sonatype.org/content/repositories/releases/org/rundeck/rundeck-api-java-client/] or [snapshots|https://oss.sonatype.org/content/repositories/snapshots/org/rundeck/rundeck-api-java-client/] from [Sonatype Nexus OSS instance|https://oss.sonatype.org/] (which is then synchronized to Maven Central).
 
 h2. Manual download
 

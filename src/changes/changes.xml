@@ -22,6 +22,18 @@
     <author>Vincent Behar</author>
   </properties>
   <body>
+    <release version="5.0" date="2012-12-30" description="Use RunDeck REST API version 5 (RunDeck 1.4.4)">
+      
+      <action dev="gschueler" type="add">Job Execution result contains average duration (v5)</action>
+      <action dev="gschueler" type="fix">Issue #1: execution results don't contain argstring</action>
+      <action dev="gschueler" type="add">Bulk Job delete (v5)</action>
+      <action dev="gschueler" type="add">Executions query (v5)</action>
+      <action dev="gschueler" type="add">History query (v5)</action>
+      <action dev="gschueler" type="add">Support Rundeck API version 5</action>
+      <action dev="gschueler" type="add">Maintenance and support of rundeck-api-java-client now primarily provided by the Rundeck project, and is now available at https://rundeck.github.com/rundeck-api-java-client</action>
+      <action dev="connaryscott" type="add">Add output download, profile page, API token generation</action>
+      <action dev="connaryscott" type="add">Support Cookie-based user session authentication</action>
+    </release>
     <release version="2.0" date="2011-08-01" description="Use RunDeck REST API version 2 (RunDeck 1.3+)">
       <action dev="vbehar" type="add">Token-based authentication</action>
     </release>
