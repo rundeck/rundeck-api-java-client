@@ -15,16 +15,6 @@
  */
 package org.rundeck.api;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -37,6 +27,17 @@ import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.AssertUtil;
 import org.rundeck.api.util.PagedResults;
 import org.rundeck.api.util.ParametersUtil;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Main entry point to talk to a RunDeck instance.<br>
@@ -71,11 +72,31 @@ public class RundeckClient implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Supported version numbers
+     */
+    public static enum Version {
+        V5(5),
+        V6(6),
+        ;
+
+        private int versionNumber;
+
+        Version(final int i) {
+            versionNumber = i;
+        }
+
+        public int getVersionNumber() {
+            return versionNumber;
+        }
+    }
     /** Version of the API supported */
-    public static final transient int API_VERSION = 5;
+    public static final transient int API_VERSION = Version.V6.getVersionNumber();
+
+    private static final String API = "/api/";
 
     /** End-point of the API */
-    public static final transient String API_ENDPOINT = "/api/" + API_VERSION;
+    public static final transient String API_ENDPOINT = API + API_VERSION;
 
     /** Default value for the "pooling interval" used when running jobs/commands/scripts */
     private static final transient long DEFAULT_POOLING_INTERVAL = 5;
@@ -86,16 +107,47 @@ public class RundeckClient implements Serializable {
     /** URL of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc) */
     private final String url;
 
-    /** Auth-token for authentication (if not using login-based auth) */
-    private final String token;
+    private int apiVersion = API_VERSION;
 
-    /** Login to use for authentication on the RunDeck instance (if not using token-based auth) */
-    private final String login;
+    private String token;
 
-    /** Password to use for authentication on the RunDeck instance (if not using token-based auth) */
-    private final String password;
+    private String login;
+
+    private String password;
     
     private String sessionID;
+
+    void setToken(String token) {
+        this.token = token;
+    }
+
+    void setLogin(String login) {
+        this.login = login;
+    }
+
+    void setPassword(String password) {
+        this.password = password;
+    }
+
+    void setSessionID(String sessionID) {
+        this.sessionID = sessionID;
+    }
+
+    int getApiVersion() {
+        return apiVersion;
+    }
+
+    void setApiVersion(int apiVersion) {
+        this.apiVersion = apiVersion;
+    }
+
+    void setApiVersion(Version apiVersion) {
+        this.apiVersion = apiVersion.getVersionNumber();
+    }
+
+    String getApiEndpoint() {
+        return API + getApiVersion();
+    }
 
     /**
      * Instantiate a new {@link RundeckClient} for the RunDeck instance at the given url, using login-based
@@ -107,11 +159,9 @@ public class RundeckClient implements Serializable {
      * @throws IllegalArgumentException if the url, login or password is blank (null, empty or whitespace)
      */
     public RundeckClient(String url, String login, String password) throws IllegalArgumentException {
-        super();
-        AssertUtil.notBlank(url, "The RunDeck URL is mandatory !");
+        this(url);
         AssertUtil.notBlank(login, "The RunDeck login is mandatory !");
         AssertUtil.notBlank(password, "The RunDeck password is mandatory !");
-        this.url = url;
         this.login = login;
         this.password = password;
         this.token = null;
@@ -126,10 +176,11 @@ public class RundeckClient implements Serializable {
      * @param sessionID to use for session authentication on the RunDeck instance
      * @param useToken should be true if using token, false if using sessionID
      * @throws IllegalArgumentException if the url or token is blank (null, empty or whitespace)
+     * @deprecated Use the builder {@link RundeckClientBuilder}
      */
     public RundeckClient(String url, String token, String sessionID, boolean useToken) throws IllegalArgumentException {
-        super();
-        AssertUtil.notBlank(url, "The RunDeck URL is mandatory !");        
+        this(url);
+
         if(useToken){
             AssertUtil.notBlank(token, "Token is mandatory!");      
             this.token = token;
@@ -140,7 +191,6 @@ public class RundeckClient implements Serializable {
             this.sessionID = sessionID;
             this.token = null;
         }
-        this.url = url;
         this.login = null;
         this.password = null;
     }
@@ -150,6 +200,20 @@ public class RundeckClient implements Serializable {
         this(url, token, null, true);
     }
 
+    /**
+     * Used by RundeckClientBuilder
+     */
+    RundeckClient(final String url) throws IllegalArgumentException {
+        AssertUtil.notBlank(url, "The RunDeck URL is mandatory !");
+        this.url=url;
+    }
+
+    /**
+     * Create a builder for RundeckClient
+     */
+    public static RundeckClientBuilder builder() {
+        return new RundeckClientBuilder();
+    }
 
     /**
      * Try to "ping" the RunDeck instance to see if it is alive

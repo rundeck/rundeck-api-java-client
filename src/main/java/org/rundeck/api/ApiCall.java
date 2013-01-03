@@ -15,22 +15,7 @@
  */
 package org.rundeck.api;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.ProxySelector;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.Header;
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
@@ -38,7 +23,6 @@ import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
-import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
@@ -64,6 +48,21 @@ import org.rundeck.api.RundeckApiException.RundeckApiTokenException;
 import org.rundeck.api.parser.ParserHelper;
 import org.rundeck.api.parser.XmlNodeParser;
 import org.rundeck.api.util.AssertUtil;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.ProxySelector;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
 
 /**
  * Class responsible for making the HTTP API calls
@@ -157,7 +156,7 @@ class ApiCall {
      */
     public void testTokenAuth() throws RundeckApiTokenException {
         try {
-            execute(new HttpGet(client.getUrl() + RundeckClient.API_ENDPOINT + "/system/info"));
+            execute(new HttpGet(client.getUrl() + client.getApiEndpoint() + "/system/info"));
         } catch (RundeckApiTokenException e) {
             throw e;
         } catch (RundeckApiException e) {
@@ -178,7 +177,7 @@ class ApiCall {
      */
     public <T> T get(ApiPathBuilder apiPath, XmlNodeParser<T> parser) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException {
-        return execute(new HttpGet(client.getUrl() + RundeckClient.API_ENDPOINT + apiPath), parser);
+        return execute(new HttpGet(client.getUrl() + client.getApiEndpoint() + apiPath), parser);
     }
 
     /**
@@ -193,7 +192,7 @@ class ApiCall {
      */
     public InputStream get(ApiPathBuilder apiPath) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException {
-        ByteArrayInputStream response = execute(new HttpGet(client.getUrl() + RundeckClient.API_ENDPOINT + apiPath));
+        ByteArrayInputStream response = execute(new HttpGet(client.getUrl() + client.getApiEndpoint() + apiPath));
 
         // try to load the document, to throw an exception in case of error
         ParserHelper.loadDocument(response);
@@ -257,7 +256,7 @@ class ApiCall {
      */
     public <T> T post(ApiPathBuilder apiPath, XmlNodeParser<T> parser) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException {
-        HttpPost httpPost = new HttpPost(client.getUrl() + RundeckClient.API_ENDPOINT + apiPath);
+        HttpPost httpPost = new HttpPost(client.getUrl() + client.getApiEndpoint() + apiPath);
 
         // POST a multi-part request, with all attachments
         if(apiPath.getAttachments().size()>0){
@@ -292,7 +291,7 @@ class ApiCall {
      */
     public <T> T delete(ApiPathBuilder apiPath, XmlNodeParser<T> parser) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException {
-        return execute(new HttpDelete(client.getUrl() + RundeckClient.API_ENDPOINT + apiPath), parser);
+        return execute(new HttpDelete(client.getUrl() + client.getApiEndpoint() + apiPath), parser);
     }
 
     /**
@@ -470,7 +469,7 @@ class ApiCall {
         DefaultHttpClient httpClient = new DefaultHttpClient();
 
         // configure user-agent
-        HttpProtocolParams.setUserAgent(httpClient.getParams(), "RunDeck API Java Client " + RundeckClient.API_VERSION);
+        HttpProtocolParams.setUserAgent(httpClient.getParams(), "RunDeck API Java Client " + client.getApiVersion());
 
         // configure SSL
         SSLSocketFactory socketFactory = null;

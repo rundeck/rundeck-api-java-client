@@ -15,12 +15,9 @@
  */
 package org.rundeck.api;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
+import betamax.Betamax;
 import betamax.MatchRule;
+import betamax.Recorder;
 import betamax.TapeMode;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,10 +29,13 @@ import org.rundeck.api.domain.RundeckHistory;
 import org.rundeck.api.domain.RundeckJobDelete;
 import org.rundeck.api.domain.RundeckJobDeleteBulk;
 import org.rundeck.api.domain.RundeckProject;
-import betamax.Betamax;
-import betamax.Recorder;
 import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.PagedResults;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -44,6 +44,10 @@ import org.rundeck.api.util.PagedResults;
  * @author Vincent Behar
  */
 public class RundeckClientTest {
+
+    public static final String TEST_TOKEN_0 = "PVnN5K3OPc5vduS3uVuVnEsD57pDC5pd";
+    public static final String TEST_TOKEN_1 = "0UUNkeRp4d58EDeCs7S6UdODp334DvK9";
+    public static final String TEST_TOKEN_2 = "PP4s4SdCRO6KUoNPd1D303Dc304ORN87";
 
     @Rule
     public Recorder recorder = new Recorder();
@@ -132,7 +136,7 @@ public class RundeckClientTest {
              match = {MatchRule.uri, MatchRule.headers, MatchRule.method, MatchRule.path, MatchRule.query})
     public void getExecutions() throws Exception {
 
-        RundeckClient client = new RundeckClient("http://rundeck.local:4440", "0UUNkeRp4d58EDeCs7S6UdODp334DvK9");
+        RundeckClient client = createClient(TEST_TOKEN_1);
 
 
         final String projectName = "blah";
@@ -259,7 +263,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "get_executions_paging")
     public void getExecutionsPaging() throws Exception{
-        RundeckClient client = new RundeckClient("http://rundeck.local:4440", "0UUNkeRp4d58EDeCs7S6UdODp334DvK9");
+        RundeckClient client = createClient(TEST_TOKEN_1);
         final String projectName = "blah";
         //2 max, 1 offset
         final PagedResults<RundeckExecution> adhocTest = client.getExecutions(ExecutionQuery.builder()
@@ -290,7 +294,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "bulk_delete")
     public void bulkDelete() throws Exception {
-        RundeckClient client = new RundeckClient("http://rundeck.local:4440", "PP4s4SdCRO6KUoNPd1D303Dc304ORN87");
+        RundeckClient client = createClient(TEST_TOKEN_2);
 
         final RundeckJobDeleteBulk deleteTest
             = client.deleteJobs(Arrays.asList("0ce457b5-ba84-41ca-812e-02b31da355a4"));
@@ -308,7 +312,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "bulk_delete_dne")
     public void bulkDeleteFailDNE() throws Exception {
-        RundeckClient client = new RundeckClient("http://rundeck.local:4440", "PP4s4SdCRO6KUoNPd1D303Dc304ORN87");
+        RundeckClient client = createClient(TEST_TOKEN_2);
 
         final RundeckJobDeleteBulk deleteTest
             = client.deleteJobs(Arrays.asList("does-not-exist"));
@@ -326,7 +330,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "bulk_delete_unauthorized")
     public void bulkDeleteFailUnauthorized() throws Exception {
-        RundeckClient client = new RundeckClient("http://rundeck.local:4440", "PP4s4SdCRO6KUoNPd1D303Dc304ORN87");
+        RundeckClient client = createClient(TEST_TOKEN_2);
 
         final RundeckJobDeleteBulk deleteTest
             = client.deleteJobs(Arrays.asList("3a6d16be-4268-4d26-86a9-cebc1781f768"));
@@ -356,7 +360,14 @@ public class RundeckClientTest {
     public void setUp() throws Exception {
         // not that you can put whatever here, because we don't actually connect to the RunDeck instance
         // but instead use betamax as a proxy to serve the previously recorded tapes (in src/test/resources)
-        client = new RundeckClient("http://rundeck.local:4440", "PVnN5K3OPc5vduS3uVuVnEsD57pDC5pd");
+        client = createClient(TEST_TOKEN_0);
+    }
+
+    private RundeckClient createClient(final String token) {
+        return RundeckClient.builder().url("http://rundeck.local:4440")
+            .token(token)
+            .version(5)
+            .build();
     }
 
 }
