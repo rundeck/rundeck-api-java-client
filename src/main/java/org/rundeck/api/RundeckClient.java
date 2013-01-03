@@ -2526,7 +2526,7 @@ public class RundeckClient implements Serializable {
                                                                                       .param("lastlines", lastlines)
                                                                                       .param("lastmod", lastmod)
                                                                                       .param("maxlines", maxlines),
-                                     new OutputParser("result/output"));
+                                     new OutputParser("result/output", createOutputEntryParser()));
     }
 
     
@@ -2549,7 +2549,15 @@ public class RundeckClient implements Serializable {
         return new ApiCall(this).get(new ApiPathBuilder("/execution/", executionId.toString(), "/output.xml").param("offset", offset)
                                                                                       .param("lastmod", lastmod)
                                                                                       .param("maxlines", maxlines),
-                                     new OutputParser("result/output"));
+                                     new OutputParser("result/output", createOutputEntryParser()));
+    }
+
+    private OutputEntryParser createOutputEntryParser() {
+        if (getApiVersion() <= Version.V5.versionNumber) {
+            return new OutputEntryParserV5();
+        }else{
+            return new OutputEntryParser();
+        }
     }
 
     

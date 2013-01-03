@@ -6,6 +6,9 @@ import org.dom4j.Node;
 import org.rundeck.api.domain.RundeckOutputEntry;
 import org.rundeck.api.domain.RundeckOutputEntry.RundeckLogLevel;
 
+/**
+ * Parses output message content for API v6
+ */
 public class OutputEntryParser implements XmlNodeParser<RundeckOutputEntry> {
 
 
@@ -39,9 +42,16 @@ public class OutputEntryParser implements XmlNodeParser<RundeckOutputEntry> {
         outputEntry.setUser(StringUtils.trimToNull(entryNode.valueOf("@user")));
         outputEntry.setCommand(StringUtils.trimToNull(entryNode.valueOf("@command")));
         outputEntry.setNode(StringUtils.trimToNull(entryNode.valueOf("@node")));
-        outputEntry.setMessage(StringUtils.trimToNull(entryNode.getStringValue()));
+        outputEntry.setMessage(parseMessage(entryNode));
         
         return outputEntry;
+    }
+
+    /**
+     * Parse the message content
+     */
+    protected String parseMessage(Node entryNode) {
+        return StringUtils.trimToNull(entryNode.valueOf("@log"));
     }
 
 }
