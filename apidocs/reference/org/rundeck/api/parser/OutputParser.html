@@ -177,6 +177,7 @@
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ListParser.html">ListParser</a>&lt;T&gt;</li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/NodeParser.html">NodeParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/OutputEntryParser.html">OutputEntryParser</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/OutputEntryParserV5.html">OutputEntryParserV5</a></li>
           <li class="selected api apilevel-"><a href="../../../../org/rundeck/api/parser/OutputParser.html">OutputParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/PagedResultParser.html">PagedResultParser</a>&lt;T&gt;</li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ParserHelper.html">ParserHelper</a></li>
@@ -404,23 +405,7 @@ Summary:
             </nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../org/rundeck/api/parser/OutputParser.html#OutputParser()">OutputParser</a></span>()</nobr>
-        
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol"><nobr>
-            
-            
-            
-            
-            
-            </nobr>
-        </td>
-        <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../org/rundeck/api/parser/OutputParser.html#OutputParser(java.lang.String)">OutputParser</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> xpath)</nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/OutputParser.html#OutputParser(java.lang.String, org.rundeck.api.parser.XmlNodeParser<org.rundeck.api.domain.RundeckOutputEntry>)">OutputParser</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> xpath, <a href="../../../../org/rundeck/api/parser/XmlNodeParser.html">XmlNodeParser</a>&lt;<a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html">RundeckOutputEntry</a>&gt; parser)</nobr>
         
   </td></tr>
 
@@ -750,7 +735,7 @@ From interface
 
 
 
-<A NAME="OutputParser()"></A>
+<A NAME="OutputParser(java.lang.String, org.rundeck.api.parser.XmlNodeParser<org.rundeck.api.domain.RundeckOutputEntry>)"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -763,7 +748,7 @@ From interface
         
       </span>
       <span class="sympad">OutputParser</span>
-      <span class="normal">()</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> xpath, <a href="../../../../org/rundeck/api/parser/XmlNodeParser.html">XmlNodeParser</a>&lt;<a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html">RundeckOutputEntry</a>&gt; parser)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -776,47 +761,6 @@ From interface
     <div class="jd-details-descr">
       
   <div class="jd-tagdata jd-tagdescr"><p></p></div>
-
-    </div>
-</div>
-
-
-<A NAME="OutputParser(java.lang.String)"></A>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-         
-         
-        
-      </span>
-      <span class="sympad">OutputParser</span>
-      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> xpath)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      
-  <div class="jd-tagdata jd-tagdescr"><p></p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>xpath</td>
-          <td>of the event element if it is not the root node
-</td>
-        </tr>
-      </table>
-  </div>
 
     </div>
 </div>

@@ -24,6 +24,28 @@ javadoc proofread file: ./proof-read.txt
         <p>See the documentation of the <a href="org/rundeck/api/RundeckClient.html">RundeckClient</a> class (main entry point of the API).</p>
 
 
+=== org/rundeck/api/RundeckClientBuilder.html ===
+        Builder to create a
+        {@link ... RundeckClient}
+        , you must specify a url, and at least one of (login, password), token, or
+         sessionId.
+METHOD: build
+        Create the RundeckClient instance
+METHOD: login
+METHOD: login
+METHOD: password
+METHOD: sessionId
+        Specify a web session ID string for authentication
+METHOD: token
+        Specify a Rundeck API Token string for authentication
+METHOD: url
+        Specify the URL
+METHOD: version
+        Specify another version number to use
+METHOD: version
+        Specify another version number to use
+
+
 === org/rundeck/api/RundeckClient.html ===
         Main entry point to talk to a RunDeck instance.<br>
          You have 2 methods for authentication : login-based or token-based. If you want to use the first, you need to provide
@@ -67,6 +89,8 @@ CONSTRUCTOR: RundeckClient
          using token-based or session-based authentication. Either token or sessionID must be valid
 METHOD: abortExecution
         Abort an execution (identified by the given ID). The execution should be running...
+METHOD: builder
+        Create a builder for RundeckClient
 METHOD: deleteJob
         Delete a single job, identified by the given ID
 METHOD: deleteJobs
@@ -362,6 +386,15 @@ METHOD: triggerJob
 METHOD: triggerJob
         Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
          end of the job execution)
+
+
+=== org/rundeck/api/RundeckClient.Version.html ===
+        Supported version numbers
+ENUM: V5
+ENUM: V6
+METHOD: getVersionNumber
+METHOD: valueOf
+METHOD: values
 
 
 === org/rundeck/api/RundeckApiException.html ===
@@ -888,13 +921,22 @@ METHOD: parseXmlNode
 
 === org/rundeck/api/parser/OutputParser.html ===
 CONSTRUCTOR: OutputParser
-CONSTRUCTOR: OutputParser
 METHOD: parseXmlNode
 
 
+=== org/rundeck/api/parser/OutputEntryParserV5.html ===
+        OutputEntryParserV5 parses message entry for API v5
+CONSTRUCTOR: OutputEntryParserV5
+CONSTRUCTOR: OutputEntryParserV5
+METHOD: parseMessage
+
+
 === org/rundeck/api/parser/OutputEntryParser.html ===
+        Parses output message content for API v6
 CONSTRUCTOR: OutputEntryParser
 CONSTRUCTOR: OutputEntryParser
+METHOD: parseMessage
+        Parse the message content
 METHOD: parseXmlNode
 
 

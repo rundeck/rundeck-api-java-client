@@ -160,6 +160,39 @@
 <exception name="Exception" type="java.lang.Exception">
 </exception>
 </method>
+<field name="TEST_TOKEN_0"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;PVnN5K3OPc5vduS3uVuVnEsD57pDC5pd&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TEST_TOKEN_1"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;0UUNkeRp4d58EDeCs7S6UdODp334DvK9&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TEST_TOKEN_2"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;PP4s4SdCRO6KUoNPd1D303Dc304ORN87&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="recorder"
  type="betamax.Recorder"
  transient="false"

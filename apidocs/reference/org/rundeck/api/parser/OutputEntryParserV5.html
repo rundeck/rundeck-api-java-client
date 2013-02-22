@@ -55,7 +55,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.ico" />
 <title>
 
-  ParserHelper
+  OutputEntryParserV5
 
 
 | RunDeck API - Java Client
@@ -177,10 +177,10 @@
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ListParser.html">ListParser</a>&lt;T&gt;</li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/NodeParser.html">NodeParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/OutputEntryParser.html">OutputEntryParser</a></li>
-          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/OutputEntryParserV5.html">OutputEntryParserV5</a></li>
+          <li class="selected api apilevel-"><a href="../../../../org/rundeck/api/parser/OutputEntryParserV5.html">OutputEntryParserV5</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/OutputParser.html">OutputParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/PagedResultParser.html">PagedResultParser</a>&lt;T&gt;</li>
-          <li class="selected api apilevel-"><a href="../../../../org/rundeck/api/parser/ParserHelper.html">ParserHelper</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ParserHelper.html">ParserHelper</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ProjectParser.html">ProjectParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/StringParser.html">StringParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/SystemInfoParser.html">SystemInfoParser</a></li>
@@ -234,6 +234,20 @@
   
   
 
+  
+   
+  
+  
+  
+  
+
+  
+   
+  
+  
+  
+  
+
 
 <div class="sum-details-links">
 
@@ -252,9 +266,9 @@ Summary:
 
 
 
-  &#124; <a href="#pubmethods">Methods</a>
-  
 
+  &#124; <a href="#promethods">Protected Methods</a>
+  
 
 
   &#124; <a href="#inhmethods">Inherited Methods</a>
@@ -281,17 +295,26 @@ Summary:
      
     
     class
-<h1>ParserHelper</h1>
+<h1>OutputEntryParserV5</h1>
 
 
 
-  
-    extends <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Object.html">Object</a><br/>
   
   
   
 
   
+    extends <a href="../../../../org/rundeck/api/parser/OutputEntryParser.html">OutputEntryParser</a><br/>
+  
+  
+  
+
+  
+  
+      implements 
+      
+        <a href="../../../../org/rundeck/api/parser/XmlNodeParser.html">XmlNodeParser</a>&lt;T&gt; 
+      
   
   
 
@@ -306,7 +329,7 @@ Summary:
 
     <tr>
          	
-        <td colspan="2" class="jd-inheritance-class-cell"><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Object.html">java.lang.Object</a></td>
+        <td colspan="3" class="jd-inheritance-class-cell"><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Object.html">java.lang.Object</a></td>
     </tr>
     
 
@@ -314,7 +337,17 @@ Summary:
         
             <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
          	
-        <td colspan="1" class="jd-inheritance-class-cell">org.rundeck.api.parser.ParserHelper</td>
+        <td colspan="2" class="jd-inheritance-class-cell"><a href="../../../../org/rundeck/api/parser/OutputEntryParser.html">org.rundeck.api.parser.OutputEntryParser</a></td>
+    </tr>
+    
+
+    <tr>
+        
+            <td class="jd-inheritance-space">&nbsp;</td>
+        
+            <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
+         	
+        <td colspan="1" class="jd-inheritance-class-cell">org.rundeck.api.parser.OutputEntryParserV5</td>
     </tr>
     
 
@@ -330,7 +363,7 @@ Summary:
 
 
 <h2>Class Overview</h2>
-<p>Helper for parsing RunDeck responses</p>
+<p>OutputEntryParserV5 parses message entry for API v5</p>
 
 
 
@@ -396,7 +429,23 @@ Summary:
             </nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../org/rundeck/api/parser/ParserHelper.html#ParserHelper()">ParserHelper</a></span>()</nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/OutputEntryParserV5.html#OutputEntryParserV5()">OutputEntryParserV5</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            </nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/OutputEntryParserV5.html#OutputEntryParserV5(java.lang.String)">OutputEntryParserV5</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> xpath)</nobr>
         
   </td></tr>
 
@@ -409,8 +458,10 @@ Summary:
 
 
 
+
+
 <!-- ========== METHOD SUMMARY =========== -->
-<table id="pubmethods" class="jd-sumtable"><tr><th colspan="12">Public Methods</th></tr>
+<table id="promethods" class="jd-sumtable"><tr><th colspan="12">Protected Methods</th></tr>
 
 
 
@@ -420,14 +471,15 @@ Summary:
             
             
             
-            static
             
-            Document</nobr>
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../org/rundeck/api/parser/ParserHelper.html#loadDocument(java.io.InputStream)">loadDocument</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/InputStream.html">InputStream</a> inputStream)</nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/OutputEntryParserV5.html#parseMessage(org.dom4j.Node)">parseMessage</a></span>(Node entryNode)</nobr>
         
-        <div class="jd-descrdiv">Load an XML Document from the given InputStream</div>
+        <div class="jd-descrdiv">Parse the message content
+</div>
   
   </td></tr>
 
@@ -439,12 +491,73 @@ Summary:
 
 
 
-
-
 <!-- ========== METHOD SUMMARY =========== -->
 <table id="inhmethods" class="jd-sumtable"><tr><th>
   <a href="#" class="toggle-all" onclick="return toggleAllInherited(this, null)">[Expand]</a>
   <div style="clear:left;">Inherited Methods</div></th></tr>
+
+
+<tr class="api apilevel-" >
+<td colspan="12">
+  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-org.rundeck.api.parser.OutputEntryParser" class="jd-expando-trigger closed"
+          ><img id="inherited-methods-org.rundeck.api.parser.OutputEntryParser-trigger"
+          src="../../../../../assets/images/triangle-closed.png"
+          class="jd-expando-trigger-img" /></a>
+From class
+
+  <a href="../../../../org/rundeck/api/parser/OutputEntryParser.html">org.rundeck.api.parser.OutputEntryParser</a>
+
+<div id="inherited-methods-org.rundeck.api.parser.OutputEntryParser">
+  <div id="inherited-methods-org.rundeck.api.parser.OutputEntryParser-list"
+        class="jd-inheritedlinks">
+  </div>
+  <div id="inherited-methods-org.rundeck.api.parser.OutputEntryParser-summary" style="display: none;">
+    <table class="jd-sumtable-expando">
+    
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/OutputEntryParser.html#parseMessage(org.dom4j.Node)">parseMessage</a></span>(Node entryNode)</nobr>
+        
+        <div class="jd-descrdiv">Parse the message content
+</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html">RundeckOutputEntry</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/OutputEntryParser.html#parseXmlNode(org.dom4j.Node)">parseXmlNode</a></span>(Node node)</nobr>
+        
+        <div class="jd-descrdiv">Parse the given XML Node</div>
+  
+  </td></tr>
+
+
+</table>
+  </div>
+</div>
+</td></tr>
+
 
 
 <tr class="api apilevel-" >
@@ -648,6 +761,50 @@ From class
 </td></tr>
 
 
+
+<tr class="api apilevel-" >
+<td colspan="12">
+  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-org.rundeck.api.parser.XmlNodeParser" class="jd-expando-trigger closed"
+          ><img id="inherited-methods-org.rundeck.api.parser.XmlNodeParser-trigger"
+          src="../../../../../assets/images/triangle-closed.png"
+          class="jd-expando-trigger-img" /></a>
+From interface
+
+  <a href="../../../../org/rundeck/api/parser/XmlNodeParser.html">org.rundeck.api.parser.XmlNodeParser</a>
+
+<div id="inherited-methods-org.rundeck.api.parser.XmlNodeParser">
+  <div id="inherited-methods-org.rundeck.api.parser.XmlNodeParser-list"
+        class="jd-inheritedlinks">
+  </div>
+  <div id="inherited-methods-org.rundeck.api.parser.XmlNodeParser-summary" style="display: none;">
+    <table class="jd-sumtable-expando">
+    
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            T</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/XmlNodeParser.html#parseXmlNode(org.dom4j.Node)">parseXmlNode</a></span>(Node node)</nobr>
+        
+        <div class="jd-descrdiv">Parse the given XML Node</div>
+  
+  </td></tr>
+
+
+</table>
+  </div>
+</div>
+</td></tr>
+
+
 </table>
 
 
@@ -682,7 +839,7 @@ From class
 
 
 
-<A NAME="ParserHelper()"></A>
+<A NAME="OutputEntryParserV5()"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -694,8 +851,39 @@ From class
          
         
       </span>
-      <span class="sympad">ParserHelper</span>
+      <span class="sympad">OutputEntryParserV5</span>
       <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="OutputEntryParserV5(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        
+      </span>
+      <span class="sympad">OutputEntryParserV5</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> xpath)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -724,24 +912,28 @@ From class
 <!-- ========= METHOD DETAIL ======== -->
 <!-- Public methdos -->
 
-<h2>Public Methods</h2>
+
+
+<!-- ========= METHOD DETAIL ======== -->
+
+<h2>Protected Methods</h2>
 
 
 
-<A NAME="loadDocument(java.io.InputStream)"></A>
+<A NAME="parseMessage(org.dom4j.Node)"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
       <span class="normal">
-        public 
-        static 
+        protected 
          
          
          
-        Document
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>
       </span>
-      <span class="sympad">loadDocument</span>
-      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/InputStream.html">InputStream</a> inputStream)</span>
+      <span class="sympad">parseMessage</span>
+      <span class="normal">(Node entryNode)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -753,39 +945,13 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Load an XML Document from the given InputStream</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>inputStream</td>
-          <td>from an API call to RunDeck</td>
-        </tr>
-      </table>
-  </div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Returns</h5>
-      <ul class="nolist"><li>an XML Document</li></ul>
-  </div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Throws</h5>
-      <table class="jd-tagtable">  
-        <tr>
-            <th><a href="../../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
-            <td>if we failed to read the response, or if the response is an error
-</td>
-        </tr>
-      </table>
-  </div>
+  <div class="jd-tagdata jd-tagdescr"><p>Parse the message content
+</p></div>
 
     </div>
 </div>
 
 
-
-
-
-<!-- ========= METHOD DETAIL ======== -->
 
 
 

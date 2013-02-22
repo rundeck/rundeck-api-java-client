@@ -132,6 +132,9 @@ METHOD: parsePendingAbort
         Test the
         {@link/RundeckClient}
         . Uses betamax to unit-test HTTP requests without a live RunDeck instance.
+FIELD: TEST_TOKEN_0
+FIELD: TEST_TOKEN_1
+FIELD: TEST_TOKEN_2
 FIELD: recorder
 CONSTRUCTOR: RundeckClientTest
 METHOD: bulkDelete
