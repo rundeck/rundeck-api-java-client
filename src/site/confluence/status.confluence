@@ -56,3 +56,8 @@ h2. RunDeck API version 5
 * Execution Query - OK
 * History list query - OK
 
+h2. RunDeck API version 6
+
+[Documentation of the RunDeck API version 6|http://rundeck.org/1.5/api/index.html]
+
+* Execution Output format fixed - OK

@@ -22,6 +22,11 @@
     <author>Vincent Behar</author>
   </properties>
   <body>
+    <release date='2013-02-21' description='Update for Rundeck API version 6' version='6.0'>
+      <action type='add' dev='gschueler'>
+        Support update for output entry format, API v6 #1
+      </action>
+    </release>
     <release version="5.0" date="2012-12-30" description="Use RunDeck REST API version 5 (RunDeck 1.4.4)">
       
       <action dev="gschueler" type="add">Job Execution result contains average duration (v5)</action>
