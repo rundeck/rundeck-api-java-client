@@ -1,0 +1,35 @@
+!tape
+name: trigger_adhoc_command
+interactions:
+- recorded: 2013-03-29T19:57:23.492Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/run/command?project=test&exec=echo+test+trigger_adhoc_command
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 9RdEosesKP3se4oV9EKOd4s3RUeUS3ON
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=1ectxi0o7trf4;Path=/
+    body: <result success='true' apiversion='5'><success><message>Immediate execution scheduled (23)</message></success><execution id='23'/></result>
+- recorded: 2013-03-29T19:57:23.527Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/execution/23
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 9RdEosesKP3se4oV9EKOd4s3RUeUS3ON
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='5'><executions count='1'><execution id='23' href='http://dignan:4440/execution/follow/23' status='succeeded'><user>admin</user><date-started unixtime='1364587043452'>2013-03-29T19:57:23Z</date-started><date-ended unixtime='1364587043496'>2013-03-29T19:57:23Z</date-ended><description>echo test trigger_adhoc_command</description><argstring/></execution></executions></result>

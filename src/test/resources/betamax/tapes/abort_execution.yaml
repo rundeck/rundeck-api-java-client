@@ -1,0 +1,20 @@
+!tape
+name: abort_execution
+interactions:
+- recorded: 2013-03-29T19:46:54.057Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/execution/21/abort
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 9RdEosesKP3se4oV9EKOd4s3RUeUS3ON
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=s0jn6bu9ijlh;Path=/
+    body: '<result success=''true'' apiversion=''5''><success><message>Execution status: running</message></success><abort status=''pending''><execution id=''21'' status=''running''/></abort></result>'

@@ -1,0 +1,41 @@
+!tape
+name: trigger_adhoc_script_as_user
+interactions:
+- recorded: 2013-03-29T20:15:40.223Z
+  request:
+    method: POST
+    uri: http://rundeck.local:4440/api/5/run/script?project=test&asUser=api-java-client-test-adhoc-script-as-user1
+    headers:
+      Content-Type: multipart/form-data; boundary=PtMlGUvOZTAvTtuFv7N4aCTeVwVXGBU7137
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      Transfer-Encoding: chunked
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 9RdEosesKP3se4oV9EKOd4s3RUeUS3ON
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=130cx6ycqxdnz;Path=/
+    body: <result success='true' apiversion='5'><success><message>Immediate execution scheduled (26)</message></success><execution id='26'/></result>
+- recorded: 2013-03-29T20:15:40.291Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/execution/26
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 9RdEosesKP3se4oV9EKOd4s3RUeUS3ON
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: '<result success=''true'' apiversion=''5''><executions count=''1''><execution id=''26'' href=''http://dignan:4440/execution/follow/26'' status=''running''><user>api-java-client-test-adhoc-script-as-user1</user><date-started unixtime=''1364588140189''>2013-03-29T20:15:40Z</date-started><description>#!/bin/bash
+
+      echo test trigger_adhoc_script
+
+      </description><argstring/></execution></executions></result>'

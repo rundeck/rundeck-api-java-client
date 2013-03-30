@@ -1,0 +1,18 @@
+!tape
+name: trigger_adhoc_command_as_user_unauthorized
+interactions:
+- recorded: 2013-03-29T20:29:44.099Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/run/command?project=test&exec=echo+test+trigger_adhoc_command_as_user&asUser=api-java-client-test-run-command-as-user1
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 9RdEosesKP3se4oV9EKOd4s3RUeUS3ON
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result error='true' apiversion='5'><error><message>Not authorized for action "Run as User" for Run Adhoc</message></error></result>

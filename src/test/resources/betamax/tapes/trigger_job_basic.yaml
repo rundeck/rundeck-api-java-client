@@ -1,0 +1,20 @@
+!tape
+name: trigger_job_basic
+interactions:
+- recorded: 2013-03-29T19:39:04.442Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/job/3170ba0e-6093-4b58-94d2-52988aefbfc9/run
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 9RdEosesKP3se4oV9EKOd4s3RUeUS3ON
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=pyljht19673c;Path=/
+    body: <result success='true' apiversion='5'><executions count='1'><execution id='19' href='http://dignan:4440/execution/follow/19' status='running'><user>admin</user><date-started unixtime='1364585944215'>2013-03-29T19:39:04Z</date-started><job id='3170ba0e-6093-4b58-94d2-52988aefbfc9' averageDuration='90180'><name>test job 1</name><group></group><project>test</project><description></description></job><description>echo hi there ${job.username} ; sleep 90</description><argstring/></execution></executions></result>

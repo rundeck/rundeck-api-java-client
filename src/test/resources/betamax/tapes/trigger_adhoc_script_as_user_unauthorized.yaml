@@ -1,0 +1,38 @@
+!tape
+name: trigger_adhoc_script_as_user_unauthorized
+interactions:
+- recorded: 2013-03-29T20:31:13.669Z
+  request:
+    method: POST
+    uri: http://rundeck.local:4440/api/5/run/script?project=test&asUser=api-java-client-test-adhoc-script-as-user1
+    headers:
+      Content-Type: multipart/form-data; boundary=jnpXLHXeLpI_iLu2EioWePNLmLGmsdwKv
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      Transfer-Encoding: chunked
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 9RdEosesKP3se4oV9EKOd4s3RUeUS3ON
+  response:
+    status: 302
+    headers:
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Location: http://rundeck.local:4440/api/error;jsessionid=1hbsc2k5khghe
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=1hbsc2k5khghe;Path=/
+- recorded: 2013-03-29T20:31:13.694Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/error;jsessionid=1hbsc2k5khghe
+    headers:
+      Cookie: JSESSIONID=1hbsc2k5khghe
+      Cookie2: $Version=1
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 9RdEosesKP3se4oV9EKOd4s3RUeUS3ON
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result error='true' apiversion='5'><error><message>Not authorized for action "Run as User" for Run Adhoc</message></error></result>

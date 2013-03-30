@@ -1,0 +1,20 @@
+!tape
+name: abort_execution_as_user_unauthorized
+interactions:
+- recorded: 2013-03-29T20:34:04.285Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/execution/28/abort?asUser=api-java-client-test-abort-as-user1
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 9RdEosesKP3se4oV9EKOd4s3RUeUS3ON
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=1i3vnb19oksh7;Path=/
+    body: '<result success=''true'' apiversion=''5''><success><message>Execution status: running</message></success><abort status=''failed'' reason=''unauthorized''><execution id=''28'' status=''running''/></abort></result>'
