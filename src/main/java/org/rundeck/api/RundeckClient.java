@@ -41,13 +41,27 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Main entry point to talk to a RunDeck instance.
- * <br>
- *     <em>Deprecation Warning:</em> The "triggerAdhocScript" methods which take multiple arguments are deprecated in
- *     favor of {@link #triggerAdhocScript(RunAdhocScript)}. The methods will be removed in version 10 of this library.
- *     <br>
+ * <p>
+ *     <em>Deprecation Warning:</em> These methods which take multiple arguments are deprecated in
+ *     favor of single argument versions, and associated Builder classes to generate them.
+ *     These methods will be removed in version 10 of this library:
+ *     <ul>
+ *         <li> triggerAdhocScript(...), use {@link #triggerAdhocScript(RunAdhocScript)} and {@link RunAdhocScriptBuilder}</li>
+ *         <li> runAdhocScript(...), use {@link #runAdhocScript(RunAdhocScript)} and {@link RunAdhocScriptBuilder}</li>
+ *         <li> triggerAdhocCommand(...), use {@link #triggerAdhocCommand(RunAdhocCommand)} and {@link
+ *         RunAdhocCommandBuilder}</li>
+ *         <li> runAdhocCommand(...), use {@link #runAdhocCommand(RunAdhocCommand)} and {@link
+ *         RunAdhocCommandBuilder}</li>
+ *         <li> triggerJob(...), use {@link #triggerJob(RunJob)} and {@link
+ *         RunJobBuilder}</li>
+ *         <li> runJob(...), use {@link #runJob(RunJob)} and {@link
+ *         RunJobBuilder}</li>
+ *     </ul>
+ *     </p>
+ * <p>
  * You have 2 methods for authentication : login-based or token-based. If you want to use the first, you need to provide
  * both a "login" and a "password". Otherwise, just provide a "token" (also called "auth-token"). See the RunDeck
- * documentation for generating such a token.<br>
+ * documentation for generating such a token.</p>
  * <br>
  * Usage : <br>
  * <code>
@@ -1048,7 +1062,7 @@ public class RundeckClient implements Serializable {
      * We will poll the RunDeck server at regular interval (every 5 seconds) to know if the execution is finished (or
      * aborted) or is still running.
      *
-     * @param jobRun the RunJob, see {@link RunJobBuilder}
+     * @param runJob the RunJob, see {@link RunJobBuilder}
      *
      * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
      *
@@ -1703,7 +1717,7 @@ public class RundeckClient implements Serializable {
      *
      * @param project name of the project - mandatory
      * @param scriptFilename filename of the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
+     * @param argString arguments of the script - optional.
      * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
      * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
      * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
@@ -1863,7 +1877,7 @@ public class RundeckClient implements Serializable {
      *
      * @param project name of the project - mandatory
      * @param script inputStream for reading the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
+     * @param argString arguments of the script - optional.
      * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
      * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
      * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
@@ -1889,6 +1903,38 @@ public class RundeckClient implements Serializable {
                 .setNodeKeepgoing(nodeKeepgoing)
                 .setAsUser(asUser)
                 .create());
+    }
+
+    /**
+     * Trigger the execution of an ad-hoc script read from a file, and return immediately (without waiting the end of
+     * the execution). The script will be dispatched to nodes, accordingly to the nodeFilters parameter.
+     *
+     * @param script         the RunAdhocScript, see {@link RunAdhocScriptBuilder}
+     * @param scriptFilename a file to read as the input script stream
+     *
+     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
+     * @throws IOException              if an error occurs reading the script file
+     * @see #triggerAdhocScript(RunAdhocScript)
+     * @see #runAdhocScript(RunAdhocScript, long, java.util.concurrent.TimeUnit)
+     */
+    public RundeckExecution triggerAdhocScript(final RunAdhocScript script, final String scriptFilename) throws
+            RundeckApiException,
+            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
+        AssertUtil.notBlank(scriptFilename, "scriptFilename is mandatory to trigger an ad-hoc script !");
+        FileInputStream stream = null;
+        try {
+            stream = FileUtils.openInputStream(new File(scriptFilename));
+            return triggerAdhocScript(RunAdhocScriptBuilder.builder(script)
+                    .setScript(stream)
+                    .create());
+        } finally {
+            IOUtils.closeQuietly(stream);
+        }
     }
     /**
      * Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
@@ -2453,6 +2499,42 @@ public class RundeckClient implements Serializable {
                 .setNodeKeepgoing(nodeKeepgoing)
                 .setAsUser(asUser)
                 .create(), poolingInterval, poolingUnit);
+    }
+
+    /**
+     * Run an ad-hoc script read from a file, and wait until its execution is finished (or aborted) to return. We will
+     * poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the
+     * execution is finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to
+     * the nodeFilters parameter.
+     *
+     * @param script          the RunAdhocScript, see {@link RunAdhocScriptBuilder}
+     * @param scriptFilename  filename of a script to read
+     * @param poolingInterval for checking the status of the execution. Must be > 0.
+     * @param poolingUnit     unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
+     *
+     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
+     * @throws IOException              if we failed to read the file
+     * @see #runAdhocScript(RunAdhocScript)
+     * @see #triggerAdhocScript(RunAdhocScript, String)
+     */
+    public RundeckExecution runAdhocScript(final RunAdhocScript script, final String scriptFilename,
+            final long poolingInterval, final TimeUnit poolingUnit) throws RundeckApiException,
+            RundeckApiLoginException, RundeckApiTokenException,
+            IllegalArgumentException, IOException {
+        FileInputStream stream = null;
+        try {
+            stream = FileUtils.openInputStream(new File(scriptFilename));
+            return runAdhocScript(RunAdhocScriptBuilder.builder(script)
+                    .setScript(stream)
+                    .create(), poolingInterval, poolingUnit);
+        } finally {
+            IOUtils.closeQuietly(stream);
+        }
     }
     /**
      * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
@@ -3031,7 +3113,7 @@ public class RundeckClient implements Serializable {
     /**
      * Get the output of a job execution
      *
-     * @param id of the execution - mandatory
+     * @param executionId id of the execution - mandatory
      * @return an {@link InputStream} instance, not linked to any network resources - won't be null
      * @throws RundeckApiException in case of error when calling the API (non-existent name or project with this name)
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
@@ -3106,7 +3188,7 @@ public class RundeckClient implements Serializable {
     /**
      * Get the execution output of the given job
      *
-     * @param jobId identifier of the job - mandatory
+     * @param executionId identifier of the execution - mandatory
      * @param offset byte offset to read from in the file. 0 indicates the beginning.
      * @param lastmod epoch datestamp in milliseconds, return results only if modification changed since the specified date OR if more data is available at the given offset
      * @param maxlines maximum number of lines to retrieve forward from the specified offset.
