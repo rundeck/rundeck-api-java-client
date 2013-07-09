@@ -7,31 +7,31 @@ import java.util.Properties;
  */
 public interface RunAdhoc {
     /**
-     * Project name
+     * Project name, required
      * @return
      */
     String getProject();
 
     /**
-     * Node filters
+     * Filters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
      * @return
      */
     Properties getNodeFilters();
 
     /**
-     * Threadcount
+     * Thread count to use (for parallelizing when running on multiple nodes) - optional
      * @return
      */
     Integer getNodeThreadcount();
 
     /**
-     * Keepgoing
+     * if true, continue executing on other nodes even if some fail - optional
      * @return
      */
     Boolean getNodeKeepgoing();
 
     /**
-     * As User
+     * Specify a user name to run the job as, must have 'runAs' permission
      * @return
      */
     String getAsUser();

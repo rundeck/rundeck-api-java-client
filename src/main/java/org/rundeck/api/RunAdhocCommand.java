@@ -6,7 +6,7 @@ package org.rundeck.api;
 public interface RunAdhocCommand extends RunAdhoc {
 
     /**
-     * Command to execute
+     * Command to executed
      * @return
      */
     String getCommand();

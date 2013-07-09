@@ -8,7 +8,7 @@ import java.io.InputStream;
 public interface RunAdhocScript extends RunAdhoc {
 
     /**
-     * Stream containing script
+     * InputStream for reading the script to be executed - mandatory
      * @return
      */
     InputStream getScript();
