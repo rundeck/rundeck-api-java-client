@@ -3,7 +3,7 @@ package org.rundeck.api;
 import java.util.Properties;
 
 /**
- * $INTERFACE is ... User: greg Date: 7/9/13 Time: 10:38 AM
+ * Builder for adhoc command request
  */
 public class RunAdhocCommandBuilder {
     private DefaultRunAdhocCommand command;

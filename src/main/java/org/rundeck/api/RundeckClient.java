@@ -96,6 +96,8 @@ public class RundeckClient implements Serializable {
     public static enum Version {
         V5(5),
         V6(6),
+        V7(7),
+        V8(8),
         ;
 
         private int versionNumber;
@@ -109,7 +111,7 @@ public class RundeckClient implements Serializable {
         }
     }
     /** Version of the API supported */
-    public static final transient int API_VERSION = Version.V6.getVersionNumber();
+    public static final transient int API_VERSION = Version.V8.getVersionNumber();
 
     private static final String API = "/api/";
 
@@ -1747,7 +1749,7 @@ public class RundeckClient implements Serializable {
                     .setNodeThreadcount(nodeThreadcount)
                     .setNodeKeepgoing(nodeKeepgoing)
                     .setAsUser(asUser)
-                    .create());
+                    .build());
         } finally {
             IOUtils.closeQuietly(stream);
         }
@@ -1902,7 +1904,7 @@ public class RundeckClient implements Serializable {
                 .setNodeThreadcount(nodeThreadcount)
                 .setNodeKeepgoing(nodeKeepgoing)
                 .setAsUser(asUser)
-                .create());
+                .build());
     }
 
     /**
@@ -1931,7 +1933,7 @@ public class RundeckClient implements Serializable {
             stream = FileUtils.openInputStream(new File(scriptFilename));
             return triggerAdhocScript(RunAdhocScriptBuilder.builder(script)
                     .setScript(stream)
-                    .create());
+                    .build());
         } finally {
             IOUtils.closeQuietly(stream);
         }
@@ -1961,6 +1963,10 @@ public class RundeckClient implements Serializable {
                         script.getNodeThreadcount())
                 .param("nodeKeepgoing",
                         script.getNodeKeepgoing())
+                .param("scriptInterpreter",
+                        script.getScriptInterpreter())
+                .param("interpreterArgsQuoted",
+                        script.getInterpreterArgsQuoted())
                 .nodeFilters(script.getNodeFilters());
         if(null!=script.getAsUser()) {
             apiPath.param("asUser", script.getAsUser());
@@ -2204,7 +2210,7 @@ public class RundeckClient implements Serializable {
                     .setArgString(ParametersUtil.generateArgString(options))
                     .setNodeThreadcount(nodeThreadcount)
                     .setNodeKeepgoing(nodeKeepgoing)
-                    .create(),
+                    .build(),
                     poolingInterval,
                     poolingUnit);
         } finally {
@@ -2498,7 +2504,7 @@ public class RundeckClient implements Serializable {
                 .setNodeThreadcount(nodeThreadcount)
                 .setNodeKeepgoing(nodeKeepgoing)
                 .setAsUser(asUser)
-                .create(), poolingInterval, poolingUnit);
+                .build(), poolingInterval, poolingUnit);
     }
 
     /**
@@ -2531,7 +2537,7 @@ public class RundeckClient implements Serializable {
             stream = FileUtils.openInputStream(new File(scriptFilename));
             return runAdhocScript(RunAdhocScriptBuilder.builder(script)
                     .setScript(stream)
-                    .create(), poolingInterval, poolingUnit);
+                    .build(), poolingInterval, poolingUnit);
         } finally {
             IOUtils.closeQuietly(stream);
         }

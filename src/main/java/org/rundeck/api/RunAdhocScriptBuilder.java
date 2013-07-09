@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * A builder to create a {@link RunAdhocScript}, use the {@link #builder()} to create a builder, then {@link #create()}
+ * A builder to build a {@link RunAdhocScript}, use the {@link #builder()} to build a builder, then {@link #build()}
  * to build an RunAdhocScript
  */
 public class RunAdhocScriptBuilder {
@@ -23,6 +23,8 @@ public class RunAdhocScriptBuilder {
         setNodeFilters(oldScript.getNodeFilters());
         setNodeKeepgoing(oldScript.getNodeKeepgoing());
         setNodeThreadcount(oldScript.getNodeThreadcount());
+        setScriptInterpreter(oldScript.getScriptInterpreter());
+        setInterpreterArgsQuoted(oldScript.getInterpreterArgsQuoted());
     }
 
     /**
@@ -80,7 +82,17 @@ public class RunAdhocScriptBuilder {
         return this;
     }
 
-    public RunAdhocScript create() {
+    public RunAdhocScriptBuilder setScriptInterpreter(final String scriptInterpreter) {
+        script.setScriptInterpreter(scriptInterpreter);
+        return this;
+    }
+
+    public RunAdhocScriptBuilder setInterpreterArgsQuoted(final Boolean interpreterArgsQuoted) {
+        script.setInterpreterArgsQuoted(interpreterArgsQuoted);
+        return this;
+    }
+
+    public RunAdhocScript build() {
         final DefaultRunAdhocScript built = script;
         script = new DefaultRunAdhocScript();
         return built;
