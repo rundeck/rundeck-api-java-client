@@ -47,7 +47,7 @@ public class RunAdhocCommandBuilder {
         return this;
     }
 
-    public RunAdhocCommand create() {
+    public RunAdhocCommand build() {
         DefaultRunAdhocCommand built = command;
         command = new DefaultRunAdhocCommand();
         return built;

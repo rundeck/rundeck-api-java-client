@@ -372,7 +372,7 @@ public class RundeckClientTest {
         RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         final RundeckExecution test
-            = client.triggerJob(RunJobBuilder.builder().setJobId("3170ba0e-6093-4b58-94d2-52988aefbfc9").create());
+            = client.triggerJob(RunJobBuilder.builder().setJobId("3170ba0e-6093-4b58-94d2-52988aefbfc9").build());
 
         Assert.assertEquals((Long) 19L, test.getId());
         Assert.assertEquals(null, test.getArgstring());
@@ -407,7 +407,7 @@ public class RundeckClientTest {
             = client.triggerJob(RunJobBuilder.builder()
                 .setJobId("3170ba0e-6093-4b58-94d2-52988aefbfc9")
                 .setAsUser("api-java-client-user-test1")
-                .create());
+                .build());
 
         Assert.assertEquals((Long)20L, test.getId());
         Assert.assertEquals(null, test.getArgstring());
@@ -440,7 +440,7 @@ public class RundeckClientTest {
             test = client.triggerJob(RunJobBuilder.builder()
                     .setJobId("3170ba0e-6093-4b58-94d2-52988aefbfc9")
                     .setAsUser("api-java-client-user-test2")
-                    .create());
+                    .build());
             Assert.fail("should not succeed");
         } catch (RundeckApiException e) {
             Assert.assertEquals("Not authorized for action \"Run as User\" for Job ID 3170ba0e-6093-4b58-94d2-52988aefbfc9", e.getMessage());
@@ -472,7 +472,7 @@ public class RundeckClientTest {
                 = client.triggerAdhocCommand(RunAdhocCommandBuilder.builder()
                 .setProject("test")
                 .setCommand("echo test trigger_adhoc_command")
-                .create());
+                .build());
 
         Assert.assertEquals((Long) 23L, test.getId());
         Assert.assertEquals(null, test.getArgstring());
@@ -508,7 +508,7 @@ public class RundeckClientTest {
                         .setProject("test")
                         .setCommand("echo test trigger_adhoc_command_as_user")
                         .setAsUser("api-java-client-test-run-command-as-user1")
-                        .create()
+                        .build()
                 );
 
         Assert.assertEquals((Long) 24L, test.getId());
@@ -543,7 +543,7 @@ public class RundeckClientTest {
                             .setProject("test")
                             .setCommand("echo test trigger_adhoc_command_as_user")
                             .setAsUser("api-java-client-test-run-command-as-user1")
-                            .create()
+                            .build()
             );
             Assert.fail("should not succeed");
         } catch (RundeckApiException e) {

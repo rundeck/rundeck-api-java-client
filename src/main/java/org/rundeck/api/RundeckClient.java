@@ -1034,7 +1034,7 @@ public class RundeckClient implements Serializable {
                 .setOptions(options)
                 .setNodeFilters(nodeFilters)
                 .setAsUser(asUser)
-                .create());
+                .build());
     }
     /**
      * Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
@@ -1227,7 +1227,7 @@ public class RundeckClient implements Serializable {
                 .setOptions(options)
                 .setNodeFilters(nodeFilters)
                 .setAsUser(asUser)
-                .create(), poolingInterval, poolingUnit);
+                .build(), poolingInterval, poolingUnit);
     }
 
     /**
@@ -1368,7 +1368,7 @@ public class RundeckClient implements Serializable {
                 .setNodeThreadcount(nodeThreadcount)
                 .setNodeKeepgoing(nodeKeepgoing)
                 .setAsUser(asUser)
-                .create());
+                .build());
     }
     /**
      * Trigger the execution of an ad-hoc command, and return immediately (without waiting the end of the execution).
@@ -1614,7 +1614,7 @@ public class RundeckClient implements Serializable {
                 .setNodeThreadcount(nodeThreadcount)
                 .setNodeKeepgoing(nodeKeepgoing)
                 .setAsUser(asUser)
-                .create(), poolingInterval, poolingUnit);
+                .build(), poolingInterval, poolingUnit);
     }
     /**
      * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck

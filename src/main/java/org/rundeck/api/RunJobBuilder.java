@@ -36,7 +36,7 @@ public class RunJobBuilder {
         return this;
     }
 
-    public RunJob create() {
+    public RunJob build() {
         RunJob built = jobRun;
         jobRun = new DefaultRunJob();
         return built;
