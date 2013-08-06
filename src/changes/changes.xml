@@ -22,7 +22,7 @@
     <author>Vincent Behar</author>
   </properties>
   <body>
-    <release date='unreleased' description='Update for Rundeck API version 8' version='8.0'>
+    <release date='2013-08-06' description='Update for Rundeck API version 8' version='8.0'>
       <action type='add' dev='gschueler'>
         Support script interpreter parameters, API v8
       </action>
