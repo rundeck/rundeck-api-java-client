@@ -158,13 +158,27 @@
           <div id="classes-nav">
             <ul>
               
+    <li><h2>Interfaces</h2>
+      <ul>
+        <li class="api apilevel-"><a href="../../../org/rundeck/api/RunAdhoc.html">RunAdhoc</a></li>
+        <li class="api apilevel-"><a href="../../../org/rundeck/api/RunAdhocCommand.html">RunAdhocCommand</a></li>
+        <li class="api apilevel-"><a href="../../../org/rundeck/api/RunAdhocScript.html">RunAdhocScript</a></li>
+        <li class="api apilevel-"><a href="../../../org/rundeck/api/RunJob.html">RunJob</a></li>
+        <li class="api apilevel-"><a href="../../../org/rundeck/api/RundeckJobsImport.html">RundeckJobsImport</a></li>
+      </ul>
+    </li>
               
     <li><h2>Classes</h2>
       <ul>
+        <li class="api apilevel-"><a href="../../../org/rundeck/api/DefaultJobsImport.html">DefaultJobsImport</a></li>
         <li class="api apilevel-"><a href="../../../org/rundeck/api/NodeFiltersBuilder.html">NodeFiltersBuilder</a></li>
         <li class="api apilevel-"><a href="../../../org/rundeck/api/OptionsBuilder.html">OptionsBuilder</a></li>
+        <li class="api apilevel-"><a href="../../../org/rundeck/api/RunAdhocCommandBuilder.html">RunAdhocCommandBuilder</a></li>
+        <li class="api apilevel-"><a href="../../../org/rundeck/api/RunAdhocScriptBuilder.html">RunAdhocScriptBuilder</a></li>
+        <li class="api apilevel-"><a href="../../../org/rundeck/api/RunJobBuilder.html">RunJobBuilder</a></li>
         <li class="api apilevel-"><a href="../../../org/rundeck/api/RundeckClient.html">RundeckClient</a></li>
         <li class="api apilevel-"><a href="../../../org/rundeck/api/RundeckClientBuilder.html">RundeckClientBuilder</a></li>
+        <li class="api apilevel-"><a href="../../../org/rundeck/api/RundeckJobsImportBuilder.html">RundeckJobsImportBuilder</a></li>
       </ul>
     </li>
               
@@ -256,6 +270,38 @@
 
 
   
+    <h3>Interfaces</h3>
+    <div class="jd-sumtable">
+    
+  <table class="jd-sumtable-expando">
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../org/rundeck/api/RunAdhoc.html">RunAdhoc</a></td>
+              <td class="jd-descrcol" width="100%">Super interface for adhoc executions
+&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../org/rundeck/api/RunAdhocCommand.html">RunAdhocCommand</a></td>
+              <td class="jd-descrcol" width="100%">A command to execute
+&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../org/rundeck/api/RunAdhocScript.html">RunAdhocScript</a></td>
+              <td class="jd-descrcol" width="100%">An adhoc script to be executed by Rundeck
+&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../org/rundeck/api/RunJob.html">RunJob</a></td>
+              <td class="jd-descrcol" width="100%">Job run request
+&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../org/rundeck/api/RundeckJobsImport.html">RundeckJobsImport</a></td>
+              <td class="jd-descrcol" width="100%">Request to import a set of Job definitions
+&nbsp;</td>
+          </tr>
+  </table>
+    </div>
+  
 
 
   
@@ -264,12 +310,32 @@
     
   <table class="jd-sumtable-expando">
         <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../org/rundeck/api/DefaultJobsImport.html">DefaultJobsImport</a></td>
+              <td class="jd-descrcol" width="100%">$INTERFACE is ...&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../org/rundeck/api/NodeFiltersBuilder.html">NodeFiltersBuilder</a></td>
               <td class="jd-descrcol" width="100%">Builder for node filters&nbsp;</td>
           </tr>
-        <tr class=" api apilevel-" >
+        <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../org/rundeck/api/OptionsBuilder.html">OptionsBuilder</a></td>
               <td class="jd-descrcol" width="100%">Builder for job options&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../org/rundeck/api/RunAdhocCommandBuilder.html">RunAdhocCommandBuilder</a></td>
+              <td class="jd-descrcol" width="100%">Builder for adhoc command request
+&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../org/rundeck/api/RunAdhocScriptBuilder.html">RunAdhocScriptBuilder</a></td>
+              <td class="jd-descrcol" width="100%">A builder to build a <code><a href="../../../org/rundeck/api/RunAdhocScript.html">RunAdhocScript</a></code>, use the <code><a href="../../../org/rundeck/api/RunAdhocScriptBuilder.html#builder()">builder()</a></code> to build a builder, then <code><a href="../../../org/rundeck/api/RunAdhocScriptBuilder.html#build()">build()</a></code>
+ to build an RunAdhocScript
+&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../org/rundeck/api/RunJobBuilder.html">RunJobBuilder</a></td>
+              <td class="jd-descrcol" width="100%">Job run request builder
+&nbsp;</td>
           </tr>
         <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../org/rundeck/api/RundeckClient.html">RundeckClient</a></td>
@@ -277,8 +343,13 @@
           </tr>
         <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../org/rundeck/api/RundeckClientBuilder.html">RundeckClientBuilder</a></td>
-              <td class="jd-descrcol" width="100%">Builder to create a <code><a href="../../../org/rundeck/api/RundeckClient.html">RundeckClient</a></code>, you must specify a url, and at least one of (login, password), token, or
+              <td class="jd-descrcol" width="100%">Builder to build a <code><a href="../../../org/rundeck/api/RundeckClient.html">RundeckClient</a></code>, you must specify a url, and at least one of (login, password), token, or
  sessionId.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../org/rundeck/api/RundeckJobsImportBuilder.html">RundeckJobsImportBuilder</a></td>
+              <td class="jd-descrcol" width="100%">Builds a <code><a href="../../../org/rundeck/api/RundeckJobsImport.html">RundeckJobsImport</a></code>
+&nbsp;</td>
           </tr>
   </table>
     </div>

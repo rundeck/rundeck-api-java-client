@@ -1,6 +1,121 @@
 <api>
 <package name="org.rundeck.api"
 >
+<class name="DefaultJobsImport"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.RundeckJobsImport">
+</implements>
+<constructor name="DefaultJobsImport"
+ type="org.rundeck.api.DefaultJobsImport"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="getFileType"
+ return="org.rundeck.api.FileType"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getImportMethod"
+ return="org.rundeck.api.domain.RundeckJobsImportMethod"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getProject"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getStream"
+ return="java.io.InputStream"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setFileType"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="fileType" type="org.rundeck.api.FileType">
+</parameter>
+</method>
+<method name="setImportMethod"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="importMethod" type="org.rundeck.api.domain.RundeckJobsImportMethod">
+</parameter>
+</method>
+<method name="setProject"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="project" type="java.lang.String">
+</parameter>
+</method>
+<method name="setStream"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="stream" type="java.io.InputStream">
+</parameter>
+</method>
+</class>
 <class name="FileType"
  extends="java.lang.Enum"
  abstract="false"
@@ -326,6 +441,575 @@
 >
 </method>
 </class>
+<interface name="RunAdhoc"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="getAsUser"
+ return="java.lang.String"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getNodeFilters"
+ return="java.util.Properties"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getNodeKeepgoing"
+ return="java.lang.Boolean"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getNodeThreadcount"
+ return="java.lang.Integer"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getProject"
+ return="java.lang.String"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</interface>
+<interface name="RunAdhocCommand"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.RunAdhoc">
+</implements>
+<method name="getCommand"
+ return="java.lang.String"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</interface>
+<class name="RunAdhocCommandBuilder"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="RunAdhocCommandBuilder"
+ type="org.rundeck.api.RunAdhocCommandBuilder"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="build"
+ return="org.rundeck.api.RunAdhocCommand"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="builder"
+ return="org.rundeck.api.RunAdhocCommandBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setAsUser"
+ return="org.rundeck.api.RunAdhocCommandBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="asUser" type="java.lang.String">
+</parameter>
+</method>
+<method name="setCommand"
+ return="org.rundeck.api.RunAdhocCommandBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="commandString" type="java.lang.String">
+</parameter>
+</method>
+<method name="setNodeFilters"
+ return="org.rundeck.api.RunAdhocCommandBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="nodeFilters" type="java.util.Properties">
+</parameter>
+</method>
+<method name="setNodeKeepgoing"
+ return="org.rundeck.api.RunAdhocCommandBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="nodeKeepgoing" type="java.lang.Boolean">
+</parameter>
+</method>
+<method name="setNodeThreadcount"
+ return="org.rundeck.api.RunAdhocCommandBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="nodeThreadcount" type="java.lang.Integer">
+</parameter>
+</method>
+<method name="setProject"
+ return="org.rundeck.api.RunAdhocCommandBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="project" type="java.lang.String">
+</parameter>
+</method>
+</class>
+<interface name="RunAdhocScript"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.RunAdhoc">
+</implements>
+<method name="getArgString"
+ return="java.lang.String"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getInterpreterArgsQuoted"
+ return="java.lang.Boolean"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getScript"
+ return="java.io.InputStream"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getScriptInterpreter"
+ return="java.lang.String"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</interface>
+<class name="RunAdhocScriptBuilder"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="RunAdhocScriptBuilder"
+ type="org.rundeck.api.RunAdhocScriptBuilder"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="oldScript" type="org.rundeck.api.RunAdhocScript">
+</parameter>
+</constructor>
+<method name="build"
+ return="org.rundeck.api.RunAdhocScript"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="builder"
+ return="org.rundeck.api.RunAdhocScriptBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="builder"
+ return="org.rundeck.api.RunAdhocScriptBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="script" type="org.rundeck.api.RunAdhocScript">
+</parameter>
+</method>
+<method name="setArgString"
+ return="org.rundeck.api.RunAdhocScriptBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="argString" type="java.lang.String">
+</parameter>
+</method>
+<method name="setAsUser"
+ return="org.rundeck.api.RunAdhocScriptBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="asUser" type="java.lang.String">
+</parameter>
+</method>
+<method name="setInterpreterArgsQuoted"
+ return="org.rundeck.api.RunAdhocScriptBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="interpreterArgsQuoted" type="java.lang.Boolean">
+</parameter>
+</method>
+<method name="setNodeFilters"
+ return="org.rundeck.api.RunAdhocScriptBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="nodeFilters" type="java.util.Properties">
+</parameter>
+</method>
+<method name="setNodeKeepgoing"
+ return="org.rundeck.api.RunAdhocScriptBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="nodeKeepgoing" type="java.lang.Boolean">
+</parameter>
+</method>
+<method name="setNodeThreadcount"
+ return="org.rundeck.api.RunAdhocScriptBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="nodeThreadcount" type="java.lang.Integer">
+</parameter>
+</method>
+<method name="setProject"
+ return="org.rundeck.api.RunAdhocScriptBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="project" type="java.lang.String">
+</parameter>
+</method>
+<method name="setScript"
+ return="org.rundeck.api.RunAdhocScriptBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="stream" type="java.io.InputStream">
+</parameter>
+</method>
+<method name="setScriptInterpreter"
+ return="org.rundeck.api.RunAdhocScriptBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="scriptInterpreter" type="java.lang.String">
+</parameter>
+</method>
+</class>
+<interface name="RunJob"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="getAsUser"
+ return="java.lang.String"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getJobId"
+ return="java.lang.String"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getNodeFilters"
+ return="java.util.Properties"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getOptions"
+ return="java.util.Properties"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</interface>
+<class name="RunJobBuilder"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="RunJobBuilder"
+ type="org.rundeck.api.RunJobBuilder"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="build"
+ return="org.rundeck.api.RunJob"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="builder"
+ return="org.rundeck.api.RunJobBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setAsUser"
+ return="org.rundeck.api.RunJobBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="asUser" type="java.lang.String">
+</parameter>
+</method>
+<method name="setJobId"
+ return="org.rundeck.api.RunJobBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="jobId" type="java.lang.String">
+</parameter>
+</method>
+<method name="setNodeFilters"
+ return="org.rundeck.api.RunJobBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="nodeFilters" type="java.util.Properties">
+</parameter>
+</method>
+<method name="setOptions"
+ return="org.rundeck.api.RunJobBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="options" type="java.util.Properties">
+</parameter>
+</method>
+</class>
 <class name="RundeckApiException"
  extends="java.lang.RuntimeException"
  abstract="false"
@@ -517,6 +1201,29 @@
  visibility="public"
 >
 <parameter name="executionId" type="java.lang.Long">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="abortExecution"
+ return="org.rundeck.api.domain.RundeckAbort"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="executionId" type="java.lang.Long">
+</parameter>
+<parameter name="asUser" type="java.lang.String">
 </parameter>
 <exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
 </exception>
@@ -1822,7 +2529,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="stream" type="java.io.InputStream">
@@ -1845,7 +2552,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="stream" type="java.io.InputStream">
@@ -1870,7 +2577,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="stream" type="java.io.InputStream">
@@ -1893,7 +2600,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="stream" type="java.io.InputStream">
@@ -1918,7 +2625,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="filename" type="java.lang.String">
@@ -1943,7 +2650,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="filename" type="java.lang.String">
@@ -1970,7 +2677,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="filename" type="java.lang.String">
@@ -1995,7 +2702,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="filename" type="java.lang.String">
@@ -2006,6 +2713,52 @@
 </parameter>
 <exception name="IOException" type="java.io.IOException">
 </exception>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="importJobs"
+ return="org.rundeck.api.domain.RundeckJobsImportResult"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="filename" type="java.lang.String">
+</parameter>
+<parameter name="rundeckJobsImport" type="org.rundeck.api.RundeckJobsImport">
+</parameter>
+<exception name="IOException" type="java.io.IOException">
+</exception>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="importJobs"
+ return="org.rundeck.api.domain.RundeckJobsImportResult"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="rundeckJobsImport" type="org.rundeck.api.RundeckJobsImport">
+</parameter>
 <exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
 </exception>
 <exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
@@ -2035,7 +2788,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2058,7 +2811,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2083,7 +2836,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2112,7 +2865,42 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
+ visibility="public"
+>
+<parameter name="project" type="java.lang.String">
+</parameter>
+<parameter name="command" type="java.lang.String">
+</parameter>
+<parameter name="nodeFilters" type="java.util.Properties">
+</parameter>
+<parameter name="nodeThreadcount" type="java.lang.Integer">
+</parameter>
+<parameter name="nodeKeepgoing" type="java.lang.Boolean">
+</parameter>
+<parameter name="asUser" type="java.lang.String">
+</parameter>
+<parameter name="poolingInterval" type="long">
+</parameter>
+<parameter name="poolingUnit" type="java.util.concurrent.TimeUnit">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="runAdhocCommand"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2145,7 +2933,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2174,7 +2962,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2194,7 +2982,7 @@
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
 </exception>
 </method>
-<method name="runAdhocScript"
+<method name="runAdhocCommand"
  return="org.rundeck.api.domain.RundeckExecution"
  abstract="false"
  native="false"
@@ -2202,6 +2990,52 @@
  static="false"
  final="false"
  deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="command" type="org.rundeck.api.RunAdhocCommand">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="runAdhocCommand"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="command" type="org.rundeck.api.RunAdhocCommand">
+</parameter>
+<parameter name="poolingInterval" type="long">
+</parameter>
+<parameter name="poolingUnit" type="java.util.concurrent.TimeUnit">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="runAdhocScript"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2226,7 +3060,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2253,7 +3087,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2282,7 +3116,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2315,7 +3149,44 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
+ visibility="public"
+>
+<parameter name="project" type="java.lang.String">
+</parameter>
+<parameter name="script" type="java.io.InputStream">
+</parameter>
+<parameter name="options" type="java.util.Properties">
+</parameter>
+<parameter name="nodeFilters" type="java.util.Properties">
+</parameter>
+<parameter name="nodeThreadcount" type="java.lang.Integer">
+</parameter>
+<parameter name="nodeKeepgoing" type="java.lang.Boolean">
+</parameter>
+<parameter name="asUser" type="java.lang.String">
+</parameter>
+<parameter name="poolingInterval" type="long">
+</parameter>
+<parameter name="poolingUnit" type="java.util.concurrent.TimeUnit">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="runAdhocScript"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2350,7 +3221,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2383,7 +3254,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2414,7 +3285,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2443,7 +3314,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2468,7 +3339,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2495,7 +3366,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2524,7 +3395,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2557,7 +3428,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2594,7 +3465,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2627,7 +3498,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2658,7 +3529,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2680,7 +3551,7 @@
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
 </exception>
 </method>
-<method name="runJob"
+<method name="runAdhocScript"
  return="org.rundeck.api.domain.RundeckExecution"
  abstract="false"
  native="false"
@@ -2688,6 +3559,83 @@
  static="false"
  final="false"
  deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="script" type="org.rundeck.api.RunAdhocScript">
+</parameter>
+<exception name="IOException" type="java.io.IOException">
+</exception>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="runAdhocScript"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="script" type="org.rundeck.api.RunAdhocScript">
+</parameter>
+<parameter name="scriptFilename" type="java.lang.String">
+</parameter>
+<parameter name="poolingInterval" type="long">
+</parameter>
+<parameter name="poolingUnit" type="java.util.concurrent.TimeUnit">
+</parameter>
+<exception name="IOException" type="java.io.IOException">
+</exception>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="runAdhocScript"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="script" type="org.rundeck.api.RunAdhocScript">
+</parameter>
+<parameter name="poolingInterval" type="long">
+</parameter>
+<parameter name="poolingUnit" type="java.util.concurrent.TimeUnit">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="runJob"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="jobId" type="java.lang.String">
@@ -2708,7 +3656,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="jobId" type="java.lang.String">
@@ -2731,7 +3679,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="jobId" type="java.lang.String">
@@ -2756,7 +3704,38 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
+ visibility="public"
+>
+<parameter name="jobId" type="java.lang.String">
+</parameter>
+<parameter name="options" type="java.util.Properties">
+</parameter>
+<parameter name="nodeFilters" type="java.util.Properties">
+</parameter>
+<parameter name="asUser" type="java.lang.String">
+</parameter>
+<parameter name="poolingInterval" type="long">
+</parameter>
+<parameter name="poolingUnit" type="java.util.concurrent.TimeUnit">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="runJob"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="jobId" type="java.lang.String">
@@ -2785,12 +3764,58 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="jobId" type="java.lang.String">
 </parameter>
 <parameter name="options" type="java.util.Properties">
+</parameter>
+<parameter name="poolingInterval" type="long">
+</parameter>
+<parameter name="poolingUnit" type="java.util.concurrent.TimeUnit">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="runJob"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="runJob" type="org.rundeck.api.RunJob">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="runJob"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="jobRun" type="org.rundeck.api.RunJob">
 </parameter>
 <parameter name="poolingInterval" type="long">
 </parameter>
@@ -2842,7 +3867,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2865,7 +3890,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2890,7 +3915,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2912,7 +3937,38 @@
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
 </exception>
 </method>
-<method name="triggerAdhocScript"
+<method name="triggerAdhocCommand"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="deprecated"
+ visibility="public"
+>
+<parameter name="project" type="java.lang.String">
+</parameter>
+<parameter name="command" type="java.lang.String">
+</parameter>
+<parameter name="nodeFilters" type="java.util.Properties">
+</parameter>
+<parameter name="nodeThreadcount" type="java.lang.Integer">
+</parameter>
+<parameter name="nodeKeepgoing" type="java.lang.Boolean">
+</parameter>
+<parameter name="asUser" type="java.lang.String">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="triggerAdhocCommand"
  return="org.rundeck.api.domain.RundeckExecution"
  abstract="false"
  native="false"
@@ -2920,6 +3976,27 @@
  static="false"
  final="false"
  deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="command" type="org.rundeck.api.RunAdhocCommand">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="triggerAdhocScript"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2942,7 +4019,40 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
+ visibility="public"
+>
+<parameter name="project" type="java.lang.String">
+</parameter>
+<parameter name="script" type="java.io.InputStream">
+</parameter>
+<parameter name="argString" type="java.lang.String">
+</parameter>
+<parameter name="nodeFilters" type="java.util.Properties">
+</parameter>
+<parameter name="nodeThreadcount" type="java.lang.Integer">
+</parameter>
+<parameter name="nodeKeepgoing" type="java.lang.Boolean">
+</parameter>
+<parameter name="asUser" type="java.lang.String">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="triggerAdhocScript"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2967,7 +4077,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -2994,7 +4104,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -3025,7 +4135,40 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
+ visibility="public"
+>
+<parameter name="project" type="java.lang.String">
+</parameter>
+<parameter name="script" type="java.io.InputStream">
+</parameter>
+<parameter name="options" type="java.util.Properties">
+</parameter>
+<parameter name="nodeFilters" type="java.util.Properties">
+</parameter>
+<parameter name="nodeThreadcount" type="java.lang.Integer">
+</parameter>
+<parameter name="nodeKeepgoing" type="java.lang.Boolean">
+</parameter>
+<parameter name="asUser" type="java.lang.String">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="triggerAdhocScript"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -3050,7 +4193,42 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
+ visibility="public"
+>
+<parameter name="project" type="java.lang.String">
+</parameter>
+<parameter name="scriptFilename" type="java.lang.String">
+</parameter>
+<parameter name="argString" type="java.lang.String">
+</parameter>
+<parameter name="nodeFilters" type="java.util.Properties">
+</parameter>
+<parameter name="nodeThreadcount" type="java.lang.Integer">
+</parameter>
+<parameter name="nodeKeepgoing" type="java.lang.Boolean">
+</parameter>
+<parameter name="asUser" type="java.lang.String">
+</parameter>
+<exception name="IOException" type="java.io.IOException">
+</exception>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="triggerAdhocScript"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -3077,7 +4255,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -3106,7 +4284,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="project" type="java.lang.String">
@@ -3132,7 +4310,42 @@
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
 </exception>
 </method>
-<method name="triggerJob"
+<method name="triggerAdhocScript"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="deprecated"
+ visibility="public"
+>
+<parameter name="project" type="java.lang.String">
+</parameter>
+<parameter name="scriptFilename" type="java.lang.String">
+</parameter>
+<parameter name="options" type="java.util.Properties">
+</parameter>
+<parameter name="nodeFilters" type="java.util.Properties">
+</parameter>
+<parameter name="nodeThreadcount" type="java.lang.Integer">
+</parameter>
+<parameter name="nodeKeepgoing" type="java.lang.Boolean">
+</parameter>
+<parameter name="asUser" type="java.lang.String">
+</parameter>
+<exception name="IOException" type="java.io.IOException">
+</exception>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="triggerAdhocScript"
  return="org.rundeck.api.domain.RundeckExecution"
  abstract="false"
  native="false"
@@ -3140,6 +4353,52 @@
  static="false"
  final="false"
  deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="script" type="org.rundeck.api.RunAdhocScript">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="triggerAdhocScript"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="script" type="org.rundeck.api.RunAdhocScript">
+</parameter>
+<parameter name="scriptFilename" type="java.lang.String">
+</parameter>
+<exception name="IOException" type="java.io.IOException">
+</exception>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="triggerJob"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="jobId" type="java.lang.String">
@@ -3160,7 +4419,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="jobId" type="java.lang.String">
@@ -3183,7 +4442,7 @@
  synchronized="false"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="jobId" type="java.lang.String">
@@ -3191,6 +4450,54 @@
 <parameter name="options" type="java.util.Properties">
 </parameter>
 <parameter name="nodeFilters" type="java.util.Properties">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="triggerJob"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="deprecated"
+ visibility="public"
+>
+<parameter name="jobId" type="java.lang.String">
+</parameter>
+<parameter name="options" type="java.util.Properties">
+</parameter>
+<parameter name="nodeFilters" type="java.util.Properties">
+</parameter>
+<parameter name="asUser" type="java.lang.String">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="triggerJob"
+ return="org.rundeck.api.domain.RundeckExecution"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="jobRun" type="org.rundeck.api.RunJob">
 </parameter>
 <exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
 </exception>
@@ -3215,6 +4522,17 @@
  type="int"
  transient="true"
  volatile="false"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="JOBS_IMPORT"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;/jobs/import&quot;"
  static="true"
  final="true"
  deprecated="not deprecated"
@@ -3389,6 +4707,172 @@
  visibility="public"
 >
 <parameter name="version" type="org.rundeck.api.RundeckClient.Version">
+</parameter>
+</method>
+</class>
+<interface name="RundeckJobsImport"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="getFileType"
+ return="org.rundeck.api.FileType"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getImportMethod"
+ return="org.rundeck.api.domain.RundeckJobsImportMethod"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getProject"
+ return="java.lang.String"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getStream"
+ return="java.io.InputStream"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</interface>
+<class name="RundeckJobsImportBuilder"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="RundeckJobsImportBuilder"
+ type="org.rundeck.api.RundeckJobsImportBuilder"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="RundeckJobsImportBuilder"
+ type="org.rundeck.api.RundeckJobsImportBuilder"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="original" type="org.rundeck.api.RundeckJobsImport">
+</parameter>
+</constructor>
+<method name="build"
+ return="org.rundeck.api.RundeckJobsImport"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="builder"
+ return="org.rundeck.api.RundeckJobsImportBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="builder"
+ return="org.rundeck.api.RundeckJobsImportBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="original" type="org.rundeck.api.RundeckJobsImport">
+</parameter>
+</method>
+<method name="setFileType"
+ return="org.rundeck.api.RundeckJobsImportBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="filetype" type="org.rundeck.api.FileType">
+</parameter>
+</method>
+<method name="setJobsImportMethod"
+ return="org.rundeck.api.RundeckJobsImportBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="behavior" type="org.rundeck.api.domain.RundeckJobsImportMethod">
+</parameter>
+</method>
+<method name="setProject"
+ return="org.rundeck.api.RundeckJobsImportBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="project" type="java.lang.String">
+</parameter>
+</method>
+<method name="setStream"
+ return="org.rundeck.api.RundeckJobsImportBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="stream" type="java.io.InputStream">
 </parameter>
 </method>
 </class>

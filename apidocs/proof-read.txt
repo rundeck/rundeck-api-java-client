@@ -24,8 +24,64 @@ javadoc proofread file: ./proof-read.txt
         <p>See the documentation of the <a href="org/rundeck/api/RundeckClient.html">RundeckClient</a> class (main entry point of the API).</p>
 
 
+=== org/rundeck/api/RunJobBuilder.html ===
+        Job run request builder
+CONSTRUCTOR: RunJobBuilder
+METHOD: build
+METHOD: builder
+METHOD: setAsUser
+METHOD: setJobId
+METHOD: setNodeFilters
+METHOD: setOptions
+
+
+=== org/rundeck/api/RunJob.html ===
+        Job run request
+METHOD: getAsUser
+        Specify a user name to run the job as, must have 'runAs' permission
+METHOD: getJobId
+        Identifier of the job - mandatory
+METHOD: getNodeFilters
+        Node filters for overriding the nodes on which the job will be executed - optional. See
+        {@link ... NodeFiltersBuilder}
+METHOD: getOptions
+        Options of the job - optional. See
+        {@link ... OptionsBuilder}
+        .
+
+
+=== org/rundeck/api/RundeckJobsImportBuilder.html ===
+        Builds a
+        {@link ... RundeckJobsImport}
+        
+CONSTRUCTOR: RundeckJobsImportBuilder
+CONSTRUCTOR: RundeckJobsImportBuilder
+METHOD: build
+METHOD: builder
+        Create a new builder
+METHOD: builder
+        Create a builder initialized with an existing
+        {@link ... RundeckJobsImport}
+METHOD: setFileType
+METHOD: setJobsImportMethod
+METHOD: setProject
+METHOD: setStream
+
+
+=== org/rundeck/api/RundeckJobsImport.html ===
+        Request to import a set of Job definitions
+METHOD: getFileType
+        Return the file type
+METHOD: getImportMethod
+        Return the import behavior
+METHOD: getProject
+        Return the project name
+METHOD: getStream
+        Return the input stream
+
+
 === org/rundeck/api/RundeckClientBuilder.html ===
-        Builder to create a
+        Builder to build a
         {@link ... RundeckClient}
         , you must specify a url, and at least one of (login, password), token, or
          sessionId.
@@ -47,10 +103,53 @@ METHOD: version
 
 
 === org/rundeck/api/RundeckClient.html ===
-        Main entry point to talk to a RunDeck instance.<br>
+        Main entry point to talk to a RunDeck instance.
+         <p>
+             <em>Deprecation Warning:</em> These methods which take multiple arguments are deprecated in
+             favor of single argument versions, and associated Builder classes to generate them.
+             These methods will be removed in version 10 of this library:
+             <ul>
+                 <li> triggerAdhocScript(...), use
+        {@link ... triggerAdhocScript(RunAdhocScript)}
+        and
+        {@link ... RunAdhocScriptBuilder}
+        </li>
+                 <li> runAdhocScript(...), use
+        {@link ... runAdhocScript(RunAdhocScript)}
+        and
+        {@link ... RunAdhocScriptBuilder}
+        </li>
+                 <li> triggerAdhocCommand(...), use
+        {@link ... triggerAdhocCommand(RunAdhocCommand)}
+        and
+        {@link ... RunAdhocCommandBuilder}
+        </li>
+                 <li> runAdhocCommand(...), use
+        {@link ... runAdhocCommand(RunAdhocCommand)}
+        and
+        {@link ... RunAdhocCommandBuilder}
+        </li>
+                 <li> triggerJob(...), use
+        {@link ... triggerJob(RunJob)}
+        and
+        {@link ... RunJobBuilder}
+        </li>
+                 <li> runJob(...), use
+        {@link ... runJob(RunJob)}
+        and
+        {@link ... RunJobBuilder}
+        </li>
+                 <li> importJobs(...), use
+        {@link ... importJobs(RundeckJobsImport)}
+        and
+        {@link ... importJobs(String, RundeckJobsImport)}
+        </li>
+             </ul>
+             </p>
+         <p>
          You have 2 methods for authentication : login-based or token-based. If you want to use the first, you need to provide
          both a "login" and a "password". Otherwise, just provide a "token" (also called "auth-token"). See the RunDeck
-         documentation for generating such a token.<br>
+         documentation for generating such a token.</p>
          <br>
          Usage : <br>
          <code>
@@ -59,15 +158,15 @@ METHOD: version
          RundeckClient rundeck = new RundeckClient("http://localhost:4440", "admin", "admin");
          // or for a token-based authentication :
          RundeckClient rundeck = new RundeckClient("http://localhost:4440", "PDDNKo5VE29kpk4prOUDr2rsKdRkEvsD");
-         
+        
          List&lt;RundeckProject&gt; projects = rundeck.getProjects();
-         
+        
          RundeckJob job = rundeck.findJob("my-project", "main-group/sub-group", "job-name");
          RundeckExecution execution = rundeck.triggerJob(job.getId(),
                                                          new OptionsBuilder().addOption("version", "1.2.0").toProperties());
-         
+        
          List&lt;RundeckExecution&gt; runningExecutions = rundeck.getRunningExecutions("my-project");
-         
+        
          rundeck.exportJobsToFile("/tmp/jobs.xml", FileType.XML, "my-project");
          rundeck.importJobs("/tmp/jobs.xml", FileType.XML);
          </pre>
@@ -76,6 +175,7 @@ FIELD: API_ENDPOINT
         End-point of the API
 FIELD: API_VERSION
         Version of the API supported
+FIELD: JOBS_IMPORT
 CONSTRUCTOR: RundeckClient
 CONSTRUCTOR: RundeckClient
         Instantiate a new
@@ -85,8 +185,10 @@ CONSTRUCTOR: RundeckClient
 CONSTRUCTOR: RundeckClient
         Instantiate a new
         {@link ... RundeckClient}
-        for the RunDeck instance at the given url, 
+        for the RunDeck instance at the given url,
          using token-based or session-based authentication. Either token or sessionID must be valid
+METHOD: abortExecution
+        Abort an execution (identified by the given ID). The execution should be running...
 METHOD: abortExecution
         Abort an execution (identified by the given ID). The execution should be running...
 METHOD: builder
@@ -219,6 +321,10 @@ METHOD: importJobs
         Import the definitions of jobs, from the given file
 METHOD: importJobs
         Import the definitions of jobs, from the given file, using the given behavior
+METHOD: importJobs
+        Import the definitions of jobs, from the given input stream, using the given behavior
+METHOD: importJobs
+        Import the definitions of jobs, from the given input stream, using the given behavior
 METHOD: ping
         Try to "ping" the RunDeck instance to see if it is alive
 METHOD: runAdhocCommand
@@ -246,8 +352,63 @@ METHOD: runAdhocCommand
 METHOD: runAdhocCommand
         Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
          server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
+         finished (or aborted) or is still running. The command will be dispatched to nodes, accordingly to the
+         nodeFilters parameter.
+METHOD: runAdhocCommand
+        Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+         server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
          finished (or aborted) or is still running. The command will not be dispatched to nodes, but be executed on the
          RunDeck server.
+METHOD: runAdhocCommand
+        Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+         server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
+         running. The command will be dispatched to nodes, accordingly to the nodeFilters parameter.
+METHOD: runAdhocCommand
+        Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+         server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
+         finished (or aborted) or is still running. The command will be dispatched to nodes, accordingly to the
+         nodeFilters parameter.
+METHOD: runAdhocScript
+        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+         server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
+         running. The script will not be dispatched to nodes, but be executed on the RunDeck server.
+METHOD: runAdhocScript
+        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+         server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
+         running. The script will not be dispatched to nodes, but be executed on the RunDeck server.
+METHOD: runAdhocScript
+        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+         server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
+         running. The script will be dispatched to nodes, accordingly to the nodeFilters parameter.
+METHOD: runAdhocScript
+        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+         server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
+         running. The script will be dispatched to nodes, accordingly to the nodeFilters parameter.
+METHOD: runAdhocScript
+        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+         server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
+         finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to the nodeFilters
+         parameter.
+METHOD: runAdhocScript
+        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+         server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
+         finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to the nodeFilters
+         parameter.
+METHOD: runAdhocScript
+        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+         server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
+         finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to the nodeFilters
+         parameter.
+METHOD: runAdhocScript
+        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+         server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
+         finished (or aborted) or is still running. The script will not be dispatched to nodes, but be executed on the
+         RunDeck server.
+METHOD: runAdhocScript
+        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+         server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
+         finished (or aborted) or is still running. The script will not be dispatched to nodes, but be executed on the
+         RunDeck server.
 METHOD: runAdhocScript
         Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
          server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
@@ -287,39 +448,17 @@ METHOD: runAdhocScript
 METHOD: runAdhocScript
         Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
          server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-         running. The script will not be dispatched to nodes, but be executed on the RunDeck server.
-METHOD: runAdhocScript
-        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-         server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-         running. The script will not be dispatched to nodes, but be executed on the RunDeck server.
-METHOD: runAdhocScript
-        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-         server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
          running. The script will be dispatched to nodes, accordingly to the nodeFilters parameter.
 METHOD: runAdhocScript
-        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-         server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-         running. The script will be dispatched to nodes, accordingly to the nodeFilters parameter.
+        Run an ad-hoc script read from a file, and wait until its execution is finished (or aborted) to return. We will
+         poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the
+         execution is finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to
+         the nodeFilters parameter.
 METHOD: runAdhocScript
         Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
          server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
          finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to the nodeFilters
          parameter.
-METHOD: runAdhocScript
-        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-         server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-         finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to the nodeFilters
-         parameter.
-METHOD: runAdhocScript
-        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-         server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-         finished (or aborted) or is still running. The script will not be dispatched to nodes, but be executed on the
-         RunDeck server.
-METHOD: runAdhocScript
-        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-         server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-         finished (or aborted) or is still running. The script will not be dispatched to nodes, but be executed on the
-         RunDeck server.
 METHOD: runJob
         Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
          We will poll the RunDeck server at regular interval (every 5 seconds) to know if the execution is finished (or
@@ -336,6 +475,18 @@ METHOD: runJob
         Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
          We will poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
          know if the execution is finished (or aborted) or is still running.
+METHOD: runJob
+        Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
+         We will poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
+         know if the execution is finished (or aborted) or is still running.
+METHOD: runJob
+        Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
+         We will poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
+         know if the execution is finished (or aborted) or is still running.
+METHOD: runJob
+        Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
+         We will poll the RunDeck server at regular interval (every 5 seconds) to know if the execution is finished (or
+         aborted) or is still running.
 METHOD: runJob
         Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
          We will poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
@@ -353,9 +504,18 @@ METHOD: triggerAdhocCommand
 METHOD: triggerAdhocCommand
         Trigger the execution of an ad-hoc command, and return immediately (without waiting the end of the execution).
          The command will be dispatched to nodes, accordingly to the nodeFilters parameter.
+METHOD: triggerAdhocCommand
+        Trigger the execution of an ad-hoc command, and return immediately (without waiting the end of the execution).
+         The command will be dispatched to nodes, accordingly to the nodeFilters parameter.
+METHOD: triggerAdhocCommand
+        Trigger the execution of an ad-hoc command, and return immediately (without waiting the end of the execution).
+         The command will be dispatched to nodes, accordingly to the nodeFilters parameter.
 METHOD: triggerAdhocScript
         Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
          script will not be dispatched to nodes, but be executed on the RunDeck server.
+METHOD: triggerAdhocScript
+        Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
+         script will be dispatched to nodes, accordingly to the nodeFilters parameter.
 METHOD: triggerAdhocScript
         Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
          script will not be dispatched to nodes, but be executed on the RunDeck server.
@@ -367,7 +527,13 @@ METHOD: triggerAdhocScript
          script will be dispatched to nodes, accordingly to the nodeFilters parameter.
 METHOD: triggerAdhocScript
         Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
+         script will be dispatched to nodes, accordingly to the nodeFilters parameter.
+METHOD: triggerAdhocScript
+        Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
          script will not be dispatched to nodes, but be executed on the RunDeck server.
+METHOD: triggerAdhocScript
+        Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
+         script will be dispatched to nodes, accordingly to the nodeFilters parameter.
 METHOD: triggerAdhocScript
         Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
          script will not be dispatched to nodes, but be executed on the RunDeck server.
@@ -377,6 +543,21 @@ METHOD: triggerAdhocScript
 METHOD: triggerAdhocScript
         Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
          script will be dispatched to nodes, accordingly to the nodeFilters parameter.
+METHOD: triggerAdhocScript
+        Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
+         script will be dispatched to nodes, accordingly to the nodeFilters parameter.
+METHOD: triggerAdhocScript
+        Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
+         script will be dispatched to nodes, accordingly to the nodeFilters parameter.
+METHOD: triggerAdhocScript
+        Trigger the execution of an ad-hoc script read from a file, and return immediately (without waiting the end of
+         the execution). The script will be dispatched to nodes, accordingly to the nodeFilters parameter.
+METHOD: triggerJob
+        Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
+         end of the job execution)
+METHOD: triggerJob
+        Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
+         end of the job execution)
 METHOD: triggerJob
         Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
          end of the job execution)
@@ -392,6 +573,8 @@ METHOD: triggerJob
         Supported version numbers
 ENUM: V5
 ENUM: V6
+ENUM: V7
+ENUM: V8
 METHOD: getVersionNumber
 METHOD: valueOf
 METHOD: values
@@ -419,6 +602,78 @@ CONSTRUCTOR: RundeckApiException.RundeckApiLoginException
         Specific authentication-related error (in case of token-based authentication)
 CONSTRUCTOR: RundeckApiException.RundeckApiTokenException
 CONSTRUCTOR: RundeckApiException.RundeckApiTokenException
+
+
+=== org/rundeck/api/RunAdhocScriptBuilder.html ===
+        A builder to build a
+        {@link ... RunAdhocScript}
+        , use the
+        {@link ... builder()}
+        to build a builder, then
+        {@link ... build()}
+        to build an RunAdhocScript
+CONSTRUCTOR: RunAdhocScriptBuilder
+METHOD: build
+METHOD: builder
+        Create a new builder
+METHOD: builder
+        Create a builder initialized with an existing
+        {@link ... RunAdhocScript}
+METHOD: setArgString
+METHOD: setAsUser
+METHOD: setInterpreterArgsQuoted
+METHOD: setNodeFilters
+METHOD: setNodeKeepgoing
+METHOD: setNodeThreadcount
+METHOD: setProject
+METHOD: setScript
+METHOD: setScriptInterpreter
+
+
+=== org/rundeck/api/RunAdhocScript.html ===
+        An adhoc script to be executed by Rundeck
+METHOD: getArgString
+        Arguments to the script
+METHOD: getInterpreterArgsQuoted
+        If true, quote the script filepath and args to the script interpreter.
+METHOD: getScript
+        InputStream for reading the script to be executed - mandatory
+METHOD: getScriptInterpreter
+        Command string to invoke the script with arguments
+
+
+=== org/rundeck/api/RunAdhocCommandBuilder.html ===
+        Builder for adhoc command request
+CONSTRUCTOR: RunAdhocCommandBuilder
+METHOD: build
+METHOD: builder
+METHOD: setAsUser
+METHOD: setCommand
+METHOD: setNodeFilters
+METHOD: setNodeKeepgoing
+METHOD: setNodeThreadcount
+METHOD: setProject
+
+
+=== org/rundeck/api/RunAdhocCommand.html ===
+        A command to execute
+METHOD: getCommand
+        Command to executed
+
+
+=== org/rundeck/api/RunAdhoc.html ===
+        Super interface for adhoc executions
+METHOD: getAsUser
+        Specify a user name to run the job as, must have 'runAs' permission
+METHOD: getNodeFilters
+        Filters for selecting nodes on which the command will be executed. See
+        {@link ... NodeFiltersBuilder}
+METHOD: getNodeKeepgoing
+        if true, continue executing on other nodes even if some fail - optional
+METHOD: getNodeThreadcount
+        Thread count to use (for parallelizing when running on multiple nodes) - optional
+METHOD: getProject
+        Project name, required
 
 
 === org/rundeck/api/OptionsBuilder.html ===
@@ -483,6 +738,19 @@ ENUM: XML
 ENUM: YAML
 METHOD: valueOf
 METHOD: values
+
+
+=== org/rundeck/api/DefaultJobsImport.html ===
+        $INTERFACE is ... User: greg Date: 8/6/13 Time: 10:18 AM
+CONSTRUCTOR: DefaultJobsImport
+METHOD: getFileType
+METHOD: getImportMethod
+METHOD: getProject
+METHOD: getStream
+METHOD: setFileType
+METHOD: setImportMethod
+METHOD: setProject
+METHOD: setStream
 
 
 === org/rundeck/api/domain/RundeckSystemInfo.html ===
@@ -1019,7 +1287,7 @@ METHOD: parseXmlNode
 
 
 === org/rundeck/api/query/ExecutionQuery.html ===
-        ExecutionQuery contains the query parameters for the /executions api, create one with the
+        ExecutionQuery contains the query parameters for the /executions api, build one with the
         {@link ... ExecutionQuery.Builder}
         class, e.g.
          using the

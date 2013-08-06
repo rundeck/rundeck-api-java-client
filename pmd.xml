@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2013-02-21T18:24:19.777">
+<pmd version="4.2.5" timestamp="2013-08-06T12:36:18.273">
 <file name="/Users/greg/devel/thirdparty/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/domain/RundeckOutput.java">
 <violation beginline="8" endline="8" begincolumn="1" endcolumn="63" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api.domain" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.rundeck.api.domain.RundeckExecution.ExecutionStatus'

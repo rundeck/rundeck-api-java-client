@@ -133,10 +133,20 @@ METHOD: parsePendingAbort
         {@link/RundeckClient}
         . Uses betamax to unit-test HTTP requests without a live RunDeck instance.
 FIELD: TEST_TOKEN_0
+        Note: to add a new test, do the following:
+         1) start a rundeck server, available at hostname "rundeck.local"
+         2) login as test or admin user, and generate a token
+         3) add the test token as a new TEST_TOKEN_X, and use that in your test
+         4) run 'mvn test', and commit the new yml file generated at src/test/resources/betamax/tapes
 FIELD: TEST_TOKEN_1
 FIELD: TEST_TOKEN_2
+FIELD: TEST_TOKEN_3
+FIELD: TEST_TOKEN_4
 FIELD: recorder
 CONSTRUCTOR: RundeckClientTest
+METHOD: abortExecution
+METHOD: abortExecutionAsUser
+METHOD: abortExecutionAsUserUnauthorized
 METHOD: bulkDelete
 METHOD: bulkDeleteFailDNE
 METHOD: bulkDeleteFailUnauthorized
@@ -148,7 +158,36 @@ METHOD: getHistoryExcludeJoblist
 METHOD: getHistoryJoblist
 METHOD: getHistoryUser
 METHOD: getProjects
+METHOD: importJobsContextProject
+        Import jobs, xml contains project context
+METHOD: importJobsNoProject
+        Import jobs, xml no project defined
+METHOD: importJobsProjectParam
+        Import jobs, using project parameter
+METHOD: importJobsProjectParamOverride
+        Import jobs, project parameter overrides xml
+METHOD: importJobsProjectParamV7
+        Import jobs, project parameter v7 doesn' use parameter
 METHOD: setUp
+METHOD: triggerAdhocCommand
+METHOD: triggerAdhocCommandAsUser
+METHOD: triggerAdhocCommandAsUserUnauthorized
+METHOD: triggerAdhocCommandDeprecated
+METHOD: triggerAdhocCommandDeprecatedAsUser
+METHOD: triggerAdhocCommandDeprecatedAsUserUnauthorized
+METHOD: triggerAdhocScript
+METHOD: triggerAdhocScriptAsUser
+METHOD: triggerAdhocScriptAsUserUnauthorized
+METHOD: triggerAdhocScriptDeprecated
+METHOD: triggerAdhocScriptDeprecatedAsUser
+METHOD: triggerAdhocScriptDeprecatedAsUserUnauthorized
+METHOD: triggerAdhocScriptInpterpreter
+METHOD: triggerJobAsUser
+METHOD: triggerJobAsUserUnauthorized
+METHOD: triggerJobBasic
+METHOD: triggerJobDeprecatedAsUser
+METHOD: triggerJobDeprecatedAsUserUnauthorized
+METHOD: triggerJobDeprecatedBasic
 
 
 === org/rundeck/api/util/ParametersUtilTest.html ===
