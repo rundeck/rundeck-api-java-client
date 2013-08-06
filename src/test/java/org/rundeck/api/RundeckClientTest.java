@@ -28,6 +28,7 @@ import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.PagedResults;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.*;
 
 
@@ -51,6 +52,7 @@ public class RundeckClientTest {
     public static final String TEST_TOKEN_1 = "0UUNkeRp4d58EDeCs7S6UdODp334DvK9";
     public static final String TEST_TOKEN_2 = "PP4s4SdCRO6KUoNPd1D303Dc304ORN87";
     public static final String TEST_TOKEN_3 = "9RdEosesKP3se4oV9EKOd4s3RUeUS3ON";
+    public static final String TEST_TOKEN_4 = "sN5RRSNvu15DnV6EcNDdc2CkdPcv3s32";
 
     @Rule
     public Recorder recorder = new Recorder();
@@ -139,7 +141,7 @@ public class RundeckClientTest {
              match = {MatchRule.uri, MatchRule.headers, MatchRule.method, MatchRule.path, MatchRule.query})
     public void getExecutions() throws Exception {
 
-        RundeckClient client = createClient(TEST_TOKEN_1);
+        RundeckClient client = createClient(TEST_TOKEN_1, 5);
 
 
         final String projectName = "blah";
@@ -266,7 +268,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "get_executions_paging")
     public void getExecutionsPaging() throws Exception{
-        RundeckClient client = createClient(TEST_TOKEN_1);
+        RundeckClient client = createClient(TEST_TOKEN_1, 5);
         final String projectName = "blah";
         //2 max, 1 offset
         final PagedResults<RundeckExecution> adhocTest = client.getExecutions(ExecutionQuery.builder()
@@ -297,7 +299,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "bulk_delete")
     public void bulkDelete() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_2);
+        RundeckClient client = createClient(TEST_TOKEN_2, 5);
 
         final RundeckJobDeleteBulk deleteTest
             = client.deleteJobs(Arrays.asList("0ce457b5-ba84-41ca-812e-02b31da355a4"));
@@ -315,7 +317,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "bulk_delete_dne")
     public void bulkDeleteFailDNE() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_2);
+        RundeckClient client = createClient(TEST_TOKEN_2, 5);
 
         final RundeckJobDeleteBulk deleteTest
             = client.deleteJobs(Arrays.asList("does-not-exist"));
@@ -333,7 +335,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "bulk_delete_unauthorized")
     public void bulkDeleteFailUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_2);
+        RundeckClient client = createClient(TEST_TOKEN_2, 5);
 
         final RundeckJobDeleteBulk deleteTest
             = client.deleteJobs(Arrays.asList("3a6d16be-4268-4d26-86a9-cebc1781f768"));
@@ -351,7 +353,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_job_basic")
     public void triggerJobDeprecatedBasic() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         final RundeckExecution test
             = client.triggerJob("3170ba0e-6093-4b58-94d2-52988aefbfc9", null, null, null);
@@ -367,7 +369,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_job_basic")
     public void triggerJobBasic() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         final RundeckExecution test
             = client.triggerJob(RunJobBuilder.builder().setJobId("3170ba0e-6093-4b58-94d2-52988aefbfc9").create());
@@ -383,7 +385,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_job_as_user")
     public void triggerJobDeprecatedAsUser() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         final RundeckExecution test
             = client.triggerJob("3170ba0e-6093-4b58-94d2-52988aefbfc9", null, null, "api-java-client-user-test1");
@@ -399,7 +401,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_job_as_user")
     public void triggerJobAsUser() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         final RundeckExecution test
             = client.triggerJob(RunJobBuilder.builder()
@@ -418,7 +420,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_job_as_user_unauthorized")
     public void triggerJobDeprecatedAsUserUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         final RundeckExecution test;
         try {
@@ -431,7 +433,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_job_as_user_unauthorized")
     public void triggerJobAsUserUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         final RundeckExecution test;
         try {
@@ -448,7 +450,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_adhoc_command")
     public void triggerAdhocCommandDeprecated() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         final RundeckExecution test
                 = client.triggerAdhocCommand("test", "echo test trigger_adhoc_command");
@@ -464,7 +466,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_adhoc_command")
     public void triggerAdhocCommand() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         final RundeckExecution test
                 = client.triggerAdhocCommand(RunAdhocCommandBuilder.builder()
@@ -483,7 +485,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_adhoc_command_as_user")
     public void triggerAdhocCommandDeprecatedAsUser() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         final RundeckExecution test
                 = client.triggerAdhocCommand("test", "echo test trigger_adhoc_command_as_user",null,null,null,"api-java-client-test-run-command-as-user1");
@@ -498,7 +500,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_adhoc_command_as_user")
     public void triggerAdhocCommandAsUser() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         final RundeckExecution test
                 = client.triggerAdhocCommand(
@@ -519,7 +521,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_adhoc_command_as_user_unauthorized")
     public void triggerAdhocCommandDeprecatedAsUserUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         final RundeckExecution test;
         try {
@@ -532,7 +534,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_adhoc_command_as_user_unauthorized")
     public void triggerAdhocCommandAsUserUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         final RundeckExecution test;
         try {
@@ -552,7 +554,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_adhoc_script")
     public void triggerAdhocScriptDeprecated() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
         String script = "#!/bin/bash\n" +
                 "echo test trigger_adhoc_script\n";
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
@@ -570,14 +572,14 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_adhoc_script")
     public void triggerAdhocScript() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
         String script = "#!/bin/bash\n" +
                 "echo test trigger_adhoc_script\n";
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
 
         final RundeckExecution test
                 = client.triggerAdhocScript(RunAdhocScriptBuilder.builder().setProject("test").setScript
-                (byteArrayInputStream).create());
+                (byteArrayInputStream).build());
 
         Assert.assertEquals((Long) 25L, test.getId());
         Assert.assertEquals(null, test.getArgstring());
@@ -589,7 +591,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_adhoc_script_as_user")
     public void triggerAdhocScriptDeprecatedAsUser() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
         String script = "#!/bin/bash\n" +
                 "echo test trigger_adhoc_script\n";
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
@@ -607,14 +609,14 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_adhoc_script_as_user")
     public void triggerAdhocScriptAsUser() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
         String script = "#!/bin/bash\n" +
                 "echo test trigger_adhoc_script\n";
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
 
         final RundeckExecution test
                 = client.triggerAdhocScript(RunAdhocScriptBuilder.builder().setProject("test").setScript
-                (byteArrayInputStream).setAsUser("api-java-client-test-adhoc-script-as-user1").create());
+                (byteArrayInputStream).setAsUser("api-java-client-test-adhoc-script-as-user1").build());
 
         Assert.assertEquals((Long) 26L, test.getId());
         Assert.assertEquals(null, test.getArgstring());
@@ -626,7 +628,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_adhoc_script_as_user_unauthorized")
     public void triggerAdhocScriptDeprecatedAsUserUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
         String script = "#!/bin/bash\n" +
                 "echo test trigger_adhoc_script\n";
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
@@ -643,7 +645,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "trigger_adhoc_script_as_user_unauthorized")
     public void triggerAdhocScriptAsUserUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
         String script = "#!/bin/bash\n" +
                 "echo test trigger_adhoc_script\n";
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
@@ -651,17 +653,38 @@ public class RundeckClientTest {
         try{
         final RundeckExecution test
                 = client.triggerAdhocScript(RunAdhocScriptBuilder.builder().setProject("test").setScript
-                (byteArrayInputStream).setAsUser("api-java-client-test-adhoc-script-as-user1").create());
+                (byteArrayInputStream).setAsUser("api-java-client-test-adhoc-script-as-user1").build());
             Assert.fail("should not succeed");
         } catch (RundeckApiException e) {
             Assert.assertEquals("Not authorized for action \"Run as User\" for Run Adhoc", e.getMessage());
         }
 
     }
+
+    @Test
+    @Betamax(tape = "trigger_adhoc_script_interpreter")
+    public void triggerAdhocScriptInpterpreter() throws Exception {
+        RundeckClient client = createClient(TEST_TOKEN_3, 8);
+        String script = "#!/bin/bash\n" +
+                "echo test trigger_adhoc_script\n";
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
+        final RundeckExecution test
+                = client.triggerAdhocScript(RunAdhocScriptBuilder.builder()
+                .setProject("test").setScript(byteArrayInputStream)
+                .setScriptInterpreter("sudo -c bob")
+                .build());
+
+        Assert.assertEquals((Long) 27L, test.getId());
+        Assert.assertEquals(null, test.getArgstring());
+        Assert.assertEquals(null, test.getAbortedBy());
+        Assert.assertEquals("#!/bin/bash\necho test trigger_adhoc_script", test.getDescription());
+        Assert.assertEquals("admin", test.getStartedBy());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
+    }
     @Test
     @Betamax(tape = "abort_execution")
     public void abortExecution() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         long executionId = 21L;
         final RundeckAbort test = client.abortExecution(executionId);
@@ -672,7 +695,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "abort_execution_as_user")
     public void abortExecutionAsUser() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         long executionId = 22L;
         final RundeckAbort test = client.abortExecution(executionId,"api-java-client-test-abort-as-user1");
@@ -683,7 +706,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "abort_execution_as_user_unauthorized")
     public void abortExecutionAsUserUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3);
+        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
         long executionId = 28L;
         final RundeckAbort test = client.abortExecution(executionId, "api-java-client-test-abort-as-user1");
@@ -699,18 +722,215 @@ public class RundeckClientTest {
         Assert.assertEquals(total, jobTest.getTotal());
     }
 
+    /**
+     * Import jobs, xml contains project context
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "import_jobs_context_project")
+    public void importJobsContextProject() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_4, 8);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>job1</name>\n" +
+                "    <context>\n" +
+                "      <project>test</project>\n" +
+                "    </context>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                .setStream(stream)
+                .setFileType(FileType.XML)
+                .setJobsImportMethod(RundeckJobsImportMethod.CREATE)
+                .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(0,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
+        Assert.assertEquals("job1", rundeckJob.getName());
+        Assert.assertEquals("test", rundeckJob.getProject());
+    }
+    /**
+     * Import jobs, xml no project defined
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "import_jobs_no_project")
+    public void importJobsNoProject() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_4, 8);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>job2</name>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                .setStream(stream)
+                .setFileType(FileType.XML)
+                .setJobsImportMethod(RundeckJobsImportMethod.CREATE)
+                .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(1,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getFailedJobs().entrySet().iterator().next().getKey();
+        String reason = rundeckJobsImportResult.getFailedJobs().get(rundeckJob);
+        Assert.assertEquals("job2", rundeckJob.getName());
+        Assert.assertEquals(null, rundeckJob.getProject());
+        Assert.assertTrue(reason.contains("Project was not specified"));
+    }
+    /**
+     * Import jobs, using project parameter
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "import_jobs_project_param")
+    public void importJobsProjectParam() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_4, 8);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>importJobsProjectParam</name>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                .setStream(stream)
+                .setFileType(FileType.XML)
+                .setJobsImportMethod(RundeckJobsImportMethod.CREATE)
+                .setProject("test")
+                .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(0,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
+        Assert.assertEquals("importJobsProjectParam", rundeckJob.getName());
+        Assert.assertEquals("test", rundeckJob.getProject());
+    }
+    /**
+     * Import jobs, project parameter overrides xml
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "import_jobs_project_param_override")
+    public void importJobsProjectParamOverride() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_4, 8);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>importJobsProjectParamOverride</name>\n" +
+                "    <context>\n" +
+                "      <project>testXYZ</project>\n" +
+                "    </context>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                .setStream(stream)
+                .setFileType(FileType.XML)
+                .setJobsImportMethod(RundeckJobsImportMethod.CREATE)
+                .setProject("test")
+                .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(0,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
+        Assert.assertEquals("importJobsProjectParamOverride", rundeckJob.getName());
+        Assert.assertEquals("test", rundeckJob.getProject());
+    }
+    /**
+     * Import jobs, project parameter v7 doesn' use parameter
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "import_jobs_project_param_v7")
+    public void importJobsProjectParamV7() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_4, 7);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>importJobsProjectParamV7</name>\n" +
+                "    <context>\n" +
+                "      <project>testXYZ</project>\n" +
+                "    </context>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                .setStream(stream)
+                .setFileType(FileType.XML)
+                .setJobsImportMethod(RundeckJobsImportMethod.CREATE)
+                .setProject("test")
+                .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(0,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
+        Assert.assertEquals("importJobsProjectParamV7", rundeckJob.getName());
+        Assert.assertEquals("testXYZ", rundeckJob.getProject());
+    }
+
     @Before
     public void setUp() throws Exception {
         // not that you can put whatever here, because we don't actually connect to the RunDeck instance
         // but instead use betamax as a proxy to serve the previously recorded tapes (in src/test/resources)
-        client = createClient(TEST_TOKEN_0);
+        client = createClient(TEST_TOKEN_0, 5);
     }
 
-    private RundeckClient createClient(final String token) {
-        return RundeckClient.builder().url("http://rundeck.local:4440")
-            .token(token)
-            .version(5)
+    private RundeckClient createClient(final String token, int version) {
+        return createBuilder(token).version(version).build();
+    }
+
+    private RundeckClient createClient(String token) {
+        return createBuilder(token)
             .build();
+    }
+
+    private RundeckClientBuilder createBuilder(String token) {
+        return RundeckClient.builder().url("http://rundeck.local:4440")
+            .token(token);
     }
 
 }

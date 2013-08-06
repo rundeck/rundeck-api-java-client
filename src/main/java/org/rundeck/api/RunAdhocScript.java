@@ -19,4 +19,16 @@ public interface RunAdhocScript extends RunAdhoc {
      */
     String getArgString();
 
+    /**
+     * Command string to invoke the script with arguments
+     * @return
+     */
+    String getScriptInterpreter();
+
+    /**
+     * If true, quote the script filepath and args to the script interpreter.
+     * @return
+     */
+    Boolean getInterpreterArgsQuoted();
+
 }

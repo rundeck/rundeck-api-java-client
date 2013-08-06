@@ -31,7 +31,7 @@ import java.util.*;
 
 
 /**
- * ExecutionQuery contains the query parameters for the /executions api, create one with the {@link Builder} class, e.g.
+ * ExecutionQuery contains the query parameters for the /executions api, build one with the {@link Builder} class, e.g.
  * using the {@link #builder()} method.
  *
  * @author Greg Schueler <a href="mailto:greg@dtosolutions.com">greg@dtosolutions.com</a>

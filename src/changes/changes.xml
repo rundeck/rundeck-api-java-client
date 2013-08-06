@@ -22,6 +22,18 @@
     <author>Vincent Behar</author>
   </properties>
   <body>
+    <release date='unreleased' description='Update for Rundeck API version 8' version='8.0'>
+      <action type='add' dev='gschueler'>
+        Support script interpreter parameters, API v8
+      </action>
+    <action type='add' dev='gschueler'>
+        Support project parameter for imported jobs, API v8
+    </action>
+      <action type='update' dev='gschueler' issue='2'>
+        Replace unwieldy methods with many arguments with Builder based interfaces, deprecating the old methods.
+          The old methods will be removed completely in version 10 of this library.
+      </action>
+    </release>
     <release date='2013-02-21' description='Update for Rundeck API version 6' version='6.0'>
       <action type='add' dev='gschueler'>
         Support update for output entry format, API v6 #1

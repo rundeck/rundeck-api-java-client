@@ -4,7 +4,7 @@ import org.rundeck.api.util.AssertUtil;
 
 
 /**
- * Builder to create a {@link RundeckClient}, you must specify a url, and at least one of (login, password), token, or
+ * Builder to build a {@link RundeckClient}, you must specify a url, and at least one of (login, password), token, or
  * sessionId.
  */
 public class RundeckClientBuilder {
