@@ -28,6 +28,7 @@ import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.PagedResults;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.*;
 
 
@@ -51,6 +52,7 @@ public class RundeckClientTest {
     public static final String TEST_TOKEN_1 = "0UUNkeRp4d58EDeCs7S6UdODp334DvK9";
     public static final String TEST_TOKEN_2 = "PP4s4SdCRO6KUoNPd1D303Dc304ORN87";
     public static final String TEST_TOKEN_3 = "9RdEosesKP3se4oV9EKOd4s3RUeUS3ON";
+    public static final String TEST_TOKEN_4 = "sN5RRSNvu15DnV6EcNDdc2CkdPcv3s32";
 
     @Rule
     public Recorder recorder = new Recorder();
@@ -718,6 +720,196 @@ public class RundeckClientTest {
         Assert.assertEquals(max, jobTest.getMax());
         Assert.assertEquals(offset, jobTest.getOffset());
         Assert.assertEquals(total, jobTest.getTotal());
+    }
+
+    /**
+     * Import jobs, xml contains project context
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "import_jobs_context_project")
+    public void importJobsContextProject() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_4, 8);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>job1</name>\n" +
+                "    <context>\n" +
+                "      <project>test</project>\n" +
+                "    </context>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                .setStream(stream)
+                .setFileType(FileType.XML)
+                .setJobsImportMethod(RundeckJobsImportMethod.CREATE)
+                .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(0,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
+        Assert.assertEquals("job1", rundeckJob.getName());
+        Assert.assertEquals("test", rundeckJob.getProject());
+    }
+    /**
+     * Import jobs, xml no project defined
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "import_jobs_no_project")
+    public void importJobsNoProject() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_4, 8);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>job2</name>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                .setStream(stream)
+                .setFileType(FileType.XML)
+                .setJobsImportMethod(RundeckJobsImportMethod.CREATE)
+                .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(1,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getFailedJobs().entrySet().iterator().next().getKey();
+        String reason = rundeckJobsImportResult.getFailedJobs().get(rundeckJob);
+        Assert.assertEquals("job2", rundeckJob.getName());
+        Assert.assertEquals(null, rundeckJob.getProject());
+        Assert.assertTrue(reason.contains("Project was not specified"));
+    }
+    /**
+     * Import jobs, using project parameter
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "import_jobs_project_param")
+    public void importJobsProjectParam() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_4, 8);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>importJobsProjectParam</name>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                .setStream(stream)
+                .setFileType(FileType.XML)
+                .setJobsImportMethod(RundeckJobsImportMethod.CREATE)
+                .setProject("test")
+                .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(0,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
+        Assert.assertEquals("importJobsProjectParam", rundeckJob.getName());
+        Assert.assertEquals("test", rundeckJob.getProject());
+    }
+    /**
+     * Import jobs, project parameter overrides xml
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "import_jobs_project_param_override")
+    public void importJobsProjectParamOverride() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_4, 8);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>importJobsProjectParamOverride</name>\n" +
+                "    <context>\n" +
+                "      <project>testXYZ</project>\n" +
+                "    </context>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                .setStream(stream)
+                .setFileType(FileType.XML)
+                .setJobsImportMethod(RundeckJobsImportMethod.CREATE)
+                .setProject("test")
+                .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(0,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
+        Assert.assertEquals("importJobsProjectParamOverride", rundeckJob.getName());
+        Assert.assertEquals("test", rundeckJob.getProject());
+    }
+    /**
+     * Import jobs, project parameter v7 doesn' use parameter
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "import_jobs_project_param_v7")
+    public void importJobsProjectParamV7() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_4, 7);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>importJobsProjectParamV7</name>\n" +
+                "    <context>\n" +
+                "      <project>testXYZ</project>\n" +
+                "    </context>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                .setStream(stream)
+                .setFileType(FileType.XML)
+                .setJobsImportMethod(RundeckJobsImportMethod.CREATE)
+                .setProject("test")
+                .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(0,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
+        Assert.assertEquals("importJobsProjectParamV7", rundeckJob.getName());
+        Assert.assertEquals("testXYZ", rundeckJob.getProject());
     }
 
     @Before

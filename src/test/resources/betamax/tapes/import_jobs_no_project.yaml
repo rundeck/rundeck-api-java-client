@@ -1,0 +1,22 @@
+!tape
+name: import_jobs_no_project
+interactions:
+- recorded: 2013-08-06T18:12:10.671Z
+  request:
+    method: POST
+    uri: http://rundeck.local:4440/api/8/jobs/import?format=xml&dupeOption=create
+    headers:
+      Content-Type: multipart/form-data; boundary=64TP79VCqm2CT8gJ-30Ra_C7fe0A28bW
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      Transfer-Encoding: chunked
+      User-Agent: RunDeck API Java Client 8
+      X-RunDeck-Auth-Token: sN5RRSNvu15DnV6EcNDdc2CkdPcv3s32
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=173jbe1qftk2s;Path=/
+    body: <result success='true' apiversion='8'><succeeded count='0'></succeeded><failed count='1'><job index='1'><name>job2</name><group></group><project/><error>Project was not specified</error></job></failed><skipped count='0'></skipped></result>

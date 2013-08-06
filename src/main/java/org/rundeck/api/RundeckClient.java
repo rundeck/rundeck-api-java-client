@@ -56,6 +56,7 @@ import java.util.concurrent.TimeUnit;
  *         RunJobBuilder}</li>
  *         <li> runJob(...), use {@link #runJob(RunJob)} and {@link
  *         RunJobBuilder}</li>
+ *         <li> importJobs(...), use {@link #importJobs(RundeckJobsImport)} and {@link #importJobs(String, RundeckJobsImport)}</li>
  *     </ul>
  *     </p>
  * <p>
@@ -89,6 +90,7 @@ import java.util.concurrent.TimeUnit;
 public class RundeckClient implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static final String JOBS_IMPORT = "/jobs/import";
 
     /**
      * Supported version numbers
@@ -643,6 +645,7 @@ public class RundeckClient implements Serializable {
      * @throws IOException if we failed to read the file
      * @see #importJobs(InputStream, String)
      * @see #importJobs(String, FileType, RundeckJobsImportMethod)
+     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this library.
      */
     public RundeckJobsImportResult importJobs(String filename, String fileType) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
@@ -663,6 +666,8 @@ public class RundeckClient implements Serializable {
      * @throws IOException if we failed to read the file
      * @see #importJobs(InputStream, FileType)
      * @see #importJobs(String, FileType, RundeckJobsImportMethod)
+     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this
+     * library.
      */
     public RundeckJobsImportResult importJobs(String filename, FileType fileType) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
@@ -684,6 +689,8 @@ public class RundeckClient implements Serializable {
      * @throws IOException if we failed to read the file
      * @see #importJobs(InputStream, String, String)
      * @see #importJobs(String, FileType, RundeckJobsImportMethod)
+     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this
+     * library.
      */
     public RundeckJobsImportResult importJobs(String filename, String fileType, String importBehavior)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException,
@@ -707,6 +714,8 @@ public class RundeckClient implements Serializable {
      * @throws IllegalArgumentException if the filename is blank (null, empty or whitespace), or the fileType is null
      * @throws IOException if we failed to read the file
      * @see #importJobs(InputStream, FileType, RundeckJobsImportMethod)
+     * @deprecated use {@link #importJobs(String, RundeckJobsImport)}, this method will be removed in version 10 of
+     * this library.
      */
     public RundeckJobsImportResult importJobs(String filename, FileType fileType, RundeckJobsImportMethod importBehavior)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException,
@@ -734,6 +743,8 @@ public class RundeckClient implements Serializable {
      *             invalid
      * @see #importJobs(String, String)
      * @see #importJobs(InputStream, FileType, RundeckJobsImportMethod)
+     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this
+     * library.
      */
     public RundeckJobsImportResult importJobs(InputStream stream, String fileType) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
@@ -753,6 +764,8 @@ public class RundeckClient implements Serializable {
      * @throws IllegalArgumentException if the stream or fileType is null
      * @see #importJobs(String, FileType)
      * @see #importJobs(InputStream, FileType, RundeckJobsImportMethod)
+     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this
+     * library.
      */
     public RundeckJobsImportResult importJobs(InputStream stream, FileType fileType) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
@@ -773,6 +786,8 @@ public class RundeckClient implements Serializable {
      *             the fileType or behavior is not valid
      * @see #importJobs(String, String, String)
      * @see #importJobs(InputStream, FileType, RundeckJobsImportMethod)
+     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this
+     * library.
      */
     public RundeckJobsImportResult importJobs(InputStream stream, String fileType, String importBehavior)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
@@ -794,16 +809,70 @@ public class RundeckClient implements Serializable {
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @throws IllegalArgumentException if the stream or fileType is null
      * @see #importJobs(String, FileType, RundeckJobsImportMethod)
+     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this
+     * library.
      */
     public RundeckJobsImportResult importJobs(InputStream stream, FileType fileType,
             RundeckJobsImportMethod importBehavior) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException, IllegalArgumentException {
-        AssertUtil.notNull(stream, "inputStream of jobs is mandatory to import jobs !");
-        AssertUtil.notNull(fileType, "fileType is mandatory to import jobs !");
-        return new ApiCall(this).post(new ApiPathBuilder("/jobs/import").param("format", fileType)
-                                                                        .param("dupeOption", importBehavior)
-                                                                        .attach("xmlBatch", stream),
-                                      new JobsImportResultParser("result"));
+        return importJobs(RundeckJobsImportBuilder.builder().setStream(stream).setFileType(fileType)
+                .setJobsImportMethod(importBehavior).build());
+    }
+
+    /**
+     * Import the definitions of jobs, from the given input stream, using the given behavior
+     *
+     * @param rundeckJobsImport import request, see {@link RundeckJobsImportBuilder}
+     *
+     * @return a {@link RundeckJobsImportResult} instance - won't be null
+     *
+     * @throws RundeckApiException      in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the stream or fileType is null
+     * @see #importJobs(String, FileType, RundeckJobsImportMethod)
+     */
+    public RundeckJobsImportResult importJobs(final String filename,final RundeckJobsImport rundeckJobsImport) throws RundeckApiException,
+            RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException, IOException {
+        AssertUtil.notBlank(filename, "filename (of jobs file) is mandatory to import jobs !");
+        FileInputStream stream = null;
+        try {
+            stream = FileUtils.openInputStream(new File(filename));
+            return importJobs(RundeckJobsImportBuilder.builder(rundeckJobsImport).setStream(stream).build());
+        } finally {
+
+            IOUtils.closeQuietly(stream);
+        }
+    }
+    /**
+     * Import the definitions of jobs, from the given input stream, using the given behavior
+     *
+     * @param rundeckJobsImport import request, see {@link RundeckJobsImportBuilder}
+     *
+     * @return a {@link RundeckJobsImportResult} instance - won't be null
+     *
+     * @throws RundeckApiException      in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the stream or fileType is null
+     * @see #importJobs(String, FileType, RundeckJobsImportMethod)
+     */
+    public RundeckJobsImportResult importJobs(final RundeckJobsImport rundeckJobsImport) throws RundeckApiException,
+            RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notNull(rundeckJobsImport.getStream(), "inputStream of jobs is mandatory to import jobs !");
+        AssertUtil.notNull(rundeckJobsImport.getFileType(), "fileType is mandatory to import jobs !");
+        final ApiPathBuilder request = new ApiPathBuilder(JOBS_IMPORT)
+                .param("format", rundeckJobsImport.getFileType())
+                .param("dupeOption", rundeckJobsImport.getImportMethod())
+                .attach("xmlBatch", rundeckJobsImport.getStream());
+        if(null!=rundeckJobsImport.getProject()) {
+            //API v8
+            request.param("project", rundeckJobsImport.getProject());
+        }
+        return new ApiCall(this).post(request, new JobsImportResultParser("result"));
     }
 
     /**
