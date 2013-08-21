@@ -100,6 +100,7 @@ public class RundeckClient implements Serializable {
         V6(6),
         V7(7),
         V8(8),
+        V9(9),
         ;
 
         private int versionNumber;
@@ -113,7 +114,7 @@ public class RundeckClient implements Serializable {
         }
     }
     /** Version of the API supported */
-    public static final transient int API_VERSION = Version.V8.getVersionNumber();
+    public static final transient int API_VERSION = Version.V9.getVersionNumber();
 
     private static final String API = "/api/";
 
