@@ -60,6 +60,7 @@ public class ExecutionParser implements XmlNodeParser<RundeckExecution> {
         execution.setArgstring(StringUtils.trimToNull(execNode.valueOf("argstring")));
         execution.setStartedBy(StringUtils.trimToNull(execNode.valueOf("user")));
         execution.setAbortedBy(StringUtils.trimToNull(execNode.valueOf("abortedby")));
+        execution.setProject(StringUtils.trimToNull(execNode.valueOf("@project")));
         String startedAt = StringUtils.trimToNull(execNode.valueOf("date-started/@unixtime"));
         if (startedAt != null) {
             execution.setStartedAt(new Date(Long.valueOf(startedAt)));

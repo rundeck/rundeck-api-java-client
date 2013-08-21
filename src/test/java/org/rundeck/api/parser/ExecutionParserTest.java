@@ -131,4 +131,29 @@ public class ExecutionParserTest {
         Assert.assertNull(job);
     }
 
+    @Test
+    public void parseV9Execution() throws Exception {
+        InputStream input = getClass().getResourceAsStream("execution-running-v9.xml");
+        Document document = ParserHelper.loadDocument(input);
+
+        RundeckExecution execution = new ExecutionParser("result/executions/execution").parseXmlNode(document);
+        RundeckJob job = execution.getJob();
+
+        Assert.assertEquals(null, job);
+        Assert.assertEquals(new Long(119), execution.getId());
+        Assert.assertEquals("http://localhost:4440/execution/follow/119", execution.getUrl());
+        Assert.assertEquals(ExecutionStatus.RUNNING, execution.getStatus());
+        Assert.assertEquals("admin", execution.getStartedBy());
+        Assert.assertEquals(new Date(1377104570966L), execution.getStartedAt());
+        Assert.assertEquals(null, execution.getEndedAt());
+        Assert.assertEquals(null, execution.getDurationInMillis());
+        Assert.assertEquals(null, execution.getDuration());
+        Assert.assertEquals(null, execution.getAbortedBy());
+        Assert.assertEquals("echo asdf; sleep 120", execution.getDescription());
+        Assert.assertEquals(null, execution.getArgstring());
+        Assert.assertEquals("test", execution.getProject());
+
+
+    }
+
 }

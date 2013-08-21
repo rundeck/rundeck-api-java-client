@@ -51,6 +51,7 @@ public class RundeckExecution implements Serializable {
 
     private String description;
     private String argstring;
+    private String project;
 
     /**
      * @return the duration of the execution in milliseconds (or null if the duration is still running, or has been
@@ -190,6 +191,7 @@ public class RundeckExecution implements Serializable {
         result = prime * result + ((startedBy == null) ? 0 : startedBy.hashCode());
         result = prime * result + ((status == null) ? 0 : status.hashCode());
         result = prime * result + ((url == null) ? 0 : url.hashCode());
+        result = prime * result + ((project == null) ? 0 : project.hashCode());
         return result;
     }
 
@@ -252,6 +254,11 @@ public class RundeckExecution implements Serializable {
                 return false;
         } else if (!url.equals(other.url))
             return false;
+        if (project == null) {
+            if (other.project != null)
+                return false;
+        } else if (!project.equals(other.project))
+            return false;
         return true;
     }
 
@@ -264,6 +271,14 @@ public class RundeckExecution implements Serializable {
 
     public void setArgstring(String argstring) {
         this.argstring = argstring;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
     }
 
     /**
