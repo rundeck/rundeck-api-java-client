@@ -1,0 +1,50 @@
+!tape
+name: running_executions_v8
+interactions:
+- recorded: 2013-08-21T17:18:36.488Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/8/projects
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 8
+      X-RunDeck-Auth-Token: C3O6d5O98Kr6Dpv71sdE4ERdCuU12P6d
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(6.1.21)
+      Set-Cookie: JSESSIONID=16xd7k6t8tr5m;Path=/
+    body: <result success='true' apiversion='9'><projects count='2'><project><name>test</name><description></description></project><project><name>test2</name><description></description></project></projects></result>
+- recorded: 2013-08-21T17:18:36.647Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/8/executions/running?project=test
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 8
+      X-RunDeck-Auth-Token: C3O6d5O98Kr6Dpv71sdE4ERdCuU12P6d
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='9'><executions count='1'><execution id='120' href='http://dignan:4440/execution/follow/120' status='running' project='test'><user>admin</user><date-started unixtime='1377105497299'>2013-08-21T17:18:17Z</date-started><description>echo asdf; sleep 120</description><argstring/></execution></executions></result>
+- recorded: 2013-08-21T17:18:36.865Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/8/executions/running?project=test2
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 8
+      X-RunDeck-Auth-Token: C3O6d5O98Kr6Dpv71sdE4ERdCuU12P6d
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml; charset=utf-8
+      Server: Jetty(6.1.21)
+    body: <result success='true' apiversion='9'><executions count='1'><execution id='121' href='http://dignan:4440/execution/follow/121' status='running' project='test2'><user>admin</user><date-started unixtime='1377105500838'>2013-08-21T17:18:20Z</date-started><description>echo asdf; sleep 120</description><argstring/></execution></executions></result>

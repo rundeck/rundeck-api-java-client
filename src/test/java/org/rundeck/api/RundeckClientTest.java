@@ -928,6 +928,23 @@ public class RundeckClientTest {
         Assert.assertEquals("test2", exec2.getProject());
     }
 
+    /**
+     * Running executions for all projects using API v8, which queries for project list and then individually
+     * queries each project's now running
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "running_executions_v8")
+    public void runningExecutionsV8() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_5, 8);
+        List<RundeckExecution> runningExecutions = client.getRunningExecutions();
+        Assert.assertEquals(2, runningExecutions.size());
+        RundeckExecution exec1 = runningExecutions.get(0);
+        Assert.assertEquals("test", exec1.getProject());
+        RundeckExecution exec2 = runningExecutions.get(1);
+        Assert.assertEquals("test2", exec2.getProject());
+    }
+
     @Before
     public void setUp() throws Exception {
         // not that you can put whatever here, because we don't actually connect to the RunDeck instance
