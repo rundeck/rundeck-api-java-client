@@ -2668,11 +2668,16 @@ public class RundeckClient implements Serializable {
      */
     public List<RundeckExecution> getRunningExecutions() throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException {
-        List<RundeckExecution> executions = new ArrayList<RundeckExecution>();
-        for (RundeckProject project : getProjects()) {
-            executions.addAll(getRunningExecutions(project.getName()));
+        if (this.getApiVersion() >= Version.V9.getVersionNumber()) {
+            //simply query using '*'
+            return getRunningExecutions("*");
+        } else {
+            List<RundeckExecution> executions = new ArrayList<RundeckExecution>();
+            for (RundeckProject project : getProjects()) {
+                executions.addAll(getRunningExecutions(project.getName()));
+            }
+            return executions;
         }
-        return executions;
     }
 
     /**

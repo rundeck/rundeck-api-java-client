@@ -53,6 +53,7 @@ public class RundeckClientTest {
     public static final String TEST_TOKEN_2 = "PP4s4SdCRO6KUoNPd1D303Dc304ORN87";
     public static final String TEST_TOKEN_3 = "9RdEosesKP3se4oV9EKOd4s3RUeUS3ON";
     public static final String TEST_TOKEN_4 = "sN5RRSNvu15DnV6EcNDdc2CkdPcv3s32";
+    public static final String TEST_TOKEN_5 = "C3O6d5O98Kr6Dpv71sdE4ERdCuU12P6d";
 
     @Rule
     public Recorder recorder = new Recorder();
@@ -910,6 +911,21 @@ public class RundeckClientTest {
         RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
         Assert.assertEquals("importJobsProjectParamV7", rundeckJob.getName());
         Assert.assertEquals("testXYZ", rundeckJob.getProject());
+    }
+    /**
+     * Running executions for all projects using API v9
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "running_executions_v9")
+    public void runningExecutionsV9() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_5, 9);
+        List<RundeckExecution> runningExecutions = client.getRunningExecutions();
+        Assert.assertEquals(2, runningExecutions.size());
+        RundeckExecution exec1 = runningExecutions.get(0);
+        Assert.assertEquals("test", exec1.getProject());
+        RundeckExecution exec2 = runningExecutions.get(1);
+        Assert.assertEquals("test2", exec2.getProject());
     }
 
     @Before
