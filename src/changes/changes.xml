@@ -22,6 +22,11 @@
     <author>Vincent Behar</author>
   </properties>
   <body>
+    <release date='2014-01-16' description='Complete Rundeck API version 9' version='9.1'>
+      <action type='add' dev='gschueler'>
+          Add uuidOption support to jobs import, API v9
+      </action>
+    </release>
     <release date='2013-08-26' description='Update for Rundeck API version 9' version='9.0'>
       <action type='add' dev='gschueler'>
           Add project to parsed execution result, API v9
