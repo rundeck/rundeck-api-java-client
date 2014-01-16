@@ -1,6 +1,7 @@
 package org.rundeck.api;
 
 import org.rundeck.api.domain.RundeckJobsImportMethod;
+import org.rundeck.api.domain.RundeckJobsUUIDImportBehavior;
 
 import java.io.InputStream;
 
@@ -11,6 +12,7 @@ public class DefaultJobsImport implements RundeckJobsImport{
     private InputStream stream;
     private FileType fileType;
     private RundeckJobsImportMethod importMethod;
+    private RundeckJobsUUIDImportBehavior uuidImportBehavior;
     private String project;
 
     public InputStream getStream() {
@@ -43,5 +45,13 @@ public class DefaultJobsImport implements RundeckJobsImport{
 
     public void setProject(final String project) {
         this.project = project;
+    }
+
+    public RundeckJobsUUIDImportBehavior getUuidImportBehavior() {
+        return uuidImportBehavior;
+    }
+
+    public void setUuidImportBehavior(RundeckJobsUUIDImportBehavior uuidImportBehavior) {
+        this.uuidImportBehavior = uuidImportBehavior;
     }
 }

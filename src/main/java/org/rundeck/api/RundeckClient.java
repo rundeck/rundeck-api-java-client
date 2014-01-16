@@ -869,6 +869,10 @@ public class RundeckClient implements Serializable {
                 .param("format", rundeckJobsImport.getFileType())
                 .param("dupeOption", rundeckJobsImport.getImportMethod())
                 .attach("xmlBatch", rundeckJobsImport.getStream());
+        if(null!=rundeckJobsImport.getUuidImportBehavior()) {
+            //API v9
+            request.param("uuidOption", rundeckJobsImport.getUuidImportBehavior());
+        }
         if(null!=rundeckJobsImport.getProject()) {
             //API v8
             request.param("project", rundeckJobsImport.getProject());

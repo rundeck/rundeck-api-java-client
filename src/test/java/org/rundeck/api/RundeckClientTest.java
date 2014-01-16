@@ -54,6 +54,7 @@ public class RundeckClientTest {
     public static final String TEST_TOKEN_3 = "9RdEosesKP3se4oV9EKOd4s3RUeUS3ON";
     public static final String TEST_TOKEN_4 = "sN5RRSNvu15DnV6EcNDdc2CkdPcv3s32";
     public static final String TEST_TOKEN_5 = "C3O6d5O98Kr6Dpv71sdE4ERdCuU12P6d";
+    public static final String TEST_TOKEN_6 = "Do4d3NUD5DKk21DR4sNK755RcPk618vn";
 
     @Rule
     public Recorder recorder = new Recorder();
@@ -911,6 +912,83 @@ public class RundeckClientTest {
         RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
         Assert.assertEquals("importJobsProjectParamV7", rundeckJob.getName());
         Assert.assertEquals("testXYZ", rundeckJob.getProject());
+    }
+    /**
+     * Import jobs, project parameter v7 doesn' use parameter
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "import_jobs_uuid_param_remove_v9")
+    public void importJobsUUIDParamRemoveV9() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 9);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <uuid>testImportUUID</uuid>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>importJobsUUIDParamRemoveV9</name>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                .setStream(stream)
+                .setFileType(FileType.XML)
+                .setJobsImportMethod(RundeckJobsImportMethod.CREATE)
+                .setUUIDImportBehavior(RundeckJobsUUIDImportBehavior.REMOVE)
+                .setProject("test")
+                .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(0,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
+        Assert.assertEquals("importJobsUUIDParamRemoveV9", rundeckJob.getName());
+        Assert.assertFalse("testImportUUID".equals(rundeckJob.getId()));
+        Assert.assertEquals("b33c8bb1-4dfc-4661-a890-4164b264cc4a", rundeckJob.getId());
+    }
+    /**
+     * Import jobs, project parameter v7 doesn' use parameter
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "import_jobs_uuid_param_preserve_v9")
+    public void importJobsUUIDParamPreserveV9() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 9);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <uuid>testImportUUID</uuid>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>importJobsUUIDParamPreserveV9</name>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                .setStream(stream)
+                .setFileType(FileType.XML)
+                .setJobsImportMethod(RundeckJobsImportMethod.CREATE)
+                .setUUIDImportBehavior(RundeckJobsUUIDImportBehavior.PRESERVE)
+                .setProject("test")
+                .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(0,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
+        Assert.assertEquals("importJobsUUIDParamPreserveV9", rundeckJob.getName());
+        Assert.assertEquals("testImportUUID", rundeckJob.getId());
     }
     /**
      * Running executions for all projects using API v9

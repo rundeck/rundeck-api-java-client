@@ -1,0 +1,23 @@
+!tape
+name: import_jobs_uuid_param_preserve_v9
+interactions:
+- recorded: 2014-01-16T19:48:16.361Z
+  request:
+    method: POST
+    uri: http://rundeck.local:4440/api/9/jobs/import?format=xml&dupeOption=create&uuidOption=preserve&project=test
+    headers:
+      Content-Type: multipart/form-data; boundary=Vv9SewZI5E_1GRc0505bncu0VK9ZyEST8frI5x
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      Transfer-Encoding: chunked
+      User-Agent: RunDeck API Java Client 9
+      X-RunDeck-Auth-Token: Do4d3NUD5DKk21DR4sNK755RcPk618vn
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1xnx5xlw417u9yjo2k4r2azlz;Path=/
+    body: "<result success='true' apiversion='10'>\n  <succeeded count='1'>\n    <job index='1' href='http://dignan.local:4440/api/10/job/testImportUUID'>\n      <id>testImportUUID</id>\n      <name>importJobsUUIDParamPreserveV9</name>\n      <group></group>\n\
+      \      <project>test</project>\n      <url>http://dignan.local:4440/scheduledExecution/show/testImportUUID</url>\n    </job>\n  </succeeded>\n  <failed count='0' />\n  <skipped count='0' />\n</result>"

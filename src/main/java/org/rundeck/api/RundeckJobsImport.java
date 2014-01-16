@@ -1,6 +1,7 @@
 package org.rundeck.api;
 
 import org.rundeck.api.domain.RundeckJobsImportMethod;
+import org.rundeck.api.domain.RundeckJobsUUIDImportBehavior;
 
 import java.io.InputStream;
 
@@ -25,6 +26,11 @@ public interface RundeckJobsImport {
      * @return
      */
     public RundeckJobsImportMethod getImportMethod();
+    /**
+     * Return the import behavior
+     * @return
+     */
+    public RundeckJobsUUIDImportBehavior getUuidImportBehavior();
 
     /**
      * Return the project name

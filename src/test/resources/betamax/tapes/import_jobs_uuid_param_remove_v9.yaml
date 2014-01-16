@@ -1,0 +1,23 @@
+!tape
+name: import_jobs_uuid_param_remove_v9
+interactions:
+- recorded: 2014-01-16T19:48:16.054Z
+  request:
+    method: POST
+    uri: http://rundeck.local:4440/api/9/jobs/import?format=xml&dupeOption=create&uuidOption=remove&project=test
+    headers:
+      Content-Type: multipart/form-data; boundary=g4k7Bv2F-yGqChdM2JJnQlCIXgmcZhb
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      Transfer-Encoding: chunked
+      User-Agent: RunDeck API Java Client 9
+      X-RunDeck-Auth-Token: Do4d3NUD5DKk21DR4sNK755RcPk618vn
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1cc5yr3jhdhxs1d9zt0cxdt84z;Path=/
+    body: "<result success='true' apiversion='10'>\n  <succeeded count='1'>\n    <job index='1' href='http://dignan.local:4440/api/10/job/b33c8bb1-4dfc-4661-a890-4164b264cc4a'>\n      <id>b33c8bb1-4dfc-4661-a890-4164b264cc4a</id>\n      <name>importJobsUUIDParamRemoveV9</name>\n\
+      \      <group></group>\n      <project>test</project>\n      <url>http://dignan.local:4440/scheduledExecution/show/b33c8bb1-4dfc-4661-a890-4164b264cc4a</url>\n    </job>\n  </succeeded>\n  <failed count='0' />\n  <skipped count='0' />\n</result>"
