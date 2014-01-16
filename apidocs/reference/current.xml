@@ -63,6 +63,17 @@
  visibility="public"
 >
 </method>
+<method name="getUuidImportBehavior"
+ return="org.rundeck.api.domain.RundeckJobsUUIDImportBehavior"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="setFileType"
  return="void"
  abstract="false"
@@ -113,6 +124,19 @@
  visibility="public"
 >
 <parameter name="stream" type="java.io.InputStream">
+</parameter>
+</method>
+<method name="setUuidImportBehavior"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="uuidImportBehavior" type="org.rundeck.api.domain.RundeckJobsUUIDImportBehavior">
 </parameter>
 </method>
 </class>
@@ -4761,6 +4785,17 @@
  visibility="public"
 >
 </method>
+<method name="getUuidImportBehavior"
+ return="org.rundeck.api.domain.RundeckJobsUUIDImportBehavior"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 </interface>
 <class name="RundeckJobsImportBuilder"
  extends="java.lang.Object"
@@ -4873,6 +4908,19 @@
  visibility="public"
 >
 <parameter name="stream" type="java.io.InputStream">
+</parameter>
+</method>
+<method name="setUUIDImportBehavior"
+ return="org.rundeck.api.RundeckJobsImportBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="behavior" type="org.rundeck.api.domain.RundeckJobsUUIDImportBehavior">
 </parameter>
 </method>
 </class>
@@ -5550,6 +5598,17 @@
  visibility="public"
 >
 </method>
+<method name="getProject"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="getShortDuration"
  return="java.lang.String"
  abstract="false"
@@ -5681,6 +5740,19 @@
  visibility="public"
 >
 <parameter name="job" type="org.rundeck.api.domain.RundeckJob">
+</parameter>
+</method>
+<method name="setProject"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="project" type="java.lang.String">
 </parameter>
 </method>
 <method name="setStartedAt"
@@ -6414,6 +6486,39 @@
  synchronized="false"
  static="false"
  final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<class name="RundeckJobsUUIDImportBehavior"
+ extends="java.lang.Enum"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="valueOf"
+ return="org.rundeck.api.domain.RundeckJobsUUIDImportBehavior"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="name" type="java.lang.String">
+</parameter>
+</method>
+<method name="values"
+ return="org.rundeck.api.domain.RundeckJobsUUIDImportBehavior[]"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="true"
  deprecated="not deprecated"
  visibility="public"
 >

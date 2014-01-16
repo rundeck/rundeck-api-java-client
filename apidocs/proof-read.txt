@@ -66,6 +66,7 @@ METHOD: setFileType
 METHOD: setJobsImportMethod
 METHOD: setProject
 METHOD: setStream
+METHOD: setUUIDImportBehavior
 
 
 === org/rundeck/api/RundeckJobsImport.html ===
@@ -78,6 +79,8 @@ METHOD: getProject
         Return the project name
 METHOD: getStream
         Return the input stream
+METHOD: getUuidImportBehavior
+        Return the import behavior
 
 
 === org/rundeck/api/RundeckClientBuilder.html ===
@@ -575,6 +578,7 @@ ENUM: V5
 ENUM: V6
 ENUM: V7
 ENUM: V8
+ENUM: V9
 METHOD: getVersionNumber
 METHOD: valueOf
 METHOD: values
@@ -747,10 +751,12 @@ METHOD: getFileType
 METHOD: getImportMethod
 METHOD: getProject
 METHOD: getStream
+METHOD: getUuidImportBehavior
 METHOD: setFileType
 METHOD: setImportMethod
 METHOD: setProject
 METHOD: setStream
+METHOD: setUuidImportBehavior
 
 
 === org/rundeck/api/domain/RundeckSystemInfo.html ===
@@ -911,6 +917,14 @@ METHOD: setUsername
 METHOD: toString
 
 
+=== org/rundeck/api/domain/RundeckJobsUUIDImportBehavior.html ===
+        $INTERFACE is ... User: greg Date: 1/16/14 Time: 11:38 AM
+ENUM: PRESERVE
+ENUM: REMOVE
+METHOD: valueOf
+METHOD: values
+
+
 === org/rundeck/api/domain/RundeckJobsImportResult.html ===
         Result of importing some jobs into RunDeck
 CONSTRUCTOR: RundeckJobsImportResult
@@ -1028,6 +1042,7 @@ METHOD: getDurationInSeconds
 METHOD: getEndedAt
 METHOD: getId
 METHOD: getJob
+METHOD: getProject
 METHOD: getShortDuration
 METHOD: getStartedAt
 METHOD: getStartedBy
@@ -1040,6 +1055,7 @@ METHOD: setDescription
 METHOD: setEndedAt
 METHOD: setId
 METHOD: setJob
+METHOD: setProject
 METHOD: setStartedAt
 METHOD: setStartedBy
 METHOD: setStatus

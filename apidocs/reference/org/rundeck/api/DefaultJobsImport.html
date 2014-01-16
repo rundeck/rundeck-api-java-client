@@ -516,11 +516,13 @@ Summary:
             
             
             
-            void</nobr>
+            <a href="../../../org/rundeck/api/domain/RundeckJobsUUIDImportBehavior.html">RundeckJobsUUIDImportBehavior</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../org/rundeck/api/DefaultJobsImport.html#setFileType(org.rundeck.api.FileType)">setFileType</a></span>(<a href="../../../org/rundeck/api/FileType.html">FileType</a> fileType)</nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/DefaultJobsImport.html#getUuidImportBehavior()">getUuidImportBehavior</a></span>()</nobr>
         
+        <div class="jd-descrdiv">Return the import behavior</div>
+  
   </td></tr>
 
 
@@ -535,7 +537,7 @@ Summary:
             void</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../org/rundeck/api/DefaultJobsImport.html#setImportMethod(org.rundeck.api.domain.RundeckJobsImportMethod)">setImportMethod</a></span>(<a href="../../../org/rundeck/api/domain/RundeckJobsImportMethod.html">RundeckJobsImportMethod</a> importMethod)</nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/DefaultJobsImport.html#setFileType(org.rundeck.api.FileType)">setFileType</a></span>(<a href="../../../org/rundeck/api/FileType.html">FileType</a> fileType)</nobr>
         
   </td></tr>
 
@@ -551,7 +553,7 @@ Summary:
             void</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../org/rundeck/api/DefaultJobsImport.html#setProject(java.lang.String)">setProject</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> project)</nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/DefaultJobsImport.html#setImportMethod(org.rundeck.api.domain.RundeckJobsImportMethod)">setImportMethod</a></span>(<a href="../../../org/rundeck/api/domain/RundeckJobsImportMethod.html">RundeckJobsImportMethod</a> importMethod)</nobr>
         
   </td></tr>
 
@@ -567,7 +569,39 @@ Summary:
             void</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/DefaultJobsImport.html#setProject(java.lang.String)">setProject</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> project)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../org/rundeck/api/DefaultJobsImport.html#setStream(java.io.InputStream)">setStream</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/InputStream.html">InputStream</a> stream)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/DefaultJobsImport.html#setUuidImportBehavior(org.rundeck.api.domain.RundeckJobsUUIDImportBehavior)">setUuidImportBehavior</a></span>(<a href="../../../org/rundeck/api/domain/RundeckJobsUUIDImportBehavior.html">RundeckJobsUUIDImportBehavior</a> uuidImportBehavior)</nobr>
         
   </td></tr>
 
@@ -880,6 +914,24 @@ From interface
   </td></tr>
 
 
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            <a href="../../../org/rundeck/api/domain/RundeckJobsUUIDImportBehavior.html">RundeckJobsUUIDImportBehavior</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckJobsImport.html#getUuidImportBehavior()">getUuidImportBehavior</a></span>()</nobr>
+        
+        <div class="jd-descrdiv">Return the import behavior</div>
+  
+  </td></tr>
+
+
 </table>
   </div>
 </div>
@@ -1090,6 +1142,37 @@ From interface
 </div>
 
 
+<A NAME="getUuidImportBehavior()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../org/rundeck/api/domain/RundeckJobsUUIDImportBehavior.html">RundeckJobsUUIDImportBehavior</a>
+      </span>
+      <span class="sympad">getUuidImportBehavior</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Return the import behavior</p></div>
+
+    </div>
+</div>
+
+
 <A NAME="setFileType(org.rundeck.api.FileType)"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -1197,6 +1280,37 @@ From interface
       </span>
       <span class="sympad">setStream</span>
       <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/InputStream.html">InputStream</a> stream)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setUuidImportBehavior(org.rundeck.api.domain.RundeckJobsUUIDImportBehavior)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setUuidImportBehavior</span>
+      <span class="normal">(<a href="../../../org/rundeck/api/domain/RundeckJobsUUIDImportBehavior.html">RundeckJobsUUIDImportBehavior</a> uuidImportBehavior)</span>
     </h4>
       <div class="api-level">
         <div>

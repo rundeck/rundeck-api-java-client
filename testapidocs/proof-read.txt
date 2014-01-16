@@ -94,6 +94,7 @@ METHOD: parseAdhocExecution
 METHOD: parseMinimalistExecution
 METHOD: parseRunningExecution
 METHOD: parseSucceededExecution
+METHOD: parseV9Execution
 
 
 === org/rundeck/api/parser/EventParserTest.html ===
@@ -142,6 +143,8 @@ FIELD: TEST_TOKEN_1
 FIELD: TEST_TOKEN_2
 FIELD: TEST_TOKEN_3
 FIELD: TEST_TOKEN_4
+FIELD: TEST_TOKEN_5
+FIELD: TEST_TOKEN_6
 FIELD: recorder
 CONSTRUCTOR: RundeckClientTest
 METHOD: abortExecution
@@ -168,6 +171,15 @@ METHOD: importJobsProjectParamOverride
         Import jobs, project parameter overrides xml
 METHOD: importJobsProjectParamV7
         Import jobs, project parameter v7 doesn' use parameter
+METHOD: importJobsUUIDParamPreserveV9
+        Import jobs, project parameter v7 doesn' use parameter
+METHOD: importJobsUUIDParamRemoveV9
+        Import jobs, project parameter v7 doesn' use parameter
+METHOD: runningExecutionsV8
+        Running executions for all projects using API v8, which queries for project list and then individually
+         queries each project's now running
+METHOD: runningExecutionsV9
+        Running executions for all projects using API v9
 METHOD: setUp
 METHOD: triggerAdhocCommand
 METHOD: triggerAdhocCommandAsUser

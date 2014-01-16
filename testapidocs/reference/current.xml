@@ -251,6 +251,58 @@
 <exception name="Exception" type="java.lang.Exception">
 </exception>
 </method>
+<method name="importJobsUUIDParamPreserveV9"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="importJobsUUIDParamRemoveV9"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="runningExecutionsV8"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="runningExecutionsV9"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
 <method name="setUp"
  return="void"
  abstract="false"
@@ -566,6 +618,28 @@
  visibility="public"
 >
 </field>
+<field name="TEST_TOKEN_5"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;C3O6d5O98Kr6Dpv71sdE4ERdCuU12P6d&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TEST_TOKEN_6"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;Do4d3NUD5DKk21DR4sNK755RcPk618vn&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="recorder"
  type="betamax.Recorder"
  transient="false"
@@ -834,6 +908,19 @@
 </exception>
 </method>
 <method name="parseSucceededExecution"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="parseV9Execution"
  return="void"
  abstract="false"
  native="false"
