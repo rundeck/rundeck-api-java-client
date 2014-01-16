@@ -78,9 +78,8 @@ h2. RunDeck API version 8
 
 h2. RunDeck API version 9
 
-[Documentation of the RunDeck API version 8|http://rundeck.org/1.6.1/api/index.html]
+[Documentation of the RunDeck API version 9|http://rundeck.org/1.6.1/api/index.html]
 
 * list running executions across all projects - OK
 * include project name in execution results - OK
-* Add uuidOption parameter to allow removing imported UUIDs to avoid creation conflicts - *TODO*
-
+* Add uuidOption parameter to allow removing imported UUIDs to avoid creation conflicts - OK
