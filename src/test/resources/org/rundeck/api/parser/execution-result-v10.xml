@@ -1,0 +1,27 @@
+<result success="true" apiversion="10">
+    <executions count="1">
+        <execution id="146" href="http://dignan.local:4440/execution/follow/146" status="succeeded" project="fdfd">
+            <user>admin</user>
+            <date-started unixtime="1389894502959">2014-01-16T17:48:22Z</date-started>
+            <date-ended unixtime="1389894504561">2014-01-16T17:48:24Z</date-ended>
+            <job id="4ae33efb-5d37-4237-a33b-ac08eaaadf79" averageDuration="1528">
+                <name>test 1</name>
+                <group/>
+                <project>fdfd</project>
+                <description/>
+            </job>
+            <description>echo hi there</description>
+            <argstring/>
+            <successfulNodes>
+                <node name="node-111.qa.subgroup.mycompany.com"/>
+                <node name="node-6.qa.subgroup.mycompany.com"/>
+                <node name="node-14.qa.subgroup.mycompany.com"/>
+            </successfulNodes>
+            <failedNodes>
+                <node name="node-112.qa.subgroup.mycompany.com"/>
+                <node name="node-62.qa.subgroup.mycompany.com"/>
+                <node name="node-12.qa.subgroup.mycompany.com"/>
+            </failedNodes>
+        </execution>
+    </executions>
+</result>
