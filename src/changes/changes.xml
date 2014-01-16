@@ -22,6 +22,14 @@
     <author>Vincent Behar</author>
   </properties>
   <body>
+    <release date='2013-08-26' description='Update for Rundeck API version 9' version='9.0'>
+      <action type='add' dev='gschueler'>
+          Add project to parsed execution result, API v9
+      </action>
+        <action type='add' dev='gschueler'>
+            Add project=* all projects executions now running query, API v9
+        </action>
+    </release>
     <release date='2013-08-06' description='Update for Rundeck API version 8' version='8.0'>
       <action type='add' dev='gschueler'>
         Support script interpreter parameters, API v8
