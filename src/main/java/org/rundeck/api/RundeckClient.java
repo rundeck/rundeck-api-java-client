@@ -542,11 +542,13 @@ public class RundeckClient implements Serializable {
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(format, "format is mandatory to export jobs !");
         AssertUtil.notBlank(project, "project is mandatory to export jobs !");
-        return new ApiCall(this).get(new ApiPathBuilder("/jobs/export").param("format", format)
-                                                                       .param("project", project)
-                                                                       .param("jobFilter", jobFilter)
-                                                                       .param("groupPath", groupPath)
-                                                                       .param("idlist", StringUtils.join(jobIds, ",")));
+        return new ApiCall(this).get(new ApiPathBuilder("/jobs/export")
+                .accept(format == FileType.XML ? "text/xml" : "text/yaml")
+                .param("format", format)
+                .param("project", project)
+                .param("jobFilter", jobFilter)
+                .param("groupPath", groupPath)
+                .param("idlist", StringUtils.join(jobIds, ",")));
     }
 
     /**
