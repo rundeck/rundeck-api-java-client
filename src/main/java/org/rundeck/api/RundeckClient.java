@@ -3265,13 +3265,20 @@ public class RundeckClient implements Serializable {
     public RundeckOutput getJobExecutionOutput(Long executionId, int offset, int lastlines, long lastmod, int maxlines)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
-        return new ApiCall(this).get(new ApiPathBuilder(
+        ApiPathBuilder param = new ApiPathBuilder(
                 "/execution/", executionId.toString(),
                 "/output")
-                .param("offset", offset)
-                .param("lastlines", lastlines)
-                .param("lastmod", lastmod)
-                .param("maxlines", maxlines),
+                .param("offset", offset);
+        if (lastlines > 0) {
+            param.param("lastlines", lastlines);
+        }
+        if (lastmod >= 0) {
+            param.param("lastmod", lastmod);
+        }
+        if (maxlines > 0) {
+            param.param("maxlines", maxlines);
+        }
+        return new ApiCall(this).get(param,
                 new OutputParser("result/output", createOutputEntryParser()));
     }
 
@@ -3300,13 +3307,20 @@ public class RundeckClient implements Serializable {
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
         AssertUtil.notNull(nodeName, "nodeName is mandatory to get the output of a job execution!");
-        return new ApiCall(this).get(new ApiPathBuilder(
+        ApiPathBuilder param = new ApiPathBuilder(
                 "/execution/", executionId.toString(),
-                "/output/node/", nodeName )
-                .param("offset", offset)
-                .param("lastlines", lastlines)
-                .param("lastmod", lastmod)
-                .param("maxlines", maxlines),
+                "/output/node/", nodeName)
+                .param("offset", offset);
+        if(lastlines>0) {
+            param.param("lastlines", lastlines);
+        }
+        if(lastmod>=0) {
+            param.param("lastmod", lastmod);
+        }
+        if(maxlines>0) {
+            param.param("maxlines", maxlines);
+        }
+        return new ApiCall(this).get(param,
                 new OutputParser("result/output", createOutputEntryParser()));
     }
     /**
@@ -3334,13 +3348,20 @@ public class RundeckClient implements Serializable {
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
         AssertUtil.notNull(stepCtx, "stepCtx is mandatory to get the output of a job execution!");
-        return new ApiCall(this).get(new ApiPathBuilder(
+        ApiPathBuilder param = new ApiPathBuilder(
                 "/execution/", executionId.toString(),
                 "/output/step/", stepCtx)
-                .param("offset", offset)
-                .param("lastlines", lastlines)
-                .param("lastmod", lastmod)
-                .param("maxlines", maxlines),
+                .param("offset", offset);
+        if (lastlines > 0) {
+            param.param("lastlines", lastlines);
+        }
+        if (lastmod >= 0) {
+            param.param("lastmod", lastmod);
+        }
+        if (maxlines > 0) {
+            param.param("maxlines", maxlines);
+        }
+        return new ApiCall(this).get(param,
                 new OutputParser("result/output", createOutputEntryParser()));
     }
     /**
@@ -3369,14 +3390,21 @@ public class RundeckClient implements Serializable {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
         AssertUtil.notNull(nodeName, "nodeName is mandatory to get the output of a job execution!");
         AssertUtil.notNull(stepCtx, "stepCtx is mandatory to get the output of a job execution!");
-        return new ApiCall(this).get(new ApiPathBuilder(
+        ApiPathBuilder param = new ApiPathBuilder(
                 "/execution/", executionId.toString(),
                 "/output/node/", nodeName,
                 "/step/", stepCtx)
-                .param("offset", offset)
-                .param("lastlines", lastlines)
-                .param("lastmod", lastmod)
-                .param("maxlines", maxlines),
+                .param("offset", offset);
+        if (lastlines > 0) {
+            param.param("lastlines", lastlines);
+        }
+        if (lastmod >= 0) {
+            param.param("lastmod", lastmod);
+        }
+        if (maxlines > 0) {
+            param.param("maxlines", maxlines);
+        }
+        return new ApiCall(this).get(param,
                 new OutputParser("result/output", createOutputEntryParser()));
     }
 
@@ -3397,10 +3425,15 @@ public class RundeckClient implements Serializable {
     public RundeckOutput getJobExecutionOutput(Long executionId, int offset, long lastmod, int maxlines)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
-        return new ApiCall(this).get(new ApiPathBuilder("/execution/", executionId.toString(), "/output").param("offset", offset)
-                                                                                      .param("lastmod", lastmod)
-                                                                                      .param("maxlines", maxlines),
-                                     new OutputParser("result/output", createOutputEntryParser()));
+        ApiPathBuilder param = new ApiPathBuilder("/execution/", executionId.toString(), "/output")
+                .param("offset", offset);
+        if (lastmod >= 0) {
+            param.param("lastmod", lastmod);
+        }
+        if (maxlines > 0) {
+            param.param("maxlines", maxlines);
+        }
+        return new ApiCall(this).get(param, new OutputParser("result/output", createOutputEntryParser()));
     }
 
     private OutputEntryParser createOutputEntryParser() {

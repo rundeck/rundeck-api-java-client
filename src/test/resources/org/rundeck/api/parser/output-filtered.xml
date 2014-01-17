@@ -1,0 +1,19 @@
+<result success="true" apiversion="10">
+    <output>
+        <id>146</id>
+        <offset>1409</offset>
+        <completed>true</completed>
+        <execCompleted>true</execCompleted>
+        <hasFailedNodes>false</hasFailedNodes>
+        <execState>succeeded</execState>
+        <lastModified>1389894504000</lastModified>
+        <execDuration>1602</execDuration>
+        <percentLoaded>99.9</percentLoaded>
+        <totalSize>1415</totalSize>
+        <filter nodename="node-111.qa.subgroup.mycompany.com" stepctx="1"/>
+        <entries>
+            <entry time="09:48:23" absolute_time="2014-01-16T17:48:23Z" log="hi there" level="NORMAL" user="Raif"
+                   command="" stepctx="1" node="node-111.qa.subgroup.mycompany.com"/>
+        </entries>
+    </output>
+</result>

@@ -22,9 +22,9 @@ public class RundeckOutput implements Serializable {
 
 	//private String error = null;
 	
-	private Boolean unmodified;
+	private Boolean unmodified = false;
 	
-	private Boolean empty;
+	private Boolean empty = false;
 	
 	private int offset;
 	
@@ -45,6 +45,9 @@ public class RundeckOutput implements Serializable {
 	private int totalSize;
 	
 	List<RundeckOutputEntry> logEntries = null;
+
+    private String filterNode;
+    private String filterStep;
 
 	public Long getExecutionId() {
 		return executionId;
@@ -181,6 +184,7 @@ public class RundeckOutput implements Serializable {
         	", execCompleted=" + execCompleted + ", hasFailedNodes=" + hasFailedNodes +
         	", status=" + status + ", lastModified=" + lastModified +
         	", execDuration=" + execDuration + ", percentLoaded=" + percentLoaded +
+        	", filterNode=" + filterNode + ", filterStep=" + filterStep +
         	", totalSize=" + totalSize + "]";
     }
 
@@ -203,6 +207,8 @@ public class RundeckOutput implements Serializable {
         result = prime * result + ((percentLoaded == null) ? 0 : percentLoaded.hashCode());
         result = prime * result + totalSize;
         result = prime * result + ((logEntries == null) ? 0 : logEntries.hashCode());
+        result = prime * result + ((filterNode == null) ? 0 : filterNode.hashCode());
+        result = prime * result + ((filterStep == null) ? 0 : filterStep.hashCode());
         return result;
     }
 
@@ -286,7 +292,40 @@ public class RundeckOutput implements Serializable {
                 return false;
         } else if (!logEntries.equals(other.logEntries))
             return false;
+        if (filterNode == null) {
+            if (other.filterNode != null)
+                return false;
+        } else if (!filterNode.equals(other.filterNode))
+            return false;
+        if (filterStep == null) {
+            if (other.filterStep != null)
+                return false;
+        } else if (!filterStep.equals(other.filterStep))
+            return false;
         return true;
     }
-	
+
+    public String getFilterNode() {
+        return filterNode;
+    }
+
+    /**
+     * return the node name used to filter this output
+     * @param filterNode
+     */
+    public void setFilterNode(String filterNode) {
+        this.filterNode = filterNode;
+    }
+
+    /**
+     * Return the step context used to filter this output
+     * @return
+     */
+    public String getFilterStep() {
+        return filterStep;
+    }
+
+    public void setFilterStep(String filterStep) {
+        this.filterStep = filterStep;
+    }
 }

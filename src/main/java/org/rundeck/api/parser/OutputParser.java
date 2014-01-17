@@ -47,6 +47,7 @@ public class OutputParser implements XmlNodeParser<RundeckOutput> {
         output.setCompleted(Boolean.valueOf(entryNode.valueOf("completed")));
         output.setExecCompleted(Boolean.valueOf(entryNode.valueOf("execCompleted")));
         output.setHasFailedNodes(Boolean.valueOf(entryNode.valueOf("hasFailedNodes")));
+        output.setUnmodified(Boolean.valueOf(entryNode.valueOf("unmodified")));
 
         try {
             output.setStatus(RundeckExecution.ExecutionStatus
@@ -77,6 +78,10 @@ public class OutputParser implements XmlNodeParser<RundeckOutput> {
             output.setTotalSize(Integer.valueOf(entryNode.valueOf("totalSize")));
         } catch (NumberFormatException e) {
             output.setTotalSize(-1);
+        }
+        if(entryNode.selectSingleNode("filter")!=null){
+            output.setFilterNode(StringUtils.trimToNull(entryNode.valueOf("filter/@nodename")));
+            output.setFilterStep(StringUtils.trimToNull(entryNode.valueOf("filter/@stepctx")));
         }
 
         Node entriesListNode = entryNode.selectSingleNode("entries");

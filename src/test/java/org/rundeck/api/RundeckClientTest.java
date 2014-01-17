@@ -1034,6 +1034,107 @@ public class RundeckClientTest {
         RundeckExecution exec2 = runningExecutions.get(1);
         Assert.assertEquals("test2", exec2.getProject());
     }
+    /**
+     * Execution output
+     */
+    @Test
+    @Betamax(tape = "execution_output_basic", mode = TapeMode.READ_ONLY)
+    public void executionOutputBasic() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckOutput output = client.getJobExecutionOutput(146L,0,0L,-1);
+
+        Assert.assertEquals(new Long(1602), output.getExecDuration());
+        Assert.assertEquals(new Long(146), output.getExecutionId());
+        Assert.assertEquals(new Long(1389894504000L), output.getLastModified());
+        Assert.assertEquals(null, output.getFilterNode());
+        Assert.assertEquals(null, output.getFilterStep());
+        Assert.assertEquals(1409, output.getOffset());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, output.getStatus());
+        Assert.assertEquals(new Float(99.57597), output.getPercentLoaded());
+        Assert.assertEquals(1415, output.getTotalSize());
+        Assert.assertEquals(true, output.isCompleted());
+        Assert.assertEquals(true, output.isExecCompleted());
+        Assert.assertEquals(false, output.isEmpty());
+        Assert.assertEquals(false, output.isHasFailedNodes());
+        Assert.assertEquals(false, output.isUnmodified());
+        Assert.assertEquals(3, output.getLogEntries().size());
+    }
+    /**
+     * Execution output for a node
+     */
+    @Test
+    @Betamax(tape = "execution_output_fornode", mode = TapeMode.READ_ONLY)
+    public void executionOutputForNode() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckOutput output = client.getJobExecutionOutputForNode(146L,"node-14.qa.subgroup.mycompany.com",0,-1,0L,-1);
+
+        Assert.assertEquals(new Long(1602), output.getExecDuration());
+        Assert.assertEquals(new Long(146), output.getExecutionId());
+        Assert.assertEquals(new Long(1389894504000L), output.getLastModified());
+        Assert.assertEquals("node-14.qa.subgroup.mycompany.com", output.getFilterNode());
+        Assert.assertEquals(null, output.getFilterStep());
+        Assert.assertEquals(1409, output.getOffset());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, output.getStatus());
+        Assert.assertEquals(new Float(99.57597), output.getPercentLoaded());
+        Assert.assertEquals(1415, output.getTotalSize());
+        Assert.assertEquals(true, output.isCompleted());
+        Assert.assertEquals(true, output.isExecCompleted());
+        Assert.assertEquals(false, output.isEmpty());
+        Assert.assertEquals(false, output.isHasFailedNodes());
+        Assert.assertEquals(false, output.isUnmodified());
+        Assert.assertEquals(1, output.getLogEntries().size());
+    }
+    /**
+     * Execution output for a step
+     */
+    @Test
+    @Betamax(tape = "execution_output_forstep", mode = TapeMode.READ_ONLY)
+    public void executionOutputForStep() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckOutput output = client.getJobExecutionOutputForStep(146L,"1",0,-1,0L,-1);
+
+        Assert.assertEquals(new Long(1602), output.getExecDuration());
+        Assert.assertEquals(new Long(146), output.getExecutionId());
+        Assert.assertEquals(new Long(1389894504000L), output.getLastModified());
+        Assert.assertEquals(null, output.getFilterNode());
+        Assert.assertEquals("1", output.getFilterStep());
+        Assert.assertEquals(1409, output.getOffset());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, output.getStatus());
+        Assert.assertEquals(new Float(99.57597), output.getPercentLoaded());
+        Assert.assertEquals(1415, output.getTotalSize());
+        Assert.assertEquals(true, output.isCompleted());
+        Assert.assertEquals(true, output.isExecCompleted());
+        Assert.assertEquals(false, output.isEmpty());
+        Assert.assertEquals(false, output.isHasFailedNodes());
+        Assert.assertEquals(false, output.isUnmodified());
+        Assert.assertEquals(3, output.getLogEntries().size());
+    }
+
+    /**
+     * Execution output for a node and step
+     */
+    @Test
+    @Betamax(tape = "execution_output_fornodeandstep", mode = TapeMode.READ_ONLY)
+    public void executionOutputForNodeAndStep() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckOutput output = client.getJobExecutionOutputForNodeAndStep(146L,"node-14.qa.subgroup.mycompany.com","1",0,-1,0L,-1);
+
+        Assert.assertEquals(new Long(1602), output.getExecDuration());
+        Assert.assertEquals(new Long(146), output.getExecutionId());
+        Assert.assertEquals(new Long(1389894504000L), output.getLastModified());
+        Assert.assertEquals("node-14.qa.subgroup.mycompany.com", output.getFilterNode());
+        Assert.assertEquals("1", output.getFilterStep());
+        Assert.assertEquals(1409, output.getOffset());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, output.getStatus());
+        Assert.assertEquals(new Float(99.57597), output.getPercentLoaded());
+        Assert.assertEquals(1415, output.getTotalSize());
+        Assert.assertEquals(true, output.isCompleted());
+        Assert.assertEquals(true, output.isExecCompleted());
+        Assert.assertEquals(false, output.isEmpty());
+        Assert.assertEquals(false, output.isHasFailedNodes());
+        Assert.assertEquals(false, output.isUnmodified());
+        Assert.assertEquals(1, output.getLogEntries().size());
+    }
 
     @Before
     public void setUp() throws Exception {
