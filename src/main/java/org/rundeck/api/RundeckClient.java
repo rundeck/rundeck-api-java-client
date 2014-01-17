@@ -3435,6 +3435,36 @@ public class RundeckClient implements Serializable {
         }
         return new ApiCall(this).get(param, new OutputParser("result/output", createOutputEntryParser()));
     }
+    /**
+     * Get the execution state output sequence of the given job
+     *
+     * @param executionId identifier of the execution - mandatory
+     * @param stateOnly if true, include only state change output entries, otherwise include state and log entries
+     * @param offset byte offset to read from in the file. 0 indicates the beginning.
+     * @param lastmod epoch datestamp in milliseconds, return results only if modification changed since the specified date OR if more data is available at the given offset
+     * @param maxlines maximum number of lines to retrieve forward from the specified offset.
+     * @return {@link RundeckOutput}
+     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckOutput getJobExecutionOutputState(Long executionId, boolean stateOnly, int offset, long lastmod, int maxlines)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
+        ApiPathBuilder param = new ApiPathBuilder("/execution/", executionId.toString(), "/output/state")
+                .param("offset", offset);
+        if (lastmod >= 0) {
+            param.param("lastmod", lastmod);
+        }
+        if (maxlines > 0) {
+            param.param("maxlines", maxlines);
+        }
+        if(stateOnly) {
+            param.param("stateOnly", true);
+        }
+        return new ApiCall(this).get(param, new OutputParser("result/output", createOutputEntryParser()));
+    }
 
     private OutputEntryParser createOutputEntryParser() {
         if (getApiVersion() <= Version.V5.versionNumber) {

@@ -1,0 +1,32 @@
+!tape
+name: execution_output_state
+interactions:
+- recorded: 2014-01-17T01:32:08.245Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/10/execution/146/output/state?offset=0&lastmod=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 10
+      X-RunDeck-Auth-Token: Do4d3NUD5DKk21DR4sNK755RcPk618vn
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=wanbmac3kkhgo3jghy3twd7g;Path=/
+    body: "<result success='true' apiversion='10'>\n  <output>\n    <id>146</id>\n    <offset>1409</offset>\n    <completed>true</completed>\n    <execCompleted>true</execCompleted>\n    <hasFailedNodes>false</hasFailedNodes>\n    <execState>succeeded</execState>\n\
+      \    <lastModified>1389894504000</lastModified>\n    <execDuration>1602</execDuration>\n    <percentLoaded>99.57597173144876</percentLoaded>\n    <totalSize>1415</totalSize>\n    <entries>\n      <entry node='dignan' step='1' stepctx='1' user='admin' time='09:48:23'\
+      \ level='NORMAL' type='stepbegin' absolute_time='2014-01-16T17:48:23Z' log='' />\n      <entry node='node-111.qa.subgroup.mycompany.com' step='1' stepctx='1' user='Raif' time='09:48:23' level='NORMAL' type='nodebegin' absolute_time='2014-01-16T17:48:23Z'\
+      \ log='' />\n      <entry node='node-111.qa.subgroup.mycompany.com' step='1' stepctx='1' user='Raif' time='09:48:23' level='NORMAL' type='log' absolute_time='2014-01-16T17:48:23Z' log='hi there' />\n      <entry node='node-111.qa.subgroup.mycompany.com'\
+      \ step='1' stepctx='1' user='Raif' time='09:48:23' level='NORMAL' type='nodeend' absolute_time='2014-01-16T17:48:23Z' log='' />\n      <entry node='dignan' step='1' stepctx='1' user='admin' time='09:48:23' level='NORMAL' type='stepend' absolute_time='2014-01-16T17:48:23Z'\
+      \ log='' />\n      <entry node='dignan' step='1' stepctx='1' user='admin' time='09:48:23' level='NORMAL' type='stepbegin' absolute_time='2014-01-16T17:48:23Z' log='' />\n      <entry node='node-14.qa.subgroup.mycompany.com' step='1' stepctx='1' user='Dale'\
+      \ time='09:48:23' level='NORMAL' type='nodebegin' absolute_time='2014-01-16T17:48:23Z' log='' />\n      <entry node='node-14.qa.subgroup.mycompany.com' step='1' stepctx='1' user='Dale' time='09:48:23' level='NORMAL' type='log' absolute_time='2014-01-16T17:48:23Z'\
+      \ log='hi there' />\n      <entry node='node-14.qa.subgroup.mycompany.com' step='1' stepctx='1' user='Dale' time='09:48:24' level='NORMAL' type='nodeend' absolute_time='2014-01-16T17:48:24Z' log='' />\n      <entry node='dignan' step='1' stepctx='1' user='admin'\
+      \ time='09:48:24' level='NORMAL' type='stepend' absolute_time='2014-01-16T17:48:24Z' log='' />\n      <entry node='dignan' step='1' stepctx='1' user='admin' time='09:48:24' level='NORMAL' type='stepbegin' absolute_time='2014-01-16T17:48:24Z' log='' />\n\
+      \      <entry node='node-6.qa.subgroup.mycompany.com' step='1' stepctx='1' user='Carolyn' time='09:48:24' level='NORMAL' type='nodebegin' absolute_time='2014-01-16T17:48:24Z' log='' />\n      <entry node='node-6.qa.subgroup.mycompany.com' step='1' stepctx='1'\
+      \ user='Carolyn' time='09:48:24' level='NORMAL' type='log' absolute_time='2014-01-16T17:48:24Z' log='hi there' />\n      <entry node='node-6.qa.subgroup.mycompany.com' step='1' stepctx='1' user='Carolyn' time='09:48:24' level='NORMAL' type='nodeend' absolute_time='2014-01-16T17:48:24Z'\
+      \ log='' />\n      <entry node='dignan' step='1' stepctx='1' user='admin' time='09:48:24' level='NORMAL' type='stepend' absolute_time='2014-01-16T17:48:24Z' log='' />\n    </entries>\n  </output>\n</result>"

@@ -1136,6 +1136,57 @@ public class RundeckClientTest {
         Assert.assertEquals(1, output.getLogEntries().size());
     }
 
+    /**
+     * Execution output state sequence
+     */
+    @Test
+    @Betamax(tape = "execution_output_state", mode = TapeMode.READ_ONLY)
+    public void executionOutputState() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckOutput output = client.getJobExecutionOutputState(146L,false,0,0L,-1);
+
+        Assert.assertEquals(new Long(1602), output.getExecDuration());
+        Assert.assertEquals(new Long(146), output.getExecutionId());
+        Assert.assertEquals(new Long(1389894504000L), output.getLastModified());
+        Assert.assertEquals(null, output.getFilterNode());
+        Assert.assertEquals(null, output.getFilterStep());
+        Assert.assertEquals(1409, output.getOffset());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, output.getStatus());
+        Assert.assertEquals(new Float(99.57597), output.getPercentLoaded());
+        Assert.assertEquals(1415, output.getTotalSize());
+        Assert.assertEquals(true, output.isCompleted());
+        Assert.assertEquals(true, output.isExecCompleted());
+        Assert.assertEquals(false, output.isEmpty());
+        Assert.assertEquals(false, output.isHasFailedNodes());
+        Assert.assertEquals(false, output.isUnmodified());
+        Assert.assertEquals(15, output.getLogEntries().size());
+    }
+    /**
+     * Execution output state sequence
+     */
+    @Test
+    @Betamax(tape = "execution_output_state_only", mode = TapeMode.READ_ONLY)
+    public void executionOutputStateOnly() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckOutput output = client.getJobExecutionOutputState(146L,true,0,0L,-1);
+
+        Assert.assertEquals(new Long(1602), output.getExecDuration());
+        Assert.assertEquals(new Long(146), output.getExecutionId());
+        Assert.assertEquals(new Long(1389894504000L), output.getLastModified());
+        Assert.assertEquals(null, output.getFilterNode());
+        Assert.assertEquals(null, output.getFilterStep());
+        Assert.assertEquals(1409, output.getOffset());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, output.getStatus());
+        Assert.assertEquals(new Float(99.57597), output.getPercentLoaded());
+        Assert.assertEquals(1415, output.getTotalSize());
+        Assert.assertEquals(true, output.isCompleted());
+        Assert.assertEquals(true, output.isExecCompleted());
+        Assert.assertEquals(false, output.isEmpty());
+        Assert.assertEquals(false, output.isHasFailedNodes());
+        Assert.assertEquals(false, output.isUnmodified());
+        Assert.assertEquals(12, output.getLogEntries().size());
+    }
+
     @Before
     public void setUp() throws Exception {
         // not that you can put whatever here, because we don't actually connect to the RunDeck instance
