@@ -87,7 +87,6 @@ public class OutputEntryParser implements XmlNodeParser<RundeckOutputEntry> {
         }
         try {
             Date parse = dateFormat.parse(s);
-            System.out.println(s + ": " + parse.getTime());
             return parse;
         } catch (ParseException e) {
             return null;
