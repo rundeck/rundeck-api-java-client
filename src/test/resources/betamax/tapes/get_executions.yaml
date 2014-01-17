@@ -6,6 +6,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?jobFilter=test+job&project=blah&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -23,6 +24,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&descFilter=a+description&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -38,6 +40,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&begin=2012-09-13T17%3A06%3A18Z&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -53,6 +56,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&end=2012-09-13T17%3A06%3A18Z&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -68,6 +72,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&excludeJobIdListFilter=123&excludeJobIdListFilter=456&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -83,6 +88,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&jobListFilter=fruit%2Fmango&jobListFilter=fruit%2Flemon&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -98,6 +104,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&excludeJobListFilter=a%2Fpath%2Fjob1&excludeJobListFilter=path%2Fto%2Fjob2&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -113,6 +120,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&jobIdListFilter=1f4415d7-3b52-4fc8-ba42-b6ac97508bff&jobIdListFilter=d9fc5ee6-f1db-4d24-8808-feda18345bab&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -128,6 +136,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&groupPath=fruit&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -143,6 +152,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&groupPathExact=fruit&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -158,6 +168,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?jobExactFilter=test+job&project=blah&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -173,6 +184,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&loglevelFilter=INFO&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -188,6 +200,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&recentFilter=1h&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -203,6 +216,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&statusFilter=succeeded&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -218,6 +232,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&adhoc=true&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -235,6 +250,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&abortedbyFilter=admin&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -252,6 +268,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?excludeJobFilter=test+job&project=blah&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -269,6 +286,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?excludeJobExactFilter=test+job&project=blah&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -284,6 +302,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&excludeGroupPath=fruit&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
@@ -301,6 +320,7 @@ interactions:
     method: GET
     uri: http://rundeck.local:4440/api/5/executions?project=blah&excludeGroupPathExact=fruit&max=2&offset=0
     headers:
+      Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5

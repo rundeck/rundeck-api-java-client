@@ -177,7 +177,11 @@ class ApiCall {
      */
     public <T> T get(ApiPathBuilder apiPath, XmlNodeParser<T> parser) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException {
-        return execute(new HttpGet(client.getUrl() + client.getApiEndpoint() + apiPath), parser);
+        HttpGet request = new HttpGet(client.getUrl() + client.getApiEndpoint() + apiPath);
+        if (null != apiPath.getAccept()) {
+            request.setHeader("Accept", apiPath.getAccept());
+        }
+        return execute(request, parser);
     }
 
     /**
@@ -192,7 +196,11 @@ class ApiCall {
      */
     public InputStream get(ApiPathBuilder apiPath) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException {
-        ByteArrayInputStream response = execute(new HttpGet(client.getUrl() + client.getApiEndpoint() + apiPath));
+        HttpGet request = new HttpGet(client.getUrl() + client.getApiEndpoint() + apiPath);
+        if (null != apiPath.getAccept()) {
+            request.setHeader("Accept", apiPath.getAccept());
+        }
+        ByteArrayInputStream response = execute(request);
 
         // try to load the document, to throw an exception in case of error
         ParserHelper.loadDocument(response);
@@ -213,7 +221,11 @@ class ApiCall {
      */
     public InputStream getNonApi(ApiPathBuilder apiPath) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException {
-        ByteArrayInputStream response = execute(new HttpGet(client.getUrl() + apiPath));
+        HttpGet request = new HttpGet(client.getUrl() + apiPath);
+        if (null != apiPath.getAccept()) {
+            request.setHeader("Accept", apiPath.getAccept());
+        }
+        ByteArrayInputStream response = execute(request);
         response.reset();
 
         return response;
@@ -257,7 +269,9 @@ class ApiCall {
     public <T> T post(ApiPathBuilder apiPath, XmlNodeParser<T> parser) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException {
         HttpPost httpPost = new HttpPost(client.getUrl() + client.getApiEndpoint() + apiPath);
-
+        if(null!= apiPath.getAccept()) {
+            httpPost.setHeader("Accept", apiPath.getAccept());
+        }
         // POST a multi-part request, with all attachments
         if(apiPath.getAttachments().size()>0){
             MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
