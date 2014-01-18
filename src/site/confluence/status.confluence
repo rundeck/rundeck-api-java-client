@@ -92,4 +92,4 @@ h2. RunDeck API version 10
 * Execution Output with State - Retrieve log output with state change information - OK
 * Execution Output - Retrieve log output for a particular node or step - OK
 * Execution Info - added successfulNodes and failedNodes detail. - OK
-* Deprecation: Remove methods deprecated until version 10. - *TODO*
+* Deprecation: Remove methods deprecated until version 10. - OK

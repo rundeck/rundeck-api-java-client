@@ -22,6 +22,23 @@
     <author>Vincent Behar</author>
   </properties>
   <body>
+      <release date='TBD' description='Rundeck API version 10' version='10.0-SNAPSHOT'>
+          <action type='add' dev='gschueler'>
+              Execution State - Retrieve workflow step and node state information
+          </action>
+          <action type='add' dev='gschueler'>
+              Execution Output with State - Retrieve log output with state change information
+          </action>
+          <action type='add' dev='gschueler'>
+              Execution Output - Retrieve log output for a particular node or step.
+          </action>
+          <action type='add' dev='gschueler'>
+              Execution Info - added successfulNodes and failedNodes detail.
+          </action>
+          <action type='remove' dev='gschueler'>
+              Remove deprecated RundeckClient methods.
+          </action>
+      </release>
       <release date='2014-01-24' description='Bugfix' version='9.3'>
           <action type='fix' dev='gschueler'>
               Issue #7: Fix authentication to Tomcat container (thanks @katanafleet)
