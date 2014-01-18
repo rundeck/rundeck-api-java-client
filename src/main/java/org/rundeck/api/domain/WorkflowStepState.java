@@ -4,13 +4,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * $INTERFACE is ... User: greg Date: 1/17/14 Time: 12:03 PM
+ * Represents the state of a step in a workflow
  */
 public class WorkflowStepState extends WorkflowStepContextState {
     private boolean nodeStep;
     private WorkflowState subWorkflow;
     private Map<String, WorkflowStepContextState> nodeStates;
 
+    /**
+     * Return true if this step runs on each target node
+     * @return
+     */
     public boolean isNodeStep() {
         return nodeStep;
     }
@@ -19,6 +23,10 @@ public class WorkflowStepState extends WorkflowStepContextState {
         this.nodeStep = nodeStep;
     }
 
+    /**
+     * Return sub workflow if this step has one
+     * @return
+     */
     public WorkflowState getSubWorkflow() {
         return subWorkflow;
     }
@@ -27,6 +35,10 @@ public class WorkflowStepState extends WorkflowStepContextState {
         this.subWorkflow = subWorkflow;
     }
 
+    /**
+     * Return the state of each target node if this step runs on each target node
+     * @return
+     */
     public Map<String, WorkflowStepContextState> getNodeStates() {
         return nodeStates;
     }

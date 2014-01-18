@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * $INTERFACE is ... User: greg Date: 1/17/14 Time: 11:26 AM
+ * Base execution status for a step
  */
 public class BaseState {
     private Date startTime;
@@ -13,6 +13,10 @@ public class BaseState {
     private Date updateTime;
     private RundeckWFExecState executionState;
 
+    /**
+     * Time that the execution of this step started
+     * @return
+     */
     public Date getStartTime() {
         return startTime;
     }
@@ -21,6 +25,10 @@ public class BaseState {
         this.startTime = startTime;
     }
 
+    /**
+     * Time that the execution of this step finished, or null if it has not completed
+     * @return
+     */
     public Date getEndTime() {
         return endTime;
     }
@@ -29,6 +37,10 @@ public class BaseState {
         this.endTime = endTime;
     }
 
+    /**
+     * Current state of the execution
+     * @return
+     */
     public RundeckWFExecState getExecutionState() {
         return executionState;
     }
@@ -37,6 +49,10 @@ public class BaseState {
         this.executionState = executionState;
     }
 
+    /**
+     * Time that this state was last updated
+     * @return
+     */
     public Date getUpdateTime() {
         return updateTime;
     }

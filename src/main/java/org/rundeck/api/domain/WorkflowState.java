@@ -6,13 +6,17 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * $INTERFACE is ... User: greg Date: 1/16/14 Time: 5:44 PM
+ * Represents the state of a workflow of steps
  */
-public class WorkflowState  extends BaseState{
+public class WorkflowState extends BaseState {
     private int stepCount;
     private Set<RundeckNodeIdentity> targetNodes;
     private List<WorkflowStepState> steps;
 
+    /**
+     * Return the number of steps in this workflow
+     * @return
+     */
     public int getStepCount() {
         return stepCount;
     }
@@ -21,6 +25,10 @@ public class WorkflowState  extends BaseState{
         this.stepCount = stepCount;
     }
 
+    /**
+     * Identify the target nodes of this workflow
+     * @return
+     */
     public Set<RundeckNodeIdentity> getTargetNodes() {
         return targetNodes;
     }
@@ -29,6 +37,10 @@ public class WorkflowState  extends BaseState{
         this.targetNodes = targetNodes;
     }
 
+    /**
+     * Return the list of steps for this workflow
+     * @return
+     */
     public List<WorkflowStepState> getSteps() {
         return steps;
     }

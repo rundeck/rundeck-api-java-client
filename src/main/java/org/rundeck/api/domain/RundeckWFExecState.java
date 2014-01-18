@@ -1,7 +1,7 @@
 package org.rundeck.api.domain;
 
 /**
- * $INTERFACE is ... User: greg Date: 1/17/14 Time: 11:27 AM
+ * An execution state for a workflow or node step
  */
 public enum RundeckWFExecState {
     /**
