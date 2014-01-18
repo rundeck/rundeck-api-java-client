@@ -364,22 +364,7 @@ public class RundeckClientTest {
         Assert.assertNull(delete.getMessage());
         Assert.assertEquals("3a6d16be-4268-4d26-86a9-cebc1781f768", delete.getId());
     }
-    @Test
-    @Betamax(tape = "trigger_job_basic")
-    public void triggerJobDeprecatedBasic() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
-        final RundeckExecution test
-            = client.triggerJob("3170ba0e-6093-4b58-94d2-52988aefbfc9", null, null, null);
-
-        Assert.assertEquals((Long) 19L, test.getId());
-        Assert.assertEquals(null, test.getArgstring());
-        Assert.assertEquals(null, test.getAbortedBy());
-        Assert.assertEquals("echo hi there ${job.username} ; sleep 90", test.getDescription());
-        Assert.assertEquals("admin", test.getStartedBy());
-        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
-
-    }
     @Test
     @Betamax(tape = "trigger_job_basic")
     public void triggerJobBasic() throws Exception {
@@ -396,22 +381,7 @@ public class RundeckClientTest {
         Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
 
     }
-    @Test
-    @Betamax(tape = "trigger_job_as_user")
-    public void triggerJobDeprecatedAsUser() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
-        final RundeckExecution test
-            = client.triggerJob("3170ba0e-6093-4b58-94d2-52988aefbfc9", null, null, "api-java-client-user-test1");
-
-        Assert.assertEquals((Long) 20L, test.getId());
-        Assert.assertEquals(null, test.getArgstring());
-        Assert.assertEquals(null, test.getAbortedBy());
-        Assert.assertEquals("echo hi there ${job.username} ; sleep 90", test.getDescription());
-        Assert.assertEquals("api-java-client-user-test1", test.getStartedBy());
-        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
-
-    }
     @Test
     @Betamax(tape = "trigger_job_as_user")
     public void triggerJobAsUser() throws Exception {
@@ -431,19 +401,7 @@ public class RundeckClientTest {
         Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
 
     }
-    @Test
-    @Betamax(tape = "trigger_job_as_user_unauthorized")
-    public void triggerJobDeprecatedAsUserUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
-        final RundeckExecution test;
-        try {
-            test = client.triggerJob("3170ba0e-6093-4b58-94d2-52988aefbfc9",null,null,"api-java-client-user-test2");
-            Assert.fail("should not succeed");
-        } catch (RundeckApiException e) {
-            Assert.assertEquals("Not authorized for action \"Run as User\" for Job ID 3170ba0e-6093-4b58-94d2-52988aefbfc9", e.getMessage());
-        }
-    }
     @Test
     @Betamax(tape = "trigger_job_as_user_unauthorized")
     public void triggerJobAsUserUnauthorized() throws Exception {
@@ -461,21 +419,7 @@ public class RundeckClientTest {
         }
     }
 
-    @Test
-    @Betamax(tape = "trigger_adhoc_command")
-    public void triggerAdhocCommandDeprecated() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
-        final RundeckExecution test
-                = client.triggerAdhocCommand("test", "echo test trigger_adhoc_command");
-
-        Assert.assertEquals((Long) 23L, test.getId());
-        Assert.assertEquals(null, test.getArgstring());
-        Assert.assertEquals(null, test.getAbortedBy());
-        Assert.assertEquals("echo test trigger_adhoc_command", test.getDescription());
-        Assert.assertEquals("admin", test.getStartedBy());
-        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, test.getStatus());
-    }
 
     @Test
     @Betamax(tape = "trigger_adhoc_command")
@@ -496,21 +440,7 @@ public class RundeckClientTest {
         Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, test.getStatus());
     }
 
-    @Test
-    @Betamax(tape = "trigger_adhoc_command_as_user")
-    public void triggerAdhocCommandDeprecatedAsUser() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
-        final RundeckExecution test
-                = client.triggerAdhocCommand("test", "echo test trigger_adhoc_command_as_user",null,null,null,"api-java-client-test-run-command-as-user1");
-
-        Assert.assertEquals((Long) 24L, test.getId());
-        Assert.assertEquals(null, test.getArgstring());
-        Assert.assertEquals(null, test.getAbortedBy());
-        Assert.assertEquals("echo test trigger_adhoc_command_as_user", test.getDescription());
-        Assert.assertEquals("api-java-client-test-run-command-as-user1", test.getStartedBy());
-        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, test.getStatus());
-    }
     @Test
     @Betamax(tape = "trigger_adhoc_command_as_user")
     public void triggerAdhocCommandAsUser() throws Exception {
@@ -532,19 +462,7 @@ public class RundeckClientTest {
         Assert.assertEquals("api-java-client-test-run-command-as-user1", test.getStartedBy());
         Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, test.getStatus());
     }
-    @Test
-    @Betamax(tape = "trigger_adhoc_command_as_user_unauthorized")
-    public void triggerAdhocCommandDeprecatedAsUserUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
-        final RundeckExecution test;
-        try {
-            test = client.triggerAdhocCommand("test", "echo test trigger_adhoc_command_as_user",null,null,null,"api-java-client-test-run-command-as-user1");
-            Assert.fail("should not succeed");
-        } catch (RundeckApiException e) {
-            Assert.assertEquals("Not authorized for action \"Run as User\" for Run Adhoc", e.getMessage());
-        }
-    }
     @Test
     @Betamax(tape = "trigger_adhoc_command_as_user_unauthorized")
     public void triggerAdhocCommandAsUserUnauthorized() throws Exception {
@@ -565,24 +483,7 @@ public class RundeckClientTest {
         }
     }
 
-    @Test
-    @Betamax(tape = "trigger_adhoc_script")
-    public void triggerAdhocScriptDeprecated() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
-        String script = "#!/bin/bash\n" +
-                "echo test trigger_adhoc_script\n";
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
 
-        final RundeckExecution test
-                = client.triggerAdhocScript("test", byteArrayInputStream,(Properties) null, null, null, null, null);
-
-        Assert.assertEquals((Long) 25L, test.getId());
-        Assert.assertEquals(null, test.getArgstring());
-        Assert.assertEquals(null, test.getAbortedBy());
-        Assert.assertEquals("#!/bin/bash\necho test trigger_adhoc_script", test.getDescription());
-        Assert.assertEquals("admin", test.getStartedBy());
-        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
-    }
     @Test
     @Betamax(tape = "trigger_adhoc_script")
     public void triggerAdhocScript() throws Exception {
@@ -602,24 +503,7 @@ public class RundeckClientTest {
         Assert.assertEquals("admin", test.getStartedBy());
         Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
     }
-    @Test
-    @Betamax(tape = "trigger_adhoc_script_as_user")
-    public void triggerAdhocScriptDeprecatedAsUser() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
-        String script = "#!/bin/bash\n" +
-                "echo test trigger_adhoc_script\n";
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
 
-        final RundeckExecution test
-                = client.triggerAdhocScript("test", byteArrayInputStream, (Properties) null, null, null, null, "api-java-client-test-adhoc-script-as-user1");
-
-        Assert.assertEquals((Long) 26L, test.getId());
-        Assert.assertEquals(null, test.getArgstring());
-        Assert.assertEquals(null, test.getAbortedBy());
-        Assert.assertEquals("#!/bin/bash\necho test trigger_adhoc_script", test.getDescription());
-        Assert.assertEquals("api-java-client-test-adhoc-script-as-user1", test.getStartedBy());
-        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
-    }
     @Test
     @Betamax(tape = "trigger_adhoc_script_as_user")
     public void triggerAdhocScriptAsUser() throws Exception {
@@ -639,23 +523,7 @@ public class RundeckClientTest {
         Assert.assertEquals("api-java-client-test-adhoc-script-as-user1", test.getStartedBy());
         Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
     }
-    @Test
-    @Betamax(tape = "trigger_adhoc_script_as_user_unauthorized")
-    public void triggerAdhocScriptDeprecatedAsUserUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
-        String script = "#!/bin/bash\n" +
-                "echo test trigger_adhoc_script\n";
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
-
-        try{
-        final RundeckExecution test
-                = client.triggerAdhocScript("test", byteArrayInputStream, (Properties) null, null, null, null, "api-java-client-test-adhoc-script-as-user1");
-            Assert.fail("should not succeed");
-        } catch (RundeckApiException e) {
-            Assert.assertEquals("Not authorized for action \"Run as User\" for Run Adhoc", e.getMessage());
-        }
-
-    }
+    
     @Test
     @Betamax(tape = "trigger_adhoc_script_as_user_unauthorized")
     public void triggerAdhocScriptAsUserUnauthorized() throws Exception {
