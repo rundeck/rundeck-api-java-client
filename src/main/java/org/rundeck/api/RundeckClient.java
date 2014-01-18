@@ -3281,6 +3281,25 @@ public class RundeckClient implements Serializable {
         return new ApiCall(this).get(param,
                 new OutputParser("result/output", createOutputEntryParser()));
     }
+    /**
+     * Get the execution state of the given execution
+     *
+     * @param executionId identifier of the execution - mandatory
+     * @return {@link RundeckExecutionState} the execution state
+     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckExecutionState getExecutionState(Long executionId)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        AssertUtil.notNull(executionId, "executionId is mandatory to get the state of an execution!");
+        ApiPathBuilder param = new ApiPathBuilder(
+                "/execution/", executionId.toString(),
+                "/state");
+
+        return new ApiCall(this).get(param, new ExecutionStateParser("result/executionState"));
+    }
 
     /**
      * Get the execution output of the given execution on the specified node

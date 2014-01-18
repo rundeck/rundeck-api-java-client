@@ -1186,6 +1186,22 @@ public class RundeckClientTest {
         Assert.assertEquals(false, output.isUnmodified());
         Assert.assertEquals(12, output.getLogEntries().size());
     }
+    /**
+     * Execution state structure
+     */
+    @Test
+    @Betamax(tape = "execution_state", mode = TapeMode.READ_ONLY)
+    public void executionState() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckExecutionState output = client.getExecutionState(149L);
+
+        Assert.assertEquals(149,output.getExecutionId());
+        Assert.assertEquals(3,output.getTargetNodes().size());
+        Assert.assertEquals(3,output.getAllNodes().size());
+        Assert.assertEquals(1,output.getStepCount());
+        Assert.assertEquals(1,output.getSteps().size());
+        Assert.assertEquals(RundeckWFExecState.SUCCEEDED,output.getExecutionState());
+    }
 
     @Before
     public void setUp() throws Exception {
