@@ -28,7 +28,7 @@ public class WorkflowStepStateParser implements XmlNodeParser<WorkflowStepState>
 
         BaseStateParser.parseBaseState(targetNode, state);
         state.setStepContextId(StringUtils.trimToNull(targetNode.valueOf("@stepctx")));
-        state.setStepNum(StringUtils.trimToNull(targetNode.valueOf("@id")));
+        state.setStepNum(Integer.valueOf(targetNode.valueOf("@id")));
         state.setNodeStep(Boolean.valueOf(StringUtils.trimToNull(targetNode.valueOf("nodeStep"))));
         if (Boolean.valueOf(StringUtils.trimToNull(targetNode.valueOf("hasSubworkflow")))) {
             //parse sub workflow

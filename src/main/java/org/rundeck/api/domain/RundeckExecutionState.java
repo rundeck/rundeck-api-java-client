@@ -13,7 +13,7 @@ public class RundeckExecutionState extends WorkflowState{
     private Map<String, List<WorkflowStepContextState>> nodeStates;
 
     /**
-     * Return the set of all rundeck nodes targetted in this execution
+     * Return the set of all rundeck nodes targeted in this execution
      * @return
      */
     public Set<RundeckNodeIdentity> getAllNodes() {

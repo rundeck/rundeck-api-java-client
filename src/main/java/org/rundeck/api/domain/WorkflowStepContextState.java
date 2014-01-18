@@ -5,7 +5,7 @@ package org.rundeck.api.domain;
  */
 public class WorkflowStepContextState extends BaseState {
     private String stepContextId;
-    private String stepNum;
+    private int stepNum;
 
     /**
      * The context id for the step in the form "#[/#[/#[...]]]" where "#" is a number
@@ -23,11 +23,11 @@ public class WorkflowStepContextState extends BaseState {
      * The step number of this step in the current workflow, 1 indexed.
      * @return
      */
-    public String getStepNum() {
+    public int getStepNum() {
         return stepNum;
     }
 
-    public void setStepNum(String stepNum) {
+    public void setStepNum(int stepNum) {
         this.stepNum = stepNum;
     }
 }

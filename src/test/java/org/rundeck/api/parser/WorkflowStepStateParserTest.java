@@ -26,7 +26,7 @@ public class WorkflowStepStateParserTest {
         Assert.assertEquals(null, stepState.getSubWorkflow());
         Assert.assertNotNull(stepState.getNodeStates());
         Assert.assertEquals("1", stepState.getStepContextId());
-        Assert.assertEquals("1", stepState.getStepNum());
+        Assert.assertEquals(1, stepState.getStepNum());
         Assert.assertEquals(1390066159000L, stepState.getStartTime().getTime());
         Assert.assertEquals(1390066160000L, stepState.getEndTime().getTime());
         Assert.assertEquals(1390066160000L, stepState.getUpdateTime().getTime());
@@ -42,7 +42,7 @@ public class WorkflowStepStateParserTest {
             Assert.assertTrue(expectedTargetNodes.contains(s));
             WorkflowStepContextState workflowStepContextState = stepState.getNodeStates().get(s);
             Assert.assertEquals("1", workflowStepContextState.getStepContextId());
-            Assert.assertEquals("1", workflowStepContextState.getStepNum());
+            Assert.assertEquals(1, workflowStepContextState.getStepNum());
             Assert.assertEquals(1390066159000L + (i * 1000), workflowStepContextState.getStartTime().getTime());
             Assert.assertEquals(1390066159000L + (i * 1000), workflowStepContextState.getEndTime().getTime());
             Assert.assertEquals(1390066159000L + (i * 1000), workflowStepContextState.getUpdateTime().getTime());
@@ -63,7 +63,7 @@ public class WorkflowStepStateParserTest {
         Assert.assertEquals(true, stepState.isNodeStep());
         Assert.assertEquals(null, stepState.getSubWorkflow());
         Assert.assertEquals("1", stepState.getStepContextId());
-        Assert.assertEquals("1", stepState.getStepNum());
+        Assert.assertEquals(1, stepState.getStepNum());
         Assert.assertNotNull(stepState.getNodeStates());
         Assert.assertEquals(1390066061000L, stepState.getStartTime().getTime());
         Assert.assertEquals(1390066066000L, stepState.getEndTime().getTime());
@@ -75,7 +75,7 @@ public class WorkflowStepStateParserTest {
 
         WorkflowStepContextState workflowStepContextState = stepState.getNodeStates().get("dignan");
         Assert.assertEquals("1", workflowStepContextState.getStepContextId());
-        Assert.assertEquals("1", workflowStepContextState.getStepNum());
+        Assert.assertEquals(1, workflowStepContextState.getStepNum());
         Assert.assertEquals(1390066061000L, workflowStepContextState.getStartTime().getTime());
         Assert.assertEquals(1390066066000L, workflowStepContextState.getEndTime().getTime());
         Assert.assertEquals(1390066066000L, workflowStepContextState.getUpdateTime().getTime());
@@ -95,7 +95,7 @@ public class WorkflowStepStateParserTest {
         Assert.assertNotNull(stepState.getSubWorkflow());
         Assert.assertNull(stepState.getNodeStates());
         Assert.assertEquals("2", stepState.getStepContextId());
-        Assert.assertEquals("2",stepState.getStepNum());
+        Assert.assertEquals(2, stepState.getStepNum());
         Assert.assertEquals(1390066066000L, stepState.getStartTime().getTime());
         Assert.assertNull(stepState.getEndTime());
         Assert.assertEquals(1390066066000L, stepState.getUpdateTime().getTime());
@@ -112,7 +112,7 @@ public class WorkflowStepStateParserTest {
         Assert.assertNull(stepState1.getSubWorkflow());
         Assert.assertNotNull(stepState1.getNodeStates());
         Assert.assertEquals("2/1", stepState1.getStepContextId());
-        Assert.assertEquals("1", stepState1.getStepNum());
+        Assert.assertEquals(1, stepState1.getStepNum());
         Assert.assertEquals(1390066067000L, stepState1.getStartTime().getTime());
         Assert.assertNull(stepState1.getEndTime());
         Assert.assertEquals(1390066067000L, stepState1.getUpdateTime().getTime());

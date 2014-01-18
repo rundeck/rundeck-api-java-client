@@ -83,11 +83,12 @@ h2. RunDeck API version 9
 * list running executions across all projects - OK
 * include project name in execution results - OK
 * Add uuidOption parameter to allow removing imported UUIDs to avoid creation conflicts - OK
+
 h2. RunDeck API version 10
 
 [Documentation of the RunDeck API version 10|http://rundeck.org/2.0.0/api/index.html]
 
-* Execution State - Retrieve workflow step and node state information - *TODO*
+* Execution State - Retrieve workflow step and node state information - OK
 * Execution Output with State - Retrieve log output with state change information - OK
 * Execution Output - Retrieve log output for a particular node or step - OK
 * Execution Info - added successfulNodes and failedNodes detail. - OK
