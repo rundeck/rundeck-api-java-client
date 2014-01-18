@@ -40,18 +40,30 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Main entry point to talk to a RunDeck instance.
- * You have 2 methods for authentication : login-based or token-based. If you want to use the first, you need to provide
- * both a "login" and a "password". Otherwise, just provide a "token" (also called "auth-token"). See the RunDeck
+ * Rundeck API client.
+ * <p>
+ * There are three methods for authentication : login-based or token-based or session-based.
+ * Login authentication requires
+ * both a "login" and a "password". Token-based requires a "token" (also called "auth-token"). See the RunDeck
  * documentation for generating such a token.</p>
+ * <p>
+ *     Session-based authentication allows re-use of a previous login session. See {@link #testAuth()}.
+ * </p>
+ * <p>
+ *     Deprecation notice: All public constructors for this class are deprecated. Use the {@link RundeckClientBuilder} or {@link #builder()} convenience method to create a RundeckClient. The public constructors will be made non-public in version 12 of this library.
+ * </p>
  * <br>
  * Usage : <br>
  * <code>
  * <pre>
  * // using login-based authentication :
- * RundeckClient rundeck = new RundeckClient("http://localhost:4440", "admin", "admin");
+ * RundeckClient rundeck = RundeckClient.builder()
+ *                           .url("http://localhost:4440")
+ *                           .login("admin", "admin").build();
  * // or for a token-based authentication :
- * RundeckClient rundeck = new RundeckClient("http://localhost:4440", "PDDNKo5VE29kpk4prOUDr2rsKdRkEvsD");
+ * RundeckClient rundeck = RundeckClient.builder()
+ *                           .url("http://localhost:4440")
+ *                           .token("PDDNKo5VE29kpk4prOUDr2rsKdRkEvsD").build();
  *
  * List&lt;RundeckProject&gt; projects = rundeck.getProjects();
  *
@@ -162,6 +174,9 @@ public class RundeckClient implements Serializable {
      * @param login to use for authentication on the RunDeck instance
      * @param password to use for authentication on the RunDeck instance
      * @throws IllegalArgumentException if the url, login or password is blank (null, empty or whitespace)
+     *
+     * @deprecated Use the builder {@link RundeckClientBuilder} or {@link #builder()}, this method will not be public in version 12 of this
+     * library.
      */
     public RundeckClient(String url, String login, String password) throws IllegalArgumentException {
         this(url);
@@ -181,7 +196,7 @@ public class RundeckClient implements Serializable {
      * @param sessionID to use for session authentication on the RunDeck instance
      * @param useToken should be true if using token, false if using sessionID
      * @throws IllegalArgumentException if the url or token is blank (null, empty or whitespace)
-     * @deprecated Use the builder {@link RundeckClientBuilder}, this method will not be public in version 10 of this library.
+     * @deprecated Use the builder {@link RundeckClientBuilder} or {@link #builder()}, this method will not be public in version 10 of this library.
      */
     private RundeckClient(String url, String token, String sessionID, boolean useToken) throws IllegalArgumentException {
         this(url);
@@ -201,6 +216,16 @@ public class RundeckClient implements Serializable {
     }
 
 
+    /**
+     * Instantiate a new {@link RundeckClient} for the RunDeck instance at the given url,
+     * using token-based authentication. Either token must be valid
+     * @param url of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
+     * @param token to use for authentication on the RunDeck instance
+     * @throws IllegalArgumentException if the url or token is blank (null, empty or whitespace)
+     * @deprecated Use the builder {@link RundeckClientBuilder} or {@link #builder()},
+     * this method will not be public in version 12 of this
+     * library.
+     */
     public RundeckClient(String url, String token) throws IllegalArgumentException {
         this(url, token, null, true);
     }
@@ -1710,7 +1735,8 @@ public class RundeckClient implements Serializable {
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @deprecated renamed for clarity use {@link #getExecutionOutput(Long, int, int, long, int)}
+     * @deprecated renamed for clarity use {@link #getExecutionOutput(Long, int, int, long, int)}, will be removed in
+     * version 12 of this library
      */
     public RundeckOutput getJobExecutionOutput(Long executionId, int offset, int lastlines, long lastmod, int maxlines)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
@@ -1909,7 +1935,8 @@ public class RundeckClient implements Serializable {
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @deprecated renamed for clarity use {@link #getExecutionOutput(Long, int, long, int)}
+     * @deprecated renamed for clarity use {@link #getExecutionOutput(Long, int, long, int)}, will be removed in
+     * version 12 of this library
      */
     public RundeckOutput getJobExecutionOutput(Long executionId, int offset, long lastmod, int maxlines)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {

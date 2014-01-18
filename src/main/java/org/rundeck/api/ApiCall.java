@@ -115,7 +115,8 @@ class ApiCall {
     /**
      * Test the authentication on the RunDeck instance. Will delegate to either {@link #testLoginAuth()} (in case of
      * login-based auth) or {@link #testTokenAuth()} (in case of token-based auth).
-     * 
+     *
+     * @return the login session ID if using login-based auth, otherwise null
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @see #testLoginAuth()
