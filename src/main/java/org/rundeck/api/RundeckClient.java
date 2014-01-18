@@ -3261,8 +3261,27 @@ public class RundeckClient implements Serializable {
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     * @deprecated renamed for clarity use {@link #getExecutionOutput(Long, int, int, long, int)}
      */
     public RundeckOutput getJobExecutionOutput(Long executionId, int offset, int lastlines, long lastmod, int maxlines)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        return getExecutionOutput(executionId, offset, lastlines, lastmod, maxlines);
+    }
+    /**
+     * Get the execution output of the given job
+     *
+     * @param executionId identifier of the execution - mandatory
+     * @param offset byte offset to read from in the file. 0 indicates the beginning.
+     * @param lastlines nnumber of lines to retrieve from the end of the available output. If specified it will override the offset value and return only the specified number of lines at the end of the log.
+     * @param lastmod epoch datestamp in milliseconds, return results only if modification changed since the specified date OR if more data is available at the given offset
+     * @param maxlines maximum number of lines to retrieve forward from the specified offset.
+     * @return {@link RundeckOutput}
+     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckOutput getExecutionOutput(Long executionId, int offset, int lastlines, long lastmod, int maxlines)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
         ApiPathBuilder param = new ApiPathBuilder(
@@ -3321,7 +3340,7 @@ public class RundeckClient implements Serializable {
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
      */
-    public RundeckOutput getJobExecutionOutputForNode(Long executionId, String nodeName, int offset, int lastlines,
+    public RundeckOutput getExecutionOutputForNode(Long executionId, String nodeName, int offset, int lastlines,
             long lastmod, int maxlines)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
@@ -3362,7 +3381,7 @@ public class RundeckClient implements Serializable {
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
      */
-    public RundeckOutput getJobExecutionOutputForStep(Long executionId, String stepCtx, int offset, int lastlines,
+    public RundeckOutput getExecutionOutputForStep(Long executionId, String stepCtx, int offset, int lastlines,
             long lastmod, int maxlines)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
@@ -3403,7 +3422,8 @@ public class RundeckClient implements Serializable {
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
      */
-    public RundeckOutput getJobExecutionOutputForNodeAndStep(Long executionId, String nodeName, String stepCtx, int offset, int lastlines,
+    public RundeckOutput getExecutionOutputForNodeAndStep(Long executionId, String nodeName, String stepCtx,
+            int offset, int lastlines,
             long lastmod, int maxlines)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
@@ -3440,8 +3460,26 @@ public class RundeckClient implements Serializable {
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     * @deprecated renamed for clarity use {@link #getExecutionOutput(Long, int, long, int)}
      */
     public RundeckOutput getJobExecutionOutput(Long executionId, int offset, long lastmod, int maxlines)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        return getExecutionOutput(executionId, offset, lastmod, maxlines);
+    }
+    /**
+     * Get the execution output of the given job
+     *
+     * @param executionId identifier of the execution - mandatory
+     * @param offset byte offset to read from in the file. 0 indicates the beginning.
+     * @param lastmod epoch datestamp in milliseconds, return results only if modification changed since the specified date OR if more data is available at the given offset
+     * @param maxlines maximum number of lines to retrieve forward from the specified offset.
+     * @return {@link RundeckOutput}
+     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckOutput getExecutionOutput(Long executionId, int offset, long lastmod, int maxlines)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
         ApiPathBuilder param = new ApiPathBuilder("/execution/", executionId.toString(), "/output")
@@ -3468,7 +3506,8 @@ public class RundeckClient implements Serializable {
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
      */
-    public RundeckOutput getJobExecutionOutputState(Long executionId, boolean stateOnly, int offset, long lastmod, int maxlines)
+    public RundeckOutput getExecutionOutputState(Long executionId, boolean stateOnly, int offset, long lastmod,
+            int maxlines)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
         ApiPathBuilder param = new ApiPathBuilder("/execution/", executionId.toString(), "/output/state")

@@ -1066,7 +1066,7 @@ public class RundeckClientTest {
     @Betamax(tape = "execution_output_fornode", mode = TapeMode.READ_ONLY)
     public void executionOutputForNode() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_6, 10);
-        RundeckOutput output = client.getJobExecutionOutputForNode(146L,"node-14.qa.subgroup.mycompany.com",0,-1,0L,-1);
+        RundeckOutput output = client.getExecutionOutputForNode(146L, "node-14.qa.subgroup.mycompany.com", 0, -1, 0L, -1);
 
         Assert.assertEquals(new Long(1602), output.getExecDuration());
         Assert.assertEquals(new Long(146), output.getExecutionId());
@@ -1091,7 +1091,7 @@ public class RundeckClientTest {
     @Betamax(tape = "execution_output_forstep", mode = TapeMode.READ_ONLY)
     public void executionOutputForStep() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_6, 10);
-        RundeckOutput output = client.getJobExecutionOutputForStep(146L,"1",0,-1,0L,-1);
+        RundeckOutput output = client.getExecutionOutputForStep(146L, "1", 0, -1, 0L, -1);
 
         Assert.assertEquals(new Long(1602), output.getExecDuration());
         Assert.assertEquals(new Long(146), output.getExecutionId());
@@ -1117,7 +1117,8 @@ public class RundeckClientTest {
     @Betamax(tape = "execution_output_fornodeandstep", mode = TapeMode.READ_ONLY)
     public void executionOutputForNodeAndStep() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_6, 10);
-        RundeckOutput output = client.getJobExecutionOutputForNodeAndStep(146L,"node-14.qa.subgroup.mycompany.com","1",0,-1,0L,-1);
+        RundeckOutput output = client.getExecutionOutputForNodeAndStep(146L, "node-14.qa.subgroup.mycompany.com",
+                "1", 0, -1, 0L, -1);
 
         Assert.assertEquals(new Long(1602), output.getExecDuration());
         Assert.assertEquals(new Long(146), output.getExecutionId());
@@ -1143,7 +1144,7 @@ public class RundeckClientTest {
     @Betamax(tape = "execution_output_state", mode = TapeMode.READ_ONLY)
     public void executionOutputState() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_6, 10);
-        RundeckOutput output = client.getJobExecutionOutputState(146L,false,0,0L,-1);
+        RundeckOutput output = client.getExecutionOutputState(146L, false, 0, 0L, -1);
 
         Assert.assertEquals(new Long(1602), output.getExecDuration());
         Assert.assertEquals(new Long(146), output.getExecutionId());
@@ -1168,7 +1169,7 @@ public class RundeckClientTest {
     @Betamax(tape = "execution_output_state_only", mode = TapeMode.READ_ONLY)
     public void executionOutputStateOnly() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_6, 10);
-        RundeckOutput output = client.getJobExecutionOutputState(146L,true,0,0L,-1);
+        RundeckOutput output = client.getExecutionOutputState(146L, true, 0, 0L, -1);
 
         Assert.assertEquals(new Long(1602), output.getExecDuration());
         Assert.assertEquals(new Long(146), output.getExecutionId());
