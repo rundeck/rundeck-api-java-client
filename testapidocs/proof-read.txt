@@ -150,6 +150,7 @@ CONSTRUCTOR: RundeckClientTest
 METHOD: abortExecution
 METHOD: abortExecutionAsUser
 METHOD: abortExecutionAsUserUnauthorized
+METHOD: apiVersionDefaultLatest
 METHOD: bulkDelete
 METHOD: bulkDeleteFailDNE
 METHOD: bulkDeleteFailUnauthorized
