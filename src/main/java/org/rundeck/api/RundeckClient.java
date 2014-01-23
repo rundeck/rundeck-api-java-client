@@ -157,15 +157,15 @@ public class RundeckClient implements Serializable {
     }
 
     int getApiVersion() {
-        return apiVersion;
+        return (apiVersion > 0 ? apiVersion : API_VERSION);
     }
 
     void setApiVersion(int apiVersion) {
-        this.apiVersion = apiVersion;
+        this.apiVersion = (apiVersion > 0 ? apiVersion : API_VERSION);
     }
 
     void setApiVersion(Version apiVersion) {
-        this.apiVersion = apiVersion.getVersionNumber();
+        setApiVersion(apiVersion.getVersionNumber());
     }
 
     String getApiEndpoint() {

@@ -62,6 +62,18 @@ public class RundeckClientTest {
     private RundeckClient client;
 
     @Test
+    public void apiVersionDefaultLatest() {
+        RundeckClient blah = createClient("blah", 0);
+        Assert.assertEquals("/api/" + RundeckClient.API_VERSION, blah.getApiEndpoint());
+        Assert.assertEquals(RundeckClient.API_VERSION, blah.getApiVersion());
+        blah.setApiVersion(0);
+        Assert.assertEquals(RundeckClient.API_VERSION, blah.getApiVersion());
+        blah.setApiVersion(-1);
+        Assert.assertEquals(RundeckClient.API_VERSION, blah.getApiVersion());
+        blah.setApiVersion(RundeckClient.Version.V9.getVersionNumber());
+        Assert.assertEquals(RundeckClient.Version.V9.getVersionNumber(), blah.getApiVersion());
+    }
+    @Test
     @Betamax(tape = "get_projects")
     public void getProjects() throws Exception {
         List<RundeckProject> projects = client.getProjects();
