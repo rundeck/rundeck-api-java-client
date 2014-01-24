@@ -395,70 +395,93 @@ class ApiCall {
      * @throws RundeckApiLoginException if the login failed
      */
     private String login(HttpClient httpClient) throws RundeckApiLoginException {
-        String location = client.getUrl() + "/j_security_check";
         String sessionID = null;
-        while (true) {
-            HttpPost postLogin = new HttpPost(location);
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("j_username", client.getLogin()));
-            params.add(new BasicNameValuePair("j_password", client.getPassword()));
-            params.add(new BasicNameValuePair("action", "login"));
 
-            HttpResponse response = null;
-            try {
-                postLogin.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
-                response = httpClient.execute(postLogin);
-                Header cookieHeader = response.getFirstHeader("Set-Cookie");
-                if(cookieHeader != null){
-                    String cookieStr = cookieHeader.getValue();
-                    if(cookieStr != null){
-                        int i1 = cookieStr.indexOf("JSESSIONID=");
-                        if(i1 >= 0){
-                            cookieStr = cookieStr.substring(i1 +  "JSESSIONID=".length());
-                            int i2 = cookieStr.indexOf(";");
-                            if(i2 >= 0){
-                                sessionID = cookieStr.substring(0, i2);
-                            }
+        // 1. call expected GET request
+        String location = client.getUrl();
+
+        try {
+            HttpGet getRequest = new HttpGet(location);
+            HttpResponse response = httpClient.execute(getRequest);
+
+            // sessionID stored in case user wants to cache it for reuse
+            Header cookieHeader = response.getFirstHeader("Set-Cookie");
+            if (cookieHeader != null) {
+                String cookieStr = cookieHeader.getValue();
+                if (cookieStr != null) {
+                    int i1 = cookieStr.indexOf("JSESSIONID=");
+                    if (i1 >= 0) {
+                        cookieStr = cookieStr.substring(i1 + "JSESSIONID=".length());
+                        int i2 = cookieStr.indexOf(";");
+                        if (i2 >= 0) {
+                            sessionID = cookieStr.substring(0, i2);
                         }
                     }
+                }
+            }
+
+            try {
+                EntityUtils.consume(response.getEntity());
+            } catch (IOException e) {
+                throw new RundeckApiLoginException("Failed to consume entity (release connection)", e);
+            }
+        } catch (IOException e) {
+            throw new RundeckApiLoginException("Failed to get request on " + location, e);
+        }
+
+        // 2. then call POST login request
+        location += "/j_security_check";
+
+        while (true) {
+            try {
+                HttpPost postLogin = new HttpPost(location);
+                List params = new ArrayList();
+                params.add(new BasicNameValuePair("j_username", client.getLogin()));
+                params.add(new BasicNameValuePair("j_password", client.getPassword()));
+                params.add(new BasicNameValuePair("action", "login"));
+                postLogin.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+                HttpResponse response = httpClient.execute(postLogin);
+
+                if (response.getStatusLine().getStatusCode() / 100 == 3) {
+                    // HTTP client refuses to handle redirects (code 3xx) for POST, so we have to do it manually...
+                    location = response.getFirstHeader("Location").getValue();
+                    try {
+                        EntityUtils.consume(response.getEntity());
+                    } catch (IOException e) {
+                        throw new RundeckApiLoginException("Failed to consume entity (release connection)", e);
+                    }
+                    continue;
+                }
+
+                if (response.getStatusLine().getStatusCode() / 100 != 2) {
+                    throw new RundeckApiLoginException("Invalid HTTP response '" + response.getStatusLine() + "' for "
+                            + location);
+                }
+
+                try {
+                    String content = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+                    if (StringUtils.contains(content, "j_security_check")) {
+                        throw new RundeckApiLoginException("Login failed for user " + client.getLogin());
+                    }
+                    try {
+                        EntityUtils.consume(response.getEntity());
+                    } catch (IOException e) {
+                        throw new RundeckApiLoginException("Failed to consume entity (release connection)", e);
+                    }
+                    break;
+                } catch (IOException io) {
+                    throw new RundeckApiLoginException("Failed to read RunDeck result", io);
+                } catch (ParseException p) {
+                    throw new RundeckApiLoginException("Failed to parse RunDeck response", p);
                 }
             } catch (IOException e) {
                 throw new RundeckApiLoginException("Failed to post login form on " + location, e);
             }
-
-            if (response.getStatusLine().getStatusCode() / 100 == 3) {
-                // HTTP client refuses to handle redirects (code 3xx) for POST, so we have to do it manually...
-                location = response.getFirstHeader("Location").getValue();
-                try {
-                    EntityUtils.consume(response.getEntity());
-                } catch (IOException e) {
-                    throw new RundeckApiLoginException("Failed to consume entity (release connection)", e);
-                }
-                continue;
-            }
-            if (response.getStatusLine().getStatusCode() / 100 != 2) {
-                throw new RundeckApiLoginException("Invalid HTTP response '" + response.getStatusLine() + "' for "
-                                                   + location);
-            }
-            try {
-                String content = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-                if (StringUtils.contains(content, "j_security_check")) {
-                    throw new RundeckApiLoginException("Login failed for user " + client.getLogin());
-                }
-                try {
-                    EntityUtils.consume(response.getEntity());
-                } catch (IOException e) {
-                    throw new RundeckApiLoginException("Failed to consume entity (release connection)", e);
-                }
-            } catch (IOException io) {
-                throw new RundeckApiLoginException("Failed to read RunDeck result", io);
-            } catch (ParseException p) {
-                throw new RundeckApiLoginException("Failed to parse RunDeck response", p);
-            }
-            break;
         }
+
         return sessionID;
     }
+
 
     /**
      * Instantiate a new {@link HttpClient} instance, configured to accept all SSL certificates
