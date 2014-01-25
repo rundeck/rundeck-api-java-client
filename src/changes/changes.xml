@@ -22,6 +22,16 @@
     <author>Vincent Behar</author>
   </properties>
   <body>
+      <release date='2014-01-24' description='Bugfix' version='9.3'>
+          <action type='fix' dev='gschueler'>
+              Issue #7: Fix authentication to Tomcat container (thanks @katanafleet)
+          </action>
+      </release>
+    <release date='2014-01-23' description='Bugfix' version='9.2'>
+      <action type='fix' dev='gschueler'>
+          Bugfix. If apiVersion is set to 0, request defaults to current API version.
+      </action>
+    </release>
     <release date='2014-01-16' description='Complete Rundeck API version 9' version='9.1'>
       <action type='add' dev='gschueler'>
           Add uuidOption support to jobs import, API v9
