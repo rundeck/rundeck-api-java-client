@@ -26,6 +26,7 @@ import java.util.Properties;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.dom4j.Document;
 import org.rundeck.api.util.ParametersUtil;
 
 /**
@@ -43,6 +44,7 @@ class ApiPathBuilder {
     /** When POSTing, we can add attachments */
     private final Map<String, InputStream> attachments;
     private final List<NameValuePair> form = new ArrayList<NameValuePair>();
+    private Document xmlDocument;
 
     /** Marker for using the right separator between parameters ("?" or "&") */
     private boolean firstParamDone = false;
@@ -266,6 +268,18 @@ class ApiPathBuilder {
         }
         return this;
     }
+    /**
+     * When POSTing a request, add the given XMl Document as the content of the request.
+     *
+     * @param document XMl document to send
+     * @return this, for method chaining
+     */
+    public ApiPathBuilder xml(final Document document) {
+        if (document != null) {
+            xmlDocument = document;
+        }
+        return this;
+    }
 
     /**
      * @return all attachments to be POSTed, with their names
@@ -311,7 +325,7 @@ class ApiPathBuilder {
      * Return true if there are any Attachments or Form data for a POST request.
      */
     public boolean hasPostContent() {
-        return getAttachments().size() > 0 || getForm().size() > 0;
+        return getAttachments().size() > 0 || getForm().size() > 0 || null != xmlDocument;
     }
 
     /**
@@ -319,6 +333,10 @@ class ApiPathBuilder {
      */
     public String getAccept() {
         return accept;
+    }
+
+    public Document getXmlDocument() {
+        return xmlDocument;
     }
 
     /**
