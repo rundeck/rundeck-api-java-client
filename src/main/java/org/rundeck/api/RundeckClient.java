@@ -349,7 +349,7 @@ public class RundeckClient implements Serializable {
             RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException, IllegalArgumentException {
 
-        AssertUtil.notBlank(projectName, "projectName is mandatory to get the details of a project !");
+        AssertUtil.notBlank(projectName, "projectName is mandatory to create a project !");
         return new ApiCall(this)
                 .post(new ApiPathBuilder("/projects").xml(
                         projectDocument(projectName, configuration)
@@ -358,6 +358,26 @@ public class RundeckClient implements Serializable {
                                 ? "/projects/project"
                                 : "/project"
                         )));
+    }
+    /**
+     * Return the configuration of a project
+     *
+     * @param projectName name of the project - mandatory
+     *
+     * @return a {@link ProjectConfig} instance - won't be null
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public ProjectConfig getProjectConfig(String projectName) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to get the config of a project !");
+        return new ApiCall(this)
+                .get(new ApiPathBuilder("/project/", projectName, "/config"), new ProjectConfigParser("/config"));
     }
 
     private Document projectDocument(String projectName, Map<String, String> configuration) {

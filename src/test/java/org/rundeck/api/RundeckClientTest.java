@@ -91,6 +91,17 @@ public class RundeckClientTest {
         Assert.assertNotNull(project.getProjectConfig());
 
     }
+
+    @Test
+    @Betamax(tape = "get_project_configv11")
+    public void getProjectConfig() throws Exception {
+        ProjectConfig config = createClient(TEST_TOKEN_6, 11).getProjectConfig("monkey1");
+        Assert.assertNotNull(config);
+        Assert.assertNotNull(config.getProperties());
+        Assert.assertEquals(9,config.getProperties().size());
+        Assert.assertEquals("monkey1", config.getProperties().get("project.name"));
+    }
+
     @Test
     @Betamax(tape = "get_history")
     public void getHistory() throws Exception {
