@@ -1,0 +1,26 @@
+!tape
+name: create_projectv11
+interactions:
+- recorded: 2014-02-27T19:45:35.430Z
+  request:
+    method: POST
+    uri: http://rundeck.local:4440/api/11/projects
+    headers:
+      Accept: text/xml
+      Content-Type: application/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      Transfer-Encoding: chunked
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: Do4d3NUD5DKk21DR4sNK755RcPk618vn
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1h2r5l35j4ynqo19dsm6xa2gv;Path=/
+      X-Rundeck-API-Version: '11'
+      X-Rundeck-API-XML-Response-Wrapper: 'false'
+    body: !!binary |-
+      PHByb2plY3QgdXJsPSdodHRwOi8vZGlnbmFuLmxvY2FsOjQ0NDAvYXBpLzExL3Byb2plY3QvbW9ua2V5MSc+CiAgPG5hbWU+bW9ua2V5MTwvbmFtZT4KICA8ZGVzY3JpcHRpb24+PC9kZXNjcmlwdGlvbj4KICA8Y29uZmlnPgogICAgPHByb3BlcnR5IGtleT0ncHJvamVjdC5uYW1lJyB2YWx1ZT0nbW9ua2V5MScgLz4KICAgIDxwcm9wZXJ0eSBrZXk9J3Byb2plY3Quc3NoLWF1dGhlbnRpY2F0aW9uJyB2YWx1ZT0ncHJpdmF0ZUtleScgLz4KICAgIDxwcm9wZXJ0eSBrZXk9J3NlcnZpY2UuTm9kZUV4ZWN1dG9yLmRlZmF1bHQucHJvdmlkZXInIHZhbHVlPSdqc2NoLXNzaCcgLz4KICAgIDxwcm9wZXJ0eSBrZXk9J3Jlc291cmNlcy5zb3VyY2UuMS5jb25maWcuaW5jbHVkZVNlcnZlck5vZGUnIHZhbHVlPSd0cnVlJyAvPgogICAgPHByb3BlcnR5IGtleT0ncmVzb3VyY2VzLnNvdXJjZS4xLmNvbmZpZy5nZW5lcmF0ZUZpbGVBdXRvbWF0aWNhbGx5JyB2YWx1ZT0ndHJ1ZScgLz4KICAgIDxwcm9wZXJ0eSBrZXk9J3Jlc291cmNlcy5zb3VyY2UuMS5jb25maWcuZmlsZScgdmFsdWU9Jy9Vc2Vycy9ncmVnL3J1bmRlY2syZC9wcm9qZWN0cy9tb25rZXkxL2V0Yy9yZXNvdXJjZXMueG1sJyAvPgogICAgPHByb3BlcnR5IGtleT0ncHJvamVjdC5zc2gta2V5cGF0aCcgdmFsdWU9Jy9Vc2Vycy9ncmVnLy5zc2gvaWRfcnNhJyAvPgogICAgPHByb3BlcnR5IGtleT0nc2VydmljZS5GaWxlQ29waWVyLmRlZmF1bHQucHJvdmlkZXInIHZhbHVlPSdqc2NoLXNjcCcgLz4KICAgIDxwcm9wZXJ0eSBrZXk9J3Jlc291cmNlcy5zb3VyY2UuMS50eXBlJyB2YWx1ZT0nZmlsZScgLz4KICA8L2NvbmZpZz4KPC9wcm9qZWN0Pg==

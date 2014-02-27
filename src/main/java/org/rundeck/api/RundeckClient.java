@@ -18,10 +18,14 @@ package org.rundeck.api;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.dom4j.Document;
+import org.dom4j.DocumentFactory;
+import org.dom4j.Element;
 import org.rundeck.api.RundeckApiException.RundeckApiLoginException;
 import org.rundeck.api.RundeckApiException.RundeckApiTokenException;
 import org.rundeck.api.domain.*;
 import org.rundeck.api.domain.RundeckExecution.ExecutionStatus;
+import org.rundeck.api.generator.ProjectGenerator;
 import org.rundeck.api.parser.*;
 import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.AssertUtil;
@@ -33,10 +37,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -95,6 +96,7 @@ public class RundeckClient implements Serializable {
         V8(8),
         V9(9),
         V10(10),
+        V11(11),
         ;
 
         private int versionNumber;
@@ -108,7 +110,7 @@ public class RundeckClient implements Serializable {
         }
     }
     /** Version of the API supported */
-    public static final transient int API_VERSION = Version.V10.getVersionNumber();
+    public static final transient int API_VERSION = Version.V11.getVersionNumber();
 
     private static final String API = "/api/";
 
@@ -274,9 +276,25 @@ public class RundeckClient implements Serializable {
         testAuth();
     }
 
+    /**
+     * Return root xpath for xml api results. for v11 and later it is empty, for earlier it is "result"
+     *
+     * @return
+     */
+    private String rootXpath() {
+        return getApiVersion() < Version.V11.getVersionNumber() ? "result" : "";
+    }
     /*
      * Projects
      */
+
+    private ProjectParser createProjectParser() {
+        return createProjectParser(null);
+    }
+
+    private ProjectParser createProjectParser(final String xpath) {
+        return new ProjectParserV11(xpath);
+    }
 
     /**
      * List all projects
@@ -289,7 +307,8 @@ public class RundeckClient implements Serializable {
     public List<RundeckProject> getProjects() throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException {
         return new ApiCall(this).get(new ApiPathBuilder("/projects"),
-                                     new ListParser<RundeckProject>(new ProjectParser(), "result/projects/project"));
+                                     new ListParser<RundeckProject>(createProjectParser(), rootXpath() +
+                                             "/projects/project"));
     }
 
     /**
@@ -306,7 +325,48 @@ public class RundeckClient implements Serializable {
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(projectName, "projectName is mandatory to get the details of a project !");
         return new ApiCall(this).get(new ApiPathBuilder("/project/", projectName),
-                                     new ProjectParser("result/projects/project"));
+                createProjectParser(rootXpath() +
+                        (getApiVersion() < Version.V11.getVersionNumber()
+                                ? "/projects/project"
+                                : "/project"
+                        )));
+    }
+
+    /**
+     * Create a new project, and return the new definition
+     *
+     * @param projectName name of the project - mandatory
+     * @param configuration project configuration properties
+     *
+     * @return a {@link RundeckProject} instance - won't be null
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public RundeckProject createProject(String projectName, Map<String, String> configuration) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to get the details of a project !");
+        return new ApiCall(this)
+                .post(new ApiPathBuilder("/projects").xml(
+                        projectDocument(projectName, configuration)
+                ), createProjectParser(rootXpath() +
+                        (getApiVersion() < Version.V11.getVersionNumber()
+                                ? "/projects/project"
+                                : "/project"
+                        )));
+    }
+
+    private Document projectDocument(String projectName, Map<String, String> configuration) {
+        RundeckProject project = new RundeckProject();
+        project.setName(projectName);
+        if (null != configuration) {
+            project.setProjectConfig(new ProjectConfig(configuration));
+        }
+        return new ProjectGenerator(project).generate();
     }
 
     /*
@@ -366,7 +426,7 @@ public class RundeckClient implements Serializable {
                                                                 .param("jobFilter", jobFilter)
                                                                 .param("groupPath", groupPath)
                                                                 .param("idlist", StringUtils.join(jobIds, ",")),
-                                     new ListParser<RundeckJob>(new JobParser(), "result/jobs/job"));
+                                     new ListParser<RundeckJob>(new JobParser(), rootXpath()+"/jobs/job"));
     }
 
     /**
@@ -699,7 +759,7 @@ public class RundeckClient implements Serializable {
             //API v8
             request.param("project", rundeckJobsImport.getProject());
         }
-        return new ApiCall(this).post(request, new JobsImportResultParser("result"));
+        return new ApiCall(this).post(request, new JobsImportResultParser(rootXpath()));
     }
 
     /**
@@ -755,7 +815,7 @@ public class RundeckClient implements Serializable {
     public String deleteJob(String jobId) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(jobId, "jobId is mandatory to delete a job !");
-        return new ApiCall(this).delete(new ApiPathBuilder("/job/", jobId), new StringParser("result/success/message"));
+        return new ApiCall(this).delete(new ApiPathBuilder("/job/", jobId), new StringParser(rootXpath()+"/success/message"));
     }
     /**
      * Delete multiple jobs, identified by the given IDs
@@ -773,7 +833,7 @@ public class RundeckClient implements Serializable {
             throw new IllegalArgumentException("jobIds are mandatory to delete a job");
         }
         return new ApiCall(this).post(new ApiPathBuilder("/jobs/delete").field("ids",jobIds),
-                                        new BulkDeleteParser("result/deleteJobs"));
+                                        new BulkDeleteParser(rootXpath()+"/deleteJobs"));
     }
 
     /**
@@ -798,7 +858,7 @@ public class RundeckClient implements Serializable {
         if(null!=jobRun.getAsUser()) {
             apiPath.param("asUser", jobRun.getAsUser());
         }
-        return new ApiCall(this).get(apiPath, new ExecutionParser("result/executions/execution"));
+        return new ApiCall(this).get(apiPath, new ExecutionParser(rootXpath()+"/executions/execution"));
     }
 
 
@@ -896,7 +956,7 @@ public class RundeckClient implements Serializable {
         if(null!= command.getAsUser()) {
             apiPath.param("asUser", command.getAsUser());
         }
-        RundeckExecution execution = new ApiCall(this).get(apiPath, new ExecutionParser("result/execution"));
+        RundeckExecution execution = new ApiCall(this).get(apiPath, new ExecutionParser(rootXpath()+"/execution"));
         // the first call just returns the ID of the execution, so we need another call to get a "real" execution
         return getExecution(execution.getId());
     }
@@ -1030,7 +1090,7 @@ public class RundeckClient implements Serializable {
         if(null!=script.getAsUser()) {
             apiPath.param("asUser", script.getAsUser());
         }
-        RundeckExecution execution = new ApiCall(this).post(apiPath, new ExecutionParser("result/execution"));
+        RundeckExecution execution = new ApiCall(this).post(apiPath, new ExecutionParser(rootXpath()+"/execution"));
         // the first call just returns the ID of the execution, so we need another call to get a "real" execution
         return getExecution(execution.getId());
     }
@@ -1177,7 +1237,7 @@ public class RundeckClient implements Serializable {
         AssertUtil.notBlank(project, "project is mandatory get all running executions !");
         return new ApiCall(this).get(new ApiPathBuilder("/executions/running").param("project", project),
                                      new ListParser<RundeckExecution>(new ExecutionParser(),
-                                                                      "result/executions/execution"));
+                                                                      rootXpath()+"/executions/execution"));
     }
 
     /**
@@ -1275,7 +1335,7 @@ public class RundeckClient implements Serializable {
                                          .param("max", max)
                                          .param("offset", offset),
                                      new ListParser<RundeckExecution>(new ExecutionParser(),
-                                                                      "result/executions/execution"));
+                                                                      rootXpath()+"/executions/execution"));
     }
 
     /**
@@ -1302,7 +1362,7 @@ public class RundeckClient implements Serializable {
                                          .param("offset", offset),
                                      new PagedResultParser<RundeckExecution>(
                                          new ListParser<RundeckExecution>(new ExecutionParser(), "execution"),
-                                         "result/executions"
+                                         rootXpath()+"/executions"
                                      )
         );
     }
@@ -1321,7 +1381,7 @@ public class RundeckClient implements Serializable {
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the details of an execution !");
         return new ApiCall(this).get(new ApiPathBuilder("/execution/", executionId.toString()),
-                                     new ExecutionParser("result/executions/execution"));
+                                     new ExecutionParser(rootXpath()+"/executions/execution"));
     }
 
     /**
@@ -1356,7 +1416,7 @@ public class RundeckClient implements Serializable {
         if(null!=asUser) {
             apiPath.param("asUser", asUser);
         }
-        return new ApiCall(this).get(apiPath, new AbortParser("result/abort"));
+        return new ApiCall(this).get(apiPath, new AbortParser(rootXpath()+"/abort"));
     }
 
     /*
@@ -1548,7 +1608,7 @@ public class RundeckClient implements Serializable {
                                          .param("end", end)
                                          .param("max", max)
                                          .param("offset", offset),
-                                     new HistoryParser("result/events"));
+                                     new HistoryParser(rootXpath()+"/events"));
     }
 
     /**
@@ -1595,7 +1655,7 @@ public class RundeckClient implements Serializable {
             .param("max", max)
             .param("offset", offset);
 
-        return new ApiCall(this).postOrGet(builder, new HistoryParser("result/events"));
+        return new ApiCall(this).postOrGet(builder, new HistoryParser(rootXpath()+"/events"));
     }
 
     /*
@@ -1773,7 +1833,7 @@ public class RundeckClient implements Serializable {
             param.param("maxlines", maxlines);
         }
         return new ApiCall(this).get(param,
-                new OutputParser("result/output", createOutputEntryParser()));
+                new OutputParser(rootXpath()+"/output", createOutputEntryParser()));
     }
     /**
      * Get the execution state of the given execution
@@ -1792,7 +1852,7 @@ public class RundeckClient implements Serializable {
                 "/execution/", executionId.toString(),
                 "/state");
 
-        return new ApiCall(this).get(param, new ExecutionStateParser("result/executionState"));
+        return new ApiCall(this).get(param, new ExecutionStateParser(rootXpath()+"/executionState"));
     }
 
     /**
@@ -1834,7 +1894,7 @@ public class RundeckClient implements Serializable {
             param.param("maxlines", maxlines);
         }
         return new ApiCall(this).get(param,
-                new OutputParser("result/output", createOutputEntryParser()));
+                new OutputParser(rootXpath()+"/output", createOutputEntryParser()));
     }
     /**
      * Get the execution output of the given execution for the specified step
@@ -1875,7 +1935,7 @@ public class RundeckClient implements Serializable {
             param.param("maxlines", maxlines);
         }
         return new ApiCall(this).get(param,
-                new OutputParser("result/output", createOutputEntryParser()));
+                new OutputParser(rootXpath()+"/output", createOutputEntryParser()));
     }
     /**
      * Get the execution output of the given execution for the specified step
@@ -1919,7 +1979,7 @@ public class RundeckClient implements Serializable {
             param.param("maxlines", maxlines);
         }
         return new ApiCall(this).get(param,
-                new OutputParser("result/output", createOutputEntryParser()));
+                new OutputParser(rootXpath()+"/output", createOutputEntryParser()));
     }
 
 
@@ -1966,7 +2026,7 @@ public class RundeckClient implements Serializable {
         if (maxlines > 0) {
             param.param("maxlines", maxlines);
         }
-        return new ApiCall(this).get(param, new OutputParser("result/output", createOutputEntryParser()));
+        return new ApiCall(this).get(param, new OutputParser(rootXpath()+"/output", createOutputEntryParser()));
     }
     /**
      * Get the execution state output sequence of the given job
@@ -1997,7 +2057,7 @@ public class RundeckClient implements Serializable {
         if(stateOnly) {
             param.param("stateOnly", true);
         }
-        return new ApiCall(this).get(param, new OutputParser("result/output", createOutputEntryParser()));
+        return new ApiCall(this).get(param, new OutputParser(rootXpath()+"/output", createOutputEntryParser()));
     }
 
     private OutputEntryParser createOutputEntryParser() {
@@ -2023,7 +2083,7 @@ public class RundeckClient implements Serializable {
      */
     public RundeckSystemInfo getSystemInfo() throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException {
-        return new ApiCall(this).get(new ApiPathBuilder("/system/info"), new SystemInfoParser("result/system"));
+        return new ApiCall(this).get(new ApiPathBuilder("/system/info"), new SystemInfoParser(rootXpath()+"/system"));
     }
 
     /**

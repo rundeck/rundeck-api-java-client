@@ -42,7 +42,7 @@ public class ProjectParser implements XmlNodeParser<RundeckProject> {
 
     @Override
     public RundeckProject parseXmlNode(Node node) {
-        Node projectNode = xpath != null ? node.selectSingleNode(xpath) : node;
+        Node projectNode = getXpath() != null ? node.selectSingleNode(getXpath()) : node;
 
         RundeckProject project = new RundeckProject();
 
@@ -53,4 +53,7 @@ public class ProjectParser implements XmlNodeParser<RundeckProject> {
         return project;
     }
 
+    protected String getXpath() {
+        return xpath;
+    }
 }

@@ -82,6 +82,16 @@ public class RundeckClientTest {
         Assert.assertNull(projects.get(0).getDescription());
     }
     @Test
+    @Betamax(tape = "create_projectv11")
+    public void createProject() throws Exception {
+
+        RundeckProject project = createClient(TEST_TOKEN_6,11).createProject("monkey1", null);
+        Assert.assertEquals("monkey1", project.getName());
+        Assert.assertEquals(null, project.getDescription());
+        Assert.assertNotNull(project.getProjectConfig());
+
+    }
+    @Test
     @Betamax(tape = "get_history")
     public void getHistory() throws Exception {
         final RundeckHistory test = client.getHistory("test");

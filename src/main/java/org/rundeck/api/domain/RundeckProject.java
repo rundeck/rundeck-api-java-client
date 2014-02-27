@@ -32,6 +32,8 @@ public class RundeckProject implements Serializable {
 
     private String resourceModelProviderUrl;
 
+    private ProjectConfig projectConfig;
+
     public String getName() {
         return name;
     }
@@ -56,10 +58,20 @@ public class RundeckProject implements Serializable {
         this.resourceModelProviderUrl = resourceModelProviderUrl;
     }
 
+    public ProjectConfig getProjectConfig() {
+        return projectConfig;
+    }
+
+    public void setProjectConfig(ProjectConfig projectConfig) {
+        this.projectConfig = projectConfig;
+    }
+
     @Override
     public String toString() {
-        return "RundeckProject [name=" + name + ", description=" + description + ", resourceModelProviderUrl="
-               + resourceModelProviderUrl + "]";
+        return "RundeckProject [name=" + name + ", description=" + description
+                + (null!=resourceModelProviderUrl? ", resourceModelProviderUrl=" + resourceModelProviderUrl : "")
+                + ", config="
+               + projectConfig + "]";
     }
 
     @Override
@@ -69,6 +81,7 @@ public class RundeckProject implements Serializable {
         result = prime * result + ((description == null) ? 0 : description.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((resourceModelProviderUrl == null) ? 0 : resourceModelProviderUrl.hashCode());
+        result = prime * result + ((projectConfig == null) ? 0 : projectConfig.hashCode());
         return result;
     }
 
@@ -96,7 +109,11 @@ public class RundeckProject implements Serializable {
                 return false;
         } else if (!resourceModelProviderUrl.equals(other.resourceModelProviderUrl))
             return false;
+        if (projectConfig == null) {
+            if (other.projectConfig != null)
+                return false;
+        } else if (!projectConfig.equals(other.projectConfig))
+            return false;
         return true;
     }
-
 }
