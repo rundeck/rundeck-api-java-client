@@ -17,6 +17,7 @@ package org.rundeck.api.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.time.DurationFormatUtils;
 
@@ -52,6 +53,8 @@ public class RundeckExecution implements Serializable {
     private String description;
     private String argstring;
     private String project;
+    private Set<RundeckNodeIdentity> successfulNodes;
+    private Set<RundeckNodeIdentity> failedNodes;
 
     /**
      * @return the duration of the execution in milliseconds (or null if the duration is still running, or has been
@@ -174,7 +177,10 @@ public class RundeckExecution implements Serializable {
         return "RundeckExecution [id=" + id + ", description=" + description + ", url=" + url + ", status=" + status
                + ", argstring=" + argstring
                + ", startedBy=" + startedBy + ", startedAt=" + startedAt + ", endedAt=" + endedAt
-               + ", durationInSeconds=" + getDurationInSeconds() + ", abortedBy=" + abortedBy + ", job=" + job + "]";
+               + ", durationInSeconds=" + getDurationInSeconds() + ", abortedBy=" + abortedBy + ", job=" + job
+               + ", successfulNodes=" + getSuccessfulNodes()
+                + ", failedNodes=" + getFailedNodes()
+                + "]";
     }
 
     @Override
@@ -279,6 +285,22 @@ public class RundeckExecution implements Serializable {
 
     public void setProject(String project) {
         this.project = project;
+    }
+
+    public Set<RundeckNodeIdentity> getSuccessfulNodes() {
+        return successfulNodes;
+    }
+
+    public void setSuccessfulNodes(Set<RundeckNodeIdentity> successfulNodes) {
+        this.successfulNodes = successfulNodes;
+    }
+
+    public Set<RundeckNodeIdentity> getFailedNodes() {
+        return failedNodes;
+    }
+
+    public void setFailedNodes(Set<RundeckNodeIdentity> failedNodes) {
+        this.failedNodes = failedNodes;
     }
 
     /**

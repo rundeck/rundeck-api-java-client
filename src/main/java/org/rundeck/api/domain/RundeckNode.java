@@ -23,7 +23,7 @@ import java.util.List;
  * 
  * @author Vincent Behar
  */
-public class RundeckNode implements Serializable {
+public class RundeckNode implements Serializable, RundeckNodeIdentity {
 
     private static final long serialVersionUID = 1L;
 
@@ -63,6 +63,7 @@ public class RundeckNode implements Serializable {
     /** URL to an external resource model service. (optional) */
     private String remoteUrl;
 
+    @Override
     public String getName() {
         return name;
     }

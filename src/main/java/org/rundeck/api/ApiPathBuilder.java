@@ -38,6 +38,8 @@ class ApiPathBuilder {
     /** Internally, we store everything in a {@link StringBuilder} */
     private final StringBuilder apiPath;
 
+    private String accept="text/xml";
+
     /** When POSTing, we can add attachments */
     private final Map<String, InputStream> attachments;
     private final List<NameValuePair> form = new ArrayList<NameValuePair>();
@@ -63,6 +65,13 @@ class ApiPathBuilder {
         }
     }
 
+    /**
+     * Set the accept header
+     */
+    public ApiPathBuilder accept(String mimeTypes) {
+        accept=mimeTypes;
+        return this;
+    }
     /**
      * Visit a {@link BuildsParameters} and add the parameters
      */
@@ -303,6 +312,13 @@ class ApiPathBuilder {
      */
     public boolean hasPostContent() {
         return getAttachments().size() > 0 || getForm().size() > 0;
+    }
+
+    /**
+     * Accept header value, default "text/xml"
+     */
+    public String getAccept() {
+        return accept;
     }
 
     /**

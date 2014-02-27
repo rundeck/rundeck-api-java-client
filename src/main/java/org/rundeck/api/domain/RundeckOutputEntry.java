@@ -1,6 +1,8 @@
 package org.rundeck.api.domain;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * Represents a RunDeck output entry
@@ -11,7 +13,8 @@ public class RundeckOutputEntry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String time = null;
-	
+	private Date absoluteTime = null;
+
 	private RundeckLogLevel level = null;
 	
 	private String message = null;
@@ -21,7 +24,9 @@ public class RundeckOutputEntry implements Serializable {
 	private String command = null;
 	
 	private String node = null;
+    private String type = null;
 
+    private Map<String,String> metadata;
 
 
 	public String getTime() {
@@ -77,8 +82,11 @@ public class RundeckOutputEntry implements Serializable {
     @Override
     public String toString() {
         return "RundeckOutputEntry [time=" + time + ", level=" + level + 
-        	", message=" + message + ", user=" + user + ", command=" + 
-        	command + ", node=" + node + "]";
+        	", message=" + message + ", user=" + user
+                + ", command=" + command
+                + ", type=" + type
+                + ", metadata=" + metadata
+                + ", node=" + node + "]";
     }
 
     @Override
@@ -91,6 +99,8 @@ public class RundeckOutputEntry implements Serializable {
         result = prime * result + ((user == null) ? 0 : user.hashCode());
         result = prime * result + ((command == null) ? 0 : command.hashCode());
         result = prime * result + ((node == null) ? 0 : node.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        result = prime * result + ((metadata == null) ? 0 : metadata.hashCode());
         return result;
     }
 
@@ -134,13 +144,49 @@ public class RundeckOutputEntry implements Serializable {
                 return false;
         } else if (!node.equals(other.node))
             return false;
+        if (type == null) {
+            if (other.type != null)
+                return false;
+        } else if (!type.equals(other.type))
+            return false;
+        if (metadata == null) {
+            if (other.metadata != null)
+                return false;
+        } else if (!metadata.equals(other.metadata))
+            return false;
         return true;
+    }
+
+    /**
+     * type of entry
+     */
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Map<String, String> getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(Map<String, String> metadata) {
+        this.metadata = metadata;
+    }
+
+    public Date getAbsoluteTime() {
+        return absoluteTime;
+    }
+
+    public void setAbsoluteTime(Date absoluteTime) {
+        this.absoluteTime = absoluteTime;
     }
 
 
     public static enum RundeckLogLevel {
-        SEVERE, WARNING, INFO, CONFIG, FINEST;
+        SEVERE, ERROR, WARNING, INFO, NORMAL, DEBUG, CONFIG, VERBOSE, FINEST,;
     }
-
 
 }

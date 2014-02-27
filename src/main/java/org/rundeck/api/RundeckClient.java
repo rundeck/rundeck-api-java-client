@@ -40,37 +40,30 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Main entry point to talk to a RunDeck instance.
+ * Rundeck API client.
  * <p>
- *     <em>Deprecation Warning:</em> These methods which take multiple arguments are deprecated in
- *     favor of single argument versions, and associated Builder classes to generate them.
- *     These methods will be removed in version 10 of this library:
- *     <ul>
- *         <li> triggerAdhocScript(...), use {@link #triggerAdhocScript(RunAdhocScript)} and {@link RunAdhocScriptBuilder}</li>
- *         <li> runAdhocScript(...), use {@link #runAdhocScript(RunAdhocScript)} and {@link RunAdhocScriptBuilder}</li>
- *         <li> triggerAdhocCommand(...), use {@link #triggerAdhocCommand(RunAdhocCommand)} and {@link
- *         RunAdhocCommandBuilder}</li>
- *         <li> runAdhocCommand(...), use {@link #runAdhocCommand(RunAdhocCommand)} and {@link
- *         RunAdhocCommandBuilder}</li>
- *         <li> triggerJob(...), use {@link #triggerJob(RunJob)} and {@link
- *         RunJobBuilder}</li>
- *         <li> runJob(...), use {@link #runJob(RunJob)} and {@link
- *         RunJobBuilder}</li>
- *         <li> importJobs(...), use {@link #importJobs(RundeckJobsImport)} and {@link #importJobs(String, RundeckJobsImport)}</li>
- *     </ul>
- *     </p>
- * <p>
- * You have 2 methods for authentication : login-based or token-based. If you want to use the first, you need to provide
- * both a "login" and a "password". Otherwise, just provide a "token" (also called "auth-token"). See the RunDeck
+ * There are three methods for authentication : login-based or token-based or session-based.
+ * Login authentication requires
+ * both a "login" and a "password". Token-based requires a "token" (also called "auth-token"). See the RunDeck
  * documentation for generating such a token.</p>
+ * <p>
+ *     Session-based authentication allows re-use of a previous login session. See {@link #testAuth()}.
+ * </p>
+ * <p>
+ *     Deprecation notice: All public constructors for this class are deprecated. Use the {@link RundeckClientBuilder} or {@link #builder()} convenience method to create a RundeckClient. The public constructors will be made non-public in version 12 of this library.
+ * </p>
  * <br>
  * Usage : <br>
  * <code>
  * <pre>
  * // using login-based authentication :
- * RundeckClient rundeck = new RundeckClient("http://localhost:4440", "admin", "admin");
+ * RundeckClient rundeck = RundeckClient.builder()
+ *                           .url("http://localhost:4440")
+ *                           .login("admin", "admin").build();
  * // or for a token-based authentication :
- * RundeckClient rundeck = new RundeckClient("http://localhost:4440", "PDDNKo5VE29kpk4prOUDr2rsKdRkEvsD");
+ * RundeckClient rundeck = RundeckClient.builder()
+ *                           .url("http://localhost:4440")
+ *                           .token("PDDNKo5VE29kpk4prOUDr2rsKdRkEvsD").build();
  *
  * List&lt;RundeckProject&gt; projects = rundeck.getProjects();
  *
@@ -101,6 +94,7 @@ public class RundeckClient implements Serializable {
         V7(7),
         V8(8),
         V9(9),
+        V10(10),
         ;
 
         private int versionNumber;
@@ -114,7 +108,7 @@ public class RundeckClient implements Serializable {
         }
     }
     /** Version of the API supported */
-    public static final transient int API_VERSION = Version.V9.getVersionNumber();
+    public static final transient int API_VERSION = Version.V10.getVersionNumber();
 
     private static final String API = "/api/";
 
@@ -122,10 +116,10 @@ public class RundeckClient implements Serializable {
     public static final transient String API_ENDPOINT = API + API_VERSION;
 
     /** Default value for the "pooling interval" used when running jobs/commands/scripts */
-    private static final transient long DEFAULT_POOLING_INTERVAL = 5;
+    public static final transient long DEFAULT_POOLING_INTERVAL = 5;
 
     /** Default unit of the "pooling interval" used when running jobs/commands/scripts */
-    private static final transient TimeUnit DEFAULT_POOLING_UNIT = TimeUnit.SECONDS;
+    public static final TimeUnit DEFAULT_POOLING_UNIT = TimeUnit.SECONDS;
 
     /** URL of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc) */
     private final String url;
@@ -180,6 +174,9 @@ public class RundeckClient implements Serializable {
      * @param login to use for authentication on the RunDeck instance
      * @param password to use for authentication on the RunDeck instance
      * @throws IllegalArgumentException if the url, login or password is blank (null, empty or whitespace)
+     *
+     * @deprecated Use the builder {@link RundeckClientBuilder} or {@link #builder()}, this method will not be public in version 12 of this
+     * library.
      */
     public RundeckClient(String url, String login, String password) throws IllegalArgumentException {
         this(url);
@@ -199,9 +196,9 @@ public class RundeckClient implements Serializable {
      * @param sessionID to use for session authentication on the RunDeck instance
      * @param useToken should be true if using token, false if using sessionID
      * @throws IllegalArgumentException if the url or token is blank (null, empty or whitespace)
-     * @deprecated Use the builder {@link RundeckClientBuilder}, this method will not be public in version 10 of this library.
+     * @deprecated Use the builder {@link RundeckClientBuilder} or {@link #builder()}, this method will not be public in version 10 of this library.
      */
-    public RundeckClient(String url, String token, String sessionID, boolean useToken) throws IllegalArgumentException {
+    private RundeckClient(String url, String token, String sessionID, boolean useToken) throws IllegalArgumentException {
         this(url);
 
         if(useToken){
@@ -219,6 +216,16 @@ public class RundeckClient implements Serializable {
     }
 
 
+    /**
+     * Instantiate a new {@link RundeckClient} for the RunDeck instance at the given url,
+     * using token-based authentication. Either token must be valid
+     * @param url of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
+     * @param token to use for authentication on the RunDeck instance
+     * @throws IllegalArgumentException if the url or token is blank (null, empty or whitespace)
+     * @deprecated Use the builder {@link RundeckClientBuilder} or {@link #builder()},
+     * this method will not be public in version 12 of this
+     * library.
+     */
     public RundeckClient(String url, String token) throws IllegalArgumentException {
         this(url, token, null, true);
     }
@@ -259,7 +266,7 @@ public class RundeckClient implements Serializable {
     }
 
     /**
-     * @deprecated Use {@link #testAuth()}
+     * @deprecated Use {@link #testAuth()}, will be removed in version 12 of this library.
      * @see #testAuth()
      */
     @Deprecated
@@ -541,11 +548,13 @@ public class RundeckClient implements Serializable {
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(format, "format is mandatory to export jobs !");
         AssertUtil.notBlank(project, "project is mandatory to export jobs !");
-        return new ApiCall(this).get(new ApiPathBuilder("/jobs/export").param("format", format)
-                                                                       .param("project", project)
-                                                                       .param("jobFilter", jobFilter)
-                                                                       .param("groupPath", groupPath)
-                                                                       .param("idlist", StringUtils.join(jobIds, ",")));
+        return new ApiCall(this).get(new ApiPathBuilder("/jobs/export")
+                .accept(format == FileType.XML ? "text/xml" : "text/yaml")
+                .param("format", format)
+                .param("project", project)
+                .param("jobFilter", jobFilter)
+                .param("groupPath", groupPath)
+                .param("idlist", StringUtils.join(jobIds, ",")));
     }
 
     /**
@@ -632,193 +641,6 @@ public class RundeckClient implements Serializable {
         return new ApiCall(this).get(new ApiPathBuilder("/job/", jobId).param("format", format));
     }
 
-    /**
-     * Import the definitions of jobs, from the given file
-     *
-     * @param filename of the file containing the jobs definitions - mandatory
-     * @param fileType type of the file. See {@link FileType} - mandatory
-     * @return a {@link RundeckJobsImportResult} instance - won't be null
-     * @throws RundeckApiException in case of error when calling the API
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the filename or fileType is blank (null, empty or whitespace), or the
-     *             fileType is invalid
-     * @throws IOException if we failed to read the file
-     * @see #importJobs(InputStream, String)
-     * @see #importJobs(String, FileType, RundeckJobsImportMethod)
-     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this library.
-     */
-    public RundeckJobsImportResult importJobs(String filename, String fileType) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
-        AssertUtil.notBlank(fileType, "fileType is mandatory to import jobs !");
-        return importJobs(filename, FileType.valueOf(StringUtils.upperCase(fileType)));
-    }
-
-    /**
-     * Import the definitions of jobs, from the given file
-     *
-     * @param filename of the file containing the jobs definitions - mandatory
-     * @param fileType type of the file. See {@link FileType} - mandatory
-     * @return a {@link RundeckJobsImportResult} instance - won't be null
-     * @throws RundeckApiException in case of error when calling the API
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the filename is blank (null, empty or whitespace), or the fileType is null
-     * @throws IOException if we failed to read the file
-     * @see #importJobs(InputStream, FileType)
-     * @see #importJobs(String, FileType, RundeckJobsImportMethod)
-     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this
-     * library.
-     */
-    public RundeckJobsImportResult importJobs(String filename, FileType fileType) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
-        return importJobs(filename, fileType, (RundeckJobsImportMethod) null);
-    }
-
-    /**
-     * Import the definitions of jobs, from the given file, using the given behavior
-     *
-     * @param filename of the file containing the jobs definitions - mandatory
-     * @param fileType type of the file. See {@link FileType} - mandatory
-     * @param importBehavior see {@link RundeckJobsImportMethod}
-     * @return a {@link RundeckJobsImportResult} instance - won't be null
-     * @throws RundeckApiException in case of error when calling the API
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the filename or fileType is blank (null, empty or whitespace), or the
-     *             fileType or behavior is not valid
-     * @throws IOException if we failed to read the file
-     * @see #importJobs(InputStream, String, String)
-     * @see #importJobs(String, FileType, RundeckJobsImportMethod)
-     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this
-     * library.
-     */
-    public RundeckJobsImportResult importJobs(String filename, String fileType, String importBehavior)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException,
-            IOException {
-        AssertUtil.notBlank(fileType, "fileType is mandatory to import jobs !");
-        return importJobs(filename,
-                          FileType.valueOf(StringUtils.upperCase(fileType)),
-                          RundeckJobsImportMethod.valueOf(StringUtils.upperCase(importBehavior)));
-    }
-
-    /**
-     * Import the definitions of jobs, from the given file, using the given behavior
-     *
-     * @param filename of the file containing the jobs definitions - mandatory
-     * @param fileType type of the file. See {@link FileType} - mandatory
-     * @param importBehavior see {@link RundeckJobsImportMethod}
-     * @return a {@link RundeckJobsImportResult} instance - won't be null
-     * @throws RundeckApiException in case of error when calling the API
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the filename is blank (null, empty or whitespace), or the fileType is null
-     * @throws IOException if we failed to read the file
-     * @see #importJobs(InputStream, FileType, RundeckJobsImportMethod)
-     * @deprecated use {@link #importJobs(String, RundeckJobsImport)}, this method will be removed in version 10 of
-     * this library.
-     */
-    public RundeckJobsImportResult importJobs(String filename, FileType fileType, RundeckJobsImportMethod importBehavior)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException,
-            IOException {
-        AssertUtil.notBlank(filename, "filename (of jobs file) is mandatory to import jobs !");
-        FileInputStream stream = null;
-        try {
-            stream = FileUtils.openInputStream(new File(filename));
-            return importJobs(stream, fileType, importBehavior);
-        } finally {
-            IOUtils.closeQuietly(stream);
-        }
-    }
-
-    /**
-     * Import the definitions of jobs, from the given input stream
-     *
-     * @param stream inputStream for reading the definitions - mandatory
-     * @param fileType type of the file. See {@link FileType} - mandatory
-     * @return a {@link RundeckJobsImportResult} instance - won't be null
-     * @throws RundeckApiException in case of error when calling the API
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the stream is null, or the fileType is blank (null, empty or whitespace) or
-     *             invalid
-     * @see #importJobs(String, String)
-     * @see #importJobs(InputStream, FileType, RundeckJobsImportMethod)
-     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this
-     * library.
-     */
-    public RundeckJobsImportResult importJobs(InputStream stream, String fileType) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        AssertUtil.notBlank(fileType, "fileType is mandatory to import jobs !");
-        return importJobs(stream, FileType.valueOf(StringUtils.upperCase(fileType)));
-    }
-
-    /**
-     * Import the definitions of jobs, from the given input stream
-     *
-     * @param stream inputStream for reading the definitions - mandatory
-     * @param fileType type of the file. See {@link FileType} - mandatory
-     * @return a {@link RundeckJobsImportResult} instance - won't be null
-     * @throws RundeckApiException in case of error when calling the API
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the stream or fileType is null
-     * @see #importJobs(String, FileType)
-     * @see #importJobs(InputStream, FileType, RundeckJobsImportMethod)
-     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this
-     * library.
-     */
-    public RundeckJobsImportResult importJobs(InputStream stream, FileType fileType) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return importJobs(stream, fileType, (RundeckJobsImportMethod) null);
-    }
-
-    /**
-     * Import the definitions of jobs, from the given input stream, using the given behavior
-     *
-     * @param stream inputStream for reading the definitions - mandatory
-     * @param fileType type of the file. See {@link FileType} - mandatory
-     * @param importBehavior see {@link RundeckJobsImportMethod}
-     * @return a {@link RundeckJobsImportResult} instance - won't be null
-     * @throws RundeckApiException in case of error when calling the API
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the stream is null, or the fileType is blank (null, empty or whitespace), or
-     *             the fileType or behavior is not valid
-     * @see #importJobs(String, String, String)
-     * @see #importJobs(InputStream, FileType, RundeckJobsImportMethod)
-     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this
-     * library.
-     */
-    public RundeckJobsImportResult importJobs(InputStream stream, String fileType, String importBehavior)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        AssertUtil.notBlank(fileType, "fileType is mandatory to import jobs !");
-        return importJobs(stream,
-                          FileType.valueOf(StringUtils.upperCase(fileType)),
-                          RundeckJobsImportMethod.valueOf(StringUtils.upperCase(importBehavior)));
-    }
-
-    /**
-     * Import the definitions of jobs, from the given input stream, using the given behavior
-     *
-     * @param stream inputStream for reading the definitions - mandatory
-     * @param fileType type of the file. See {@link FileType} - mandatory
-     * @param importBehavior see {@link RundeckJobsImportMethod}
-     * @return a {@link RundeckJobsImportResult} instance - won't be null
-     * @throws RundeckApiException in case of error when calling the API
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the stream or fileType is null
-     * @see #importJobs(String, FileType, RundeckJobsImportMethod)
-     * @deprecated use {@link #importJobs(RundeckJobsImport)}, this method will be removed in version 10 of this
-     * library.
-     */
-    public RundeckJobsImportResult importJobs(InputStream stream, FileType fileType,
-            RundeckJobsImportMethod importBehavior) throws RundeckApiException, RundeckApiLoginException,
-            RundeckApiTokenException, IllegalArgumentException {
-        return importJobs(RundeckJobsImportBuilder.builder().setStream(stream).setFileType(fileType)
-                .setJobsImportMethod(importBehavior).build());
-    }
 
     /**
      * Import the definitions of jobs, from the given input stream, using the given behavior
@@ -958,93 +780,6 @@ public class RundeckClient implements Serializable {
      * Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
      * end of the job execution)
      *
-     * @param jobId identifier of the job - mandatory
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @see #triggerJob(String, Properties, Properties)
-     * @see #runJob(String)
-     * @deprecated use {@link #triggerJob(RunJob)}, this method will be removed in version 10 of this library
-     */
-    public RundeckExecution triggerJob(String jobId) throws RundeckApiException, RundeckApiLoginException,
-            RundeckApiTokenException, IllegalArgumentException {
-        return triggerJob(jobId, null);
-    }
-
-    /**
-     * Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
-     * end of the job execution)
-     *
-     * @param jobId identifier of the job - mandatory
-     * @param options of the job - optional. See {@link OptionsBuilder}.
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @see #triggerJob(String, Properties, Properties)
-     * @see #runJob(String, Properties)
-     * @deprecated use {@link #triggerJob(RunJob)}, this method will be removed in version 10 of this library
-     */
-    public RundeckExecution triggerJob(String jobId, Properties options) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return triggerJob(jobId, options, null);
-    }
-
-    /**
-     * Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
-     * end of the job execution)
-     *
-     * @param jobId identifier of the job - mandatory
-     * @param options of the job - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for overriding the nodes on which the job will be executed - optional. See
-     *            {@link NodeFiltersBuilder}
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @see #triggerJob(String)
-     * @see #runJob(String, Properties, Properties)
-     * @deprecated use {@link #triggerJob(RunJob)}, this method will be removed in version 10 of this library
-     */
-    public RundeckExecution triggerJob(String jobId, Properties options, Properties nodeFilters)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return triggerJob(jobId, options, nodeFilters, null);
-    }
-    /**
-     * Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
-     * end of the job execution)
-     *
-     * @param jobId identifier of the job - mandatory
-     * @param options of the job - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for overriding the nodes on which the job will be executed - optional. See
-     *            {@link NodeFiltersBuilder}
-     * @param asUser specify a user name to run the job as, must have 'runAs' permission
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @see #triggerJob(String)
-     * @see #runJob(String, Properties, Properties)
-     * @deprecated use {@link #triggerJob(RunJob)}, this method will be removed in version 10 of this library
-     */
-    public RundeckExecution triggerJob(String jobId, Properties options, Properties nodeFilters, String asUser)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return triggerJob(RunJobBuilder.builder()
-                .setJobId(jobId)
-                .setOptions(options)
-                .setNodeFilters(nodeFilters)
-                .setAsUser(asUser)
-                .build());
-    }
-    /**
-     * Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
-     * end of the job execution)
-     *
      * @param jobRun the RunJob, see {@link RunJobBuilder}
      * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
      * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
@@ -1066,72 +801,6 @@ public class RundeckClient implements Serializable {
         return new ApiCall(this).get(apiPath, new ExecutionParser("result/executions/execution"));
     }
 
-    /**
-     * Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
-     * We will poll the RunDeck server at regular interval (every 5 seconds) to know if the execution is finished (or
-     * aborted) or is still running.
-     *
-     * @param jobId identifier of the job - mandatory
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @see #triggerJob(String)
-     * @see #runJob(String, Properties, Properties, long, TimeUnit)
-     * @deprecated use {@link #runJob(RunJob, long, java.util.concurrent.TimeUnit)},
-     * this method will be removed in version 10 of this library
-     */
-    public RundeckExecution runJob(String jobId) throws RundeckApiException, RundeckApiLoginException,
-            RundeckApiTokenException, IllegalArgumentException {
-        return runJob(jobId, null);
-    }
-
-    /**
-     * Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
-     * We will poll the RunDeck server at regular interval (every 5 seconds) to know if the execution is finished (or
-     * aborted) or is still running.
-     *
-     * @param jobId identifier of the job - mandatory
-     * @param options of the job - optional. See {@link OptionsBuilder}.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @see #triggerJob(String, Properties)
-     * @see #runJob(String, Properties, Properties, long, TimeUnit)
-     * @deprecated use {@link #runJob(RunJob, long, java.util.concurrent.TimeUnit)},
-     * this method will be removed in version 10 of this library
-     */
-    public RundeckExecution runJob(String jobId, Properties options) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return runJob(jobId, options, null);
-    }
-
-    /**
-     * Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
-     * We will poll the RunDeck server at regular interval (every 5 seconds) to know if the execution is finished (or
-     * aborted) or is still running.
-     *
-     * @param jobId identifier of the job - mandatory
-     * @param options of the job - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for overriding the nodes on which the job will be executed - optional. See
-     *            {@link NodeFiltersBuilder}
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @see #triggerJob(String, Properties, Properties)
-     * @see #runJob(String, Properties, Properties, long, TimeUnit)
-     * @deprecated use {@link #runJob(RunJob, long, java.util.concurrent.TimeUnit)},
-     * this method will be removed in version 10 of this library
-     */
-    public RundeckExecution runJob(String jobId, Properties options, Properties nodeFilters)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return runJob(jobId, options, nodeFilters, DEFAULT_POOLING_INTERVAL, DEFAULT_POOLING_UNIT);
-    }
 
     /**
      * Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
@@ -1152,87 +821,6 @@ public class RundeckClient implements Serializable {
     public RundeckExecution runJob(final RunJob runJob) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException, IllegalArgumentException {
         return runJob(runJob, DEFAULT_POOLING_INTERVAL, DEFAULT_POOLING_UNIT);
-    }
-    /**
-     * Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
-     * We will poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
-     * know if the execution is finished (or aborted) or is still running.
-     *
-     * @param jobId identifier of the job - mandatory
-     * @param options of the job - optional. See {@link OptionsBuilder}.
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @see #triggerJob(String, Properties)
-     * @see #runJob(String, Properties, Properties, long, TimeUnit)
-     * @deprecated use {@link #runJob(RunJob, long, java.util.concurrent.TimeUnit)},
-     * this method will be removed in version 10 of this library
-     */
-    public RundeckExecution runJob(String jobId, Properties options, long poolingInterval, TimeUnit poolingUnit)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return runJob(jobId, options, null, poolingInterval, poolingUnit);
-    }
-
-    /**
-     * Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
-     * We will poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
-     * know if the execution is finished (or aborted) or is still running.
-     *
-     * @param jobId identifier of the job - mandatory
-     * @param options of the job - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for overriding the nodes on which the job will be executed - optional. See
-     *            {@link NodeFiltersBuilder}
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @see #triggerJob(String, Properties)
-     * @see #runJob(String, Properties, Properties, long, TimeUnit)
-     * @deprecated use {@link #runJob(RunJob, long, java.util.concurrent.TimeUnit)},
-     * this method will be removed in version 10 of this library
-     */
-    public RundeckExecution runJob(String jobId, Properties options, Properties nodeFilters, long poolingInterval,
-            TimeUnit poolingUnit) throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException,
-            IllegalArgumentException {
-        return runJob(jobId, options, nodeFilters, null, poolingInterval, poolingUnit);
-    }
-    /**
-     * Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
-     * We will poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
-     * know if the execution is finished (or aborted) or is still running.
-     *
-     * @param jobId identifier of the job - mandatory
-     * @param options of the job - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for overriding the nodes on which the job will be executed - optional. See
-     *            {@link NodeFiltersBuilder}
-     * @param asUser specify a user name to run the job as, must have 'runAs' permission
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @see #triggerJob(String, Properties)
-     * @see #runJob(String, Properties, Properties, long, TimeUnit)
-     * @deprecated use {@link #runJob(RunJob, long, java.util.concurrent.TimeUnit)}, this method will be removed in version 10 of this library
-     */
-    public RundeckExecution runJob(String jobId, Properties options, Properties nodeFilters, String asUser, long poolingInterval,
-            TimeUnit poolingUnit) throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException,
-            IllegalArgumentException {
-        return runJob(RunJobBuilder.builder()
-                .setJobId(jobId)
-                .setOptions(options)
-                .setNodeFilters(nodeFilters)
-                .setAsUser(asUser)
-                .build(), poolingInterval, poolingUnit);
     }
 
     /**
@@ -1280,101 +868,7 @@ public class RundeckClient implements Serializable {
      * Ad-hoc commands
      */
 
-    /**
-     * Trigger the execution of an ad-hoc command, and return immediately (without waiting the end of the execution).
-     * The command will not be dispatched to nodes, but be executed on the RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param command to be executed - mandatory
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or command is blank (null, empty or whitespace)
-     * @see #triggerAdhocCommand(String, String, Properties, Integer, Boolean)
-     * @see #runAdhocCommand(String, String)
-     * @deprecated use {@link #triggerAdhocCommand(RunAdhocCommand)}, will be removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocCommand(String project, String command) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return triggerAdhocCommand(project, command, null);
-    }
 
-    /**
-     * Trigger the execution of an ad-hoc command, and return immediately (without waiting the end of the execution).
-     * The command will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param command to be executed - mandatory
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or command is blank (null, empty or whitespace)
-     * @see #triggerAdhocCommand(String, String, Properties, Integer, Boolean)
-     * @see #runAdhocCommand(String, String, Properties)
-     * @deprecated use {@link #triggerAdhocCommand(RunAdhocCommand)}, will be removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocCommand(String project, String command, Properties nodeFilters)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return triggerAdhocCommand(project, command, nodeFilters, null, null);
-    }
-
-    /**
-     * Trigger the execution of an ad-hoc command, and return immediately (without waiting the end of the execution).
-     * The command will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param command to be executed - mandatory
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or command is blank (null, empty or whitespace)
-     * @see #triggerAdhocCommand(String, String)
-     * @see #runAdhocCommand(String, String, Properties)
-     * @deprecated use {@link #triggerAdhocCommand(RunAdhocCommand)}, will be removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocCommand(String project, String command, Properties nodeFilters,
-            Integer nodeThreadcount, Boolean nodeKeepgoing) throws RundeckApiException, RundeckApiLoginException,
-            RundeckApiTokenException, IllegalArgumentException {
-        return triggerAdhocCommand(project, command, nodeFilters, nodeThreadcount, nodeKeepgoing, null);
-    }
-    /**
-     * Trigger the execution of an ad-hoc command, and return immediately (without waiting the end of the execution).
-     * The command will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param command to be executed - mandatory
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @param asUser specify a user name to run the job as, must have 'runAs' permission
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or command is blank (null, empty or whitespace)
-     * @see #triggerAdhocCommand(String, String)
-     * @see #runAdhocCommand(String, String, Properties)
-     * @deprecated use {@link #triggerAdhocCommand(RunAdhocCommand)}, will be removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocCommand(String project, String command, Properties nodeFilters,
-            Integer nodeThreadcount, Boolean nodeKeepgoing, String asUser) throws RundeckApiException, RundeckApiLoginException,
-            RundeckApiTokenException, IllegalArgumentException {
-        return triggerAdhocCommand(RunAdhocCommandBuilder.builder()
-                .setProject(project)
-                .setCommand(command)
-                .setNodeFilters(nodeFilters)
-                .setNodeThreadcount(nodeThreadcount)
-                .setNodeKeepgoing(nodeKeepgoing)
-                .setAsUser(asUser)
-                .build());
-    }
     /**
      * Trigger the execution of an ad-hoc command, and return immediately (without waiting the end of the execution).
      * The command will be dispatched to nodes, accordingly to the nodeFilters parameter.
@@ -1407,134 +901,6 @@ public class RundeckClient implements Serializable {
         return getExecution(execution.getId());
     }
 
-    /**
-     * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-     * running. The command will not be dispatched to nodes, but be executed on the RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param command to be executed - mandatory
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or command is blank (null, empty or whitespace)
-     * @see #runAdhocCommand(String, String, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocCommand(String, String)
-     * @deprecated use {@link #runAdhocCommand(RunAdhocCommand)}, this method will
-     *             be removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocCommand(String project, String command) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return runAdhocCommand(project, command, null);
-    }
-
-    /**
-     * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-     * finished (or aborted) or is still running. The command will not be dispatched to nodes, but be executed on the
-     * RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param command to be executed - mandatory
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or command is blank (null, empty or whitespace)
-     * @see #runAdhocCommand(String, String, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocCommand(String, String)
-     * @deprecated use {@link #runAdhocCommand(RunAdhocCommand, long, java.util.concurrent.TimeUnit)}, this method will
-     *             be removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocCommand(String project, String command, long poolingInterval, TimeUnit poolingUnit)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return runAdhocCommand(project, command, null, poolingInterval, poolingUnit);
-    }
-
-    /**
-     * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-     * running. The command will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param command to be executed - mandatory
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or command is blank (null, empty or whitespace)
-     * @see #runAdhocCommand(String, String, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocCommand(String, String, Properties)
-     * @deprecated use {@link #runAdhocCommand(RunAdhocCommand)}, this method will
-     *             be removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocCommand(String project, String command, Properties nodeFilters)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return runAdhocCommand(project, command, nodeFilters, null, null);
-    }
-
-    /**
-     * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-     * finished (or aborted) or is still running. The command will be dispatched to nodes, accordingly to the
-     * nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param command to be executed - mandatory
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or command is blank (null, empty or whitespace)
-     * @see #runAdhocCommand(String, String, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocCommand(String, String, Properties)
-     * @deprecated use {@link #runAdhocCommand(RunAdhocCommand, long, java.util.concurrent.TimeUnit)}, this method will
-     *             be removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocCommand(String project, String command, Properties nodeFilters,
-            long poolingInterval, TimeUnit poolingUnit) throws RundeckApiException, RundeckApiLoginException,
-            RundeckApiTokenException, IllegalArgumentException {
-        return runAdhocCommand(project, command, nodeFilters, null, null, poolingInterval, poolingUnit);
-    }
-
-    /**
-     * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-     * running. The command will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param command to be executed - mandatory
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or command is blank (null, empty or whitespace)
-     * @see #runAdhocCommand(String, String, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocCommand(String, String, Properties, Integer, Boolean)
-     * @deprecated use {@link #runAdhocCommand(RunAdhocCommand)}, this method will
-     *             be removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocCommand(String project, String command, Properties nodeFilters,
-            Integer nodeThreadcount, Boolean nodeKeepgoing) throws RundeckApiException, RundeckApiLoginException,
-            RundeckApiTokenException, IllegalArgumentException {
-        return runAdhocCommand(project,
-                               command,
-                               nodeFilters,
-                               nodeThreadcount,
-                               nodeKeepgoing,
-                               DEFAULT_POOLING_INTERVAL,
-                               DEFAULT_POOLING_UNIT);
-    }
 
     /**
      * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
@@ -1557,70 +923,6 @@ public class RundeckClient implements Serializable {
                                DEFAULT_POOLING_UNIT);
     }
 
-    /**
-     * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-     * finished (or aborted) or is still running. The command will be dispatched to nodes, accordingly to the
-     * nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param command to be executed - mandatory
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or command is blank (null, empty or whitespace)
-     * @see #triggerAdhocCommand(String, String, Properties, Integer, Boolean)
-     * @deprecated use {@link #runAdhocCommand(RunAdhocCommand, long, java.util.concurrent.TimeUnit)}, this method will
-     *             be removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocCommand(String project, String command, Properties nodeFilters,
-            Integer nodeThreadcount, Boolean nodeKeepgoing, long poolingInterval, TimeUnit poolingUnit)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return runAdhocCommand(project, command, nodeFilters, nodeThreadcount, nodeKeepgoing, null, poolingInterval, poolingUnit);
-    }
-
-    /**
-     * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-     * finished (or aborted) or is still running. The command will be dispatched to nodes, accordingly to the
-     * nodeFilters parameter.
-     *
-     * @param project         name of the project - mandatory
-     * @param command         to be executed - mandatory
-     * @param nodeFilters     for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing   if true, continue executing on other nodes even if some fail - optional
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit     unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     *
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     *
-     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or command is blank (null, empty or whitespace)
-     * @see #triggerAdhocCommand(String, String, Properties, Integer, Boolean)
-     * @deprecated use {@link #runAdhocCommand(RunAdhocCommand, long, java.util.concurrent.TimeUnit)}, this method will
-     *             be removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocCommand(String project, String command, Properties nodeFilters,
-            Integer nodeThreadcount, Boolean nodeKeepgoing, String asUser, long poolingInterval, TimeUnit poolingUnit)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return runAdhocCommand(RunAdhocCommandBuilder.builder()
-                .setProject(project)
-                .setCommand(command)
-                .setNodeFilters(nodeFilters)
-                .setNodeThreadcount(nodeThreadcount)
-                .setNodeKeepgoing(nodeKeepgoing)
-                .setAsUser(asUser)
-                .build(), poolingInterval, poolingUnit);
-    }
     /**
      * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
      * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
@@ -1663,323 +965,6 @@ public class RundeckClient implements Serializable {
      * Ad-hoc scripts
      */
 
-    /**
-     * Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
-     * script will not be dispatched to nodes, but be executed on the RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #triggerAdhocScript(String, String, Properties, Properties, Integer, Boolean)
-     * @see #runAdhocScript(String, String)
-     * @deprecated use {@link #triggerAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocScript(String project, String scriptFilename) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
-        return triggerAdhocScript(project, scriptFilename, null);
-    }
-
-    /**
-     * Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
-     * script will not be dispatched to nodes, but be executed on the RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #triggerAdhocScript(String, String, Properties, Properties, Integer, Boolean)
-     * @see #runAdhocScript(String, String, Properties)
-     * @deprecated use {@link #triggerAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocScript(String project, String scriptFilename, Properties options)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException,
-            IOException {
-        return triggerAdhocScript(project, scriptFilename, options, null);
-    }
-
-    /**
-     * Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
-     * script will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #triggerAdhocScript(String, String, Properties, Properties, Integer, Boolean)
-     * @see #runAdhocScript(String, String, Properties, Properties)
-     * @deprecated use {@link #triggerAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocScript(String project, String scriptFilename, Properties options,
-            Properties nodeFilters) throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException,
-            IllegalArgumentException, IOException {
-        return triggerAdhocScript(project, scriptFilename, options, nodeFilters, null, null);
-    }
-
-    /**
-     * Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
-     * script will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #triggerAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean)
-     * @see #runAdhocScript(String, String, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @deprecated use {@link #triggerAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocScript(String project, String scriptFilename, Properties options,
-            Properties nodeFilters, Integer nodeThreadcount, Boolean nodeKeepgoing) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
-        return triggerAdhocScript(project, scriptFilename, options, nodeFilters, nodeThreadcount, nodeKeepgoing, null);
-    }
-    /**
-     * Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
-     * script will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #triggerAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean)
-     * @see #runAdhocScript(String, String, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @deprecated use {@link #triggerAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocScript(String project, String scriptFilename, Properties options,
-            Properties nodeFilters, Integer nodeThreadcount, Boolean nodeKeepgoing,String asUser) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
-        return triggerAdhocScript(project, scriptFilename, ParametersUtil.generateArgString(options), nodeFilters,
-                nodeThreadcount, nodeKeepgoing, asUser);
-    }
-    /**
-     * Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
-     * script will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @param argString arguments of the script - optional.
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #triggerAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean)
-     * @see #runAdhocScript(String, String, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @deprecated use {@link #triggerAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocScript(String project, String scriptFilename, String argString,
-            Properties nodeFilters, Integer nodeThreadcount, Boolean nodeKeepgoing,String asUser) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
-        AssertUtil.notBlank(scriptFilename, "scriptFilename is mandatory to trigger an ad-hoc script !");
-        FileInputStream stream = null;
-        try {
-            stream = FileUtils.openInputStream(new File(scriptFilename));
-            return triggerAdhocScript(RunAdhocScriptBuilder.builder()
-                    .setProject(project)
-                    .setScript(stream)
-                    .setNodeFilters(nodeFilters)
-                    .setArgString(argString)
-                    .setNodeThreadcount(nodeThreadcount)
-                    .setNodeKeepgoing(nodeKeepgoing)
-                    .setAsUser(asUser)
-                    .build());
-        } finally {
-            IOUtils.closeQuietly(stream);
-        }
-    }
-
-    /**
-     * Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
-     * script will not be dispatched to nodes, but be executed on the RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @see #triggerAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean)
-     * @see #runAdhocScript(String, InputStream)
-     * @deprecated use {@link #triggerAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocScript(String project, InputStream script) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return triggerAdhocScript(project, script, null);
-    }
-
-    /**
-     * Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
-     * script will not be dispatched to nodes, but be executed on the RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @see #triggerAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean)
-     * @see #runAdhocScript(String, InputStream, Properties)
-     * @deprecated use {@link #triggerAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocScript(String project, InputStream script, Properties options)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return triggerAdhocScript(project, script, options, null);
-    }
-
-    /**
-     * Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
-     * script will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @see #triggerAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean)
-     * @see #runAdhocScript(String, InputStream, Properties, Properties)
-     * @deprecated use {@link #triggerAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocScript(String project, InputStream script, Properties options,
-            Properties nodeFilters) throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException,
-            IllegalArgumentException {
-        return triggerAdhocScript(project, script, options, nodeFilters, null, null);
-    }
-
-    /**
-     * Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
-     * script will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @see #triggerAdhocScript(String, String, Properties, Properties, Integer, Boolean)
-     * @see #runAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @deprecated use {@link #triggerAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocScript(String project, InputStream script, Properties options,
-            Properties nodeFilters, Integer nodeThreadcount, Boolean nodeKeepgoing) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return triggerAdhocScript(project, script, options, nodeFilters, nodeThreadcount, nodeKeepgoing, null);
-    }
-    /**
-     * Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
-     * script will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @see #triggerAdhocScript(String, String, Properties, Properties, Integer, Boolean)
-     * @see #runAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @deprecated use {@link #triggerAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocScript(String project, InputStream script, Properties options,
-            Properties nodeFilters, Integer nodeThreadcount, Boolean nodeKeepgoing, String asUser) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return triggerAdhocScript(project, script, ParametersUtil.generateArgString(options), nodeFilters,
-                nodeThreadcount, nodeKeepgoing, asUser);
-    }
-    /**
-     * Trigger the execution of an ad-hoc script, and return immediately (without waiting the end of the execution). The
-     * script will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @param argString arguments of the script - optional.
-     * @param nodeFilters for selecting nodes on which the command will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @return a {@link RundeckExecution} instance for the newly created (and running) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @see #triggerAdhocScript(String, String, Properties, Properties, Integer, Boolean)
-     * @see #runAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @deprecated use {@link #triggerAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution triggerAdhocScript(String project, InputStream script, String argString,
-            Properties nodeFilters, Integer nodeThreadcount, Boolean nodeKeepgoing, String asUser) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return triggerAdhocScript(RunAdhocScriptBuilder.builder()
-                .setProject(project)
-                .setScript(script)
-                .setNodeFilters(nodeFilters)
-                .setArgString(argString)
-                .setNodeThreadcount(nodeThreadcount)
-                .setNodeKeepgoing(nodeKeepgoing)
-                .setAsUser(asUser)
-                .build());
-    }
 
     /**
      * Trigger the execution of an ad-hoc script read from a file, and return immediately (without waiting the end of
@@ -2050,440 +1035,6 @@ public class RundeckClient implements Serializable {
         return getExecution(execution.getId());
     }
 
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-     * running. The script will not be dispatched to nodes, but be executed on the RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, String, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, String)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, String scriptFilename) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
-        return runAdhocScript(project, scriptFilename, null);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-     * finished (or aborted) or is still running. The script will not be dispatched to nodes, but be executed on the
-     * RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, String, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, String)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript, long, java.util.concurrent.TimeUnit)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, String scriptFilename, long poolingInterval,
-            TimeUnit poolingUnit) throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException,
-            IllegalArgumentException, IOException {
-        return runAdhocScript(project, scriptFilename, null, poolingInterval, poolingUnit);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-     * running. The script will not be dispatched to nodes, but be executed on the RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, String, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, String, Properties)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, String scriptFilename, Properties options)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException,
-            IOException {
-        return runAdhocScript(project, scriptFilename, options, null);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-     * finished (or aborted) or is still running. The script will not be dispatched to nodes, but be executed on the
-     * RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, String, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, String, Properties)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript, long, java.util.concurrent.TimeUnit)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, String scriptFilename, Properties options,
-            long poolingInterval, TimeUnit poolingUnit) throws RundeckApiException, RundeckApiLoginException,
-            RundeckApiTokenException, IllegalArgumentException, IOException {
-        return runAdhocScript(project, scriptFilename, options, null, poolingInterval, poolingUnit);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-     * running. The script will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the script will be executed. See {@link NodeFiltersBuilder}
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, String, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, String, Properties, Properties)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, String scriptFilename, Properties options,
-            Properties nodeFilters) throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException,
-            IllegalArgumentException, IOException {
-        return runAdhocScript(project, scriptFilename, options, nodeFilters, null, null);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-     * finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to the nodeFilters
-     * parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the script will be executed. See {@link NodeFiltersBuilder}
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, String, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, String, Properties, Properties)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript, long, java.util.concurrent.TimeUnit)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, String scriptFilename, Properties options,
-            Properties nodeFilters, long poolingInterval, TimeUnit poolingUnit) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
-        return runAdhocScript(project, scriptFilename, options, nodeFilters, null, null, poolingInterval, poolingUnit);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-     * running. The script will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the script will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, String, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, String, Properties, Properties, Integer, Boolean)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, String scriptFilename, Properties options,
-            Properties nodeFilters, Integer nodeThreadcount, Boolean nodeKeepgoing) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
-        return runAdhocScript(project,
-                              scriptFilename,
-                              options,
-                              nodeFilters,
-                              nodeThreadcount,
-                              nodeKeepgoing,
-                              DEFAULT_POOLING_INTERVAL,
-                              DEFAULT_POOLING_UNIT);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-     * finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to the nodeFilters
-     * parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param scriptFilename filename of the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the script will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project or scriptFilename is blank (null, empty or whitespace)
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, String, Properties, Properties, Integer, Boolean)
-     *
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript, long, java.util.concurrent.TimeUnit)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, String scriptFilename, Properties options,
-            Properties nodeFilters, Integer nodeThreadcount, Boolean nodeKeepgoing, long poolingInterval,
-            TimeUnit poolingUnit) throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException,
-            IllegalArgumentException, IOException {
-        AssertUtil.notBlank(scriptFilename, "scriptFilename is mandatory to run an ad-hoc script !");
-        FileInputStream stream = null;
-        try {
-            stream = FileUtils.openInputStream(new File(scriptFilename));
-            return runAdhocScript(RunAdhocScriptBuilder.builder()
-                    .setProject(project)
-                    .setScript(stream)
-                    .setNodeFilters(nodeFilters)
-                    .setArgString(ParametersUtil.generateArgString(options))
-                    .setNodeThreadcount(nodeThreadcount)
-                    .setNodeKeepgoing(nodeKeepgoing)
-                    .build(),
-                    poolingInterval,
-                    poolingUnit);
-        } finally {
-            IOUtils.closeQuietly(stream);
-        }
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-     * running. The script will not be dispatched to nodes, but be executed on the RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, InputStream)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, InputStream script) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
-        return runAdhocScript(project, script, null);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-     * finished (or aborted) or is still running. The script will not be dispatched to nodes, but be executed on the
-     * RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, InputStream)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript, long, java.util.concurrent.TimeUnit)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, InputStream script, long poolingInterval,
-            TimeUnit poolingUnit) throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException,
-            IllegalArgumentException, IOException {
-        return runAdhocScript(project, script, null, poolingInterval, poolingUnit);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-     * running. The script will not be dispatched to nodes, but be executed on the RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, InputStream, Properties)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, InputStream script, Properties options)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException,
-            IOException {
-        return runAdhocScript(project, script, options, null);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-     * finished (or aborted) or is still running. The script will not be dispatched to nodes, but be executed on the
-     * RunDeck server.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, InputStream, Properties)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript, long, java.util.concurrent.TimeUnit)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, InputStream script, Properties options,
-            long poolingInterval, TimeUnit poolingUnit) throws RundeckApiException, RundeckApiLoginException,
-            RundeckApiTokenException, IllegalArgumentException, IOException {
-        return runAdhocScript(project, script, options, null, poolingInterval, poolingUnit);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-     * running. The script will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the script will be executed. See {@link NodeFiltersBuilder}
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, InputStream, Properties, Properties)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, InputStream script, Properties options,
-            Properties nodeFilters) throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException,
-            IllegalArgumentException, IOException {
-        return runAdhocScript(project, script, options, nodeFilters, null, null);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-     * finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to the nodeFilters
-     * parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the script will be executed. See {@link NodeFiltersBuilder}
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, InputStream, Properties, Properties)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript, long, java.util.concurrent.TimeUnit)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, InputStream script, Properties options,
-            Properties nodeFilters, long poolingInterval, TimeUnit poolingUnit) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
-        return runAdhocScript(project, script, options, nodeFilters, null, null, poolingInterval, poolingUnit);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
-     * running. The script will be dispatched to nodes, accordingly to the nodeFilters parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the script will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, InputStream script, Properties options,
-            Properties nodeFilters, Integer nodeThreadcount, Boolean nodeKeepgoing) throws RundeckApiException,
-            RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException, IOException {
-        return runAdhocScript(project,
-                              script,
-                              options,
-                              nodeFilters,
-                              nodeThreadcount,
-                              nodeKeepgoing,
-                              DEFAULT_POOLING_INTERVAL,
-                              DEFAULT_POOLING_UNIT);
-    }
 
     /**
      * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
@@ -2505,80 +1056,6 @@ public class RundeckClient implements Serializable {
         return runAdhocScript(script,
                               DEFAULT_POOLING_INTERVAL,
                               DEFAULT_POOLING_UNIT);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-     * finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to the nodeFilters
-     * parameter.
-     *
-     * @param project name of the project - mandatory
-     * @param script inputStream for reading the script to be executed - mandatory
-     * @param options of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters for selecting nodes on which the script will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing if true, continue executing on other nodes even if some fail - optional
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     * @throws RundeckApiException in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @throws IOException if we failed to read the file
-     * @see #runAdhocScript(String, String, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript, long, java.util.concurrent.TimeUnit)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, InputStream script, Properties options,
-            Properties nodeFilters, Integer nodeThreadcount, Boolean nodeKeepgoing, long poolingInterval,
-            TimeUnit poolingUnit) throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException,
-            IllegalArgumentException {
-        return runAdhocScript(project, script, options, nodeFilters, nodeThreadcount, nodeKeepgoing, null, poolingInterval, poolingUnit);
-    }
-
-    /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
-     * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
-     * finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to the nodeFilters
-     * parameter.
-     *
-     * @param project         name of the project - mandatory
-     * @param script          inputStream for reading the script to be executed - mandatory
-     * @param options         of the script - optional. See {@link OptionsBuilder}.
-     * @param nodeFilters     for selecting nodes on which the script will be executed. See {@link NodeFiltersBuilder}
-     * @param nodeThreadcount thread count to use (for parallelizing when running on multiple nodes) - optional
-     * @param nodeKeepgoing   if true, continue executing on other nodes even if some fail - optional
-     * @param poolingInterval for checking the status of the execution. Must be > 0.
-     * @param poolingUnit     unit (seconds, milli-seconds, ...) of the interval. Default to seconds.
-     *
-     * @return a {@link RundeckExecution} instance for the (finished/aborted) execution - won't be null
-     *
-     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the project is blank (null, empty or whitespace) or the script is null
-     * @throws IOException              if we failed to read the file
-     * @see #runAdhocScript(String, String, Properties, Properties, Integer, Boolean, long, TimeUnit)
-     * @see #triggerAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean)
-     * @deprecated use {@link #runAdhocScript(RunAdhocScript, long, java.util.concurrent.TimeUnit)}, this method will be
-     *             removed in version 10 of this library
-     */
-    public RundeckExecution runAdhocScript(String project, InputStream script, Properties options,
-            Properties nodeFilters, Integer nodeThreadcount, Boolean nodeKeepgoing, String asUser, long poolingInterval,
-            TimeUnit poolingUnit) throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException,
-            IllegalArgumentException {
-        return runAdhocScript(RunAdhocScriptBuilder.builder()
-                .setProject(project)
-                .setScript(script)
-                .setNodeFilters(nodeFilters)
-                .setArgString(ParametersUtil.generateArgString(options))
-                .setNodeThreadcount(nodeThreadcount)
-                .setNodeKeepgoing(nodeKeepgoing)
-                .setAsUser(asUser)
-                .build(), poolingInterval, poolingUnit);
     }
 
     /**
@@ -3258,15 +1735,191 @@ public class RundeckClient implements Serializable {
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     * @deprecated renamed for clarity use {@link #getExecutionOutput(Long, int, int, long, int)}, will be removed in
+     * version 12 of this library
      */
     public RundeckOutput getJobExecutionOutput(Long executionId, int offset, int lastlines, long lastmod, int maxlines)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        return getExecutionOutput(executionId, offset, lastlines, lastmod, maxlines);
+    }
+    /**
+     * Get the execution output of the given job
+     *
+     * @param executionId identifier of the execution - mandatory
+     * @param offset byte offset to read from in the file. 0 indicates the beginning.
+     * @param lastlines nnumber of lines to retrieve from the end of the available output. If specified it will override the offset value and return only the specified number of lines at the end of the log.
+     * @param lastmod epoch datestamp in milliseconds, return results only if modification changed since the specified date OR if more data is available at the given offset
+     * @param maxlines maximum number of lines to retrieve forward from the specified offset.
+     * @return {@link RundeckOutput}
+     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckOutput getExecutionOutput(Long executionId, int offset, int lastlines, long lastmod, int maxlines)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
-        return new ApiCall(this).get(new ApiPathBuilder("/execution/", executionId.toString(), "/output.xml").param("offset", offset)
-                                                                                      .param("lastlines", lastlines)
-                                                                                      .param("lastmod", lastmod)
-                                                                                      .param("maxlines", maxlines),
-                                     new OutputParser("result/output", createOutputEntryParser()));
+        ApiPathBuilder param = new ApiPathBuilder(
+                "/execution/", executionId.toString(),
+                "/output")
+                .param("offset", offset);
+        if (lastlines > 0) {
+            param.param("lastlines", lastlines);
+        }
+        if (lastmod >= 0) {
+            param.param("lastmod", lastmod);
+        }
+        if (maxlines > 0) {
+            param.param("maxlines", maxlines);
+        }
+        return new ApiCall(this).get(param,
+                new OutputParser("result/output", createOutputEntryParser()));
+    }
+    /**
+     * Get the execution state of the given execution
+     *
+     * @param executionId identifier of the execution - mandatory
+     * @return {@link RundeckExecutionState} the execution state
+     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckExecutionState getExecutionState(Long executionId)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        AssertUtil.notNull(executionId, "executionId is mandatory to get the state of an execution!");
+        ApiPathBuilder param = new ApiPathBuilder(
+                "/execution/", executionId.toString(),
+                "/state");
+
+        return new ApiCall(this).get(param, new ExecutionStateParser("result/executionState"));
+    }
+
+    /**
+     * Get the execution output of the given execution on the specified node
+     *
+     * @param executionId identifier of the execution - mandatory
+     * @param nodeName    name of the node
+     * @param offset      byte offset to read from in the file. 0 indicates the beginning.
+     * @param lastlines   nnumber of lines to retrieve from the end of the available output. If specified it will
+     *                    override the offset value and return only the specified number of lines at the end of the
+     *                    log.
+     * @param lastmod     epoch datestamp in milliseconds, return results only if modification changed since the
+     *                    specified date OR if more data is available at the given offset
+     * @param maxlines    maximum number of lines to retrieve forward from the specified offset.
+     *
+     * @return {@link RundeckOutput}
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckOutput getExecutionOutputForNode(Long executionId, String nodeName, int offset, int lastlines,
+            long lastmod, int maxlines)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
+        AssertUtil.notNull(nodeName, "nodeName is mandatory to get the output of a job execution!");
+        ApiPathBuilder param = new ApiPathBuilder(
+                "/execution/", executionId.toString(),
+                "/output/node/", nodeName)
+                .param("offset", offset);
+        if(lastlines>0) {
+            param.param("lastlines", lastlines);
+        }
+        if(lastmod>=0) {
+            param.param("lastmod", lastmod);
+        }
+        if(maxlines>0) {
+            param.param("maxlines", maxlines);
+        }
+        return new ApiCall(this).get(param,
+                new OutputParser("result/output", createOutputEntryParser()));
+    }
+    /**
+     * Get the execution output of the given execution for the specified step
+     *
+     * @param executionId identifier of the execution - mandatory
+     * @param stepCtx     identifier for the step
+     * @param offset      byte offset to read from in the file. 0 indicates the beginning.
+     * @param lastlines   nnumber of lines to retrieve from the end of the available output. If specified it will
+     *                    override the offset value and return only the specified number of lines at the end of the
+     *                    log.
+     * @param lastmod     epoch datestamp in milliseconds, return results only if modification changed since the
+     *                    specified date OR if more data is available at the given offset
+     * @param maxlines    maximum number of lines to retrieve forward from the specified offset.
+     *
+     * @return {@link RundeckOutput}
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckOutput getExecutionOutputForStep(Long executionId, String stepCtx, int offset, int lastlines,
+            long lastmod, int maxlines)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
+        AssertUtil.notNull(stepCtx, "stepCtx is mandatory to get the output of a job execution!");
+        ApiPathBuilder param = new ApiPathBuilder(
+                "/execution/", executionId.toString(),
+                "/output/step/", stepCtx)
+                .param("offset", offset);
+        if (lastlines > 0) {
+            param.param("lastlines", lastlines);
+        }
+        if (lastmod >= 0) {
+            param.param("lastmod", lastmod);
+        }
+        if (maxlines > 0) {
+            param.param("maxlines", maxlines);
+        }
+        return new ApiCall(this).get(param,
+                new OutputParser("result/output", createOutputEntryParser()));
+    }
+    /**
+     * Get the execution output of the given execution for the specified step
+     *
+     * @param executionId identifier of the execution - mandatory
+     * @param stepCtx     identifier for the step
+     * @param offset      byte offset to read from in the file. 0 indicates the beginning.
+     * @param lastlines   nnumber of lines to retrieve from the end of the available output. If specified it will
+     *                    override the offset value and return only the specified number of lines at the end of the
+     *                    log.
+     * @param lastmod     epoch datestamp in milliseconds, return results only if modification changed since the
+     *                    specified date OR if more data is available at the given offset
+     * @param maxlines    maximum number of lines to retrieve forward from the specified offset.
+     *
+     * @return {@link RundeckOutput}
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckOutput getExecutionOutputForNodeAndStep(Long executionId, String nodeName, String stepCtx,
+            int offset, int lastlines,
+            long lastmod, int maxlines)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
+        AssertUtil.notNull(nodeName, "nodeName is mandatory to get the output of a job execution!");
+        AssertUtil.notNull(stepCtx, "stepCtx is mandatory to get the output of a job execution!");
+        ApiPathBuilder param = new ApiPathBuilder(
+                "/execution/", executionId.toString(),
+                "/output/node/", nodeName,
+                "/step/", stepCtx)
+                .param("offset", offset);
+        if (lastlines > 0) {
+            param.param("lastlines", lastlines);
+        }
+        if (lastmod >= 0) {
+            param.param("lastmod", lastmod);
+        }
+        if (maxlines > 0) {
+            param.param("maxlines", maxlines);
+        }
+        return new ApiCall(this).get(param,
+                new OutputParser("result/output", createOutputEntryParser()));
     }
 
 
@@ -3282,14 +1935,69 @@ public class RundeckClient implements Serializable {
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     * @deprecated renamed for clarity use {@link #getExecutionOutput(Long, int, long, int)}, will be removed in
+     * version 12 of this library
      */
     public RundeckOutput getJobExecutionOutput(Long executionId, int offset, long lastmod, int maxlines)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        return getExecutionOutput(executionId, offset, lastmod, maxlines);
+    }
+    /**
+     * Get the execution output of the given job
+     *
+     * @param executionId identifier of the execution - mandatory
+     * @param offset byte offset to read from in the file. 0 indicates the beginning.
+     * @param lastmod epoch datestamp in milliseconds, return results only if modification changed since the specified date OR if more data is available at the given offset
+     * @param maxlines maximum number of lines to retrieve forward from the specified offset.
+     * @return {@link RundeckOutput}
+     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckOutput getExecutionOutput(Long executionId, int offset, long lastmod, int maxlines)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
-        return new ApiCall(this).get(new ApiPathBuilder("/execution/", executionId.toString(), "/output.xml").param("offset", offset)
-                                                                                      .param("lastmod", lastmod)
-                                                                                      .param("maxlines", maxlines),
-                                     new OutputParser("result/output", createOutputEntryParser()));
+        ApiPathBuilder param = new ApiPathBuilder("/execution/", executionId.toString(), "/output")
+                .param("offset", offset);
+        if (lastmod >= 0) {
+            param.param("lastmod", lastmod);
+        }
+        if (maxlines > 0) {
+            param.param("maxlines", maxlines);
+        }
+        return new ApiCall(this).get(param, new OutputParser("result/output", createOutputEntryParser()));
+    }
+    /**
+     * Get the execution state output sequence of the given job
+     *
+     * @param executionId identifier of the execution - mandatory
+     * @param stateOnly if true, include only state change output entries, otherwise include state and log entries
+     * @param offset byte offset to read from in the file. 0 indicates the beginning.
+     * @param lastmod epoch datestamp in milliseconds, return results only if modification changed since the specified date OR if more data is available at the given offset
+     * @param maxlines maximum number of lines to retrieve forward from the specified offset.
+     * @return {@link RundeckOutput}
+     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
+     */
+    public RundeckOutput getExecutionOutputState(Long executionId, boolean stateOnly, int offset, long lastmod,
+            int maxlines)
+            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
+        AssertUtil.notNull(executionId, "executionId is mandatory to get the output of a job execution!");
+        ApiPathBuilder param = new ApiPathBuilder("/execution/", executionId.toString(), "/output/state")
+                .param("offset", offset);
+        if (lastmod >= 0) {
+            param.param("lastmod", lastmod);
+        }
+        if (maxlines > 0) {
+            param.param("maxlines", maxlines);
+        }
+        if(stateOnly) {
+            param.param("stateOnly", true);
+        }
+        return new ApiCall(this).get(param, new OutputParser("result/output", createOutputEntryParser()));
     }
 
     private OutputEntryParser createOutputEntryParser() {

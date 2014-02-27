@@ -1,0 +1,81 @@
+<result success="true" apiversion="10">
+    <executionState id="149">
+        <executionId>149</executionId>
+        <serverNode>dignan</serverNode>
+        <executionState>SUCCEEDED</executionState>
+        <completed>true</completed>
+        <targetNodes>
+            <nodes>
+                <node name="node-111.qa.subgroup.mycompany.com"/>
+                <node name="node-14.qa.subgroup.mycompany.com"/>
+                <node name="node-6.qa.subgroup.mycompany.com"/>
+            </nodes>
+        </targetNodes>
+        <allNodes>
+            <nodes>
+                <node name="node-111.qa.subgroup.mycompany.com"/>
+                <node name="node-14.qa.subgroup.mycompany.com"/>
+                <node name="node-6.qa.subgroup.mycompany.com"/>
+            </nodes>
+        </allNodes>
+        <stepCount>1</stepCount>
+        <updateTime>2014-01-18T17:29:20Z</updateTime>
+        <startTime>2014-01-18T17:29:19Z</startTime>
+        <endTime>2014-01-18T17:29:20Z</endTime>
+        <steps>
+            <step stepctx="1" id="1">
+                <nodeStep>true</nodeStep>
+                <executionState>SUCCEEDED</executionState>
+                <startTime>2014-01-18T17:29:19Z</startTime>
+                <updateTime>2014-01-18T17:29:20Z</updateTime>
+                <endTime>2014-01-18T17:29:20Z</endTime>
+                <nodeStates>
+                    <nodeState name="node-111.qa.subgroup.mycompany.com">
+                        <executionState>SUCCEEDED</executionState>
+                        <startTime>2014-01-18T17:29:19Z</startTime>
+                        <updateTime>2014-01-18T17:29:19Z</updateTime>
+                        <endTime>2014-01-18T17:29:19Z</endTime>
+                    </nodeState>
+                    <nodeState name="node-6.qa.subgroup.mycompany.com">
+                        <executionState>SUCCEEDED</executionState>
+                        <startTime>2014-01-18T17:29:20Z</startTime>
+                        <updateTime>2014-01-18T17:29:20Z</updateTime>
+                        <endTime>2014-01-18T17:29:20Z</endTime>
+                    </nodeState>
+                    <nodeState name="node-14.qa.subgroup.mycompany.com">
+                        <executionState>SUCCEEDED</executionState>
+                        <startTime>2014-01-18T17:29:21Z</startTime>
+                        <updateTime>2014-01-18T17:29:21Z</updateTime>
+                        <endTime>2014-01-18T17:29:21Z</endTime>
+                    </nodeState>
+                </nodeStates>
+            </step>
+        </steps>
+        <nodes>
+            <node name="node-111.qa.subgroup.mycompany.com">
+                <steps>
+                    <step>
+                        <stepctx>1</stepctx>
+                        <executionState>SUCCEEDED</executionState>
+                    </step>
+                </steps>
+            </node>
+            <node name="node-6.qa.subgroup.mycompany.com">
+                <steps>
+                    <step>
+                        <stepctx>1</stepctx>
+                        <executionState>SUCCEEDED</executionState>
+                    </step>
+                </steps>
+            </node>
+            <node name="node-14.qa.subgroup.mycompany.com">
+                <steps>
+                    <step>
+                        <stepctx>1</stepctx>
+                        <executionState>SUCCEEDED</executionState>
+                    </step>
+                </steps>
+            </node>
+        </nodes>
+    </executionState>
+</result>

@@ -1,0 +1,46 @@
+<result success="true" apiversion="10">
+    <output>
+        <id>146</id>
+        <offset>1409</offset>
+        <completed>true</completed>
+        <execCompleted>true</execCompleted>
+        <hasFailedNodes>false</hasFailedNodes>
+        <execState>succeeded</execState>
+        <lastModified>1389894504000</lastModified>
+        <execDuration>1602</execDuration>
+        <percentLoaded>99.57597173144876</percentLoaded>
+        <totalSize>1415</totalSize>
+        <entries>
+            <entry node="dignan" step="1" stepctx="1" user="admin" time="09:48:23" level="NORMAL" type="stepbegin"
+                   absolute_time="2014-01-16T17:48:23Z" log=""/>
+            <entry node="node-111.qa.subgroup.mycompany.com" step="1" stepctx="1" user="Raif" time="09:48:23"
+                   level="NORMAL" type="nodebegin" absolute_time="2014-01-16T17:48:23Z" log=""/>
+            <entry node="node-111.qa.subgroup.mycompany.com" step="1" stepctx="1" user="Raif" time="09:48:23"
+                   level="NORMAL" type="log" absolute_time="2014-01-16T17:48:23Z" log="hi there"/>
+            <entry node="node-111.qa.subgroup.mycompany.com" step="1" stepctx="1" user="Raif" time="09:48:23"
+                   level="NORMAL" type="nodeend" absolute_time="2014-01-16T17:48:23Z" log=""/>
+            <entry node="dignan" step="1" stepctx="1" user="admin" time="09:48:23" level="NORMAL" type="stepend"
+                   absolute_time="2014-01-16T17:48:23Z" log=""/>
+            <entry node="dignan" step="1" stepctx="1" user="admin" time="09:48:23" level="NORMAL" type="stepbegin"
+                   absolute_time="2014-01-16T17:48:23Z" log=""/>
+            <entry node="node-14.qa.subgroup.mycompany.com" step="1" stepctx="1" user="Dale" time="09:48:23"
+                   level="NORMAL" type="nodebegin" absolute_time="2014-01-16T17:48:23Z" log=""/>
+            <entry node="node-14.qa.subgroup.mycompany.com" step="1" stepctx="1" user="Dale" time="09:48:23"
+                   level="NORMAL" type="log" absolute_time="2014-01-16T17:48:23Z" log="hi there"/>
+            <entry node="node-14.qa.subgroup.mycompany.com" step="1" stepctx="1" user="Dale" time="09:48:24"
+                   level="NORMAL" type="nodeend" absolute_time="2014-01-16T17:48:24Z" log=""/>
+            <entry node="dignan" step="1" stepctx="1" user="admin" time="09:48:24" level="NORMAL" type="stepend"
+                   absolute_time="2014-01-16T17:48:24Z" log=""/>
+            <entry node="dignan" step="1" stepctx="1" user="admin" time="09:48:24" level="NORMAL" type="stepbegin"
+                   absolute_time="2014-01-16T17:48:24Z" log=""/>
+            <entry node="node-6.qa.subgroup.mycompany.com" step="1" stepctx="1" user="Carolyn" time="09:48:24"
+                   level="NORMAL" type="nodebegin" absolute_time="2014-01-16T17:48:24Z" log=""/>
+            <entry node="node-6.qa.subgroup.mycompany.com" step="1" stepctx="1" user="Carolyn" time="09:48:24"
+                   level="NORMAL" type="log" absolute_time="2014-01-16T17:48:24Z" log="hi there"/>
+            <entry node="node-6.qa.subgroup.mycompany.com" step="1" stepctx="1" user="Carolyn" time="09:48:24"
+                   level="NORMAL" type="nodeend" absolute_time="2014-01-16T17:48:24Z" log=""/>
+            <entry node="dignan" step="1" stepctx="1" user="admin" time="09:48:24" level="NORMAL" type="stepend"
+                   absolute_time="2014-01-16T17:48:24Z" log=""/>
+        </entries>
+    </output>
+</result>

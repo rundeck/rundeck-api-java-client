@@ -364,22 +364,7 @@ public class RundeckClientTest {
         Assert.assertNull(delete.getMessage());
         Assert.assertEquals("3a6d16be-4268-4d26-86a9-cebc1781f768", delete.getId());
     }
-    @Test
-    @Betamax(tape = "trigger_job_basic")
-    public void triggerJobDeprecatedBasic() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
-        final RundeckExecution test
-            = client.triggerJob("3170ba0e-6093-4b58-94d2-52988aefbfc9", null, null, null);
-
-        Assert.assertEquals((Long) 19L, test.getId());
-        Assert.assertEquals(null, test.getArgstring());
-        Assert.assertEquals(null, test.getAbortedBy());
-        Assert.assertEquals("echo hi there ${job.username} ; sleep 90", test.getDescription());
-        Assert.assertEquals("admin", test.getStartedBy());
-        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
-
-    }
     @Test
     @Betamax(tape = "trigger_job_basic")
     public void triggerJobBasic() throws Exception {
@@ -396,22 +381,7 @@ public class RundeckClientTest {
         Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
 
     }
-    @Test
-    @Betamax(tape = "trigger_job_as_user")
-    public void triggerJobDeprecatedAsUser() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
-        final RundeckExecution test
-            = client.triggerJob("3170ba0e-6093-4b58-94d2-52988aefbfc9", null, null, "api-java-client-user-test1");
-
-        Assert.assertEquals((Long) 20L, test.getId());
-        Assert.assertEquals(null, test.getArgstring());
-        Assert.assertEquals(null, test.getAbortedBy());
-        Assert.assertEquals("echo hi there ${job.username} ; sleep 90", test.getDescription());
-        Assert.assertEquals("api-java-client-user-test1", test.getStartedBy());
-        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
-
-    }
     @Test
     @Betamax(tape = "trigger_job_as_user")
     public void triggerJobAsUser() throws Exception {
@@ -431,19 +401,7 @@ public class RundeckClientTest {
         Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
 
     }
-    @Test
-    @Betamax(tape = "trigger_job_as_user_unauthorized")
-    public void triggerJobDeprecatedAsUserUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
-        final RundeckExecution test;
-        try {
-            test = client.triggerJob("3170ba0e-6093-4b58-94d2-52988aefbfc9",null,null,"api-java-client-user-test2");
-            Assert.fail("should not succeed");
-        } catch (RundeckApiException e) {
-            Assert.assertEquals("Not authorized for action \"Run as User\" for Job ID 3170ba0e-6093-4b58-94d2-52988aefbfc9", e.getMessage());
-        }
-    }
     @Test
     @Betamax(tape = "trigger_job_as_user_unauthorized")
     public void triggerJobAsUserUnauthorized() throws Exception {
@@ -461,21 +419,7 @@ public class RundeckClientTest {
         }
     }
 
-    @Test
-    @Betamax(tape = "trigger_adhoc_command")
-    public void triggerAdhocCommandDeprecated() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
-        final RundeckExecution test
-                = client.triggerAdhocCommand("test", "echo test trigger_adhoc_command");
-
-        Assert.assertEquals((Long) 23L, test.getId());
-        Assert.assertEquals(null, test.getArgstring());
-        Assert.assertEquals(null, test.getAbortedBy());
-        Assert.assertEquals("echo test trigger_adhoc_command", test.getDescription());
-        Assert.assertEquals("admin", test.getStartedBy());
-        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, test.getStatus());
-    }
 
     @Test
     @Betamax(tape = "trigger_adhoc_command")
@@ -496,21 +440,7 @@ public class RundeckClientTest {
         Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, test.getStatus());
     }
 
-    @Test
-    @Betamax(tape = "trigger_adhoc_command_as_user")
-    public void triggerAdhocCommandDeprecatedAsUser() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
-        final RundeckExecution test
-                = client.triggerAdhocCommand("test", "echo test trigger_adhoc_command_as_user",null,null,null,"api-java-client-test-run-command-as-user1");
-
-        Assert.assertEquals((Long) 24L, test.getId());
-        Assert.assertEquals(null, test.getArgstring());
-        Assert.assertEquals(null, test.getAbortedBy());
-        Assert.assertEquals("echo test trigger_adhoc_command_as_user", test.getDescription());
-        Assert.assertEquals("api-java-client-test-run-command-as-user1", test.getStartedBy());
-        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, test.getStatus());
-    }
     @Test
     @Betamax(tape = "trigger_adhoc_command_as_user")
     public void triggerAdhocCommandAsUser() throws Exception {
@@ -532,19 +462,7 @@ public class RundeckClientTest {
         Assert.assertEquals("api-java-client-test-run-command-as-user1", test.getStartedBy());
         Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, test.getStatus());
     }
-    @Test
-    @Betamax(tape = "trigger_adhoc_command_as_user_unauthorized")
-    public void triggerAdhocCommandDeprecatedAsUserUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
 
-        final RundeckExecution test;
-        try {
-            test = client.triggerAdhocCommand("test", "echo test trigger_adhoc_command_as_user",null,null,null,"api-java-client-test-run-command-as-user1");
-            Assert.fail("should not succeed");
-        } catch (RundeckApiException e) {
-            Assert.assertEquals("Not authorized for action \"Run as User\" for Run Adhoc", e.getMessage());
-        }
-    }
     @Test
     @Betamax(tape = "trigger_adhoc_command_as_user_unauthorized")
     public void triggerAdhocCommandAsUserUnauthorized() throws Exception {
@@ -565,24 +483,7 @@ public class RundeckClientTest {
         }
     }
 
-    @Test
-    @Betamax(tape = "trigger_adhoc_script")
-    public void triggerAdhocScriptDeprecated() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
-        String script = "#!/bin/bash\n" +
-                "echo test trigger_adhoc_script\n";
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
 
-        final RundeckExecution test
-                = client.triggerAdhocScript("test", byteArrayInputStream,(Properties) null, null, null, null, null);
-
-        Assert.assertEquals((Long) 25L, test.getId());
-        Assert.assertEquals(null, test.getArgstring());
-        Assert.assertEquals(null, test.getAbortedBy());
-        Assert.assertEquals("#!/bin/bash\necho test trigger_adhoc_script", test.getDescription());
-        Assert.assertEquals("admin", test.getStartedBy());
-        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
-    }
     @Test
     @Betamax(tape = "trigger_adhoc_script")
     public void triggerAdhocScript() throws Exception {
@@ -602,24 +503,7 @@ public class RundeckClientTest {
         Assert.assertEquals("admin", test.getStartedBy());
         Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
     }
-    @Test
-    @Betamax(tape = "trigger_adhoc_script_as_user")
-    public void triggerAdhocScriptDeprecatedAsUser() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
-        String script = "#!/bin/bash\n" +
-                "echo test trigger_adhoc_script\n";
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
 
-        final RundeckExecution test
-                = client.triggerAdhocScript("test", byteArrayInputStream, (Properties) null, null, null, null, "api-java-client-test-adhoc-script-as-user1");
-
-        Assert.assertEquals((Long) 26L, test.getId());
-        Assert.assertEquals(null, test.getArgstring());
-        Assert.assertEquals(null, test.getAbortedBy());
-        Assert.assertEquals("#!/bin/bash\necho test trigger_adhoc_script", test.getDescription());
-        Assert.assertEquals("api-java-client-test-adhoc-script-as-user1", test.getStartedBy());
-        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
-    }
     @Test
     @Betamax(tape = "trigger_adhoc_script_as_user")
     public void triggerAdhocScriptAsUser() throws Exception {
@@ -639,23 +523,7 @@ public class RundeckClientTest {
         Assert.assertEquals("api-java-client-test-adhoc-script-as-user1", test.getStartedBy());
         Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
     }
-    @Test
-    @Betamax(tape = "trigger_adhoc_script_as_user_unauthorized")
-    public void triggerAdhocScriptDeprecatedAsUserUnauthorized() throws Exception {
-        RundeckClient client = createClient(TEST_TOKEN_3, 5);
-        String script = "#!/bin/bash\n" +
-                "echo test trigger_adhoc_script\n";
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
-
-        try{
-        final RundeckExecution test
-                = client.triggerAdhocScript("test", byteArrayInputStream, (Properties) null, null, null, null, "api-java-client-test-adhoc-script-as-user1");
-            Assert.fail("should not succeed");
-        } catch (RundeckApiException e) {
-            Assert.assertEquals("Not authorized for action \"Run as User\" for Run Adhoc", e.getMessage());
-        }
-
-    }
+    
     @Test
     @Betamax(tape = "trigger_adhoc_script_as_user_unauthorized")
     public void triggerAdhocScriptAsUserUnauthorized() throws Exception {
@@ -1033,6 +901,175 @@ public class RundeckClientTest {
         Assert.assertEquals("test", exec1.getProject());
         RundeckExecution exec2 = runningExecutions.get(1);
         Assert.assertEquals("test2", exec2.getProject());
+    }
+    /**
+     * Execution output
+     */
+    @Test
+    @Betamax(tape = "execution_output_basic", mode = TapeMode.READ_ONLY)
+    public void executionOutputBasic() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckOutput output = client.getJobExecutionOutput(146L,0,0L,-1);
+
+        Assert.assertEquals(new Long(1602), output.getExecDuration());
+        Assert.assertEquals(new Long(146), output.getExecutionId());
+        Assert.assertEquals(new Long(1389894504000L), output.getLastModified());
+        Assert.assertEquals(null, output.getFilterNode());
+        Assert.assertEquals(null, output.getFilterStep());
+        Assert.assertEquals(1409, output.getOffset());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, output.getStatus());
+        Assert.assertEquals(new Float(99.57597), output.getPercentLoaded());
+        Assert.assertEquals(1415, output.getTotalSize());
+        Assert.assertEquals(true, output.isCompleted());
+        Assert.assertEquals(true, output.isExecCompleted());
+        Assert.assertEquals(false, output.isEmpty());
+        Assert.assertEquals(false, output.isHasFailedNodes());
+        Assert.assertEquals(false, output.isUnmodified());
+        Assert.assertEquals(3, output.getLogEntries().size());
+    }
+    /**
+     * Execution output for a node
+     */
+    @Test
+    @Betamax(tape = "execution_output_fornode", mode = TapeMode.READ_ONLY)
+    public void executionOutputForNode() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckOutput output = client.getExecutionOutputForNode(146L, "node-14.qa.subgroup.mycompany.com", 0, -1, 0L, -1);
+
+        Assert.assertEquals(new Long(1602), output.getExecDuration());
+        Assert.assertEquals(new Long(146), output.getExecutionId());
+        Assert.assertEquals(new Long(1389894504000L), output.getLastModified());
+        Assert.assertEquals("node-14.qa.subgroup.mycompany.com", output.getFilterNode());
+        Assert.assertEquals(null, output.getFilterStep());
+        Assert.assertEquals(1409, output.getOffset());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, output.getStatus());
+        Assert.assertEquals(new Float(99.57597), output.getPercentLoaded());
+        Assert.assertEquals(1415, output.getTotalSize());
+        Assert.assertEquals(true, output.isCompleted());
+        Assert.assertEquals(true, output.isExecCompleted());
+        Assert.assertEquals(false, output.isEmpty());
+        Assert.assertEquals(false, output.isHasFailedNodes());
+        Assert.assertEquals(false, output.isUnmodified());
+        Assert.assertEquals(1, output.getLogEntries().size());
+    }
+    /**
+     * Execution output for a step
+     */
+    @Test
+    @Betamax(tape = "execution_output_forstep", mode = TapeMode.READ_ONLY)
+    public void executionOutputForStep() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckOutput output = client.getExecutionOutputForStep(146L, "1", 0, -1, 0L, -1);
+
+        Assert.assertEquals(new Long(1602), output.getExecDuration());
+        Assert.assertEquals(new Long(146), output.getExecutionId());
+        Assert.assertEquals(new Long(1389894504000L), output.getLastModified());
+        Assert.assertEquals(null, output.getFilterNode());
+        Assert.assertEquals("1", output.getFilterStep());
+        Assert.assertEquals(1409, output.getOffset());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, output.getStatus());
+        Assert.assertEquals(new Float(99.57597), output.getPercentLoaded());
+        Assert.assertEquals(1415, output.getTotalSize());
+        Assert.assertEquals(true, output.isCompleted());
+        Assert.assertEquals(true, output.isExecCompleted());
+        Assert.assertEquals(false, output.isEmpty());
+        Assert.assertEquals(false, output.isHasFailedNodes());
+        Assert.assertEquals(false, output.isUnmodified());
+        Assert.assertEquals(3, output.getLogEntries().size());
+    }
+
+    /**
+     * Execution output for a node and step
+     */
+    @Test
+    @Betamax(tape = "execution_output_fornodeandstep", mode = TapeMode.READ_ONLY)
+    public void executionOutputForNodeAndStep() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckOutput output = client.getExecutionOutputForNodeAndStep(146L, "node-14.qa.subgroup.mycompany.com",
+                "1", 0, -1, 0L, -1);
+
+        Assert.assertEquals(new Long(1602), output.getExecDuration());
+        Assert.assertEquals(new Long(146), output.getExecutionId());
+        Assert.assertEquals(new Long(1389894504000L), output.getLastModified());
+        Assert.assertEquals("node-14.qa.subgroup.mycompany.com", output.getFilterNode());
+        Assert.assertEquals("1", output.getFilterStep());
+        Assert.assertEquals(1409, output.getOffset());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, output.getStatus());
+        Assert.assertEquals(new Float(99.57597), output.getPercentLoaded());
+        Assert.assertEquals(1415, output.getTotalSize());
+        Assert.assertEquals(true, output.isCompleted());
+        Assert.assertEquals(true, output.isExecCompleted());
+        Assert.assertEquals(false, output.isEmpty());
+        Assert.assertEquals(false, output.isHasFailedNodes());
+        Assert.assertEquals(false, output.isUnmodified());
+        Assert.assertEquals(1, output.getLogEntries().size());
+    }
+
+    /**
+     * Execution output state sequence
+     */
+    @Test
+    @Betamax(tape = "execution_output_state", mode = TapeMode.READ_ONLY)
+    public void executionOutputState() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckOutput output = client.getExecutionOutputState(146L, false, 0, 0L, -1);
+
+        Assert.assertEquals(new Long(1602), output.getExecDuration());
+        Assert.assertEquals(new Long(146), output.getExecutionId());
+        Assert.assertEquals(new Long(1389894504000L), output.getLastModified());
+        Assert.assertEquals(null, output.getFilterNode());
+        Assert.assertEquals(null, output.getFilterStep());
+        Assert.assertEquals(1409, output.getOffset());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, output.getStatus());
+        Assert.assertEquals(new Float(99.57597), output.getPercentLoaded());
+        Assert.assertEquals(1415, output.getTotalSize());
+        Assert.assertEquals(true, output.isCompleted());
+        Assert.assertEquals(true, output.isExecCompleted());
+        Assert.assertEquals(false, output.isEmpty());
+        Assert.assertEquals(false, output.isHasFailedNodes());
+        Assert.assertEquals(false, output.isUnmodified());
+        Assert.assertEquals(15, output.getLogEntries().size());
+    }
+    /**
+     * Execution output state sequence
+     */
+    @Test
+    @Betamax(tape = "execution_output_state_only", mode = TapeMode.READ_ONLY)
+    public void executionOutputStateOnly() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckOutput output = client.getExecutionOutputState(146L, true, 0, 0L, -1);
+
+        Assert.assertEquals(new Long(1602), output.getExecDuration());
+        Assert.assertEquals(new Long(146), output.getExecutionId());
+        Assert.assertEquals(new Long(1389894504000L), output.getLastModified());
+        Assert.assertEquals(null, output.getFilterNode());
+        Assert.assertEquals(null, output.getFilterStep());
+        Assert.assertEquals(1409, output.getOffset());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, output.getStatus());
+        Assert.assertEquals(new Float(99.57597), output.getPercentLoaded());
+        Assert.assertEquals(1415, output.getTotalSize());
+        Assert.assertEquals(true, output.isCompleted());
+        Assert.assertEquals(true, output.isExecCompleted());
+        Assert.assertEquals(false, output.isEmpty());
+        Assert.assertEquals(false, output.isHasFailedNodes());
+        Assert.assertEquals(false, output.isUnmodified());
+        Assert.assertEquals(12, output.getLogEntries().size());
+    }
+    /**
+     * Execution state structure
+     */
+    @Test
+    @Betamax(tape = "execution_state", mode = TapeMode.READ_ONLY)
+    public void executionState() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_6, 10);
+        RundeckExecutionState output = client.getExecutionState(149L);
+
+        Assert.assertEquals(149,output.getExecutionId());
+        Assert.assertEquals(3,output.getTargetNodes().size());
+        Assert.assertEquals(3,output.getAllNodes().size());
+        Assert.assertEquals(1,output.getStepCount());
+        Assert.assertEquals(1,output.getSteps().size());
+        Assert.assertEquals(RundeckWFExecState.SUCCEEDED,output.getExecutionState());
     }
 
     @Before
