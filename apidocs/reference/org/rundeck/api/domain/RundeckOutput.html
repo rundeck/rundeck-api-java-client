@@ -158,13 +158,20 @@
           <div id="classes-nav">
             <ul>
               
+    <li><h2>Interfaces</h2>
+      <ul>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckNodeIdentity.html">RundeckNodeIdentity</a></li>
+      </ul>
+    </li>
               
     <li><h2>Classes</h2>
       <ul>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/BaseState.html">BaseState</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckAbort.html">RundeckAbort</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckEvent.html">RundeckEvent</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckEvent.NodeSummary.html">RundeckEvent.NodeSummary</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckExecutionState.html">RundeckExecutionState</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckHistory.html">RundeckHistory</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJob.html">RundeckJob</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobDelete.html">RundeckJobDelete</a></li>
@@ -175,6 +182,9 @@
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html">RundeckOutputEntry</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckSystemInfo.html">RundeckSystemInfo</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowState.html">WorkflowState</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowStepContextState.html">WorkflowStepContextState</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowStepState.html">WorkflowStepState</a></li>
       </ul>
     </li>
               
@@ -187,6 +197,7 @@
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobsImportMethod.html">RundeckJobsImportMethod</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobsUUIDImportBehavior.html">RundeckJobsUUIDImportBehavior</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.RundeckLogLevel.html">RundeckOutputEntry.RundeckLogLevel</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckWFExecState.html">RundeckWFExecState</a></li>
       </ul>
     </li>
               
@@ -499,6 +510,40 @@ Summary:
             
             
             
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutput.html#getFilterNode()">getFilterNode</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutput.html#getFilterStep()">getFilterStep</a></span>()</nobr>
+        
+        <div class="jd-descrdiv">Return the step context used to filter this output</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
             <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Long.html">Long</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
@@ -759,6 +804,40 @@ Summary:
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutput.html#setExecutionId(java.lang.Long)">setExecutionId</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Long.html">Long</a> executionId)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutput.html#setFilterNode(java.lang.String)">setFilterNode</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> filterNode)</nobr>
+        
+        <div class="jd-descrdiv">return the node name used to filter this output</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutput.html#setFilterStep(java.lang.String)">setFilterStep</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> filterStep)</nobr>
         
   </td></tr>
 
@@ -1329,6 +1408,68 @@ From class
 </div>
 
 
+<A NAME="getFilterNode()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>
+      </span>
+      <span class="sympad">getFilterNode</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getFilterStep()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>
+      </span>
+      <span class="sympad">getFilterStep</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Return the step context used to filter this output</p></div>
+
+    </div>
+</div>
+
+
 <A NAME="getLastModified()"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -1839,6 +1980,68 @@ From class
       </span>
       <span class="sympad">setExecutionId</span>
       <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Long.html">Long</a> executionId)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setFilterNode(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setFilterNode</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> filterNode)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>return the node name used to filter this output</p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setFilterStep(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setFilterStep</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> filterStep)</span>
     </h4>
       <div class="api-level">
         <div>

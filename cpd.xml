@@ -2,7 +2,7 @@
 <pmd-cpd>
 <duplication lines="27" tokens="139">
 <file line="152" path="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/domain/RundeckEvent.java"/>
-<file line="138" path="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/domain/RundeckExecution.java"/>
+<file line="141" path="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/domain/RundeckExecution.java"/>
 <codefragment>
 <![CDATA[
     }
@@ -37,7 +37,7 @@
 </duplication>
 <duplication lines="34" tokens="118">
 <file line="60" path="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/domain/RundeckEvent.java"/>
-<file line="60" path="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/domain/RundeckExecution.java"/>
+<file line="63" path="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/domain/RundeckExecution.java"/>
 <codefragment>
 <![CDATA[
     public Long getDurationInMillis() {

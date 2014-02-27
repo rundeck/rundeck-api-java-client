@@ -13,6 +13,21 @@ javadoc proofread file: ./proof-read.txt
 === reference/packages.html ===
 
 
+=== org/rundeck/api/parser/WorkflowStepStateParserTest.html ===
+        $INTERFACE is ... User: greg Date: 1/18/14 Time: 9:00 AM
+CONSTRUCTOR: WorkflowStepStateParserTest
+METHOD: testParse1
+METHOD: testParseRunning1
+METHOD: testParseRunning2
+
+
+=== org/rundeck/api/parser/WorkflowStateParserTest.html ===
+        $INTERFACE is ... User: greg Date: 1/16/14 Time: 5:47 PM
+CONSTRUCTOR: WorkflowStateParserTest
+METHOD: parse
+METHOD: parseBasic
+
+
 === org/rundeck/api/parser/SystemInfoParserTest.html ===
         Test the
         {@link/SystemInfoParser}
@@ -44,6 +59,21 @@ METHOD: loadErrorDocument
         XML with an explicit "error" result should throw an exception
 METHOD: loadSuccessDocument
         XML with an explicit "success" result should NOT throw an exception
+
+
+=== org/rundeck/api/parser/OutputParserTest.html ===
+        $INTERFACE is ... User: greg Date: 1/16/14 Time: 4:24 PM
+CONSTRUCTOR: OutputParserTest
+METHOD: parseOutputBasic
+METHOD: parseOutputFiltered
+METHOD: parseOutputUnmodified
+
+
+=== org/rundeck/api/parser/OutputEntryParserTest.html ===
+        $INTERFACE is ... User: greg Date: 1/16/14 Time: 4:35 PM
+CONSTRUCTOR: OutputEntryParserTest
+METHOD: testEntryBasic
+METHOD: testEntryState
 
 
 === org/rundeck/api/parser/NodeParserTest.html ===
@@ -79,11 +109,26 @@ METHOD: parseExecutionJob2
 METHOD: parseJob
 
 
+=== org/rundeck/api/parser/IndexedWorkflowStepStateParserTest.html ===
+        $INTERFACE is ... User: greg Date: 1/18/14 Time: 9:57 AM
+CONSTRUCTOR: IndexedWorkflowStepStateParserTest
+METHOD: testLookupContextDescend1
+METHOD: testLookupContextSimple1
+METHOD: testLookupContextSimple2
+METHOD: testParse1
+
+
 === org/rundeck/api/parser/HistoryParserTest.html ===
         Test the
         {@link/HistoryParser}
 CONSTRUCTOR: HistoryParserTest
 METHOD: parseHistory
+
+
+=== org/rundeck/api/parser/ExecutionStateParserTest.html ===
+        $INTERFACE is ... User: greg Date: 1/16/14 Time: 5:42 PM
+CONSTRUCTOR: ExecutionStateParserTest
+METHOD: testBasic
 
 
 === org/rundeck/api/parser/ExecutionParserTest.html ===
@@ -94,6 +139,7 @@ METHOD: parseAdhocExecution
 METHOD: parseMinimalistExecution
 METHOD: parseRunningExecution
 METHOD: parseSucceededExecution
+METHOD: parseV10Execution
 METHOD: parseV9Execution
 
 
@@ -119,6 +165,13 @@ METHOD: successfulResult
 CONSTRUCTOR: BulkDeleteParserTest
 METHOD: bulkParser
 METHOD: bulkParserAllsuccessful
+
+
+=== org/rundeck/api/parser/BaseStateParserTest.html ===
+        $INTERFACE is ... User: greg Date: 1/18/14 Time: 8:33 AM
+CONSTRUCTOR: BaseStateParserTest
+METHOD: testBase1
+METHOD: testBase2
 
 
 === org/rundeck/api/parser/AbortParserTest.html ===
@@ -154,6 +207,20 @@ METHOD: apiVersionDefaultLatest
 METHOD: bulkDelete
 METHOD: bulkDeleteFailDNE
 METHOD: bulkDeleteFailUnauthorized
+METHOD: executionOutputBasic
+        Execution output
+METHOD: executionOutputForNode
+        Execution output for a node
+METHOD: executionOutputForNodeAndStep
+        Execution output for a node and step
+METHOD: executionOutputForStep
+        Execution output for a step
+METHOD: executionOutputState
+        Execution output state sequence
+METHOD: executionOutputStateOnly
+        Execution output state sequence
+METHOD: executionState
+        Execution state structure
 METHOD: getExecutions
 METHOD: getExecutionsPaging
         Test paging values from results
@@ -185,22 +252,13 @@ METHOD: setUp
 METHOD: triggerAdhocCommand
 METHOD: triggerAdhocCommandAsUser
 METHOD: triggerAdhocCommandAsUserUnauthorized
-METHOD: triggerAdhocCommandDeprecated
-METHOD: triggerAdhocCommandDeprecatedAsUser
-METHOD: triggerAdhocCommandDeprecatedAsUserUnauthorized
 METHOD: triggerAdhocScript
 METHOD: triggerAdhocScriptAsUser
 METHOD: triggerAdhocScriptAsUserUnauthorized
-METHOD: triggerAdhocScriptDeprecated
-METHOD: triggerAdhocScriptDeprecatedAsUser
-METHOD: triggerAdhocScriptDeprecatedAsUserUnauthorized
 METHOD: triggerAdhocScriptInpterpreter
 METHOD: triggerJobAsUser
 METHOD: triggerJobAsUserUnauthorized
 METHOD: triggerJobBasic
-METHOD: triggerJobDeprecatedAsUser
-METHOD: triggerJobDeprecatedAsUserUnauthorized
-METHOD: triggerJobDeprecatedBasic
 
 
 === org/rundeck/api/util/ParametersUtilTest.html ===

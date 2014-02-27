@@ -158,13 +158,20 @@
           <div id="classes-nav">
             <ul>
               
+    <li><h2>Interfaces</h2>
+      <ul>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckNodeIdentity.html">RundeckNodeIdentity</a></li>
+      </ul>
+    </li>
               
     <li><h2>Classes</h2>
       <ul>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/BaseState.html">BaseState</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckAbort.html">RundeckAbort</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckEvent.html">RundeckEvent</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckEvent.NodeSummary.html">RundeckEvent.NodeSummary</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a></li>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckExecutionState.html">RundeckExecutionState</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckHistory.html">RundeckHistory</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJob.html">RundeckJob</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobDelete.html">RundeckJobDelete</a></li>
@@ -175,6 +182,9 @@
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html">RundeckOutputEntry</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckSystemInfo.html">RundeckSystemInfo</a></li>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowState.html">WorkflowState</a></li>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowStepContextState.html">WorkflowStepContextState</a></li>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowStepState.html">WorkflowStepState</a></li>
       </ul>
     </li>
               
@@ -187,6 +197,7 @@
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobsImportMethod.html">RundeckJobsImportMethod</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobsUUIDImportBehavior.html">RundeckJobsUUIDImportBehavior</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.RundeckLogLevel.html">RundeckOutputEntry.RundeckLogLevel</a></li>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckWFExecState.html">RundeckWFExecState</a></li>
       </ul>
     </li>
               
@@ -262,6 +273,18 @@
 
 
   
+    <h3>Interfaces</h3>
+    <div class="jd-sumtable">
+    
+  <table class="jd-sumtable-expando">
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckNodeIdentity.html">RundeckNodeIdentity</a></td>
+              <td class="jd-descrcol" width="100%">Identifies a node by name
+&nbsp;</td>
+          </tr>
+  </table>
+    </div>
+  
 
 
   
@@ -270,21 +293,31 @@
     
   <table class="jd-sumtable-expando">
         <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/BaseState.html">BaseState</a></td>
+              <td class="jd-descrcol" width="100%">Base execution status for a step
+&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckAbort.html">RundeckAbort</a></td>
               <td class="jd-descrcol" width="100%">Represents an abort of a <code><a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a></code>&nbsp;</td>
           </tr>
-        <tr class=" api apilevel-" >
+        <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckEvent.html">RundeckEvent</a></td>
               <td class="jd-descrcol" width="100%">Represents a RunDeck event&nbsp;</td>
           </tr>
-        <tr class="alt-color api apilevel-" >
+        <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckEvent.NodeSummary.html">RundeckEvent.NodeSummary</a></td>
               <td class="jd-descrcol" width="100%">Summary for nodes
 &nbsp;</td>
           </tr>
-        <tr class=" api apilevel-" >
+        <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a></td>
               <td class="jd-descrcol" width="100%">Represents a RunDeck execution, usually triggered by an API call.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckExecutionState.html">RundeckExecutionState</a></td>
+              <td class="jd-descrcol" width="100%">The state of an Execution
+&nbsp;</td>
           </tr>
         <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckHistory.html">RundeckHistory</a></td>
@@ -331,6 +364,21 @@
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckSystemInfo.html">RundeckSystemInfo</a></td>
               <td class="jd-descrcol" width="100%">Represents the RunDeck system info&nbsp;</td>
           </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/WorkflowState.html">WorkflowState</a></td>
+              <td class="jd-descrcol" width="100%">Represents the state of a workflow of steps
+&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/WorkflowStepContextState.html">WorkflowStepContextState</a></td>
+              <td class="jd-descrcol" width="100%">A state for a particular step
+&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/WorkflowStepState.html">WorkflowStepState</a></td>
+              <td class="jd-descrcol" width="100%">Represents the state of a step in a workflow
+&nbsp;</td>
+          </tr>
   </table>
     </div>
   
@@ -367,6 +415,11 @@
         <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.RundeckLogLevel.html">RundeckOutputEntry.RundeckLogLevel</a></td>
               <td class="jd-descrcol" width="100%">&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckWFExecState.html">RundeckWFExecState</a></td>
+              <td class="jd-descrcol" width="100%">An execution state for a workflow or node step
+&nbsp;</td>
           </tr>
   </table>
     </div>

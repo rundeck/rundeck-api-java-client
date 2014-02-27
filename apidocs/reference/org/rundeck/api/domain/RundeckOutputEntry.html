@@ -158,13 +158,20 @@
           <div id="classes-nav">
             <ul>
               
+    <li><h2>Interfaces</h2>
+      <ul>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckNodeIdentity.html">RundeckNodeIdentity</a></li>
+      </ul>
+    </li>
               
     <li><h2>Classes</h2>
       <ul>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/BaseState.html">BaseState</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckAbort.html">RundeckAbort</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckEvent.html">RundeckEvent</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckEvent.NodeSummary.html">RundeckEvent.NodeSummary</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckExecutionState.html">RundeckExecutionState</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckHistory.html">RundeckHistory</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJob.html">RundeckJob</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobDelete.html">RundeckJobDelete</a></li>
@@ -175,6 +182,9 @@
           <li class="selected api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html">RundeckOutputEntry</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckSystemInfo.html">RundeckSystemInfo</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowState.html">WorkflowState</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowStepContextState.html">WorkflowStepContextState</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowStepState.html">WorkflowStepState</a></li>
       </ul>
     </li>
               
@@ -187,6 +197,7 @@
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobsImportMethod.html">RundeckJobsImportMethod</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobsUUIDImportBehavior.html">RundeckJobsUUIDImportBehavior</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.RundeckLogLevel.html">RundeckOutputEntry.RundeckLogLevel</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckWFExecState.html">RundeckWFExecState</a></li>
       </ul>
     </li>
               
@@ -474,6 +485,22 @@ Summary:
             
             
             
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/Date.html">Date</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html#getAbsoluteTime()">getAbsoluteTime</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
             <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
@@ -483,7 +510,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -499,7 +526,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -510,6 +537,22 @@ Summary:
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html#getMessage()">getMessage</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/Map.html">Map</a>&lt;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>,&nbsp;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>&gt;</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html#getMetadata()">getMetadata</a></span>()</nobr>
         
   </td></tr>
 
@@ -557,7 +600,42 @@ Summary:
             <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html#getType()">getType</a></span>()</nobr>
+        
+        <div class="jd-descrdiv">type of entry
+</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html#getUser()">getUser</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            int</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html#hashCode()">hashCode</a></span>()</nobr>
         
   </td></tr>
 
@@ -570,10 +648,10 @@ Summary:
             
             
             
-            int</nobr>
+            void</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html#hashCode()">hashCode</a></span>()</nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html#setAbsoluteTime(java.util.Date)">setAbsoluteTime</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/Date.html">Date</a> absoluteTime)</nobr>
         
   </td></tr>
 
@@ -637,7 +715,7 @@ Summary:
             void</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html#setNode(java.lang.String)">setNode</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> node)</nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html#setMetadata(java.util.Map<java.lang.String, java.lang.String>)">setMetadata</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/Map.html">Map</a>&lt;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>,&nbsp;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>&gt; metadata)</nobr>
         
   </td></tr>
 
@@ -653,7 +731,39 @@ Summary:
             void</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html#setNode(java.lang.String)">setNode</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> node)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html#setTime(java.lang.String)">setTime</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> time)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html#setType(java.lang.String)">setType</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> type)</nobr>
         
   </td></tr>
 
@@ -1019,6 +1129,37 @@ From class
 </div>
 
 
+<A NAME="getAbsoluteTime()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/Date.html">Date</a>
+      </span>
+      <span class="sympad">getAbsoluteTime</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
 <A NAME="getCommand()"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -1112,6 +1253,37 @@ From class
 </div>
 
 
+<A NAME="getMetadata()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/Map.html">Map</a>&lt;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>,&nbsp;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>&gt;
+      </span>
+      <span class="sympad">getMetadata</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
 <A NAME="getNode()"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -1174,6 +1346,38 @@ From class
 </div>
 
 
+<A NAME="getType()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>
+      </span>
+      <span class="sympad">getType</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>type of entry
+</p></div>
+
+    </div>
+</div>
+
+
 <A NAME="getUser()"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -1219,6 +1423,37 @@ From class
       </span>
       <span class="sympad">hashCode</span>
       <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setAbsoluteTime(java.util.Date)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setAbsoluteTime</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/Date.html">Date</a> absoluteTime)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -1329,6 +1564,37 @@ From class
 </div>
 
 
+<A NAME="setMetadata(java.util.Map<java.lang.String, java.lang.String>)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setMetadata</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/Map.html">Map</a>&lt;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>,&nbsp;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>&gt; metadata)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
 <A NAME="setNode(java.lang.String)"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -1374,6 +1640,37 @@ From class
       </span>
       <span class="sympad">setTime</span>
       <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> time)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setType(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setType</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> type)</span>
     </h4>
       <div class="api-level">
         <div>

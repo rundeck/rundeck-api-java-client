@@ -158,13 +158,20 @@
           <div id="classes-nav">
             <ul>
               
+    <li><h2>Interfaces</h2>
+      <ul>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckNodeIdentity.html">RundeckNodeIdentity</a></li>
+      </ul>
+    </li>
               
     <li><h2>Classes</h2>
       <ul>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/BaseState.html">BaseState</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckAbort.html">RundeckAbort</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckEvent.html">RundeckEvent</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckEvent.NodeSummary.html">RundeckEvent.NodeSummary</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckExecutionState.html">RundeckExecutionState</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckHistory.html">RundeckHistory</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJob.html">RundeckJob</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobDelete.html">RundeckJobDelete</a></li>
@@ -175,6 +182,9 @@
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html">RundeckOutputEntry</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckSystemInfo.html">RundeckSystemInfo</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowState.html">WorkflowState</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowStepContextState.html">WorkflowStepContextState</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowStepState.html">WorkflowStepState</a></li>
       </ul>
     </li>
               
@@ -187,6 +197,7 @@
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobsImportMethod.html">RundeckJobsImportMethod</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckJobsUUIDImportBehavior.html">RundeckJobsUUIDImportBehavior</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.RundeckLogLevel.html">RundeckOutputEntry.RundeckLogLevel</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckWFExecState.html">RundeckWFExecState</a></li>
       </ul>
     </li>
               
@@ -235,6 +246,13 @@
   
   
 
+  
+  
+  
+  
+
+  
+   
   
   
   
@@ -302,6 +320,8 @@ Summary:
       implements 
       
         <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/Serializable.html">Serializable</a> 
+      
+        <a href="../../../../org/rundeck/api/domain/RundeckNodeIdentity.html">RundeckNodeIdentity</a> 
       
   
   
@@ -502,6 +522,8 @@ Summary:
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckNode.html#getName()">getName</a></span>()</nobr>
         
+        <div class="jd-descrdiv">Return the rundeck Node name</div>
+  
   </td></tr>
 
 
@@ -1075,6 +1097,50 @@ From class
 
 
 
+
+<tr class="api apilevel-" >
+<td colspan="12">
+  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-org.rundeck.api.domain.RundeckNodeIdentity" class="jd-expando-trigger closed"
+          ><img id="inherited-methods-org.rundeck.api.domain.RundeckNodeIdentity-trigger"
+          src="../../../../../assets/images/triangle-closed.png"
+          class="jd-expando-trigger-img" /></a>
+From interface
+
+  <a href="../../../../org/rundeck/api/domain/RundeckNodeIdentity.html">org.rundeck.api.domain.RundeckNodeIdentity</a>
+
+<div id="inherited-methods-org.rundeck.api.domain.RundeckNodeIdentity">
+  <div id="inherited-methods-org.rundeck.api.domain.RundeckNodeIdentity-list"
+        class="jd-inheritedlinks">
+  </div>
+  <div id="inherited-methods-org.rundeck.api.domain.RundeckNodeIdentity-summary" style="display: none;">
+    <table class="jd-sumtable-expando">
+    
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckNodeIdentity.html#getName()">getName</a></span>()</nobr>
+        
+        <div class="jd-descrdiv">Return the rundeck Node name</div>
+  
+  </td></tr>
+
+
+</table>
+  </div>
+</div>
+</td></tr>
+
+
 </table>
 
 
@@ -1304,7 +1370,7 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata jd-tagdescr"><p>Return the rundeck Node name</p></div>
 
     </div>
 </div>

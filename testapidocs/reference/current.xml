@@ -106,6 +106,97 @@
 <exception name="Exception" type="java.lang.Exception">
 </exception>
 </method>
+<method name="executionOutputBasic"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="executionOutputForNode"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="executionOutputForNodeAndStep"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="executionOutputForStep"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="executionOutputState"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="executionOutputStateOnly"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="executionState"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
 <method name="getExecutions"
  return="void"
  abstract="false"
@@ -366,45 +457,6 @@
 <exception name="Exception" type="java.lang.Exception">
 </exception>
 </method>
-<method name="triggerAdhocCommandDeprecated"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<exception name="Exception" type="java.lang.Exception">
-</exception>
-</method>
-<method name="triggerAdhocCommandDeprecatedAsUser"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<exception name="Exception" type="java.lang.Exception">
-</exception>
-</method>
-<method name="triggerAdhocCommandDeprecatedAsUserUnauthorized"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<exception name="Exception" type="java.lang.Exception">
-</exception>
-</method>
 <method name="triggerAdhocScript"
  return="void"
  abstract="false"
@@ -432,45 +484,6 @@
 </exception>
 </method>
 <method name="triggerAdhocScriptAsUserUnauthorized"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<exception name="Exception" type="java.lang.Exception">
-</exception>
-</method>
-<method name="triggerAdhocScriptDeprecated"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<exception name="Exception" type="java.lang.Exception">
-</exception>
-</method>
-<method name="triggerAdhocScriptDeprecatedAsUser"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<exception name="Exception" type="java.lang.Exception">
-</exception>
-</method>
-<method name="triggerAdhocScriptDeprecatedAsUserUnauthorized"
  return="void"
  abstract="false"
  native="false"
@@ -523,45 +536,6 @@
 </exception>
 </method>
 <method name="triggerJobBasic"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<exception name="Exception" type="java.lang.Exception">
-</exception>
-</method>
-<method name="triggerJobDeprecatedAsUser"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<exception name="Exception" type="java.lang.Exception">
-</exception>
-</method>
-<method name="triggerJobDeprecatedAsUserUnauthorized"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<exception name="Exception" type="java.lang.Exception">
-</exception>
-</method>
-<method name="triggerJobDeprecatedBasic"
  return="void"
  abstract="false"
  native="false"
@@ -706,6 +680,45 @@
 >
 <exception name="Exception" type="java.lang.Exception">
 </exception>
+</method>
+</class>
+<class name="BaseStateParserTest"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="BaseStateParserTest"
+ type="org.rundeck.api.parser.BaseStateParserTest"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="testBase1"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="testBase2"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
 </method>
 </class>
 <class name="BulkDeleteParserTest"
@@ -931,6 +944,19 @@
 <exception name="Exception" type="java.lang.Exception">
 </exception>
 </method>
+<method name="parseV10Execution"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
 <method name="parseV9Execution"
  return="void"
  abstract="false"
@@ -943,6 +969,34 @@
 >
 <exception name="Exception" type="java.lang.Exception">
 </exception>
+</method>
+</class>
+<class name="ExecutionStateParserTest"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="ExecutionStateParserTest"
+ type="org.rundeck.api.parser.ExecutionStateParserTest"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="testBasic"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
 </method>
 </class>
 <class name="HistoryParserTest"
@@ -972,6 +1026,69 @@
  visibility="public"
 >
 <exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+</class>
+<class name="IndexedWorkflowStepStateParserTest"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="IndexedWorkflowStepStateParserTest"
+ type="org.rundeck.api.parser.IndexedWorkflowStepStateParserTest"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="testLookupContextDescend1"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="testLookupContextSimple1"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="testLookupContextSimple2"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="testParse1"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="DocumentException" type="org.dom4j.DocumentException">
 </exception>
 </method>
 </class>
@@ -1160,6 +1277,101 @@
 </exception>
 </method>
 </class>
+<class name="OutputEntryParserTest"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="OutputEntryParserTest"
+ type="org.rundeck.api.parser.OutputEntryParserTest"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="testEntryBasic"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="testEntryState"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<class name="OutputParserTest"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="OutputParserTest"
+ type="org.rundeck.api.parser.OutputParserTest"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="parseOutputBasic"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="parseOutputFiltered"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+<method name="parseOutputUnmodified"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="Exception" type="java.lang.Exception">
+</exception>
+</method>
+</class>
 <class name="ParserHelperTest"
  extends="java.lang.Object"
  abstract="false"
@@ -1304,6 +1516,95 @@
 >
 <exception name="Exception" type="java.lang.Exception">
 </exception>
+</method>
+</class>
+<class name="WorkflowStateParserTest"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="WorkflowStateParserTest"
+ type="org.rundeck.api.parser.WorkflowStateParserTest"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="parse"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="parseBasic"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<class name="WorkflowStepStateParserTest"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="WorkflowStepStateParserTest"
+ type="org.rundeck.api.parser.WorkflowStepStateParserTest"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="testParse1"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="testParseRunning1"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="testParseRunning2"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
 </method>
 </class>
 </package>
