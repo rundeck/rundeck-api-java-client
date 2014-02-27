@@ -32,6 +32,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.entity.EntityTemplate;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.InputStreamBody;
@@ -48,6 +49,7 @@ import org.rundeck.api.RundeckApiException.RundeckApiTokenException;
 import org.rundeck.api.parser.ParserHelper;
 import org.rundeck.api.parser.XmlNodeParser;
 import org.rundeck.api.util.AssertUtil;
+import org.rundeck.api.util.DocumentContentProducer;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -286,6 +288,9 @@ class ApiCall {
             } catch (UnsupportedEncodingException e) {
                 throw new RundeckApiException("Unsupported encoding: " + e.getMessage(), e);
             }
+        }else if(apiPath.getXmlDocument()!=null) {
+            httpPost.setHeader("Content-Type", "application/xml");
+            httpPost.setEntity(new EntityTemplate(new DocumentContentProducer(apiPath.getXmlDocument())));
         }else {
             throw new IllegalArgumentException("No Form or Multipart entity for POST content-body");
         }
