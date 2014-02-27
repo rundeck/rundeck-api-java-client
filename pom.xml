@@ -27,7 +27,7 @@
   <!-- Project informations -->
   <groupId>org.rundeck</groupId>
   <artifactId>rundeck-api-java-client</artifactId>
-  <version>10.0</version>
+  <version>10.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>RunDeck API - Java Client</name>
   <description>Java client for the RunDeck REST API</description>
