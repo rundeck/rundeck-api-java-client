@@ -25,6 +25,7 @@ import org.rundeck.api.RundeckApiException.RundeckApiLoginException;
 import org.rundeck.api.RundeckApiException.RundeckApiTokenException;
 import org.rundeck.api.domain.*;
 import org.rundeck.api.domain.RundeckExecution.ExecutionStatus;
+import org.rundeck.api.generator.ProjectConfigGenerator;
 import org.rundeck.api.generator.ProjectGenerator;
 import org.rundeck.api.parser.*;
 import org.rundeck.api.query.ExecutionQuery;
@@ -379,6 +380,28 @@ public class RundeckClient implements Serializable {
         return new ApiCall(this)
                 .get(new ApiPathBuilder("/project/", projectName, "/config"), new ProjectConfigParser("/config"));
     }
+    /**
+     * Return the configuration of a project
+     *
+     * @param projectName name of the project - mandatory
+     *
+     * @return a {@link ProjectConfig} instance - won't be null
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public ProjectConfig setProjectConfig(String projectName, Map<String,String> configuration) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to get the config of a project !");
+        return new ApiCall(this)
+                .put(new ApiPathBuilder("/project/", projectName, "/config")
+                        .xml(new ProjectConfigGenerator(new ProjectConfig(configuration)))
+                        , new ProjectConfigParser("/config"));
+    }
 
     private Document projectDocument(String projectName, Map<String, String> configuration) {
         RundeckProject project = new RundeckProject();
@@ -386,7 +409,7 @@ public class RundeckClient implements Serializable {
         if (null != configuration) {
             project.setProjectConfig(new ProjectConfig(configuration));
         }
-        return new ProjectGenerator(project).generate();
+        return new ProjectGenerator(project).generateXmlDocument();
     }
 
     /*

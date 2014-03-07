@@ -27,6 +27,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.dom4j.Document;
+import org.rundeck.api.generator.XmlDocumentGenerator;
 import org.rundeck.api.util.ParametersUtil;
 
 /**
@@ -277,6 +278,18 @@ class ApiPathBuilder {
     public ApiPathBuilder xml(final Document document) {
         if (document != null) {
             xmlDocument = document;
+        }
+        return this;
+    }
+    /**
+     * When POSTing a request, add the given XMl Document as the content of the request.
+     *
+     * @param document XMl document to send
+     * @return this, for method chaining
+     */
+    public ApiPathBuilder xml(final XmlDocumentGenerator document) {
+        if (document != null) {
+            xmlDocument = document.generateXmlDocument();
         }
         return this;
     }

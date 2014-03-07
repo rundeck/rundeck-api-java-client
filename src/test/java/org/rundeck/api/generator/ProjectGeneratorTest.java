@@ -17,7 +17,7 @@ public class ProjectGeneratorTest {
         RundeckProject project = new RundeckProject();
         project.setName("monkey1");
 
-        Document doc = new ProjectGenerator(project).generate();
+        Document doc = new ProjectGenerator(project).generateXmlDocument();
         Assert.assertEquals("project", doc.getRootElement().getName());
         Assert.assertNotNull(doc.selectSingleNode("/project/name"));
         Assert.assertEquals("monkey1", doc.selectSingleNode("/project/name").getText());

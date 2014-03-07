@@ -101,6 +101,20 @@ public class RundeckClientTest {
         Assert.assertEquals(9,config.getProperties().size());
         Assert.assertEquals("monkey1", config.getProperties().get("project.name"));
     }
+    @Test
+    @Betamax(tape = "set_project_configv11")
+    public void setProjectConfig() throws Exception {
+        HashMap<String, String> config = new HashMap<String, String>();
+        config.put("alphabetty", "spaghetti");
+        config.put("blha.blee", "a big amazing thingy so there.");
+        ProjectConfig result = createClient(TEST_TOKEN_6, 11).setProjectConfig("monkey1", config);
+        Assert.assertNotNull(result);
+        Assert.assertNotNull(result.getProperties());
+        Assert.assertEquals(3, result.getProperties().size());
+        Assert.assertEquals("monkey1", result.getProperties().get("project.name"));
+        Assert.assertEquals("spaghetti", result.getProperties().get("alphabetty"));
+        Assert.assertEquals("a big amazing thingy so there.", result.getProperties().get("blha.blee"));
+    }
 
     @Test
     @Betamax(tape = "get_history")

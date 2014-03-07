@@ -16,19 +16,10 @@
 package org.rundeck.api;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.Header;
-import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpRequestInterceptor;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.ParseException;
+import org.apache.http.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.*;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
@@ -272,6 +263,27 @@ class ApiCall {
     public <T> T post(ApiPathBuilder apiPath, XmlNodeParser<T> parser) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException {
         HttpPost httpPost = new HttpPost(client.getUrl() + client.getApiEndpoint() + apiPath);
+        return requestWithEntity(apiPath, parser, httpPost);
+    }
+    /**
+     * Execute an HTTP PUT request to the RunDeck instance, on the given path. We will login first, and then execute
+     * the API call. At the end, the given parser will be used to convert the response to a more useful result object.
+     *
+     * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
+     * @param parser used to parse the response
+     * @return the result of the call, as formatted by the parser
+     * @throws RundeckApiException in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    public <T> T put(ApiPathBuilder apiPath, XmlNodeParser<T> parser) throws RundeckApiException,
+            RundeckApiLoginException, RundeckApiTokenException {
+        HttpPut httpPut = new HttpPut(client.getUrl() + client.getApiEndpoint() + apiPath);
+        return requestWithEntity(apiPath, parser, httpPut);
+    }
+
+    private <T> T requestWithEntity(ApiPathBuilder apiPath, XmlNodeParser<T> parser, HttpEntityEnclosingRequestBase
+            httpPost) {
         if(null!= apiPath.getAccept()) {
             httpPost.setHeader("Accept", apiPath.getAccept());
         }
@@ -344,7 +356,7 @@ class ApiCall {
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      */
-    private ByteArrayInputStream execute(HttpRequestBase request) throws RundeckApiException, RundeckApiLoginException,
+    private ByteArrayInputStream execute(HttpUriRequest request) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException {
         HttpClient httpClient = instantiateHttpClient();
         try {

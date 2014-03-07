@@ -12,27 +12,21 @@ import org.rundeck.api.domain.RundeckProject;
  * @author greg
  * @since 2014-02-27
  */
-public class ProjectGenerator {
+public class ProjectGenerator extends BaseDocGenerator {
     RundeckProject project;
 
     public ProjectGenerator(RundeckProject project) {
         this.project = project;
     }
 
-    public Document generate() {
-        Document projectDom = DocumentFactory.getInstance().createDocument();
-        Element rootElem = projectDom.addElement("project");
+    @Override
+    public Element generateXmlElement() {
+        Element rootElem = DocumentFactory.getInstance().createElement("project");
         rootElem.addElement("name").setText(project.getName());
         ProjectConfig configuration = project.getProjectConfig();
         if (null != configuration) {
-
-            Element config = rootElem.addElement("config");
-            for (String s : configuration.getProperties().keySet()) {
-                Element property = config.addElement("property");
-                property.addAttribute("key", s);
-                property.addAttribute("value", configuration.getProperties().get(s));
-            }
+            rootElem.add(new ProjectConfigGenerator(configuration).generateXmlElement());
         }
-        return projectDom;
+        return rootElem;
     }
 }
