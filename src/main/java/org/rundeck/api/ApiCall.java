@@ -15,6 +15,7 @@
  */
 package org.rundeck.api;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.*;
 import org.apache.http.client.HttpClient;
@@ -42,10 +43,7 @@ import org.rundeck.api.parser.XmlNodeParser;
 import org.rundeck.api.util.AssertUtil;
 import org.rundeck.api.util.DocumentContentProducer;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.ProxySelector;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -356,13 +354,35 @@ class ApiCall {
     private <T> T execute(HttpRequestBase request, XmlNodeParser<T> parser) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException {
         // execute the request
-        InputStream response = execute(request);
-
-        // read and parse the response
-        Document xmlDocument = ParserHelper.loadDocument(response);
-        return parser.parseXmlNode(xmlDocument);
+        return new ParserHandler<T>(parser).handle(execute(request, new ResultHandler()));
     }
 
+    /**
+     * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
+     * API call. At the end, the given parser will be used to convert the response to a more useful result object.
+     *
+     * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
+     * @param parser  used to parse the response
+     *
+     * @return the result of the call, as formatted by the parser
+     *
+     * @throws RundeckApiException      in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    public int get(ApiPathBuilder apiPath, OutputStream outputStream) throws RundeckApiException,
+            RundeckApiLoginException, RundeckApiTokenException, IOException {
+        HttpGet request = new HttpGet(client.getUrl() + client.getApiEndpoint() + apiPath);
+        if (null != apiPath.getAccept()) {
+            request.setHeader("Accept", apiPath.getAccept());
+        }
+        WriteOutHandler handler = new WriteOutHandler(outputStream);
+        int wrote = execute(request, handler);
+        if(handler.thrown!=null){
+            throw handler.thrown;
+        }
+        return wrote;
+    }
     /**
      * Execute an HTTP request to the RunDeck instance. We will login first, and then execute the API call.
      * 
@@ -373,6 +393,83 @@ class ApiCall {
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      */
     private ByteArrayInputStream execute(HttpUriRequest request) throws RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException {
+        return execute(request, new ResultHandler() );
+    }
+
+    /**
+     * Handles one type into another
+     * @param <T>
+     * @param <V>
+     */
+    private static interface Handler<T,V>{
+        public V handle(T response);
+    }
+
+    /**
+     * Handles parsing inputstream via a parser
+     * @param <S>
+     */
+    private static class ParserHandler<S> implements Handler<InputStream,S> {
+        XmlNodeParser<S> parser;
+
+        private ParserHandler(XmlNodeParser<S> parser) {
+            this.parser = parser;
+        }
+
+        @Override
+        public S handle(InputStream response) {
+            // read and parse the response
+            return parser.parseXmlNode(ParserHelper.loadDocument(response));
+        }
+    }
+
+    /**
+     * Handles writing response to an output stream
+     */
+    private static class WriteOutHandler implements Handler<HttpResponse,Integer> {
+        private WriteOutHandler(OutputStream writeOut) {
+            this.writeOut = writeOut;
+        }
+
+        OutputStream writeOut;
+        IOException thrown;
+        @Override
+        public Integer handle(final HttpResponse response) {
+            try {
+                return IOUtils.copy(response.getEntity().getContent(), writeOut);
+            } catch (IOException e) {
+                thrown=e;
+            }
+            return -1;
+        }
+    }
+
+    /**
+     * Handles reading response into a byte array stream
+     */
+    private static class ResultHandler implements Handler<HttpResponse,ByteArrayInputStream> {
+        @Override
+        public ByteArrayInputStream handle(final HttpResponse response) {
+            // return a new inputStream, so that we can close all network resources
+            try {
+                return new ByteArrayInputStream(EntityUtils.toByteArray(response.getEntity()));
+            } catch (IOException e) {
+                throw new RundeckApiException("Failed to consume entity and convert the inputStream", e);
+            }
+        }
+    }
+    /**
+     * Execute an HTTP request to the RunDeck instance. We will login first, and then execute the API call.
+     *
+     * @param request to execute. see {@link HttpGet}, {@link HttpDelete}, and so on...
+     * @return a new {@link InputStream} instance, not linked with network resources
+     * @throws RundeckApiException in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    private <T> T execute(HttpUriRequest request, Handler<HttpResponse,T> handler) throws RundeckApiException,
+            RundeckApiLoginException,
             RundeckApiTokenException {
         HttpClient httpClient = instantiateHttpClient();
         try {
@@ -428,13 +525,7 @@ class ApiCall {
                 throw new RundeckApiException("Empty RunDeck response ! HTTP status line is : "
                                               + response.getStatusLine());
             }
-
-            // return a new inputStream, so that we can close all network resources
-            try {
-                return new ByteArrayInputStream(EntityUtils.toByteArray(response.getEntity()));
-            } catch (IOException e) {
-                throw new RundeckApiException("Failed to consume entity and convert the inputStream", e);
-            }
+            return handler.handle(response);
         } finally {
             httpClient.getConnectionManager().shutdown();
         }
