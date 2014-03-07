@@ -34,11 +34,7 @@ import org.rundeck.api.util.AssertUtil;
 import org.rundeck.api.util.PagedResults;
 import org.rundeck.api.util.ParametersUtil;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -377,6 +373,49 @@ public class RundeckClient implements Serializable {
 
         AssertUtil.notBlank(projectName, "projectName is mandatory to create a project !");
         new ApiCall(this).delete(new ApiPathBuilder("/project/", projectName));
+    }
+    /**
+     * Convenience method to export the archive of a project to the specified file.
+     *
+     * @param projectName name of the project - mandatory
+     * @param out         file to write to
+     * @return number of bytes written to the stream
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public int exportProject(final String projectName, final File out) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException, IOException {
+        final FileOutputStream fileOutputStream = new FileOutputStream(out);
+        try {
+            return exportProject(projectName, fileOutputStream);
+        }finally {
+            fileOutputStream.close();
+        }
+    }
+    /**
+     * Export the archive of a project to the specified outputstream
+     *
+     * @param projectName name of the project - mandatory
+     * @return number of bytes written to the stream
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public int exportProject(String projectName, OutputStream out) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException, IOException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to export a project archive!");
+        return new ApiCall(this).get(
+                new ApiPathBuilder("/project/", projectName, "/export")
+                        .accept("application/zip"),
+                out);
     }
     /**
      * Return the configuration of a project

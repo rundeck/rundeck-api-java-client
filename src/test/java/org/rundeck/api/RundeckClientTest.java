@@ -28,6 +28,7 @@ import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.PagedResults;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.util.*;
 
@@ -158,6 +159,15 @@ public class RundeckClientTest {
         client1.deleteProjectConfig("ABC", "monkey-burrito");
         String value=client1.getProjectConfig("ABC", "monkey-burrito");
         Assert.assertNull(value);
+    }
+    @Test
+    @Betamax(tape = "export_projectv11")
+    public void exportProject() throws Exception {
+        RundeckClient client1 = createClient(TEST_TOKEN_6, 11);
+        File temp = File.createTempFile("test-archive", ".zip");
+        temp.deleteOnExit();
+        int i = client1.exportProject("DEF1", temp);
+        Assert.assertEquals(8705,i);
     }
     @Test
     @Betamax(tape = "get_history")
