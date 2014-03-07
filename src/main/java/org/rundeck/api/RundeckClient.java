@@ -362,6 +362,23 @@ public class RundeckClient implements Serializable {
                         )));
     }
     /**
+     * Delete a project
+     *
+     * @param projectName name of the project - mandatory
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public void deleteProject(String projectName) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to create a project !");
+        new ApiCall(this).delete(new ApiPathBuilder("/project/", projectName));
+    }
+    /**
      * Return the configuration of a project
      *
      * @param projectName name of the project - mandatory

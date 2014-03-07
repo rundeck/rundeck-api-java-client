@@ -91,6 +91,20 @@ public class RundeckClientTest {
         Assert.assertNotNull(project.getProjectConfig());
 
     }
+    @Test
+    @Betamax(tape = "delete_projectv11")
+    public void deleteProject() throws Exception {
+        RundeckClient client1 = createClient(TEST_TOKEN_6, 11);
+        client1.deleteProject("delete_me");
+        RundeckProject delete_me = null;
+        try {
+            delete_me = client1.getProject("delete_me");
+            Assert.fail();
+        } catch (RundeckApiException.RundeckApiHttpStatusException e) {
+            Assert.assertEquals(404,e.getStatusCode());
+        }
+
+    }
 
     @Test
     @Betamax(tape = "get_project_configv11")
