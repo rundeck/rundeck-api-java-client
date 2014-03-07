@@ -325,6 +325,22 @@ class ApiCall {
             RundeckApiLoginException, RundeckApiTokenException {
         return execute(new HttpDelete(client.getUrl() + client.getApiEndpoint() + apiPath), parser);
     }
+    /**
+     * Execute an HTTP DELETE request to the RunDeck instance, on the given path, and expect a 204 response.
+     *
+     * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
+     * @throws RundeckApiException in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    public void delete(ApiPathBuilder apiPath) throws RundeckApiException,
+            RundeckApiLoginException, RundeckApiTokenException {
+
+        InputStream response = execute(new HttpDelete(client.getUrl() + client.getApiEndpoint() + apiPath));
+        if(null!=response){
+            throw new RundeckApiException("Unexpected Rundeck response content, expected no content!");
+        }
+    }
 
     /**
      * Execute an HTTP request to the RunDeck instance. We will login first, and then execute the API call. At the end,
@@ -377,7 +393,8 @@ class ApiCall {
 
             // in case of error, we get a redirect to /api/error
             // that we need to follow manually for POST and DELETE requests (as GET)
-            if (response.getStatusLine().getStatusCode() / 100 == 3) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode / 100 == 3) {
                 String newLocation = response.getFirstHeader("Location").getValue();
                 try {
                     EntityUtils.consume(response.getEntity());
@@ -387,21 +404,25 @@ class ApiCall {
                 request = new HttpGet(newLocation);
                 try {
                     response = httpClient.execute(request);
+                    statusCode = response.getStatusLine().getStatusCode();
                 } catch (IOException e) {
                     throw new RundeckApiException("Failed to execute an HTTP GET on url : " + request.getURI(), e);
                 }
             }
 
             // check the response code (should be 2xx, even in case of error : error message is in the XML result)
-            if (response.getStatusLine().getStatusCode() / 100 != 2) {
-                if (response.getStatusLine().getStatusCode() == 403 && 
+            if (statusCode / 100 != 2) {
+                if (statusCode == 403 &&
                         (client.getToken() != null || client.getSessionID() != null)) {
                     throw new RundeckApiTokenException("Invalid Token or sessionID ! Got HTTP response '" + response.getStatusLine()
                                                        + "' for " + request.getURI());
                 } else {
-                    throw new RundeckApiException("Invalid HTTP response '" + response.getStatusLine() + "' for "
-                                                  + request.getURI());
+                    throw new RundeckApiException.RundeckApiHttpStatusException("Invalid HTTP response '" + response.getStatusLine() + "' for "
+                                                  + request.getURI(), statusCode);
                 }
+            }
+            if(statusCode==204){
+                return null;
             }
             if (response.getEntity() == null) {
                 throw new RundeckApiException("Empty RunDeck response ! HTTP status line is : "

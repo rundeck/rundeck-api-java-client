@@ -82,5 +82,27 @@ public class RundeckApiException extends RuntimeException {
             super(message, cause);
         }
     }
+    /**
+     * Error due to unexpected HTTP status
+     */
+    public static class RundeckApiHttpStatusException extends RundeckApiAuthException {
+
+        private static final long serialVersionUID = 1L;
+        private int statusCode;
+
+        public RundeckApiHttpStatusException(String message, int statusCode) {
+            super(message);
+            this.statusCode = statusCode;
+        }
+
+        public RundeckApiHttpStatusException(String message, Throwable cause, int statusCode) {
+            super(message, cause);
+            this.statusCode = statusCode;
+        }
+
+        public int getStatusCode() {
+            return statusCode;
+        }
+    }
 
 }
