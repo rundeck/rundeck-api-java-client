@@ -117,6 +117,35 @@ public class RundeckClientTest {
     }
 
     @Test
+    @Betamax(tape = "get_project_config_keyedv11")
+    public void getProjectConfigKeyed() throws Exception {
+        String value = createClient(TEST_TOKEN_6, 11).getProjectConfig("ABC", "project.name");
+        Assert.assertNotNull(value);
+        Assert.assertEquals("ABC", value);
+    }
+    @Test
+    @Betamax(tape = "get_project_config_keyed_dne_v11")
+    public void getProjectConfigKeyedDNE() throws Exception {
+        String value = createClient(TEST_TOKEN_6, 11).getProjectConfig("ABC", "does-not-exist");
+        Assert.assertNull(value);
+    }
+    @Test
+    @Betamax(tape = "set_project_config_keyedv11")
+    public void setProjectConfigKeyed() throws Exception {
+        String value = createClient(TEST_TOKEN_6, 11).setProjectConfig("ABC", "monkey-burrito", "lemon pie");
+        Assert.assertNotNull(value);
+        Assert.assertEquals("lemon pie", value);
+    }
+    @Test
+    @Betamax(tape = "delete_project_config_keyedv11")
+    public void deleteProjectConfigKeyed() throws Exception {
+        RundeckClient client1 = createClient(TEST_TOKEN_6, 11);
+        Assert.assertEquals("7up", client1.setProjectConfig("ABC", "monkey-burrito", "7up"));
+        client1.deleteProjectConfig("ABC", "monkey-burrito");
+        String value=client1.getProjectConfig("ABC", "monkey-burrito");
+        Assert.assertNull(value);
+    }
+    @Test
     @Betamax(tape = "get_history")
     public void getHistory() throws Exception {
         final RundeckHistory test = client.getHistory("test");

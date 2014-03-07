@@ -1,0 +1,22 @@
+!tape
+name: get_project_config_keyed_dne_v11
+interactions:
+- recorded: 2014-03-07T20:19:47.533Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/project/ABC/config/does-not-exist
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: Do4d3NUD5DKk21DR4sNK755RcPk618vn
+  response:
+    status: 404
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=2367tnltmmec14cn79ps4fam9;Path=/
+      X-Rundeck-API-Version: '11'
+    body: "<result error='true' apiversion='11'>\n  <error code='api.error.item.doesnotexist'>\n    <message>property does not exist: does-not-exist</message>\n  </error>\n</result>"

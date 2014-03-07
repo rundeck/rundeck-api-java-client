@@ -26,6 +26,7 @@ import org.rundeck.api.RundeckApiException.RundeckApiTokenException;
 import org.rundeck.api.domain.*;
 import org.rundeck.api.domain.RundeckExecution.ExecutionStatus;
 import org.rundeck.api.generator.ProjectConfigGenerator;
+import org.rundeck.api.generator.ProjectConfigPropertyGenerator;
 import org.rundeck.api.generator.ProjectGenerator;
 import org.rundeck.api.parser.*;
 import org.rundeck.api.query.ExecutionQuery;
@@ -379,6 +380,92 @@ public class RundeckClient implements Serializable {
         AssertUtil.notBlank(projectName, "projectName is mandatory to get the config of a project !");
         return new ApiCall(this)
                 .get(new ApiPathBuilder("/project/", projectName, "/config"), new ProjectConfigParser("/config"));
+    }
+    /**
+     * Get a single project configuration key
+     *
+     * @param projectName name of the project - mandatory
+     * @param key name of the configuration key
+     *
+     * @return value, or null if the value is not set
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public String getProjectConfig(final String projectName, final String key) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to get the config of a project !");
+        AssertUtil.notBlank(key, "key is mandatory to get the config key value!");
+
+        ConfigProperty configProperty = null;
+        try {
+            configProperty = new ApiCall(this)
+                    .get(new ApiPathBuilder("/project/", projectName, "/config/", key),
+                            new ProjectConfigPropertyParser("/property"));
+        } catch (RundeckApiException.RundeckApiHttpStatusException e) {
+            if(404==e.getStatusCode()){
+                return null;
+            }
+            throw e;
+        }
+        return configProperty.getValue();
+    }
+    /**
+     * Set a single project configuration property value
+     *
+     * @param projectName name of the project - mandatory
+     * @param key name of the configuration property
+     * @param value value of the property
+     *
+     * @return new value
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public String setProjectConfig(final String projectName, final String key, final String value) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to set the config of a project !");
+        AssertUtil.notBlank(key, "key is mandatory to set the config key value!");
+        AssertUtil.notBlank(value, "value is mandatory to set the config key value!");
+
+        final ConfigProperty configProperty = new ApiCall(this)
+                .put(new ApiPathBuilder("/project/", projectName, "/config/", key)
+                        .xml(new ProjectConfigPropertyGenerator(new ConfigProperty(key, value))),
+                        new ProjectConfigPropertyParser("/property"));
+
+        return configProperty.getValue();
+    }
+    /**
+     * Set a single project configuration property value
+     *
+     * @param projectName name of the project - mandatory
+     * @param key name of the configuration property
+     * @param value value of the property
+     *
+     * @return new value
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public void deleteProjectConfig(final String projectName, final String key) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to set the config of a project !");
+        AssertUtil.notBlank(key, "key is mandatory to set the config key value!");
+
+        new ApiCall(this).delete(new ApiPathBuilder("/project/", projectName, "/config/",
+                key).accept("application/xml"));
     }
     /**
      * Return the configuration of a project
