@@ -24,7 +24,9 @@ import org.apache.http.client.methods.*;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.entity.EntityTemplate;
+import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.InputStreamBody;
@@ -298,6 +300,13 @@ class ApiCall {
             } catch (UnsupportedEncodingException e) {
                 throw new RundeckApiException("Unsupported encoding: " + e.getMessage(), e);
             }
+        }else if(apiPath.getContentStream() !=null && apiPath.getContentType()!=null){
+            BasicHttpEntity entity = new BasicHttpEntity();
+            entity.setContent(apiPath.getContentStream());
+            entity.setContentType(apiPath.getContentType());
+            httpPost.setEntity(entity);
+        }else if(apiPath.getContentFile() !=null && apiPath.getContentType()!=null){
+            httpPost.setEntity(new FileEntity(apiPath.getContentFile(), apiPath.getContentType()));
         }else if(apiPath.getXmlDocument()!=null) {
             httpPost.setHeader("Content-Type", "application/xml");
             httpPost.setEntity(new EntityTemplate(new DocumentContentProducer(apiPath.getXmlDocument())));

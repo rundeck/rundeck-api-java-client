@@ -15,6 +15,7 @@
  */
 package org.rundeck.api;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,6 +47,9 @@ class ApiPathBuilder {
     private final Map<String, InputStream> attachments;
     private final List<NameValuePair> form = new ArrayList<NameValuePair>();
     private Document xmlDocument;
+    private InputStream contentStream;
+    private File contentFile;
+    private String contentType;
 
     /** Marker for using the right separator between parameters ("?" or "&") */
     private boolean firstParamDone = false;
@@ -59,6 +63,10 @@ class ApiPathBuilder {
     public ApiPathBuilder(String... paths) {
         apiPath = new StringBuilder();
         attachments = new HashMap<String, InputStream>();
+        paths(paths);
+    }
+
+    public ApiPathBuilder paths(String... paths) {
         if (paths != null) {
             for (String path : paths) {
                 if (StringUtils.isNotBlank(path)) {
@@ -66,6 +74,7 @@ class ApiPathBuilder {
                 }
             }
         }
+        return this;
     }
 
     /**
@@ -270,6 +279,36 @@ class ApiPathBuilder {
         return this;
     }
     /**
+     * When POSTing a request, use the given {@link InputStream} as the content of the request. This
+     * will only add the stream if it is not null.
+     *
+     * @param contentType MIME content type ofr hte request
+     * @param stream content stream
+     * @return this, for method chaining
+     */
+    public ApiPathBuilder content(final String contentType, final InputStream stream) {
+        if (stream != null && contentType != null) {
+            this.contentStream=stream;
+            this.contentType=contentType;
+        }
+        return this;
+    }
+    /**
+     * When POSTing a request, use the given {@link File} as the content of the request. This
+     * will only add the stream if it is not null.
+     *
+     * @param contentType MIME content type ofr hte request
+     * @param file content from a file
+     * @return this, for method chaining
+     */
+    public ApiPathBuilder content(final String contentType, final File file) {
+        if (file != null && contentType != null) {
+            this.contentFile=file;
+            this.contentType=contentType;
+        }
+        return this;
+    }
+    /**
      * When POSTing a request, add the given XMl Document as the content of the request.
      *
      * @param document XMl document to send
@@ -350,6 +389,18 @@ class ApiPathBuilder {
 
     public Document getXmlDocument() {
         return xmlDocument;
+    }
+
+    public InputStream getContentStream() {
+        return contentStream;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public File getContentFile() {
+        return contentFile;
     }
 
     /**
