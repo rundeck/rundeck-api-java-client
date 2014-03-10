@@ -417,6 +417,44 @@ public class RundeckClient implements Serializable {
                         .accept("application/zip"),
                 out);
     }
+
+    /**
+     * Import a archive file to the specified project.
+     *
+     * @param projectName name of the project - mandatory
+     * @param archiveFile zip archive file
+     * @param includeExecutions if true, import executions defined in the archive, otherwise skip them
+     * @param preserveJobUuids if true, do not remove UUIDs from imported jobs, otherwise remove them
+     *
+     * @return Result of the import request, may contain a list of import error messages
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public ArchiveImport importArchive(final String projectName, final File archiveFile,
+            final boolean includeExecutions, final boolean preserveJobUuids) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException, IOException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to import a project archive!");
+        AssertUtil.notNull(archiveFile, "archiveFile is mandatory to import a project archive!"); ;
+        return callImportProject(projectName, includeExecutions, preserveJobUuids,
+                new ApiPathBuilder().content("application/zip", archiveFile));
+    }
+
+    private ArchiveImport callImportProject(final String projectName, final boolean includeExecutions, final boolean preserveJobUuids,
+            final ApiPathBuilder param) {
+        param.paths("/project/", projectName, "/import")
+        .param("importExecutions", includeExecutions)
+        .param("jobUuidOption", preserveJobUuids ? "preserve" : "remove");
+        return new ApiCall(this).put(
+                param,
+                new ArchiveImportParser()
+        );
+    }
+
     /**
      * Return the configuration of a project
      *

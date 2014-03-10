@@ -1,0 +1,71 @@
+!tape
+name: import_project_suv11
+interactions:
+- recorded: 2014-03-09T23:57:25.471Z
+  request:
+    method: PUT
+    uri: http://rundeck.local:4440/api/11/project/DEF2/import?importExecutions=true&jobUuidOption=preserve
+    headers:
+      Accept: text/xml
+      Content-Length: '8705'
+      Content-Type: application/zip
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: Do4d3NUD5DKk21DR4sNK755RcPk618vn
+    body: ''
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=10hrj0jebdc621ukdlal6qqyu3;Path=/
+      X-Rundeck-API-Version: '11'
+      X-Rundeck-API-XML-Response-Wrapper: 'false'
+    body: !!binary |-
+      PGltcG9ydCBzdGF0dXM9J3N1Y2Nlc3NmdWwnIC8+
+- recorded: 2014-03-09T23:57:26.403Z
+  request:
+    method: PUT
+    uri: http://rundeck.local:4440/api/11/project/DEF2/import?importExecutions=false&jobUuidOption=preserve
+    headers:
+      Accept: text/xml
+      Content-Length: '8705'
+      Content-Type: application/zip
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: Do4d3NUD5DKk21DR4sNK755RcPk618vn
+    body: ''
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '11'
+      X-Rundeck-API-XML-Response-Wrapper: 'false'
+    body: !!binary |-
+      PGltcG9ydCBzdGF0dXM9J3N1Y2Nlc3NmdWwnIC8+
+- recorded: 2014-03-09T23:57:27.155Z
+  request:
+    method: PUT
+    uri: http://rundeck.local:4440/api/11/project/DEF2/import?importExecutions=true&jobUuidOption=remove
+    headers:
+      Accept: text/xml
+      Content-Length: '8705'
+      Content-Type: application/zip
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: Do4d3NUD5DKk21DR4sNK755RcPk618vn
+    body: ''
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '11'
+      X-Rundeck-API-XML-Response-Wrapper: 'false'
+    body: !!binary |-
+      PGltcG9ydCBzdGF0dXM9J3N1Y2Nlc3NmdWwnIC8+

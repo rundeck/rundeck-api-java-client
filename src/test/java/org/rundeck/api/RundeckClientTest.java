@@ -19,6 +19,7 @@ import betamax.Betamax;
 import betamax.MatchRule;
 import betamax.Recorder;
 import betamax.TapeMode;
+import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -27,9 +28,7 @@ import org.rundeck.api.domain.*;
 import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.PagedResults;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 
@@ -167,7 +166,45 @@ public class RundeckClientTest {
         File temp = File.createTempFile("test-archive", ".zip");
         temp.deleteOnExit();
         int i = client1.exportProject("DEF1", temp);
-        Assert.assertEquals(8705,i);
+        Assert.assertEquals(8705, i);
+    }
+    @Test
+    @Betamax(tape = "import_project_suv11",mode = TapeMode.READ_ONLY)
+    public void importProjectSuccess() throws Exception {
+        RundeckClient client1 = createClient(TEST_TOKEN_6, 11);
+        InputStream resourceAsStream = getClass().getResourceAsStream("test-archive.zip");
+        File temp = File.createTempFile("test-archive", ".zip");
+        temp.deleteOnExit();
+        IOUtils.copy(resourceAsStream, new FileOutputStream(temp));
+        ArchiveImport def1 = client1.importArchive("DEF2", temp, true, true);
+        Assert.assertTrue(def1.isSuccessful());
+        Assert.assertEquals(0, def1.getErrorMessages().size());
+
+        ArchiveImport def2 = client1.importArchive("DEF2", temp, false, true);
+        Assert.assertTrue(def2.isSuccessful());
+        Assert.assertEquals(0, def2.getErrorMessages().size());
+
+        ArchiveImport def3 = client1.importArchive("DEF2", temp, true, false);
+        Assert.assertTrue(def3.isSuccessful());
+        Assert.assertEquals(0, def3.getErrorMessages().size());
+        temp.delete();
+    }
+    @Test
+    @Betamax(tape = "import_project_failure_v11", mode = TapeMode.READ_ONLY)
+    public void importProjectFailure() throws Exception {
+        RundeckClient client1 = createClient(TEST_TOKEN_6, 11);
+        InputStream resourceAsStream = getClass().getResourceAsStream("test-archive.zip");
+        File temp = File.createTempFile("test-archive", ".zip");
+        temp.deleteOnExit();
+        IOUtils.copy(resourceAsStream, new FileOutputStream(temp));
+        ArchiveImport def1 = client1.importArchive("DEF1", temp, false, true);
+        Assert.assertFalse(def1.isSuccessful());
+        Assert.assertEquals(10, def1.getErrorMessages().size());
+        Assert.assertEquals("Job at index [1] at archive path: " +
+                "rundeck-DEF1/jobs/job-6fd1808c-eafb-49ac-abf2-4de7ec75872f.xml had errors: Validation errors: Cannot" +
+                " create a Job with UUID 6fd1808c-eafb-49ac-abf2-4de7ec75872f: a Job already exists with this UUID. " +
+                "Change the UUID or delete the other Job.", def1.getErrorMessages().get(0));
+
     }
     @Test
     @Betamax(tape = "get_history")
