@@ -50,6 +50,7 @@ class ApiPathBuilder {
     private InputStream contentStream;
     private File contentFile;
     private String contentType;
+    private boolean emptyContent = false;
 
     /** Marker for using the right separator between parameters ("?" or "&") */
     private boolean firstParamDone = false;
@@ -309,6 +310,15 @@ class ApiPathBuilder {
         return this;
     }
     /**
+     * When POSTing a request, send an empty request.
+     *
+     * @return this, for method chaining
+     */
+    public ApiPathBuilder emptyContent() {
+        this.emptyContent=true;
+        return this;
+    }
+    /**
      * When POSTing a request, add the given XMl Document as the content of the request.
      *
      * @param document XMl document to send
@@ -403,6 +413,9 @@ class ApiPathBuilder {
         return contentFile;
     }
 
+    public boolean isEmptyContent() {
+        return emptyContent;
+    }
     /**
      * BuildsParameters can add URL or POST parameters to an {@link ApiPathBuilder}
      *

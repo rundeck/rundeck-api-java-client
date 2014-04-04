@@ -310,6 +310,8 @@ class ApiCall {
         }else if(apiPath.getXmlDocument()!=null) {
             httpPost.setHeader("Content-Type", "application/xml");
             httpPost.setEntity(new EntityTemplate(new DocumentContentProducer(apiPath.getXmlDocument())));
+        }else if(apiPath.isEmptyContent()){
+            //empty content
         }else {
             throw new IllegalArgumentException("No Form or Multipart entity for POST content-body");
         }
