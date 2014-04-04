@@ -2310,6 +2310,70 @@ public class RundeckClient implements Serializable {
         return new ApiCall(this).get(new ApiPathBuilder("/system/info"), new SystemInfoParser(rootXpath()+"/system"));
     }
 
+
+    /*
+     * API token
+     */
+
+    /**
+     * List API tokens for a user.
+     * @param user username
+     * @return list of tokens
+     * @throws RundeckApiException
+     */
+    public List<RundeckToken> listApiTokens(final String user) throws RundeckApiException {
+        AssertUtil.notNull(user, "user is mandatory to list API tokens for a user.");
+        return new ApiCall(this).
+                get(new ApiPathBuilder("/tokens/", user),
+                        new ListParser<RundeckToken>(new RundeckTokenParser(), "/tokens/token"));
+    }
+
+    /**
+     * List all API tokens
+     * @return list of tokens
+     * @throws RundeckApiException
+     */
+    public List<RundeckToken> listApiTokens() throws RundeckApiException {
+        return new ApiCall(this).
+                get(new ApiPathBuilder("/tokens"),
+                        new ListParser<RundeckToken>(new RundeckTokenParser(), "/tokens/token"));
+    }
+
+    /**
+     * Generate an API token for a user.
+     * @param user
+     * @return
+     * @throws RundeckApiException
+     */
+    public String generateApiToken(final String user) throws RundeckApiException{
+        AssertUtil.notNull(user, "user is mandatory to generate an API token for a user.");
+        RundeckToken result = new ApiCall(this).
+                post(new ApiPathBuilder("/tokens/", user).emptyContent(),
+                        new RundeckTokenParser("/token"));
+        return result.getToken();
+    }
+    /**
+     * Delete an existing token
+     * @param token
+     * @return
+     * @throws RundeckApiException
+     */
+    public boolean deleteApiToken(final String token) throws RundeckApiException{
+        AssertUtil.notNull(token, "token is mandatory to delete an API token.");
+        new ApiCall(this).delete(new ApiPathBuilder("/token/", token));
+        return true;
+    }
+    /**
+     * Return user info for an existing token
+     * @param token
+     * @return token info
+     * @throws RundeckApiException
+     */
+    public RundeckToken getApiToken(final String token) throws RundeckApiException{
+        AssertUtil.notNull(token, "token is mandatory to get an API token.");
+        return new ApiCall(this).get(new ApiPathBuilder("/token/", token), new RundeckTokenParser("/token"));
+    }
+
     /**
      * @return the URL of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
      */

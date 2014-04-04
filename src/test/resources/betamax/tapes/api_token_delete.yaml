@@ -1,0 +1,36 @@
+!tape
+name: api_token_delete
+interactions:
+- recorded: 2014-04-04T18:38:18.432Z
+  request:
+    method: DELETE
+    uri: http://rundeck.local:4440/api/11/token/MiquQjELTrEaugpmdgAKs1W3a7xonAwU
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 204
+    headers:
+      Content-Type: text/html;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=j0fidhqqsmlt1qmvaawr52a42;Path=/
+- recorded: 2014-04-04T18:38:18.523Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/token/MiquQjELTrEaugpmdgAKs1W3a7xonAwU
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 404
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '11'
+    body: "<result error='true' apiversion='11'>\n  <error code='api.error.item.doesnotexist'>\n    <message>Token does not exist: MiquQjELTrEaugpmdgAKs1W3a7xonAwU</message>\n  </error>\n</result>"

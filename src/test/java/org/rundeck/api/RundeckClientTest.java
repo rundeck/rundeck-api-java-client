@@ -55,6 +55,7 @@ public class RundeckClientTest {
     public static final String TEST_TOKEN_4 = "sN5RRSNvu15DnV6EcNDdc2CkdPcv3s32";
     public static final String TEST_TOKEN_5 = "C3O6d5O98Kr6Dpv71sdE4ERdCuU12P6d";
     public static final String TEST_TOKEN_6 = "Do4d3NUD5DKk21DR4sNK755RcPk618vn";
+    public static final String TEST_TOKEN_7 = "8Dp9op111ER6opsDRkddvE86K9sE499s";
 
     @Rule
     public Recorder recorder = new Recorder();
@@ -1195,6 +1196,89 @@ public class RundeckClientTest {
         Assert.assertEquals(1,output.getStepCount());
         Assert.assertEquals(1,output.getSteps().size());
         Assert.assertEquals(RundeckWFExecState.SUCCEEDED,output.getExecutionState());
+    }
+
+    /**
+     * generate api token
+     */
+    @Test
+    @Betamax(tape = "api_token_generate", mode = TapeMode.READ_ONLY)
+    public void generateApiToken() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        String token = client.generateApiToken("bob");
+
+        Assert.assertNotNull(token);
+        Assert.assertEquals("MiquQjELTrEaugpmdgAKs1W3a7xonAwU", token);
+    }
+    /**
+     * get api token
+     */
+    @Test
+    @Betamax(tape = "api_token_get", mode = TapeMode.READ_ONLY)
+    public void getApiToken() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        RundeckToken token = client.getApiToken("MiquQjELTrEaugpmdgAKs1W3a7xonAwU");
+
+        Assert.assertNotNull(token);
+        Assert.assertEquals("MiquQjELTrEaugpmdgAKs1W3a7xonAwU", token.getToken());
+        Assert.assertEquals("bob", token.getUser());
+    }
+    /**
+     * list api tokens for user
+     */
+    @Test
+    @Betamax(tape = "api_tokens_list_user", mode = TapeMode.READ_ONLY)
+    public void listApiTokens_user() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        List<RundeckToken> tokens = client.listApiTokens("bob");
+
+        Assert.assertNotNull(tokens);
+        Assert.assertEquals(3, tokens.size());
+        Assert.assertEquals("hINp5eGzvYA9UePbUChaKHd5NiRkwWbx", tokens.get(0).getToken());
+        Assert.assertEquals("bob", tokens.get(0).getUser());
+        Assert.assertEquals("NaNnwVzAHAG83qOS7Wtwh6mjcXViyWUV", tokens.get(1).getToken());
+        Assert.assertEquals("bob", tokens.get(1).getUser());
+        Assert.assertEquals("MiquQjELTrEaugpmdgAKs1W3a7xonAwU", tokens.get(2).getToken());
+        Assert.assertEquals("bob", tokens.get(2).getUser());
+    }
+    /**
+     * list api tokens all
+     */
+    @Test
+    @Betamax(tape = "api_tokens_list_all"/*, mode = TapeMode.READ_ONLY*/)
+    public void listApiTokens() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        List<RundeckToken> tokens = client.listApiTokens();
+
+        Assert.assertNotNull(tokens);
+        Assert.assertEquals(4, tokens.size());
+        Assert.assertEquals("8Dp9op111ER6opsDRkddvE86K9sE499s", tokens.get(0).getToken());
+        Assert.assertEquals("admin", tokens.get(0).getUser());
+        Assert.assertEquals("hINp5eGzvYA9UePbUChaKHd5NiRkwWbx", tokens.get(1).getToken());
+        Assert.assertEquals("bob", tokens.get(1).getUser());
+        Assert.assertEquals("NaNnwVzAHAG83qOS7Wtwh6mjcXViyWUV", tokens.get(2).getToken());
+        Assert.assertEquals("bob", tokens.get(2).getUser());
+        Assert.assertEquals("MiquQjELTrEaugpmdgAKs1W3a7xonAwU", tokens.get(3).getToken());
+        Assert.assertEquals("bob", tokens.get(3).getUser());
+    }
+
+    /**
+     * get api token
+     */
+    @Test
+    @Betamax(tape = "api_token_delete"/*, mode = TapeMode.READ_ONLY*/)
+    public void deleteApiToken() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+
+        client.deleteApiToken("MiquQjELTrEaugpmdgAKs1W3a7xonAwU");
+
+        //get should now return 404
+        try {
+            client.getApiToken("MiquQjELTrEaugpmdgAKs1W3a7xonAwU");
+            Assert.fail("expected failure");
+        } catch (RundeckApiException.RundeckApiHttpStatusException e) {
+            Assert.assertEquals(404, e.getStatusCode());
+        }
     }
 
     @Before
