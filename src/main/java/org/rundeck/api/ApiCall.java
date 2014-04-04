@@ -387,10 +387,14 @@ class ApiCall {
         if (null != apiPath.getAccept()) {
             request.setHeader("Accept", apiPath.getAccept());
         }
-        WriteOutHandler handler = new WriteOutHandler(outputStream);
-        int wrote = execute(request, handler);
-        if(handler.thrown!=null){
-            throw handler.thrown;
+        final WriteOutHandler writeOutHandler = new WriteOutHandler(outputStream);
+        Handler<HttpResponse,Integer> handler = writeOutHandler;
+        if(null!=apiPath.getRequiredContentType()){
+            handler = new RequireContentTypeHandler<Integer>(apiPath.getRequiredContentType(), handler);
+        }
+        final int wrote = execute(request, handler);
+        if(writeOutHandler.thrown!=null){
+            throw writeOutHandler.thrown;
         }
         return wrote;
     }
@@ -432,6 +436,51 @@ class ApiCall {
         public S handle(InputStream response) {
             // read and parse the response
             return parser.parseXmlNode(ParserHelper.loadDocument(response));
+        }
+    }
+
+    /**
+     * Handles writing response to an output stream
+     */
+    private static class ChainHandler<T> implements Handler<HttpResponse,T> {
+        Handler<HttpResponse, T> chain;
+        private ChainHandler(Handler<HttpResponse,T> chain) {
+            this.chain=chain;
+        }
+        @Override
+        public T handle(final HttpResponse response) {
+            return chain.handle(response);
+        }
+    }
+
+    /**
+     * Handles writing response to an output stream
+     */
+    private static class RequireContentTypeHandler<T> extends ChainHandler<T> {
+        String contentType;
+
+        private RequireContentTypeHandler(final String contentType, final Handler<HttpResponse, T> chain) {
+            super(chain);
+            this.contentType = contentType;
+        }
+
+        @Override
+        public T handle(final HttpResponse response) {
+            final Header firstHeader = response.getFirstHeader("Content-Type");
+            final String[] split = firstHeader.getValue().split(";");
+            boolean matched=false;
+            for (int i = 0; i < split.length; i++) {
+                String s = split[i];
+                if (this.contentType.equalsIgnoreCase(s.trim())) {
+                    matched=true;
+                    break;
+                }
+            }
+            if(!matched) {
+                throw new RundeckApiException.RundeckApiHttpContentTypeException(firstHeader.getValue(),
+                        this.contentType);
+            }
+            return super.handle(response);
         }
     }
 

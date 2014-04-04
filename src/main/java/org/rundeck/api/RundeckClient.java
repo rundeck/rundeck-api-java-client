@@ -19,8 +19,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
-import org.dom4j.DocumentFactory;
-import org.dom4j.Element;
 import org.rundeck.api.RundeckApiException.RundeckApiLoginException;
 import org.rundeck.api.RundeckApiException.RundeckApiTokenException;
 import org.rundeck.api.domain.*;
@@ -83,6 +81,8 @@ public class RundeckClient implements Serializable {
 
     private static final long serialVersionUID = 1L;
     public static final String JOBS_IMPORT = "/jobs/import";
+    public static final String STORAGE_ROOT_PATH = "/storage/";
+    public static final String SSH_KEY_PATH = "ssh-key/";
 
     /**
      * Supported version numbers
@@ -2372,6 +2372,139 @@ public class RundeckClient implements Serializable {
     public RundeckToken getApiToken(final String token) throws RundeckApiException{
         AssertUtil.notNull(token, "token is mandatory to get an API token.");
         return new ApiCall(this).get(new ApiPathBuilder("/token/", token), new RundeckTokenParser("/token"));
+    }
+
+    /**
+     * Store an SSH key file
+     * @param path ssh key storage path, must start with "ssh-key/"
+     * @param keyfile key file
+     * @param privateKey true to store private key, false to store public key
+     * @return the SSH key resource
+     * @throws RundeckApiException
+     */
+    public SSHKeyResource storeSshKey(final String path, final File keyfile, boolean privateKey) throws RundeckApiException{
+        AssertUtil.notNull(path, "path is mandatory to store an SSH key.");
+        AssertUtil.notNull(keyfile, "keyfile is mandatory to store an SSH key.");
+        if (!path.startsWith(SSH_KEY_PATH)) {
+            throw new IllegalArgumentException("SSH key storage path must start with: " + SSH_KEY_PATH);
+        }
+        return new ApiCall(this).post(
+                new ApiPathBuilder(STORAGE_ROOT_PATH, path).content(
+                        privateKey ? "application/octet-stream" : "application/pgp-keys",
+                        keyfile
+                ),
+                new SSHKeyResourceParser("/resource")
+        );
+    }
+
+    /**
+     * Get metadata for an SSH key file
+     *
+     * @param path ssh key storage path, must start with "ssh-key/"
+     *
+     * @return the ssh key resource
+     *
+     * @throws RundeckApiException if there is an error, or if the path is a directory not a file
+     */
+    public SSHKeyResource getSshKey(final String path) throws RundeckApiException {
+        AssertUtil.notNull(path, "path is mandatory to get an SSH key.");
+        if (!path.startsWith(SSH_KEY_PATH)) {
+            throw new IllegalArgumentException("SSH key storage path must start with: " + SSH_KEY_PATH);
+        }
+        SSHKeyResource storageResource = new ApiCall(this).get(
+                new ApiPathBuilder(STORAGE_ROOT_PATH, path),
+                new SSHKeyResourceParser("/resource")
+        );
+        if (storageResource.isDirectory()) {
+            throw new RundeckApiException("SSH Key Path is a directory: " + path);
+        }
+        return storageResource;
+    }
+
+    /**
+     * Get content for a public SSH key file
+     * @param path ssh key storage path, must start with "ssh-key/"
+     * @param out outputstream to write data to
+     *
+     * @return length of written data
+     * @throws RundeckApiException
+     */
+    public int getPublicSshKeyContent(final String path, final OutputStream out) throws
+            RundeckApiException, IOException {
+        AssertUtil.notNull(path, "path is mandatory to get an SSH key.");
+        if (!path.startsWith(SSH_KEY_PATH)) {
+            throw new IllegalArgumentException("SSH key storage path must start with: " + SSH_KEY_PATH);
+        }
+        try {
+            return new ApiCall(this).get(
+                    new ApiPathBuilder(STORAGE_ROOT_PATH, path)
+                            .accept("application/pgp-keys")
+                            .requireContentType("application/pgp-keys"),
+                    out
+            );
+        } catch (RundeckApiException.RundeckApiHttpContentTypeException e) {
+            throw new RundeckApiException("Requested SSH Key path was not a Public key: " + path, e);
+        }
+    }
+
+    /**
+     * Get content for a public SSH key file
+     * @param path ssh key storage path, must start with "ssh-key/"
+     * @param out file to write data to
+     * @return length of written data
+     * @throws RundeckApiException
+     */
+    public int getPublicSshKeyContent(final String path, final File out) throws
+            RundeckApiException, IOException {
+        final FileOutputStream fileOutputStream = new FileOutputStream(out);
+        try {
+            return getPublicSshKeyContent(path, fileOutputStream);
+        }finally {
+            fileOutputStream.close();
+        }
+    }
+
+    /**
+     * List contents of root SSH key directory
+     *
+     * @return list of SSH key resources
+     * @throws RundeckApiException
+     */
+    public List<SSHKeyResource> listSshKeyDirectoryRoot() throws RundeckApiException {
+        return listSshKeyDirectory(SSH_KEY_PATH);
+    }
+    /**
+     * List contents of SSH key directory
+     *
+     * @param path ssh key storage path, must start with "ssh-key/"
+     *
+     * @throws RundeckApiException if there is an error, or if the path is a file not a directory
+     */
+    public List<SSHKeyResource> listSshKeyDirectory(final String path) throws RundeckApiException {
+        AssertUtil.notNull(path, "path is mandatory to get an SSH key.");
+        if (!path.startsWith(SSH_KEY_PATH)) {
+            throw new IllegalArgumentException("SSH key storage path must start with: " + SSH_KEY_PATH);
+        }
+        SSHKeyResource storageResource = new ApiCall(this).get(
+                new ApiPathBuilder(STORAGE_ROOT_PATH, path),
+                new SSHKeyResourceParser("/resource")
+        );
+        if(!storageResource.isDirectory()) {
+            throw new RundeckApiException("SSH key path is not a directory path: " + path);
+        }
+        return storageResource.getDirectoryContents();
+    }
+
+    /**
+     * Delete an SSH key file
+     * @param path a path to a SSH key file, must start with "ssh-key/"
+     */
+    public void deleteSshKey(final String path){
+        AssertUtil.notNull(path, "path is mandatory to delete an SSH key.");
+        if (!path.startsWith(SSH_KEY_PATH)) {
+            throw new IllegalArgumentException("SSH key storage path must start with: " + SSH_KEY_PATH);
+        }
+        new ApiCall(this).delete(new ApiPathBuilder(STORAGE_ROOT_PATH, path));
     }
 
     /**

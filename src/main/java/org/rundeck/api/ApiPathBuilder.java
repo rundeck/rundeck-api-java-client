@@ -50,6 +50,7 @@ class ApiPathBuilder {
     private InputStream contentStream;
     private File contentFile;
     private String contentType;
+    private String requiredContentType;
     private boolean emptyContent = false;
 
     /** Marker for using the right separator between parameters ("?" or "&") */
@@ -416,6 +417,16 @@ class ApiPathBuilder {
     public boolean isEmptyContent() {
         return emptyContent;
     }
+
+    public ApiPathBuilder requireContentType(String contentType) {
+        this.requiredContentType=contentType;
+        return this;
+    }
+
+    public String getRequiredContentType() {
+        return requiredContentType;
+    }
+
     /**
      * BuildsParameters can add URL or POST parameters to an {@link ApiPathBuilder}
      *

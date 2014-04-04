@@ -1280,6 +1280,215 @@ public class RundeckClientTest {
             Assert.assertEquals(404, e.getStatusCode());
         }
     }
+    /**
+     * Store ssh key
+     */
+    @Test
+    @Betamax(tape = "ssh_key_store_private", mode = TapeMode.READ_ONLY)
+    public void storeSshKey_private() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        File temp = File.createTempFile("test-key", ".tmp");
+        temp.deleteOnExit();
+        FileOutputStream out = new FileOutputStream(temp);
+        try{
+            out.write("test1".getBytes());
+        }finally {
+            out.close();
+        }
+        SSHKeyResource storageResource = client.storeSshKey("ssh-key/test/example/file1.pem", temp, true);
+        Assert.assertNotNull(storageResource);
+        Assert.assertFalse(storageResource.isDirectory());
+        Assert.assertTrue(storageResource.isPrivateKey());
+        Assert.assertEquals("file1.pem", storageResource.getName());
+        Assert.assertEquals("ssh-key/test/example/file1.pem", storageResource.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/ssh-key/test/example/file1.pem",
+                storageResource.getUrl());
+        Assert.assertEquals(0, storageResource.getDirectoryContents().size());
+        Map<String, String> metadata = storageResource.getMetadata();
+        Assert.assertNotNull(metadata);
+        Assert.assertEquals("application/octet-stream", metadata.get("Rundeck-content-type"));
+        Assert.assertEquals("private", metadata.get("Rundeck-ssh-key-type"));
+    }
+    /**
+     * Store ssh key
+     */
+    @Test
+    @Betamax(tape = "ssh_key_store_public", mode = TapeMode.READ_ONLY)
+    public void storeSshKey_public() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        File temp = File.createTempFile("test-key", ".tmp");
+        temp.deleteOnExit();
+        FileOutputStream out = new FileOutputStream(temp);
+        try{
+            out.write("test1".getBytes());
+        }finally {
+            out.close();
+        }
+        SSHKeyResource storageResource = client.storeSshKey("ssh-key/test/example/file2.pub", temp, false);
+        Assert.assertNotNull(storageResource);
+        Assert.assertFalse(storageResource.isDirectory());
+        Assert.assertFalse(storageResource.isPrivateKey());
+        Assert.assertEquals("file2.pub", storageResource.getName());
+        Assert.assertEquals("ssh-key/test/example/file2.pub", storageResource.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/ssh-key/test/example/file2.pub",
+                storageResource.getUrl());
+        Assert.assertEquals(0, storageResource.getDirectoryContents().size());
+        Map<String, String> metadata = storageResource.getMetadata();
+        Assert.assertNotNull(metadata);
+        Assert.assertEquals("application/pgp-keys", metadata.get("Rundeck-content-type"));
+        Assert.assertEquals("public", metadata.get("Rundeck-ssh-key-type"));
+    }
+    /**
+     * get ssh key
+     */
+    @Test
+    @Betamax(tape = "ssh_key_get_public", mode = TapeMode.READ_ONLY)
+    public void getSshKey_public() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        SSHKeyResource storageResource = client.getSshKey("ssh-key/test/example/file2.pub");
+        Assert.assertNotNull(storageResource);
+        Assert.assertFalse(storageResource.isDirectory());
+        Assert.assertFalse(storageResource.isPrivateKey());
+        Assert.assertEquals("file2.pub", storageResource.getName());
+        Assert.assertEquals("ssh-key/test/example/file2.pub", storageResource.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/ssh-key/test/example/file2.pub",
+                storageResource.getUrl());
+        Assert.assertEquals(0, storageResource.getDirectoryContents().size());
+        Map<String, String> metadata = storageResource.getMetadata();
+        Assert.assertNotNull(metadata);
+        Assert.assertEquals("application/pgp-keys", metadata.get("Rundeck-content-type"));
+        Assert.assertEquals("public", metadata.get("Rundeck-ssh-key-type"));
+    }
+    /**
+     * get ssh key
+     */
+    @Test
+    @Betamax(tape = "ssh_key_get_private", mode = TapeMode.READ_ONLY)
+    public void getSshKey_private() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        SSHKeyResource storageResource = client.getSshKey("ssh-key/test/example/file1.pem");
+        Assert.assertNotNull(storageResource);
+        Assert.assertFalse(storageResource.isDirectory());
+        Assert.assertTrue(storageResource.isPrivateKey());
+        Assert.assertEquals("file1.pem", storageResource.getName());
+        Assert.assertEquals("ssh-key/test/example/file1.pem", storageResource.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/ssh-key/test/example/file1.pem",
+                storageResource.getUrl());
+        Assert.assertEquals(0, storageResource.getDirectoryContents().size());
+        Map<String, String> metadata = storageResource.getMetadata();
+        Assert.assertNotNull(metadata);
+        Assert.assertEquals("application/octet-stream", metadata.get("Rundeck-content-type"));
+        Assert.assertEquals("private", metadata.get("Rundeck-ssh-key-type"));
+    }
+    /**
+     * get ssh key data
+     */
+    @Test
+    @Betamax(tape = "ssh_key_get_data_private", mode = TapeMode.READ_ONLY)
+    public void getSshKeyData_private() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        File temp = File.createTempFile("test-key", ".tmp");
+        temp.deleteOnExit();
+        try {
+            int data = client.getPublicSshKeyContent("ssh-key/test/example/file1.pem", temp);
+            Assert.fail("expected failure");
+        } catch (RundeckApiException e) {
+            Assert.assertEquals("Requested SSH Key path was not a Public key: ssh-key/test/example/file1.pem",
+                    e.getMessage());
+        }
+    }
+    /**
+     * get ssh key data
+     */
+    @Test
+    @Betamax(tape = "ssh_key_get_data_public", mode = TapeMode.READ_ONLY)
+    public void getSshKeyData_public() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        File temp = File.createTempFile("test-key", ".tmp");
+        temp.deleteOnExit();
+        int length = client.getPublicSshKeyContent("ssh-key/test/example/file2.pub", temp);
+        Assert.assertEquals(5, length);
+    }
+    /**
+     * list directory
+     */
+    @Test
+    @Betamax(tape = "ssh_key_list_directory", mode = TapeMode.READ_ONLY)
+    public void listSshKeyDirectory() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        List<SSHKeyResource> list = client.listSshKeyDirectory("ssh-key/test/example");
+        Assert.assertEquals(2, list.size());
+        SSHKeyResource storageResource1 = list.get(0);
+        SSHKeyResource storageResource2 = list.get(1);
+
+        Assert.assertFalse(storageResource2.isDirectory());
+        Assert.assertTrue(storageResource2.isPrivateKey());
+        Assert.assertEquals("file1.pem", storageResource2.getName());
+        Assert.assertEquals("ssh-key/test/example/file1.pem", storageResource2.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/ssh-key/test/example/file1.pem", storageResource2.getUrl());
+        Assert.assertNotNull(storageResource2.getMetadata());
+
+        Assert.assertEquals("application/octet-stream", storageResource2.getMetadata().get("Rundeck-content-type"));
+        Assert.assertEquals("private", storageResource2.getMetadata().get("Rundeck-ssh-key-type"));
+
+        Assert.assertFalse(storageResource1.isDirectory());
+        Assert.assertFalse(storageResource1.isPrivateKey());
+        Assert.assertEquals("file2.pub", storageResource1.getName());
+        Assert.assertEquals("ssh-key/test/example/file2.pub", storageResource1.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/ssh-key/test/example/file2.pub",
+                storageResource1.getUrl());
+        Assert.assertNotNull(storageResource1.getMetadata());
+        Assert.assertEquals("application/pgp-keys", storageResource1.getMetadata().get("Rundeck-content-type"));
+        Assert.assertEquals("public", storageResource1.getMetadata().get("Rundeck-ssh-key-type"));
+    }
+    /**
+     * list root
+     */
+    @Test
+    @Betamax(tape = "ssh_key_list_root", mode = TapeMode.READ_ONLY)
+    public void listSshKeyDirectoryRoot() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        List<SSHKeyResource> list = client.listSshKeyDirectoryRoot();
+        Assert.assertEquals(2, list.size());
+        SSHKeyResource storageResource0 = list.get(0);
+        SSHKeyResource storageResource1 = list.get(1);
+
+        Assert.assertFalse(storageResource0.isDirectory());
+        Assert.assertTrue(storageResource0.isPrivateKey());
+        Assert.assertEquals("test1.pem", storageResource0.getName());
+        Assert.assertEquals("ssh-key/test1.pem", storageResource0.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/ssh-key/test1.pem", storageResource0.getUrl());
+        Assert.assertNotNull(storageResource0.getMetadata());
+
+        Assert.assertEquals("application/octet-stream", storageResource0.getMetadata().get("Rundeck-content-type"));
+        Assert.assertEquals("private", storageResource0.getMetadata().get("Rundeck-ssh-key-type"));
+
+        Assert.assertTrue(storageResource1.toString(), storageResource1.isDirectory());
+        Assert.assertEquals(null, storageResource1.getName());
+        Assert.assertEquals("ssh-key/test", storageResource1.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/ssh-key/test",
+                storageResource1.getUrl());
+        Assert.assertNull(storageResource1.getMetadata());
+
+
+    }
+
+    /**
+     * delete ssh key
+     */
+    @Test
+    @Betamax(tape = "ssh_key_delete", mode = TapeMode.READ_ONLY)
+    public void deleteSshKey() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        client.deleteSshKey("ssh-key/test/example/file2.pub");
+
+        try {
+            client.getSshKey("ssh-key/test/example/file2.pub");
+            Assert.fail("expected failure");
+        } catch (RundeckApiException.RundeckApiHttpStatusException e) {
+            Assert.assertEquals(404,e.getStatusCode());
+        }
+    }
 
     @Before
     public void setUp() throws Exception {
