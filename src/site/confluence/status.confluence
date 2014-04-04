@@ -110,6 +110,6 @@ h2. RunDeck API version 11
 * SSH Key delete - *TODO*
 * SSH Key list - *TODO*
 * SSH Key get - *TODO*
-* API Token create - *TODO*
-* API Token list - *TODO*
-* API Token delete - *TODO*
+* API Token create - OK
+* API Token list - OK
+* API Token delete - OK

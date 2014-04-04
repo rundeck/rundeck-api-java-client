@@ -1245,7 +1245,7 @@ public class RundeckClientTest {
      * list api tokens all
      */
     @Test
-    @Betamax(tape = "api_tokens_list_all"/*, mode = TapeMode.READ_ONLY*/)
+    @Betamax(tape = "api_tokens_list_all", mode = TapeMode.READ_ONLY)
     public void listApiTokens() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_7, 11);
         List<RundeckToken> tokens = client.listApiTokens();
@@ -1266,7 +1266,7 @@ public class RundeckClientTest {
      * get api token
      */
     @Test
-    @Betamax(tape = "api_token_delete"/*, mode = TapeMode.READ_ONLY*/)
+    @Betamax(tape = "api_token_delete", mode = TapeMode.READ_ONLY)
     public void deleteApiToken() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_7, 11);
 
