@@ -106,10 +106,10 @@ h2. RunDeck API version 11
 * Delete project - OK
 * Export project archive - OK
 * Import project archive - OK
-* SSH Key upload - *TODO*
-* SSH Key delete - *TODO*
-* SSH Key list - *TODO*
-* SSH Key get - *TODO*
+* SSH Key upload - OK
+* SSH Key delete - OK
+* SSH Key list - OK
+* SSH Key get - OK
 * API Token create - OK
 * API Token list - OK
 * API Token delete - OK
