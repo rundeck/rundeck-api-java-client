@@ -93,3 +93,17 @@ h2. RunDeck API version 10
 * Execution Output - Retrieve log output for a particular node or step - OK
 * Execution Info - added successfulNodes and failedNodes detail. - OK
 * Deprecation: Remove methods deprecated until version 10. - OK
+
+
+h2. RunDeck API version 11
+
+[Documentation of the RunDeck API version 11|http://rundeck.org/2.1.0/api/index.html]
+
+* Project creation - OK
+* Get Project configuration - OK
+* Set Project configuration - OK
+* Get/Set Project configuration keys - OK
+* Delete project - OK
+* Export project archive - OK
+* Import project archive - OK
+* ...
