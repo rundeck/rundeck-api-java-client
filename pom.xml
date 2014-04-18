@@ -460,9 +460,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.github.robfletcher</groupId>
+      <groupId>co.freeside</groupId>
       <artifactId>betamax</artifactId>
-      <version>1.0</version>
+      <version>1.1.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
