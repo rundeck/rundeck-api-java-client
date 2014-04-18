@@ -4,9 +4,9 @@ interactions:
 - recorded: 2012-09-22T00:20:49.353Z
   request:
     method: GET
-    uri: http://rundeck.local:4440/api/5/executions?project=blah&excludeGroupPathExact=fruit&max=2&offset=1
+    uri: http://localhost:4440/api/5/executions?project=blah&excludeGroupPathExact=fruit&max=2&offset=1
     headers:
-      Host: rundeck.local:4440
+      Host: localhost:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
       X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
@@ -21,9 +21,9 @@ interactions:
 - recorded: 2012-09-22T00:20:49.353Z
   request:
     method: GET
-    uri: http://rundeck.local:4440/api/5/executions?project=blah&excludeGroupPathExact=fruit&max=1&offset=1
+    uri: http://localhost:4440/api/5/executions?project=blah&excludeGroupPathExact=fruit&max=1&offset=1
     headers:
-      Host: rundeck.local:4440
+      Host: localhost:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
       X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
@@ -38,9 +38,9 @@ interactions:
 - recorded: 2012-09-22T00:20:49.353Z
   request:
     method: GET
-    uri: http://rundeck.local:4440/api/5/executions?project=blah&excludeGroupPathExact=fruit&max=1&offset=2
+    uri: http://localhost:4440/api/5/executions?project=blah&excludeGroupPathExact=fruit&max=1&offset=2
     headers:
-      Host: rundeck.local:4440
+      Host: localhost:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
       X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9

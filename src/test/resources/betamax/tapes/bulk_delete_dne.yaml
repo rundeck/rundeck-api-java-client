@@ -4,11 +4,11 @@ interactions:
 - recorded: 2012-10-02T21:50:29.756Z
   request:
     method: POST
-    uri: http://rundeck.local:4440/api/5/jobs/delete
+    uri: http://localhost:4440/api/5/jobs/delete
     headers:
       Content-Length: '18'
       Content-Type: application/x-www-form-urlencoded; charset=UTF-8
-      Host: rundeck.local:4440
+      Host: localhost:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
       X-RunDeck-Auth-Token: PP4s4SdCRO6KUoNPd1D303Dc304ORN87

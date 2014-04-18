@@ -4,9 +4,9 @@ interactions:
 - recorded: 2011-09-18T16:04:45.973Z
   request:
     method: GET
-    uri: http://rundeck.local:4440/api/5/projects
+    uri: http://localhost:4440/api/5/projects
     headers:
-      Host: rundeck.local:4440
+      Host: localhost:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
       X-RunDeck-Auth-Token: PVnN5K3OPc5vduS3uVuVnEsD57pDC5pd

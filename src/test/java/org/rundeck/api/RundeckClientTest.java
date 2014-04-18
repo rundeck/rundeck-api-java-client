@@ -1089,7 +1089,7 @@ public class RundeckClientTest {
     }
 
     private RundeckClientBuilder createBuilder(String token) {
-        return RundeckClient.builder().url("http://rundeck.local:4440")
+        return RundeckClient.builder().url("http://localhost:4440")
             .token(token);
     }
 

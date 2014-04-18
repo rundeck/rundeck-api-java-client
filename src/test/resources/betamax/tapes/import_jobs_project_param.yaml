@@ -4,10 +4,10 @@ interactions:
 - recorded: 2013-08-06T18:14:37.103Z
   request:
     method: POST
-    uri: http://rundeck.local:4440/api/8/jobs/import?format=xml&dupeOption=create&project=test
+    uri: http://localhost:4440/api/8/jobs/import?format=xml&dupeOption=create&project=test
     headers:
       Content-Type: multipart/form-data; boundary=OMe6MGobdh_YA6TfnAjCTKXotJchUWOV
-      Host: rundeck.local:4440
+      Host: localhost:4440
       Proxy-Connection: Keep-Alive
       Transfer-Encoding: chunked
       User-Agent: RunDeck API Java Client 8

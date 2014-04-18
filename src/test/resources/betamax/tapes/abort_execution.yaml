@@ -4,9 +4,9 @@ interactions:
 - recorded: 2013-03-29T19:46:54.057Z
   request:
     method: GET
-    uri: http://rundeck.local:4440/api/5/execution/21/abort
+    uri: http://localhost:4440/api/5/execution/21/abort
     headers:
-      Host: rundeck.local:4440
+      Host: localhost:4440
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
       X-RunDeck-Auth-Token: 9RdEosesKP3se4oV9EKOd4s3RUeUS3ON

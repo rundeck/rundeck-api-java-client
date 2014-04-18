@@ -4,9 +4,9 @@ interactions:
 - recorded: 2012-08-24T21:37:50.531Z
   request:
     method: GET
-    uri: http://rundeck.local:4440/api/5/history?project=demo&userFilter=bob&max=1&offset=0
+    uri: http://localhost:4440/api/5/history?project=demo&userFilter=bob&max=1&offset=0
     headers:
-      Host: rundeck.localtest:8080
+      Host: localhosttest:8080
       Proxy-Connection: Keep-Alive
       User-Agent: RunDeck API Java Client 5
       X-RunDeck-Auth-Token: 960412PR40dRREU5d87S2Ce2OeddD5c1
