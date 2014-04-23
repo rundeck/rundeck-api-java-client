@@ -1,21 +1,18 @@
 package org.rundeck.api.domain;
 
-import org.rundeck.api.RundeckClient;
-import org.rundeck.api.parser.StorageResourceParser;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * BaseSSHKeyResource is ...
+ * BaseKeyResource is ...
  *
  * @author Greg Schueler <greg@simplifyops.com>
  * @since 2014-04-04
  */
-public class BaseSSHKeyResource extends BaseStorageResource implements SSHKeyResource {
+public class BaseKeyResource extends BaseStorageResource implements KeyResource {
     private boolean privateKey;
 
-    public BaseSSHKeyResource() {
+    public BaseKeyResource() {
     }
 
 
@@ -27,22 +24,22 @@ public class BaseSSHKeyResource extends BaseStorageResource implements SSHKeyRes
         this.privateKey = privateKey;
     }
 
-    ArrayList<SSHKeyResource> sshKeyResources = new ArrayList<SSHKeyResource>();
+    ArrayList<KeyResource> keyResources = new ArrayList<KeyResource>();
 
     @Override
     public void setDirectoryContents(List<? extends StorageResource> directoryContents) {
         for (StorageResource directoryContent : directoryContents) {
-            sshKeyResources.add(from(directoryContent));
+            keyResources.add(from(directoryContent));
         }
     }
 
     @Override
-    public List<SSHKeyResource> getDirectoryContents() {
-        return sshKeyResources;
+    public List<KeyResource> getDirectoryContents() {
+        return keyResources;
     }
 
-    public static BaseSSHKeyResource from(final StorageResource source) {
-        final BaseSSHKeyResource baseSshKeyResource = new BaseSSHKeyResource();
+    public static BaseKeyResource from(final StorageResource source) {
+        final BaseKeyResource baseSshKeyResource = new BaseKeyResource();
         baseSshKeyResource.setDirectory(source.isDirectory());
         baseSshKeyResource.setPath(source.getPath());
         baseSshKeyResource.setName(source.getName());
@@ -51,7 +48,7 @@ public class BaseSSHKeyResource extends BaseStorageResource implements SSHKeyRes
         if (!baseSshKeyResource.isDirectory()) {
             baseSshKeyResource.setPrivateKey(
                     null != baseSshKeyResource.getMetadata() && "private".equals(baseSshKeyResource.getMetadata().get
-                            ("Rundeck-ssh-key-type"))
+                            ("Rundeck-key-type"))
             );
         } else if (null != source.getDirectoryContents()) {
             baseSshKeyResource.setDirectoryContents(source.getDirectoryContents());

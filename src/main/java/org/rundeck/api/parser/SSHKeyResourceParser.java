@@ -1,9 +1,8 @@
 package org.rundeck.api.parser;
 
 import org.dom4j.Node;
-import org.rundeck.api.RundeckClient;
-import org.rundeck.api.domain.BaseSSHKeyResource;
-import org.rundeck.api.domain.SSHKeyResource;
+import org.rundeck.api.domain.BaseKeyResource;
+import org.rundeck.api.domain.KeyResource;
 
 /**
  * SSHKeyResourceParser is ...
@@ -11,7 +10,7 @@ import org.rundeck.api.domain.SSHKeyResource;
  * @author Greg Schueler <greg@simplifyops.com>
  * @since 2014-04-04
  */
-public class SSHKeyResourceParser extends BaseXpathParser<SSHKeyResource> implements XmlNodeParser<SSHKeyResource> {
+public class SSHKeyResourceParser extends BaseXpathParser<KeyResource> implements XmlNodeParser<KeyResource> {
     public SSHKeyResourceParser() {
     }
 
@@ -20,7 +19,7 @@ public class SSHKeyResourceParser extends BaseXpathParser<SSHKeyResource> implem
     }
 
     @Override
-    public SSHKeyResource parse(Node node) {
-        return BaseSSHKeyResource.from(new StorageResourceParser().parse(node));
+    public KeyResource parse(Node node) {
+        return BaseKeyResource.from(new StorageResourceParser().parse(node));
     }
 }

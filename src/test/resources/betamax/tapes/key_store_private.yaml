@@ -4,7 +4,7 @@ interactions:
 - recorded: 2014-04-04T19:30:35.367Z
   request:
     method: POST
-    uri: http://rundeck.local:4440/api/11/storage/ssh-key/test/example/file1.pem
+    uri: http://rundeck.local:4440/api/11/storage/keys/test/example/file1.pem
     headers:
       Accept: text/xml
       Content-Length: '5'
@@ -22,4 +22,5 @@ interactions:
       Server: Jetty(7.6.0.v20120127)
       Set-Cookie: JSESSIONID=ktmwc4h53xfud6v2ch67x5p9;Path=/
     body: !!binary |-
-      PHJlc291cmNlIHBhdGg9J3NzaC1rZXkvdGVzdC9leGFtcGxlL2ZpbGUxLnBlbScgdHlwZT0nZmlsZScgdXJsPSdodHRwOi8vZGlnbmFuLmxvY2FsOjQ0NDAvYXBpLzExL3N0b3JhZ2Uvc3NoLWtleS90ZXN0L2V4YW1wbGUvZmlsZTEucGVtJyBuYW1lPSdmaWxlMS5wZW0nPjxyZXNvdXJjZS1tZXRhPjxSdW5kZWNrLWNvbnRlbnQtdHlwZT5hcHBsaWNhdGlvbi9vY3RldC1zdHJlYW08L1J1bmRlY2stY29udGVudC10eXBlPjxSdW5kZWNrLWNvbnRlbnQtc2l6ZT41PC9SdW5kZWNrLWNvbnRlbnQtc2l6ZT48UnVuZGVjay1jb250ZW50LW1hc2s+Y29udGVudDwvUnVuZGVjay1jb250ZW50LW1hc2s+PFJ1bmRlY2stc3NoLWtleS10eXBlPnByaXZhdGU8L1J1bmRlY2stc3NoLWtleS10eXBlPjwvcmVzb3VyY2UtbWV0YT48L3Jlc291cmNlPg==
+      PHJlc291cmNlIHBhdGg9J2tleXMvdGVzdC9leGFtcGxlL2ZpbGUxLnBlbScgdHlwZT0nZmlsZScgdXJsPSdodHRwOi8vZGlnbmFuLmxvY2FsOjQ0NDAvYXBpLzExL3N0b3JhZ2Uva2V5cy90ZXN0L2V4YW1wbGUvZmlsZTEucGVtJyBuYW1lPSdmaWxlMS5wZW0nPjxyZXNvdXJjZS1tZXRhPjxSdW5kZWNrLWNvbnRlbnQtdHlwZT5hcHBsaWNhdGlvbi9vY3RldC1zdHJlYW08L1J1bmRlY2stY29udGVudC10eXBlPjxSdW5kZWNrLWNvbnRlbnQtc2l6ZT41PC9SdW5kZWNrLWNvbnRlbnQtc2l6ZT48UnVuZGVjay1jb250ZW50LW1hc2s+Y29udGVudDwvUnVuZGVjay1jb250ZW50LW1hc2s+PFJ1bmRlY2sta2V5LXR5cGU+cHJpdmF0ZTwvUnVuZGVjay1rZXktdHlwZT48L3Jlc291cmNlLW1ldGE+PC9yZXNvdXJjZT4N
+
