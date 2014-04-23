@@ -22,7 +22,7 @@
     <author>Vincent Behar</author>
   </properties>
   <body>
-      <release date='TBD' description='Rundeck API version 10' version='10.0-SNAPSHOT'>
+      <release date='2014-02-27' description='Rundeck API version 10' version='10.0'>
           <action type='add' dev='gschueler'>
               Execution State - Retrieve workflow step and node state information
           </action>
