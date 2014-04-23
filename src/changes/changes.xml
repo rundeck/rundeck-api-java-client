@@ -22,6 +22,22 @@
     <author>Vincent Behar</author>
   </properties>
   <body>
+      <release date='2014-04-24' description='Rundeck API version 11' version='11.0'>
+          <action type='add' dev='gschueler'>Project creation</action>
+          <action type='add' dev='gschueler'>Get Project configuration</action>
+          <action type='add' dev='gschueler'>Set Project configuration</action>
+          <action type='add' dev='gschueler'>Get/Set Project configuration keys</action>
+          <action type='add' dev='gschueler'>Delete project</action>
+          <action type='add' dev='gschueler'>Export project archive</action>
+          <action type='add' dev='gschueler'>Import project archive</action>
+          <action type='add' dev='gschueler'>Key file upload</action>
+          <action type='add' dev='gschueler'>Key file delete</action>
+          <action type='add' dev='gschueler'>Key file list</action>
+          <action type='add' dev='gschueler'>Key file get</action>
+          <action type='add' dev='gschueler'>API Token create</action>
+          <action type='add' dev='gschueler'>API Token list</action>
+          <action type='add' dev='gschueler'>API Token delete</action>
+      </release>
       <release date='2014-02-27' description='Rundeck API version 10' version='10.0'>
           <action type='add' dev='gschueler'>
               Execution State - Retrieve workflow step and node state information
