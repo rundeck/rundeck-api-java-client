@@ -19,6 +19,7 @@ import betamax.Betamax;
 import betamax.MatchRule;
 import betamax.Recorder;
 import betamax.TapeMode;
+import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -27,8 +28,7 @@ import org.rundeck.api.domain.*;
 import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.PagedResults;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 
@@ -55,6 +55,7 @@ public class RundeckClientTest {
     public static final String TEST_TOKEN_4 = "sN5RRSNvu15DnV6EcNDdc2CkdPcv3s32";
     public static final String TEST_TOKEN_5 = "C3O6d5O98Kr6Dpv71sdE4ERdCuU12P6d";
     public static final String TEST_TOKEN_6 = "Do4d3NUD5DKk21DR4sNK755RcPk618vn";
+    public static final String TEST_TOKEN_7 = "8Dp9op111ER6opsDRkddvE86K9sE499s";
 
     @Rule
     public Recorder recorder = new Recorder();
@@ -80,6 +81,131 @@ public class RundeckClientTest {
         Assert.assertEquals(1, projects.size());
         Assert.assertEquals("test", projects.get(0).getName());
         Assert.assertNull(projects.get(0).getDescription());
+    }
+    @Test
+    @Betamax(tape = "create_projectv11")
+    public void createProject() throws Exception {
+
+        RundeckProject project = createClient(TEST_TOKEN_6,11).createProject("monkey1", null);
+        Assert.assertEquals("monkey1", project.getName());
+        Assert.assertEquals(null, project.getDescription());
+        Assert.assertNotNull(project.getProjectConfig());
+
+    }
+    @Test
+    @Betamax(tape = "delete_projectv11")
+    public void deleteProject() throws Exception {
+        RundeckClient client1 = createClient(TEST_TOKEN_6, 11);
+        client1.deleteProject("delete_me");
+        RundeckProject delete_me = null;
+        try {
+            delete_me = client1.getProject("delete_me");
+            Assert.fail();
+        } catch (RundeckApiException.RundeckApiHttpStatusException e) {
+            Assert.assertEquals(404,e.getStatusCode());
+        }
+
+    }
+
+    @Test
+    @Betamax(tape = "get_project_configv11")
+    public void getProjectConfig() throws Exception {
+        ProjectConfig config = createClient(TEST_TOKEN_6, 11).getProjectConfig("monkey1");
+        Assert.assertNotNull(config);
+        Assert.assertNotNull(config.getProperties());
+        Assert.assertEquals(9,config.getProperties().size());
+        Assert.assertEquals("monkey1", config.getProperties().get("project.name"));
+    }
+    @Test
+    @Betamax(tape = "set_project_configv11")
+    public void setProjectConfig() throws Exception {
+        HashMap<String, String> config = new HashMap<String, String>();
+        config.put("alphabetty", "spaghetti");
+        config.put("blha.blee", "a big amazing thingy so there.");
+        ProjectConfig result = createClient(TEST_TOKEN_6, 11).setProjectConfig("monkey1", config);
+        Assert.assertNotNull(result);
+        Assert.assertNotNull(result.getProperties());
+        Assert.assertEquals(3, result.getProperties().size());
+        Assert.assertEquals("monkey1", result.getProperties().get("project.name"));
+        Assert.assertEquals("spaghetti", result.getProperties().get("alphabetty"));
+        Assert.assertEquals("a big amazing thingy so there.", result.getProperties().get("blha.blee"));
+    }
+
+    @Test
+    @Betamax(tape = "get_project_config_keyedv11")
+    public void getProjectConfigKeyed() throws Exception {
+        String value = createClient(TEST_TOKEN_6, 11).getProjectConfig("ABC", "project.name");
+        Assert.assertNotNull(value);
+        Assert.assertEquals("ABC", value);
+    }
+    @Test
+    @Betamax(tape = "get_project_config_keyed_dne_v11")
+    public void getProjectConfigKeyedDNE() throws Exception {
+        String value = createClient(TEST_TOKEN_6, 11).getProjectConfig("ABC", "does-not-exist");
+        Assert.assertNull(value);
+    }
+    @Test
+    @Betamax(tape = "set_project_config_keyedv11")
+    public void setProjectConfigKeyed() throws Exception {
+        String value = createClient(TEST_TOKEN_6, 11).setProjectConfig("ABC", "monkey-burrito", "lemon pie");
+        Assert.assertNotNull(value);
+        Assert.assertEquals("lemon pie", value);
+    }
+    @Test
+    @Betamax(tape = "delete_project_config_keyedv11")
+    public void deleteProjectConfigKeyed() throws Exception {
+        RundeckClient client1 = createClient(TEST_TOKEN_6, 11);
+        Assert.assertEquals("7up", client1.setProjectConfig("ABC", "monkey-burrito", "7up"));
+        client1.deleteProjectConfig("ABC", "monkey-burrito");
+        String value=client1.getProjectConfig("ABC", "monkey-burrito");
+        Assert.assertNull(value);
+    }
+    @Test
+    @Betamax(tape = "export_projectv11")
+    public void exportProject() throws Exception {
+        RundeckClient client1 = createClient(TEST_TOKEN_6, 11);
+        File temp = File.createTempFile("test-archive", ".zip");
+        temp.deleteOnExit();
+        int i = client1.exportProject("DEF1", temp);
+        Assert.assertEquals(8705, i);
+    }
+    @Test
+    @Betamax(tape = "import_project_suv11",mode = TapeMode.READ_ONLY)
+    public void importProjectSuccess() throws Exception {
+        RundeckClient client1 = createClient(TEST_TOKEN_6, 11);
+        InputStream resourceAsStream = getClass().getResourceAsStream("test-archive.zip");
+        File temp = File.createTempFile("test-archive", ".zip");
+        temp.deleteOnExit();
+        IOUtils.copy(resourceAsStream, new FileOutputStream(temp));
+        ArchiveImport def1 = client1.importArchive("DEF2", temp, true, true);
+        Assert.assertTrue(def1.isSuccessful());
+        Assert.assertEquals(0, def1.getErrorMessages().size());
+
+        ArchiveImport def2 = client1.importArchive("DEF2", temp, false, true);
+        Assert.assertTrue(def2.isSuccessful());
+        Assert.assertEquals(0, def2.getErrorMessages().size());
+
+        ArchiveImport def3 = client1.importArchive("DEF2", temp, true, false);
+        Assert.assertTrue(def3.isSuccessful());
+        Assert.assertEquals(0, def3.getErrorMessages().size());
+        temp.delete();
+    }
+    @Test
+    @Betamax(tape = "import_project_failure_v11", mode = TapeMode.READ_ONLY)
+    public void importProjectFailure() throws Exception {
+        RundeckClient client1 = createClient(TEST_TOKEN_6, 11);
+        InputStream resourceAsStream = getClass().getResourceAsStream("test-archive.zip");
+        File temp = File.createTempFile("test-archive", ".zip");
+        temp.deleteOnExit();
+        IOUtils.copy(resourceAsStream, new FileOutputStream(temp));
+        ArchiveImport def1 = client1.importArchive("DEF1", temp, false, true);
+        Assert.assertFalse(def1.isSuccessful());
+        Assert.assertEquals(10, def1.getErrorMessages().size());
+        Assert.assertEquals("Job at index [1] at archive path: " +
+                "rundeck-DEF1/jobs/job-6fd1808c-eafb-49ac-abf2-4de7ec75872f.xml had errors: Validation errors: Cannot" +
+                " create a Job with UUID 6fd1808c-eafb-49ac-abf2-4de7ec75872f: a Job already exists with this UUID. " +
+                "Change the UUID or delete the other Job.", def1.getErrorMessages().get(0));
+
     }
     @Test
     @Betamax(tape = "get_history")
@@ -1070,6 +1196,298 @@ public class RundeckClientTest {
         Assert.assertEquals(1,output.getStepCount());
         Assert.assertEquals(1,output.getSteps().size());
         Assert.assertEquals(RundeckWFExecState.SUCCEEDED,output.getExecutionState());
+    }
+
+    /**
+     * generate api token
+     */
+    @Test
+    @Betamax(tape = "api_token_generate", mode = TapeMode.READ_ONLY)
+    public void generateApiToken() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        String token = client.generateApiToken("bob");
+
+        Assert.assertNotNull(token);
+        Assert.assertEquals("MiquQjELTrEaugpmdgAKs1W3a7xonAwU", token);
+    }
+    /**
+     * get api token
+     */
+    @Test
+    @Betamax(tape = "api_token_get", mode = TapeMode.READ_ONLY)
+    public void getApiToken() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        RundeckToken token = client.getApiToken("MiquQjELTrEaugpmdgAKs1W3a7xonAwU");
+
+        Assert.assertNotNull(token);
+        Assert.assertEquals("MiquQjELTrEaugpmdgAKs1W3a7xonAwU", token.getToken());
+        Assert.assertEquals("bob", token.getUser());
+    }
+    /**
+     * list api tokens for user
+     */
+    @Test
+    @Betamax(tape = "api_tokens_list_user", mode = TapeMode.READ_ONLY)
+    public void listApiTokens_user() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        List<RundeckToken> tokens = client.listApiTokens("bob");
+
+        Assert.assertNotNull(tokens);
+        Assert.assertEquals(3, tokens.size());
+        Assert.assertEquals("hINp5eGzvYA9UePbUChaKHd5NiRkwWbx", tokens.get(0).getToken());
+        Assert.assertEquals("bob", tokens.get(0).getUser());
+        Assert.assertEquals("NaNnwVzAHAG83qOS7Wtwh6mjcXViyWUV", tokens.get(1).getToken());
+        Assert.assertEquals("bob", tokens.get(1).getUser());
+        Assert.assertEquals("MiquQjELTrEaugpmdgAKs1W3a7xonAwU", tokens.get(2).getToken());
+        Assert.assertEquals("bob", tokens.get(2).getUser());
+    }
+    /**
+     * list api tokens all
+     */
+    @Test
+    @Betamax(tape = "api_tokens_list_all", mode = TapeMode.READ_ONLY)
+    public void listApiTokens() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        List<RundeckToken> tokens = client.listApiTokens();
+
+        Assert.assertNotNull(tokens);
+        Assert.assertEquals(4, tokens.size());
+        Assert.assertEquals("8Dp9op111ER6opsDRkddvE86K9sE499s", tokens.get(0).getToken());
+        Assert.assertEquals("admin", tokens.get(0).getUser());
+        Assert.assertEquals("hINp5eGzvYA9UePbUChaKHd5NiRkwWbx", tokens.get(1).getToken());
+        Assert.assertEquals("bob", tokens.get(1).getUser());
+        Assert.assertEquals("NaNnwVzAHAG83qOS7Wtwh6mjcXViyWUV", tokens.get(2).getToken());
+        Assert.assertEquals("bob", tokens.get(2).getUser());
+        Assert.assertEquals("MiquQjELTrEaugpmdgAKs1W3a7xonAwU", tokens.get(3).getToken());
+        Assert.assertEquals("bob", tokens.get(3).getUser());
+    }
+
+    /**
+     * get api token
+     */
+    @Test
+    @Betamax(tape = "api_token_delete", mode = TapeMode.READ_ONLY)
+    public void deleteApiToken() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+
+        client.deleteApiToken("MiquQjELTrEaugpmdgAKs1W3a7xonAwU");
+
+        //get should now return 404
+        try {
+            client.getApiToken("MiquQjELTrEaugpmdgAKs1W3a7xonAwU");
+            Assert.fail("expected failure");
+        } catch (RundeckApiException.RundeckApiHttpStatusException e) {
+            Assert.assertEquals(404, e.getStatusCode());
+        }
+    }
+    /**
+     * Store ssh key
+     */
+    @Test
+    @Betamax(tape = "key_store_private", mode = TapeMode.READ_ONLY)
+    public void storeKey_private() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        File temp = File.createTempFile("test-key", ".tmp");
+        temp.deleteOnExit();
+        FileOutputStream out = new FileOutputStream(temp);
+        try{
+            out.write("test1".getBytes());
+        }finally {
+            out.close();
+        }
+        KeyResource storageResource = client.storeKey("keys/test/example/file1.pem", temp, true);
+        Assert.assertNotNull(storageResource);
+        Assert.assertFalse(storageResource.isDirectory());
+        Assert.assertTrue(storageResource.isPrivateKey());
+        Assert.assertEquals("file1.pem", storageResource.getName());
+        Assert.assertEquals("keys/test/example/file1.pem", storageResource.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/keys/test/example/file1.pem",
+                storageResource.getUrl());
+        Assert.assertEquals(0, storageResource.getDirectoryContents().size());
+        Map<String, String> metadata = storageResource.getMetadata();
+        Assert.assertNotNull(metadata);
+        Assert.assertEquals("application/octet-stream", metadata.get("Rundeck-content-type"));
+        Assert.assertEquals("private", metadata.get("Rundeck-key-type"));
+    }
+    /**
+     * Store ssh key
+     */
+    @Test
+    @Betamax(tape = "key_store_public", mode = TapeMode.READ_ONLY)
+    public void storeKey_public() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        File temp = File.createTempFile("test-key", ".tmp");
+        temp.deleteOnExit();
+        FileOutputStream out = new FileOutputStream(temp);
+        try{
+            out.write("test1".getBytes());
+        }finally {
+            out.close();
+        }
+        KeyResource storageResource = client.storeKey("keys/test/example/file2.pub", temp, false);
+        Assert.assertNotNull(storageResource);
+        Assert.assertFalse(storageResource.isDirectory());
+        Assert.assertFalse(storageResource.isPrivateKey());
+        Assert.assertEquals("file2.pub", storageResource.getName());
+        Assert.assertEquals("keys/test/example/file2.pub", storageResource.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/keys/test/example/file2.pub",
+                storageResource.getUrl());
+        Assert.assertEquals(0, storageResource.getDirectoryContents().size());
+        Map<String, String> metadata = storageResource.getMetadata();
+        Assert.assertNotNull(metadata);
+        Assert.assertEquals("application/pgp-keys", metadata.get("Rundeck-content-type"));
+        Assert.assertEquals("public", metadata.get("Rundeck-key-type"));
+    }
+    /**
+     * get ssh key
+     */
+    @Test
+    @Betamax(tape = "key_get_public", mode = TapeMode.READ_ONLY)
+    public void getKey_public() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        KeyResource storageResource = client.getKey("keys/test/example/file2.pub");
+        Assert.assertNotNull(storageResource);
+        Assert.assertFalse(storageResource.isDirectory());
+        Assert.assertFalse(storageResource.isPrivateKey());
+        Assert.assertEquals("file2.pub", storageResource.getName());
+        Assert.assertEquals("keys/test/example/file2.pub", storageResource.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/keys/test/example/file2.pub",
+                storageResource.getUrl());
+        Assert.assertEquals(0, storageResource.getDirectoryContents().size());
+        Map<String, String> metadata = storageResource.getMetadata();
+        Assert.assertNotNull(metadata);
+        Assert.assertEquals("application/pgp-keys", metadata.get("Rundeck-content-type"));
+        Assert.assertEquals("public", metadata.get("Rundeck-key-type"));
+    }
+    /**
+     * get ssh key
+     */
+    @Test
+    @Betamax(tape = "key_get_private", mode = TapeMode.READ_ONLY)
+    public void getKey_private() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        KeyResource storageResource = client.getKey("keys/test/example/file1.pem");
+        Assert.assertNotNull(storageResource);
+        Assert.assertFalse(storageResource.isDirectory());
+        Assert.assertTrue(storageResource.isPrivateKey());
+        Assert.assertEquals("file1.pem", storageResource.getName());
+        Assert.assertEquals("keys/test/example/file1.pem", storageResource.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/keys/test/example/file1.pem",
+                storageResource.getUrl());
+        Assert.assertEquals(0, storageResource.getDirectoryContents().size());
+        Map<String, String> metadata = storageResource.getMetadata();
+        Assert.assertNotNull(metadata);
+        Assert.assertEquals("application/octet-stream", metadata.get("Rundeck-content-type"));
+        Assert.assertEquals("private", metadata.get("Rundeck-key-type"));
+    }
+    /**
+     * get ssh key data
+     */
+    @Test
+    @Betamax(tape = "key_get_data_private", mode = TapeMode.READ_ONLY)
+    public void getKeyData_private() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        File temp = File.createTempFile("test-key", ".tmp");
+        temp.deleteOnExit();
+        try {
+            int data = client.getPublicKeyContent("keys/test/example/file1.pem", temp);
+            Assert.fail("expected failure");
+        } catch (RundeckApiException e) {
+            Assert.assertEquals("Requested Key path was not a Public key: keys/test/example/file1.pem",
+                    e.getMessage());
+        }
+    }
+    /**
+     * get ssh key data
+     */
+    @Test
+    @Betamax(tape = "key_get_data_public", mode = TapeMode.READ_ONLY)
+    public void getKeyData_public() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        File temp = File.createTempFile("test-key", ".tmp");
+        temp.deleteOnExit();
+        int length = client.getPublicKeyContent("keys/test/example/file2.pub", temp);
+        Assert.assertEquals(5, length);
+    }
+    /**
+     * list directory
+     */
+    @Test
+    @Betamax(tape = "key_list_directory", mode = TapeMode.READ_ONLY)
+    public void listKeyDirectory() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        List<KeyResource> list = client.listKeyDirectory("keys/test/example");
+        Assert.assertEquals(2, list.size());
+        KeyResource storageResource1 = list.get(0);
+        KeyResource storageResource2 = list.get(1);
+
+        Assert.assertFalse(storageResource2.isDirectory());
+        Assert.assertTrue(storageResource2.isPrivateKey());
+        Assert.assertEquals("file1.pem", storageResource2.getName());
+        Assert.assertEquals("keys/test/example/file1.pem", storageResource2.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/keys/test/example/file1.pem", storageResource2.getUrl());
+        Assert.assertNotNull(storageResource2.getMetadata());
+
+        Assert.assertEquals("application/octet-stream", storageResource2.getMetadata().get("Rundeck-content-type"));
+        Assert.assertEquals("private", storageResource2.getMetadata().get("Rundeck-key-type"));
+
+        Assert.assertFalse(storageResource1.isDirectory());
+        Assert.assertFalse(storageResource1.isPrivateKey());
+        Assert.assertEquals("file2.pub", storageResource1.getName());
+        Assert.assertEquals("keys/test/example/file2.pub", storageResource1.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/keys/test/example/file2.pub",
+                storageResource1.getUrl());
+        Assert.assertNotNull(storageResource1.getMetadata());
+        Assert.assertEquals("application/pgp-keys", storageResource1.getMetadata().get("Rundeck-content-type"));
+        Assert.assertEquals("public", storageResource1.getMetadata().get("Rundeck-key-type"));
+    }
+    /**
+     * list root
+     */
+    @Test
+    @Betamax(tape = "key_list_root", mode = TapeMode.READ_ONLY)
+    public void listKeyDirectoryRoot() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        List<KeyResource> list = client.listKeyDirectoryRoot();
+        Assert.assertEquals(2, list.size());
+        KeyResource storageResource0 = list.get(0);
+        KeyResource storageResource1 = list.get(1);
+
+        Assert.assertFalse(storageResource0.isDirectory());
+        Assert.assertTrue(storageResource0.isPrivateKey());
+        Assert.assertEquals("test1.pem", storageResource0.getName());
+        Assert.assertEquals("keys/test1.pem", storageResource0.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/keys/test1.pem", storageResource0.getUrl());
+        Assert.assertNotNull(storageResource0.getMetadata());
+
+        Assert.assertEquals("application/octet-stream", storageResource0.getMetadata().get("Rundeck-content-type"));
+        Assert.assertEquals("private", storageResource0.getMetadata().get("Rundeck-key-type"));
+
+        Assert.assertTrue(storageResource1.toString(), storageResource1.isDirectory());
+        Assert.assertEquals(null, storageResource1.getName());
+        Assert.assertEquals("keys/test", storageResource1.getPath());
+        Assert.assertEquals("http://dignan.local:4440/api/11/storage/keys/test",
+                storageResource1.getUrl());
+        Assert.assertNull(storageResource1.getMetadata());
+
+
+    }
+
+    /**
+     * delete ssh key
+     */
+    @Test
+    @Betamax(tape = "key_delete", mode = TapeMode.READ_ONLY)
+    public void deleteKey() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        client.deleteKey("keys/test/example/file2.pub");
+
+        try {
+            client.getKey("keys/test/example/file2.pub");
+            Assert.fail("expected failure");
+        } catch (RundeckApiException.RundeckApiHttpStatusException e) {
+            Assert.assertEquals(404,e.getStatusCode());
+        }
     }
 
     @Before

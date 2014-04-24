@@ -1,0 +1,26 @@
+!tape
+name: set_project_config_keyedv11
+interactions:
+- recorded: 2014-03-07T19:59:51.009Z
+  request:
+    method: PUT
+    uri: http://rundeck.local:4440/api/11/project/ABC/config/monkey-burrito
+    headers:
+      Accept: text/xml
+      Content-Type: application/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      Transfer-Encoding: chunked
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: Do4d3NUD5DKk21DR4sNK755RcPk618vn
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=3ssp8chdwsuw16hihk5frgpzy;Path=/
+      X-Rundeck-API-Version: '11'
+      X-Rundeck-API-XML-Response-Wrapper: 'false'
+    body: !!binary |-
+      PHByb3BlcnR5IGtleT0nbW9ua2V5LWJ1cnJpdG8nIHZhbHVlPSdsZW1vbiBwaWUnIC8+

@@ -1,0 +1,21 @@
+!tape
+name: key_list_root
+interactions:
+- recorded: 2014-04-04T20:41:16.501Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/storage/keys/
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/html;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=5sj36vytg4y1182mziim4868b;Path=/
+    body: <resource path='keys' type='directory' url='http://dignan.local:4440/api/11/storage/keys'><contents count='2'><resource path='keys/test1.pem' type='file' url='http://dignan.local:4440/api/11/storage/keys/test1.pem' name='test1.pem'><resource-meta><Rundeck-content-type>application/octet-stream</Rundeck-content-type><Rundeck-content-size>1679</Rundeck-content-size><Rundeck-content-mask>content</Rundeck-content-mask><Rundeck-key-type>private</Rundeck-key-type></resource-meta></resource><resource path='keys/test' type='directory' url='http://dignan.local:4440/api/11/storage/keys/test'></resource></contents></resource>

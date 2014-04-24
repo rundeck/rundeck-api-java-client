@@ -1,0 +1,23 @@
+!tape
+name: ssh_key_get_private
+interactions:
+- recorded: 2014-04-04T19:47:29.880Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/storage/keys/test/example/file1.pem
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=nc5p0he3nw19e4gegidc4bs7;Path=/
+    body: !!binary |-
+      PHJlc291cmNlIHBhdGg9J2tleXMvdGVzdC9leGFtcGxlL2ZpbGUxLnBlbScgdHlwZT0nZmlsZScgdXJsPSdodHRwOi8vZGlnbmFuLmxvY2FsOjQ0NDAvYXBpLzExL3N0b3JhZ2Uva2V5cy90ZXN0L2V4YW1wbGUvZmlsZTEucGVtJyBuYW1lPSdmaWxlMS5wZW0nPjxyZXNvdXJjZS1tZXRhPjxSdW5kZWNrLWNvbnRlbnQtdHlwZT5hcHBsaWNhdGlvbi9vY3RldC1zdHJlYW08L1J1bmRlY2stY29udGVudC10eXBlPjxSdW5kZWNrLWNvbnRlbnQtc2l6ZT41PC9SdW5kZWNrLWNvbnRlbnQtc2l6ZT48UnVuZGVjay1jb250ZW50LW1hc2s+Y29udGVudDwvUnVuZGVjay1jb250ZW50LW1hc2s+PFJ1bmRlY2sta2V5LXR5cGU+cHJpdmF0ZTwvUnVuZGVjay1rZXktdHlwZT48L3Jlc291cmNlLW1ldGE+PC9yZXNvdXJjZT4K
+

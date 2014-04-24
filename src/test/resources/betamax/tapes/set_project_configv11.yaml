@@ -1,0 +1,26 @@
+!tape
+name: set_project_configv11
+interactions:
+- recorded: 2014-02-27T21:00:27.197Z
+  request:
+    method: PUT
+    uri: http://rundeck.local:4440/api/11/project/monkey1/config
+    headers:
+      Accept: text/xml
+      Content-Type: application/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      Transfer-Encoding: chunked
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: Do4d3NUD5DKk21DR4sNK755RcPk618vn
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=19npj7cd0hpm71nfljn7nlbvh8;Path=/
+      X-Rundeck-API-Version: '11'
+      X-Rundeck-API-XML-Response-Wrapper: 'false'
+    body: !!binary |-
+      PGNvbmZpZz4KICA8cHJvcGVydHkga2V5PSdwcm9qZWN0Lm5hbWUnIHZhbHVlPSdtb25rZXkxJyAvPgogIDxwcm9wZXJ0eSBrZXk9J2FscGhhYmV0dHknIHZhbHVlPSdzcGFnaGV0dGknIC8+CiAgPHByb3BlcnR5IGtleT0nYmxoYS5ibGVlJyB2YWx1ZT0nYSBiaWcgYW1hemluZyB0aGluZ3kgc28gdGhlcmUuJyAvPgo8L2NvbmZpZz4=

@@ -1,0 +1,26 @@
+!tape
+name: ssh_key_store_public
+interactions:
+- recorded: 2014-04-04T19:34:02.683Z
+  request:
+    method: POST
+    uri: http://rundeck.local:4440/api/11/storage/keys/test/example/file2.pub
+    headers:
+      Accept: text/xml
+      Content-Length: '5'
+      Content-Type: application/pgp-keys
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+    body: ''
+  response:
+    status: 201
+    headers:
+      Content-Type: application/xml;charset=utf-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=2l3g8m0tvwef19jn2bu23bzk6;Path=/
+    body: !!binary |-
+      PHJlc291cmNlIHBhdGg9J2tleXMvdGVzdC9leGFtcGxlL2ZpbGUyLnB1YicgdHlwZT0nZmlsZScgdXJsPSdodHRwOi8vZGlnbmFuLmxvY2FsOjQ0NDAvYXBpLzExL3N0b3JhZ2Uva2V5cy90ZXN0L2V4YW1wbGUvZmlsZTIucHViJyBuYW1lPSdmaWxlMi5wdWInPjxyZXNvdXJjZS1tZXRhPjxSdW5kZWNrLWNvbnRlbnQtdHlwZT5hcHBsaWNhdGlvbi9wZ3Ata2V5czwvUnVuZGVjay1jb250ZW50LXR5cGU+PFJ1bmRlY2stY29udGVudC1zaXplPjU8L1J1bmRlY2stY29udGVudC1zaXplPjxSdW5kZWNrLWtleS10eXBlPnB1YmxpYzwvUnVuZGVjay1rZXktdHlwZT48L3Jlc291cmNlLW1ldGE+PC9yZXNvdXJjZT4K
+

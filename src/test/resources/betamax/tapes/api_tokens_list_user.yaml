@@ -1,0 +1,24 @@
+!tape
+name: api_tokens_list_user
+interactions:
+- recorded: 2014-04-04T18:26:33.394Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/tokens/bob
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=114794elwavo26cx4ugkv7pe7;Path=/
+      X-Rundeck-API-Version: '11'
+      X-Rundeck-API-XML-Response-Wrapper: 'false'
+    body: !!binary |-
+      PHRva2VucyBjb3VudD0nMycgdXNlcj0nYm9iJz4KICA8dG9rZW4gaWQ9J2hJTnA1ZUd6dllBOVVlUGJVQ2hhS0hkNU5pUmt3V2J4JyB1c2VyPSdib2InIC8+CiAgPHRva2VuIGlkPSdOYU5ud1Z6QUhBRzgzcU9TN1d0d2g2bWpjWFZpeVdVVicgdXNlcj0nYm9iJyAvPgogIDx0b2tlbiBpZD0nTWlxdVFqRUxUckVhdWdwbWRnQUtzMVczYTd4b25Bd1UnIHVzZXI9J2JvYicgLz4KPC90b2tlbnM+

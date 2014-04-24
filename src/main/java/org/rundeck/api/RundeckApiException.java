@@ -82,5 +82,65 @@ public class RundeckApiException extends RuntimeException {
             super(message, cause);
         }
     }
+    /**
+     * Error due to unexpected HTTP status
+     */
+    public static class RundeckApiHttpStatusException extends RundeckApiAuthException {
+
+        private static final long serialVersionUID = 1L;
+        private int statusCode;
+
+        public RundeckApiHttpStatusException(String message, int statusCode) {
+            super(message);
+            this.statusCode = statusCode;
+        }
+
+        public RundeckApiHttpStatusException(String message, Throwable cause, int statusCode) {
+            super(message, cause);
+            this.statusCode = statusCode;
+        }
+
+        public int getStatusCode() {
+            return statusCode;
+        }
+    }
+
+    /**
+     * Error due to unexpected HTTP content-type
+     */
+    public static class RundeckApiHttpContentTypeException extends RundeckApiAuthException {
+
+        private static final long serialVersionUID = 1L;
+        private String contentType;
+        private String requiredContentType;
+
+        public RundeckApiHttpContentTypeException(final String contentType,
+                final String requiredContentType) {
+            super("Unexpected content-type: '" + contentType + "', expected: '" + requiredContentType + "'");
+            this.contentType = contentType;
+            this.requiredContentType = requiredContentType;
+        }
+        public RundeckApiHttpContentTypeException(final String message, final String contentType,
+                final String requiredContentType) {
+            super(message);
+            this.contentType = contentType;
+            this.requiredContentType = requiredContentType;
+        }
+
+        public RundeckApiHttpContentTypeException(final String message, final Throwable cause, final String contentType,
+                final String requiredContentType) {
+            super(message, cause);
+            this.contentType = contentType;
+            this.requiredContentType = requiredContentType;
+        }
+
+        public String getContentType() {
+            return contentType;
+        }
+
+        public String getRequiredContentType() {
+            return requiredContentType;
+        }
+    }
 
 }

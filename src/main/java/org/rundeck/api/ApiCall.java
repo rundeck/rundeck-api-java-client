@@ -15,23 +15,18 @@
  */
 package org.rundeck.api;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.Header;
-import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpRequestInterceptor;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.ParseException;
+import org.apache.http.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.*;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.entity.BasicHttpEntity;
+import org.apache.http.entity.EntityTemplate;
+import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.InputStreamBody;
@@ -48,11 +43,9 @@ import org.rundeck.api.RundeckApiException.RundeckApiTokenException;
 import org.rundeck.api.parser.ParserHelper;
 import org.rundeck.api.parser.XmlNodeParser;
 import org.rundeck.api.util.AssertUtil;
+import org.rundeck.api.util.DocumentContentProducer;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.ProxySelector;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -270,6 +263,27 @@ class ApiCall {
     public <T> T post(ApiPathBuilder apiPath, XmlNodeParser<T> parser) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException {
         HttpPost httpPost = new HttpPost(client.getUrl() + client.getApiEndpoint() + apiPath);
+        return requestWithEntity(apiPath, parser, httpPost);
+    }
+    /**
+     * Execute an HTTP PUT request to the RunDeck instance, on the given path. We will login first, and then execute
+     * the API call. At the end, the given parser will be used to convert the response to a more useful result object.
+     *
+     * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
+     * @param parser used to parse the response
+     * @return the result of the call, as formatted by the parser
+     * @throws RundeckApiException in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    public <T> T put(ApiPathBuilder apiPath, XmlNodeParser<T> parser) throws RundeckApiException,
+            RundeckApiLoginException, RundeckApiTokenException {
+        HttpPut httpPut = new HttpPut(client.getUrl() + client.getApiEndpoint() + apiPath);
+        return requestWithEntity(apiPath, parser, httpPut);
+    }
+
+    private <T> T requestWithEntity(ApiPathBuilder apiPath, XmlNodeParser<T> parser, HttpEntityEnclosingRequestBase
+            httpPost) {
         if(null!= apiPath.getAccept()) {
             httpPost.setHeader("Accept", apiPath.getAccept());
         }
@@ -286,6 +300,18 @@ class ApiCall {
             } catch (UnsupportedEncodingException e) {
                 throw new RundeckApiException("Unsupported encoding: " + e.getMessage(), e);
             }
+        }else if(apiPath.getContentStream() !=null && apiPath.getContentType()!=null){
+            BasicHttpEntity entity = new BasicHttpEntity();
+            entity.setContent(apiPath.getContentStream());
+            entity.setContentType(apiPath.getContentType());
+            httpPost.setEntity(entity);
+        }else if(apiPath.getContentFile() !=null && apiPath.getContentType()!=null){
+            httpPost.setEntity(new FileEntity(apiPath.getContentFile(), apiPath.getContentType()));
+        }else if(apiPath.getXmlDocument()!=null) {
+            httpPost.setHeader("Content-Type", "application/xml");
+            httpPost.setEntity(new EntityTemplate(new DocumentContentProducer(apiPath.getXmlDocument())));
+        }else if(apiPath.isEmptyContent()){
+            //empty content
         }else {
             throw new IllegalArgumentException("No Form or Multipart entity for POST content-body");
         }
@@ -308,6 +334,22 @@ class ApiCall {
             RundeckApiLoginException, RundeckApiTokenException {
         return execute(new HttpDelete(client.getUrl() + client.getApiEndpoint() + apiPath), parser);
     }
+    /**
+     * Execute an HTTP DELETE request to the RunDeck instance, on the given path, and expect a 204 response.
+     *
+     * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
+     * @throws RundeckApiException in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    public void delete(ApiPathBuilder apiPath) throws RundeckApiException,
+            RundeckApiLoginException, RundeckApiTokenException {
+
+        InputStream response = execute(new HttpDelete(client.getUrl() + client.getApiEndpoint() + apiPath));
+        if(null!=response){
+            throw new RundeckApiException("Unexpected Rundeck response content, expected no content!");
+        }
+    }
 
     /**
      * Execute an HTTP request to the RunDeck instance. We will login first, and then execute the API call. At the end,
@@ -323,13 +365,39 @@ class ApiCall {
     private <T> T execute(HttpRequestBase request, XmlNodeParser<T> parser) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException {
         // execute the request
-        InputStream response = execute(request);
-
-        // read and parse the response
-        Document xmlDocument = ParserHelper.loadDocument(response);
-        return parser.parseXmlNode(xmlDocument);
+        return new ParserHandler<T>(parser).handle(execute(request, new ResultHandler()));
     }
 
+    /**
+     * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
+     * API call. At the end, the given parser will be used to convert the response to a more useful result object.
+     *
+     * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
+     * @param parser  used to parse the response
+     *
+     * @return the result of the call, as formatted by the parser
+     *
+     * @throws RundeckApiException      in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    public int get(ApiPathBuilder apiPath, OutputStream outputStream) throws RundeckApiException,
+            RundeckApiLoginException, RundeckApiTokenException, IOException {
+        HttpGet request = new HttpGet(client.getUrl() + client.getApiEndpoint() + apiPath);
+        if (null != apiPath.getAccept()) {
+            request.setHeader("Accept", apiPath.getAccept());
+        }
+        final WriteOutHandler writeOutHandler = new WriteOutHandler(outputStream);
+        Handler<HttpResponse,Integer> handler = writeOutHandler;
+        if(null!=apiPath.getRequiredContentType()){
+            handler = new RequireContentTypeHandler<Integer>(apiPath.getRequiredContentType(), handler);
+        }
+        final int wrote = execute(request, handler);
+        if(writeOutHandler.thrown!=null){
+            throw writeOutHandler.thrown;
+        }
+        return wrote;
+    }
     /**
      * Execute an HTTP request to the RunDeck instance. We will login first, and then execute the API call.
      * 
@@ -339,7 +407,129 @@ class ApiCall {
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      */
-    private ByteArrayInputStream execute(HttpRequestBase request) throws RundeckApiException, RundeckApiLoginException,
+    private ByteArrayInputStream execute(HttpUriRequest request) throws RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException {
+        return execute(request, new ResultHandler() );
+    }
+
+    /**
+     * Handles one type into another
+     * @param <T>
+     * @param <V>
+     */
+    private static interface Handler<T,V>{
+        public V handle(T response);
+    }
+
+    /**
+     * Handles parsing inputstream via a parser
+     * @param <S>
+     */
+    private static class ParserHandler<S> implements Handler<InputStream,S> {
+        XmlNodeParser<S> parser;
+
+        private ParserHandler(XmlNodeParser<S> parser) {
+            this.parser = parser;
+        }
+
+        @Override
+        public S handle(InputStream response) {
+            // read and parse the response
+            return parser.parseXmlNode(ParserHelper.loadDocument(response));
+        }
+    }
+
+    /**
+     * Handles writing response to an output stream
+     */
+    private static class ChainHandler<T> implements Handler<HttpResponse,T> {
+        Handler<HttpResponse, T> chain;
+        private ChainHandler(Handler<HttpResponse,T> chain) {
+            this.chain=chain;
+        }
+        @Override
+        public T handle(final HttpResponse response) {
+            return chain.handle(response);
+        }
+    }
+
+    /**
+     * Handles writing response to an output stream
+     */
+    private static class RequireContentTypeHandler<T> extends ChainHandler<T> {
+        String contentType;
+
+        private RequireContentTypeHandler(final String contentType, final Handler<HttpResponse, T> chain) {
+            super(chain);
+            this.contentType = contentType;
+        }
+
+        @Override
+        public T handle(final HttpResponse response) {
+            final Header firstHeader = response.getFirstHeader("Content-Type");
+            final String[] split = firstHeader.getValue().split(";");
+            boolean matched=false;
+            for (int i = 0; i < split.length; i++) {
+                String s = split[i];
+                if (this.contentType.equalsIgnoreCase(s.trim())) {
+                    matched=true;
+                    break;
+                }
+            }
+            if(!matched) {
+                throw new RundeckApiException.RundeckApiHttpContentTypeException(firstHeader.getValue(),
+                        this.contentType);
+            }
+            return super.handle(response);
+        }
+    }
+
+    /**
+     * Handles writing response to an output stream
+     */
+    private static class WriteOutHandler implements Handler<HttpResponse,Integer> {
+        private WriteOutHandler(OutputStream writeOut) {
+            this.writeOut = writeOut;
+        }
+
+        OutputStream writeOut;
+        IOException thrown;
+        @Override
+        public Integer handle(final HttpResponse response) {
+            try {
+                return IOUtils.copy(response.getEntity().getContent(), writeOut);
+            } catch (IOException e) {
+                thrown=e;
+            }
+            return -1;
+        }
+    }
+
+    /**
+     * Handles reading response into a byte array stream
+     */
+    private static class ResultHandler implements Handler<HttpResponse,ByteArrayInputStream> {
+        @Override
+        public ByteArrayInputStream handle(final HttpResponse response) {
+            // return a new inputStream, so that we can close all network resources
+            try {
+                return new ByteArrayInputStream(EntityUtils.toByteArray(response.getEntity()));
+            } catch (IOException e) {
+                throw new RundeckApiException("Failed to consume entity and convert the inputStream", e);
+            }
+        }
+    }
+    /**
+     * Execute an HTTP request to the RunDeck instance. We will login first, and then execute the API call.
+     *
+     * @param request to execute. see {@link HttpGet}, {@link HttpDelete}, and so on...
+     * @return a new {@link InputStream} instance, not linked with network resources
+     * @throws RundeckApiException in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    private <T> T execute(HttpUriRequest request, Handler<HttpResponse,T> handler) throws RundeckApiException,
+            RundeckApiLoginException,
             RundeckApiTokenException {
         HttpClient httpClient = instantiateHttpClient();
         try {
@@ -360,7 +550,8 @@ class ApiCall {
 
             // in case of error, we get a redirect to /api/error
             // that we need to follow manually for POST and DELETE requests (as GET)
-            if (response.getStatusLine().getStatusCode() / 100 == 3) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode / 100 == 3) {
                 String newLocation = response.getFirstHeader("Location").getValue();
                 try {
                     EntityUtils.consume(response.getEntity());
@@ -370,33 +561,31 @@ class ApiCall {
                 request = new HttpGet(newLocation);
                 try {
                     response = httpClient.execute(request);
+                    statusCode = response.getStatusLine().getStatusCode();
                 } catch (IOException e) {
                     throw new RundeckApiException("Failed to execute an HTTP GET on url : " + request.getURI(), e);
                 }
             }
 
             // check the response code (should be 2xx, even in case of error : error message is in the XML result)
-            if (response.getStatusLine().getStatusCode() / 100 != 2) {
-                if (response.getStatusLine().getStatusCode() == 403 && 
+            if (statusCode / 100 != 2) {
+                if (statusCode == 403 &&
                         (client.getToken() != null || client.getSessionID() != null)) {
                     throw new RundeckApiTokenException("Invalid Token or sessionID ! Got HTTP response '" + response.getStatusLine()
                                                        + "' for " + request.getURI());
                 } else {
-                    throw new RundeckApiException("Invalid HTTP response '" + response.getStatusLine() + "' for "
-                                                  + request.getURI());
+                    throw new RundeckApiException.RundeckApiHttpStatusException("Invalid HTTP response '" + response.getStatusLine() + "' for "
+                                                  + request.getURI(), statusCode);
                 }
+            }
+            if(statusCode==204){
+                return null;
             }
             if (response.getEntity() == null) {
                 throw new RundeckApiException("Empty RunDeck response ! HTTP status line is : "
                                               + response.getStatusLine());
             }
-
-            // return a new inputStream, so that we can close all network resources
-            try {
-                return new ByteArrayInputStream(EntityUtils.toByteArray(response.getEntity()));
-            } catch (IOException e) {
-                throw new RundeckApiException("Failed to consume entity and convert the inputStream", e);
-            }
+            return handler.handle(response);
         } finally {
             httpClient.getConnectionManager().shutdown();
         }

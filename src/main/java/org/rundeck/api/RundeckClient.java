@@ -18,25 +18,22 @@ package org.rundeck.api;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.dom4j.Document;
 import org.rundeck.api.RundeckApiException.RundeckApiLoginException;
 import org.rundeck.api.RundeckApiException.RundeckApiTokenException;
 import org.rundeck.api.domain.*;
 import org.rundeck.api.domain.RundeckExecution.ExecutionStatus;
+import org.rundeck.api.generator.ProjectConfigGenerator;
+import org.rundeck.api.generator.ProjectConfigPropertyGenerator;
+import org.rundeck.api.generator.ProjectGenerator;
 import org.rundeck.api.parser.*;
 import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.AssertUtil;
 import org.rundeck.api.util.PagedResults;
 import org.rundeck.api.util.ParametersUtil;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.io.*;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -84,6 +81,8 @@ public class RundeckClient implements Serializable {
 
     private static final long serialVersionUID = 1L;
     public static final String JOBS_IMPORT = "/jobs/import";
+    public static final String STORAGE_ROOT_PATH = "/storage/";
+    public static final String STORAGE_KEYS_PATH = "keys/";
 
     /**
      * Supported version numbers
@@ -95,6 +94,7 @@ public class RundeckClient implements Serializable {
         V8(8),
         V9(9),
         V10(10),
+        V11(11),
         ;
 
         private int versionNumber;
@@ -108,7 +108,7 @@ public class RundeckClient implements Serializable {
         }
     }
     /** Version of the API supported */
-    public static final transient int API_VERSION = Version.V10.getVersionNumber();
+    public static final transient int API_VERSION = Version.V11.getVersionNumber();
 
     private static final String API = "/api/";
 
@@ -274,9 +274,25 @@ public class RundeckClient implements Serializable {
         testAuth();
     }
 
+    /**
+     * Return root xpath for xml api results. for v11 and later it is empty, for earlier it is "result"
+     *
+     * @return
+     */
+    private String rootXpath() {
+        return getApiVersion() < Version.V11.getVersionNumber() ? "result" : "";
+    }
     /*
      * Projects
      */
+
+    private ProjectParser createProjectParser() {
+        return createProjectParser(null);
+    }
+
+    private ProjectParser createProjectParser(final String xpath) {
+        return new ProjectParserV11(xpath);
+    }
 
     /**
      * List all projects
@@ -289,7 +305,8 @@ public class RundeckClient implements Serializable {
     public List<RundeckProject> getProjects() throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException {
         return new ApiCall(this).get(new ApiPathBuilder("/projects"),
-                                     new ListParser<RundeckProject>(new ProjectParser(), "result/projects/project"));
+                                     new ListParser<RundeckProject>(createProjectParser(), rootXpath() +
+                                             "/projects/project"));
     }
 
     /**
@@ -306,7 +323,274 @@ public class RundeckClient implements Serializable {
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(projectName, "projectName is mandatory to get the details of a project !");
         return new ApiCall(this).get(new ApiPathBuilder("/project/", projectName),
-                                     new ProjectParser("result/projects/project"));
+                createProjectParser(rootXpath() +
+                        (getApiVersion() < Version.V11.getVersionNumber()
+                                ? "/projects/project"
+                                : "/project"
+                        )));
+    }
+
+    /**
+     * Create a new project, and return the new definition
+     *
+     * @param projectName name of the project - mandatory
+     * @param configuration project configuration properties
+     *
+     * @return a {@link RundeckProject} instance - won't be null
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public RundeckProject createProject(String projectName, Map<String, String> configuration) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to create a project !");
+        return new ApiCall(this)
+                .post(new ApiPathBuilder("/projects").xml(
+                        projectDocument(projectName, configuration)
+                ), createProjectParser(rootXpath() +
+                        (getApiVersion() < Version.V11.getVersionNumber()
+                                ? "/projects/project"
+                                : "/project"
+                        )));
+    }
+    /**
+     * Delete a project
+     *
+     * @param projectName name of the project - mandatory
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public void deleteProject(String projectName) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to create a project !");
+        new ApiCall(this).delete(new ApiPathBuilder("/project/", projectName));
+    }
+    /**
+     * Convenience method to export the archive of a project to the specified file.
+     *
+     * @param projectName name of the project - mandatory
+     * @param out         file to write to
+     * @return number of bytes written to the stream
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public int exportProject(final String projectName, final File out) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException, IOException {
+        final FileOutputStream fileOutputStream = new FileOutputStream(out);
+        try {
+            return exportProject(projectName, fileOutputStream);
+        }finally {
+            fileOutputStream.close();
+        }
+    }
+    /**
+     * Export the archive of a project to the specified outputstream
+     *
+     * @param projectName name of the project - mandatory
+     * @return number of bytes written to the stream
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public int exportProject(String projectName, OutputStream out) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException, IOException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to export a project archive!");
+        return new ApiCall(this).get(
+                new ApiPathBuilder("/project/", projectName, "/export")
+                        .accept("application/zip"),
+                out);
+    }
+
+    /**
+     * Import a archive file to the specified project.
+     *
+     * @param projectName name of the project - mandatory
+     * @param archiveFile zip archive file
+     * @param includeExecutions if true, import executions defined in the archive, otherwise skip them
+     * @param preserveJobUuids if true, do not remove UUIDs from imported jobs, otherwise remove them
+     *
+     * @return Result of the import request, may contain a list of import error messages
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public ArchiveImport importArchive(final String projectName, final File archiveFile,
+            final boolean includeExecutions, final boolean preserveJobUuids) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException, IOException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to import a project archive!");
+        AssertUtil.notNull(archiveFile, "archiveFile is mandatory to import a project archive!"); ;
+        return callImportProject(projectName, includeExecutions, preserveJobUuids,
+                new ApiPathBuilder().content("application/zip", archiveFile));
+    }
+
+    private ArchiveImport callImportProject(final String projectName, final boolean includeExecutions, final boolean preserveJobUuids,
+            final ApiPathBuilder param) {
+        param.paths("/project/", projectName, "/import")
+        .param("importExecutions", includeExecutions)
+        .param("jobUuidOption", preserveJobUuids ? "preserve" : "remove");
+        return new ApiCall(this).put(
+                param,
+                new ArchiveImportParser()
+        );
+    }
+
+    /**
+     * Return the configuration of a project
+     *
+     * @param projectName name of the project - mandatory
+     *
+     * @return a {@link ProjectConfig} instance - won't be null
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public ProjectConfig getProjectConfig(String projectName) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to get the config of a project !");
+        return new ApiCall(this)
+                .get(new ApiPathBuilder("/project/", projectName, "/config"), new ProjectConfigParser("/config"));
+    }
+    /**
+     * Get a single project configuration key
+     *
+     * @param projectName name of the project - mandatory
+     * @param key name of the configuration key
+     *
+     * @return value, or null if the value is not set
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public String getProjectConfig(final String projectName, final String key) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to get the config of a project !");
+        AssertUtil.notBlank(key, "key is mandatory to get the config key value!");
+
+        ConfigProperty configProperty = null;
+        try {
+            configProperty = new ApiCall(this)
+                    .get(new ApiPathBuilder("/project/", projectName, "/config/", key),
+                            new ProjectConfigPropertyParser("/property"));
+        } catch (RundeckApiException.RundeckApiHttpStatusException e) {
+            if(404==e.getStatusCode()){
+                return null;
+            }
+            throw e;
+        }
+        return configProperty.getValue();
+    }
+    /**
+     * Set a single project configuration property value
+     *
+     * @param projectName name of the project - mandatory
+     * @param key name of the configuration property
+     * @param value value of the property
+     *
+     * @return new value
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public String setProjectConfig(final String projectName, final String key, final String value) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to set the config of a project !");
+        AssertUtil.notBlank(key, "key is mandatory to set the config key value!");
+        AssertUtil.notBlank(value, "value is mandatory to set the config key value!");
+
+        final ConfigProperty configProperty = new ApiCall(this)
+                .put(new ApiPathBuilder("/project/", projectName, "/config/", key)
+                        .xml(new ProjectConfigPropertyGenerator(new ConfigProperty(key, value))),
+                        new ProjectConfigPropertyParser("/property"));
+
+        return configProperty.getValue();
+    }
+    /**
+     * Set a single project configuration property value
+     *
+     * @param projectName name of the project - mandatory
+     * @param key name of the configuration property
+     * @param value value of the property
+     *
+     * @return new value
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public void deleteProjectConfig(final String projectName, final String key) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to set the config of a project !");
+        AssertUtil.notBlank(key, "key is mandatory to set the config key value!");
+
+        new ApiCall(this).delete(new ApiPathBuilder("/project/", projectName, "/config/",
+                key).accept("application/xml"));
+    }
+    /**
+     * Return the configuration of a project
+     *
+     * @param projectName name of the project - mandatory
+     *
+     * @return a {@link ProjectConfig} instance - won't be null
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent project with this name)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the projectName is blank (null, empty or whitespace)
+     */
+    public ProjectConfig setProjectConfig(String projectName, Map<String,String> configuration) throws
+            RundeckApiException, RundeckApiLoginException,
+            RundeckApiTokenException, IllegalArgumentException {
+
+        AssertUtil.notBlank(projectName, "projectName is mandatory to get the config of a project !");
+        return new ApiCall(this)
+                .put(new ApiPathBuilder("/project/", projectName, "/config")
+                        .xml(new ProjectConfigGenerator(new ProjectConfig(configuration)))
+                        , new ProjectConfigParser("/config"));
+    }
+
+    private Document projectDocument(String projectName, Map<String, String> configuration) {
+        RundeckProject project = new RundeckProject();
+        project.setName(projectName);
+        if (null != configuration) {
+            project.setProjectConfig(new ProjectConfig(configuration));
+        }
+        return new ProjectGenerator(project).generateXmlDocument();
     }
 
     /*
@@ -366,7 +650,7 @@ public class RundeckClient implements Serializable {
                                                                 .param("jobFilter", jobFilter)
                                                                 .param("groupPath", groupPath)
                                                                 .param("idlist", StringUtils.join(jobIds, ",")),
-                                     new ListParser<RundeckJob>(new JobParser(), "result/jobs/job"));
+                                     new ListParser<RundeckJob>(new JobParser(), rootXpath()+"/jobs/job"));
     }
 
     /**
@@ -699,7 +983,7 @@ public class RundeckClient implements Serializable {
             //API v8
             request.param("project", rundeckJobsImport.getProject());
         }
-        return new ApiCall(this).post(request, new JobsImportResultParser("result"));
+        return new ApiCall(this).post(request, new JobsImportResultParser(rootXpath()));
     }
 
     /**
@@ -755,7 +1039,7 @@ public class RundeckClient implements Serializable {
     public String deleteJob(String jobId) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(jobId, "jobId is mandatory to delete a job !");
-        return new ApiCall(this).delete(new ApiPathBuilder("/job/", jobId), new StringParser("result/success/message"));
+        return new ApiCall(this).delete(new ApiPathBuilder("/job/", jobId), new StringParser(rootXpath()+"/success/message"));
     }
     /**
      * Delete multiple jobs, identified by the given IDs
@@ -773,7 +1057,7 @@ public class RundeckClient implements Serializable {
             throw new IllegalArgumentException("jobIds are mandatory to delete a job");
         }
         return new ApiCall(this).post(new ApiPathBuilder("/jobs/delete").field("ids",jobIds),
-                                        new BulkDeleteParser("result/deleteJobs"));
+                                        new BulkDeleteParser(rootXpath()+"/deleteJobs"));
     }
 
     /**
@@ -798,7 +1082,7 @@ public class RundeckClient implements Serializable {
         if(null!=jobRun.getAsUser()) {
             apiPath.param("asUser", jobRun.getAsUser());
         }
-        return new ApiCall(this).get(apiPath, new ExecutionParser("result/executions/execution"));
+        return new ApiCall(this).get(apiPath, new ExecutionParser(rootXpath()+"/executions/execution"));
     }
 
 
@@ -896,7 +1180,7 @@ public class RundeckClient implements Serializable {
         if(null!= command.getAsUser()) {
             apiPath.param("asUser", command.getAsUser());
         }
-        RundeckExecution execution = new ApiCall(this).get(apiPath, new ExecutionParser("result/execution"));
+        RundeckExecution execution = new ApiCall(this).get(apiPath, new ExecutionParser(rootXpath()+"/execution"));
         // the first call just returns the ID of the execution, so we need another call to get a "real" execution
         return getExecution(execution.getId());
     }
@@ -1030,7 +1314,7 @@ public class RundeckClient implements Serializable {
         if(null!=script.getAsUser()) {
             apiPath.param("asUser", script.getAsUser());
         }
-        RundeckExecution execution = new ApiCall(this).post(apiPath, new ExecutionParser("result/execution"));
+        RundeckExecution execution = new ApiCall(this).post(apiPath, new ExecutionParser(rootXpath()+"/execution"));
         // the first call just returns the ID of the execution, so we need another call to get a "real" execution
         return getExecution(execution.getId());
     }
@@ -1177,7 +1461,7 @@ public class RundeckClient implements Serializable {
         AssertUtil.notBlank(project, "project is mandatory get all running executions !");
         return new ApiCall(this).get(new ApiPathBuilder("/executions/running").param("project", project),
                                      new ListParser<RundeckExecution>(new ExecutionParser(),
-                                                                      "result/executions/execution"));
+                                                                      rootXpath()+"/executions/execution"));
     }
 
     /**
@@ -1275,7 +1559,7 @@ public class RundeckClient implements Serializable {
                                          .param("max", max)
                                          .param("offset", offset),
                                      new ListParser<RundeckExecution>(new ExecutionParser(),
-                                                                      "result/executions/execution"));
+                                                                      rootXpath()+"/executions/execution"));
     }
 
     /**
@@ -1302,7 +1586,7 @@ public class RundeckClient implements Serializable {
                                          .param("offset", offset),
                                      new PagedResultParser<RundeckExecution>(
                                          new ListParser<RundeckExecution>(new ExecutionParser(), "execution"),
-                                         "result/executions"
+                                         rootXpath()+"/executions"
                                      )
         );
     }
@@ -1321,7 +1605,7 @@ public class RundeckClient implements Serializable {
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the details of an execution !");
         return new ApiCall(this).get(new ApiPathBuilder("/execution/", executionId.toString()),
-                                     new ExecutionParser("result/executions/execution"));
+                                     new ExecutionParser(rootXpath()+"/executions/execution"));
     }
 
     /**
@@ -1356,7 +1640,7 @@ public class RundeckClient implements Serializable {
         if(null!=asUser) {
             apiPath.param("asUser", asUser);
         }
-        return new ApiCall(this).get(apiPath, new AbortParser("result/abort"));
+        return new ApiCall(this).get(apiPath, new AbortParser(rootXpath()+"/abort"));
     }
 
     /*
@@ -1548,7 +1832,7 @@ public class RundeckClient implements Serializable {
                                          .param("end", end)
                                          .param("max", max)
                                          .param("offset", offset),
-                                     new HistoryParser("result/events"));
+                                     new HistoryParser(rootXpath()+"/events"));
     }
 
     /**
@@ -1595,7 +1879,7 @@ public class RundeckClient implements Serializable {
             .param("max", max)
             .param("offset", offset);
 
-        return new ApiCall(this).postOrGet(builder, new HistoryParser("result/events"));
+        return new ApiCall(this).postOrGet(builder, new HistoryParser(rootXpath()+"/events"));
     }
 
     /*
@@ -1773,7 +2057,7 @@ public class RundeckClient implements Serializable {
             param.param("maxlines", maxlines);
         }
         return new ApiCall(this).get(param,
-                new OutputParser("result/output", createOutputEntryParser()));
+                new OutputParser(rootXpath()+"/output", createOutputEntryParser()));
     }
     /**
      * Get the execution state of the given execution
@@ -1792,7 +2076,7 @@ public class RundeckClient implements Serializable {
                 "/execution/", executionId.toString(),
                 "/state");
 
-        return new ApiCall(this).get(param, new ExecutionStateParser("result/executionState"));
+        return new ApiCall(this).get(param, new ExecutionStateParser(rootXpath()+"/executionState"));
     }
 
     /**
@@ -1834,7 +2118,7 @@ public class RundeckClient implements Serializable {
             param.param("maxlines", maxlines);
         }
         return new ApiCall(this).get(param,
-                new OutputParser("result/output", createOutputEntryParser()));
+                new OutputParser(rootXpath()+"/output", createOutputEntryParser()));
     }
     /**
      * Get the execution output of the given execution for the specified step
@@ -1875,7 +2159,7 @@ public class RundeckClient implements Serializable {
             param.param("maxlines", maxlines);
         }
         return new ApiCall(this).get(param,
-                new OutputParser("result/output", createOutputEntryParser()));
+                new OutputParser(rootXpath()+"/output", createOutputEntryParser()));
     }
     /**
      * Get the execution output of the given execution for the specified step
@@ -1919,7 +2203,7 @@ public class RundeckClient implements Serializable {
             param.param("maxlines", maxlines);
         }
         return new ApiCall(this).get(param,
-                new OutputParser("result/output", createOutputEntryParser()));
+                new OutputParser(rootXpath()+"/output", createOutputEntryParser()));
     }
 
 
@@ -1966,7 +2250,7 @@ public class RundeckClient implements Serializable {
         if (maxlines > 0) {
             param.param("maxlines", maxlines);
         }
-        return new ApiCall(this).get(param, new OutputParser("result/output", createOutputEntryParser()));
+        return new ApiCall(this).get(param, new OutputParser(rootXpath()+"/output", createOutputEntryParser()));
     }
     /**
      * Get the execution state output sequence of the given job
@@ -1997,7 +2281,7 @@ public class RundeckClient implements Serializable {
         if(stateOnly) {
             param.param("stateOnly", true);
         }
-        return new ApiCall(this).get(param, new OutputParser("result/output", createOutputEntryParser()));
+        return new ApiCall(this).get(param, new OutputParser(rootXpath()+"/output", createOutputEntryParser()));
     }
 
     private OutputEntryParser createOutputEntryParser() {
@@ -2023,7 +2307,204 @@ public class RundeckClient implements Serializable {
      */
     public RundeckSystemInfo getSystemInfo() throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException {
-        return new ApiCall(this).get(new ApiPathBuilder("/system/info"), new SystemInfoParser("result/system"));
+        return new ApiCall(this).get(new ApiPathBuilder("/system/info"), new SystemInfoParser(rootXpath()+"/system"));
+    }
+
+
+    /*
+     * API token
+     */
+
+    /**
+     * List API tokens for a user.
+     * @param user username
+     * @return list of tokens
+     * @throws RundeckApiException
+     */
+    public List<RundeckToken> listApiTokens(final String user) throws RundeckApiException {
+        AssertUtil.notNull(user, "user is mandatory to list API tokens for a user.");
+        return new ApiCall(this).
+                get(new ApiPathBuilder("/tokens/", user),
+                        new ListParser<RundeckToken>(new RundeckTokenParser(), "/tokens/token"));
+    }
+
+    /**
+     * List all API tokens
+     * @return list of tokens
+     * @throws RundeckApiException
+     */
+    public List<RundeckToken> listApiTokens() throws RundeckApiException {
+        return new ApiCall(this).
+                get(new ApiPathBuilder("/tokens"),
+                        new ListParser<RundeckToken>(new RundeckTokenParser(), "/tokens/token"));
+    }
+
+    /**
+     * Generate an API token for a user.
+     * @param user
+     * @return
+     * @throws RundeckApiException
+     */
+    public String generateApiToken(final String user) throws RundeckApiException{
+        AssertUtil.notNull(user, "user is mandatory to generate an API token for a user.");
+        RundeckToken result = new ApiCall(this).
+                post(new ApiPathBuilder("/tokens/", user).emptyContent(),
+                        new RundeckTokenParser("/token"));
+        return result.getToken();
+    }
+    /**
+     * Delete an existing token
+     * @param token
+     * @return
+     * @throws RundeckApiException
+     */
+    public boolean deleteApiToken(final String token) throws RundeckApiException{
+        AssertUtil.notNull(token, "token is mandatory to delete an API token.");
+        new ApiCall(this).delete(new ApiPathBuilder("/token/", token));
+        return true;
+    }
+    /**
+     * Return user info for an existing token
+     * @param token
+     * @return token info
+     * @throws RundeckApiException
+     */
+    public RundeckToken getApiToken(final String token) throws RundeckApiException{
+        AssertUtil.notNull(token, "token is mandatory to get an API token.");
+        return new ApiCall(this).get(new ApiPathBuilder("/token/", token), new RundeckTokenParser("/token"));
+    }
+
+    /**
+     * Store an key file
+     * @param path ssh key storage path, must start with "keys/"
+     * @param keyfile key file
+     * @param privateKey true to store private key, false to store public key
+     * @return the key resource
+     * @throws RundeckApiException
+     */
+    public KeyResource storeKey(final String path, final File keyfile, boolean privateKey) throws RundeckApiException{
+        AssertUtil.notNull(path, "path is mandatory to store an key.");
+        AssertUtil.notNull(keyfile, "keyfile is mandatory to store an key.");
+        if (!path.startsWith(STORAGE_KEYS_PATH)) {
+            throw new IllegalArgumentException("key storage path must start with: " + STORAGE_KEYS_PATH);
+        }
+        return new ApiCall(this).post(
+                new ApiPathBuilder(STORAGE_ROOT_PATH, path).content(
+                        privateKey ? "application/octet-stream" : "application/pgp-keys",
+                        keyfile
+                ),
+                new SSHKeyResourceParser("/resource")
+        );
+    }
+
+    /**
+     * Get metadata for an key file
+     *
+     * @param path ssh key storage path, must start with "keys/"
+     *
+     * @return the ssh key resource
+     *
+     * @throws RundeckApiException if there is an error, or if the path is a directory not a file
+     */
+    public KeyResource getKey(final String path) throws RundeckApiException {
+        AssertUtil.notNull(path, "path is mandatory to get an key.");
+        if (!path.startsWith(STORAGE_KEYS_PATH)) {
+            throw new IllegalArgumentException("key storage path must start with: " + STORAGE_KEYS_PATH);
+        }
+        KeyResource storageResource = new ApiCall(this).get(
+                new ApiPathBuilder(STORAGE_ROOT_PATH, path),
+                new SSHKeyResourceParser("/resource")
+        );
+        if (storageResource.isDirectory()) {
+            throw new RundeckApiException("Key Path is a directory: " + path);
+        }
+        return storageResource;
+    }
+
+    /**
+     * Get content for a public key file
+     * @param path ssh key storage path, must start with "keys/"
+     * @param out outputstream to write data to
+     *
+     * @return length of written data
+     * @throws RundeckApiException
+     */
+    public int getPublicKeyContent(final String path, final OutputStream out) throws
+            RundeckApiException, IOException {
+        AssertUtil.notNull(path, "path is mandatory to get an key.");
+        if (!path.startsWith(STORAGE_KEYS_PATH)) {
+            throw new IllegalArgumentException("key storage path must start with: " + STORAGE_KEYS_PATH);
+        }
+        try {
+            return new ApiCall(this).get(
+                    new ApiPathBuilder(STORAGE_ROOT_PATH, path)
+                            .accept("application/pgp-keys")
+                            .requireContentType("application/pgp-keys"),
+                    out
+            );
+        } catch (RundeckApiException.RundeckApiHttpContentTypeException e) {
+            throw new RundeckApiException("Requested Key path was not a Public key: " + path, e);
+        }
+    }
+
+    /**
+     * Get content for a public key file
+     * @param path ssh key storage path, must start with "keys/"
+     * @param out file to write data to
+     * @return length of written data
+     * @throws RundeckApiException
+     */
+    public int getPublicKeyContent(final String path, final File out) throws
+            RundeckApiException, IOException {
+        final FileOutputStream fileOutputStream = new FileOutputStream(out);
+        try {
+            return getPublicKeyContent(path, fileOutputStream);
+        }finally {
+            fileOutputStream.close();
+        }
+    }
+
+    /**
+     * List contents of root key directory
+     *
+     * @return list of key resources
+     * @throws RundeckApiException
+     */
+    public List<KeyResource> listKeyDirectoryRoot() throws RundeckApiException {
+        return listKeyDirectory(STORAGE_KEYS_PATH);
+    }
+    /**
+     * List contents of key directory
+     *
+     * @param path ssh key storage path, must start with "keys/"
+     *
+     * @throws RundeckApiException if there is an error, or if the path is a file not a directory
+     */
+    public List<KeyResource> listKeyDirectory(final String path) throws RundeckApiException {
+        AssertUtil.notNull(path, "path is mandatory to get an key.");
+        if (!path.startsWith(STORAGE_KEYS_PATH)) {
+            throw new IllegalArgumentException("key storage path must start with: " + STORAGE_KEYS_PATH);
+        }
+        KeyResource storageResource = new ApiCall(this).get(
+                new ApiPathBuilder(STORAGE_ROOT_PATH, path),
+                new SSHKeyResourceParser("/resource")
+        );
+        if(!storageResource.isDirectory()) {
+            throw new RundeckApiException("key path is not a directory path: " + path);
+        }
+        return storageResource.getDirectoryContents();
+    }
+
+    /**
+     * Delete an key file
+     * @param path a path to a key file, must start with "keys/"
+     */
+    public void deleteKey(final String path){
+        AssertUtil.notNull(path, "path is mandatory to delete an key.");
+        if (!path.startsWith(STORAGE_KEYS_PATH)) {
+            throw new IllegalArgumentException("key storage path must start with: " + STORAGE_KEYS_PATH);
+        }
+        new ApiCall(this).delete(new ApiPathBuilder(STORAGE_ROOT_PATH, path));
     }
 
     /**

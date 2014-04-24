@@ -1,0 +1,23 @@
+!tape
+name: ssh_key_get_data_private
+interactions:
+- recorded: 2014-04-04T19:50:59.155Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/storage/keys/test/example/file1.pem
+    headers:
+      Accept: application/pgp-keys
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1gzu37lkjr0fitxhf5fgkgsfu;Path=/
+    body: !!binary |-
+      eyJwYXRoIjoia2V5cy90ZXN0L2V4YW1wbGUvZmlsZTEucGVtIiwidHlwZSI6ImZpbGUiLCJuYW1lIjoiZmlsZTEucGVtIiwidXJsIjoiaHR0cDovL2RpZ25hbi5sb2NhbDo0NDQwL2FwaS8xMS9zdG9yYWdlL2tleXMvdGVzdC9leGFtcGxlL2ZpbGUxLnBlbSIsIm1ldGEiOnsiUnVuZGVjay1jb250ZW50LXR5cGUiOiJhcHBsaWNhdGlvbi9vY3RldC1zdHJlYW0iLCJSdW5kZWNrLWNvbnRlbnQtc2l6ZSI6IjUiLCJSdW5kZWNrLWNvbnRlbnQtbWFzayI6ImNvbnRlbnQiLCJSdW5kZWNrLWtleS10eXBlIjoicHJpdmF0ZSJ9fQo=
+
