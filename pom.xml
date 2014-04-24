@@ -108,7 +108,7 @@
     <plugin.jxr.version>2.3</plugin.jxr.version>
     <plugin.pmd.version>2.6</plugin.pmd.version>
     <plugin.project-info-reports.version>2.4</plugin.project-info-reports.version>
-    <plugin.release.version>2.2.1</plugin.release.version>
+    <plugin.release.version>2.3.2</plugin.release.version>
     <plugin.resources.version>2.5</plugin.resources.version>
     <plugin.site.version>3.0</plugin.site.version>
     <plugin.source.version>2.1.2</plugin.source.version>
