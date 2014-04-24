@@ -146,6 +146,8 @@
   <a href="../../../../org/rundeck/api/package-summary.html">org.rundeck.api</a></li>
     <li class="api apilevel-">
   <a href="../../../../org/rundeck/api/domain/package-summary.html">org.rundeck.api.domain</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/rundeck/api/generator/package-summary.html">org.rundeck.api.generator</a></li>
     <li class="selected api apilevel-">
   <a href="../../../../org/rundeck/api/parser/package-summary.html">org.rundeck.api.parser</a></li>
     <li class="api apilevel-">
@@ -167,7 +169,9 @@
     <li><h2>Classes</h2>
       <ul>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/AbortParser.html">AbortParser</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ArchiveImportParser.html">ArchiveImportParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/BaseStateParser.html">BaseStateParser</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/BaseXpathParser.html">BaseXpathParser</a>&lt;T&gt;</li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/BulkDeleteParser.html">BulkDeleteParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/DeleteParser.html">DeleteParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/EventParser.html">EventParser</a></li>
@@ -184,7 +188,13 @@
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/OutputParser.html">OutputParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/PagedResultParser.html">PagedResultParser</a>&lt;T&gt;</li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ParserHelper.html">ParserHelper</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ProjectConfigParser.html">ProjectConfigParser</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ProjectConfigPropertyParser.html">ProjectConfigPropertyParser</a></li>
           <li class="selected api apilevel-"><a href="../../../../org/rundeck/api/parser/ProjectParser.html">ProjectParser</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ProjectParserV11.html">ProjectParserV11</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/RundeckTokenParser.html">RundeckTokenParser</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/SSHKeyResourceParser.html">SSHKeyResourceParser</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/StorageResourceParser.html">StorageResourceParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/StringParser.html">StringParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/SystemInfoParser.html">SystemInfoParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/WorkflowStateParser.html">WorkflowStateParser</a></li>
@@ -269,6 +279,9 @@ Summary:
   
 
 
+  &#124; <a href="#promethods">Protected Methods</a>
+  
+
 
   &#124; <a href="#inhmethods">Inherited Methods</a>
 
@@ -340,6 +353,37 @@ Summary:
 
 
 
+
+<table class="jd-sumtable jd-sumtable-subclasses"><tr><td colspan="12" style="border:none;margin:0;padding:0;">
+
+  <a href="#" onclick="return toggleInherited(this, null)" id="subclasses-direct" class="jd-expando-trigger closed"
+          ><img id="subclasses-direct-trigger"
+          src="../../../../../assets/images/triangle-closed.png"
+          class="jd-expando-trigger-img" /></a>Known Direct Subclasses
+
+  <div id="subclasses-direct">
+      <div id="subclasses-direct-list"
+              class="jd-inheritedlinks"
+              
+              >
+          
+            
+              <a href="../../../../org/rundeck/api/parser/ProjectParserV11.html">ProjectParserV11</a>
+            
+          
+      </div>
+      <div id="subclasses-direct-summary"
+              style="display: none;"
+              >
+  <table class="jd-sumtable-expando">
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/parser/ProjectParserV11.html">ProjectParserV11</a></td>
+              <td class="jd-descrcol" width="100%">ProjectParserV11 supports embedded "config" element.&nbsp;</td>
+          </tr>
+  </table>
+      </div>
+  </div>
+</td></tr></table>
 
 
 
@@ -470,6 +514,31 @@ Summary:
 </table>
 
 
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+<table id="promethods" class="jd-sumtable"><tr><th colspan="12">Protected Methods</th></tr>
+
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/ProjectParser.html#getXpath()">getXpath</a></span>()</nobr>
+        
+  </td></tr>
+
+
+
+</table>
 
 
 
@@ -887,6 +956,42 @@ From interface
 
 
 <!-- ========= METHOD DETAIL ======== -->
+
+<h2>Protected Methods</h2>
+
+
+
+<A NAME="getXpath()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        protected 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>
+      </span>
+      <span class="sympad">getXpath</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
 
 
 

@@ -147,6 +147,8 @@
     <li class="api apilevel-">
   <a href="../../../org/rundeck/api/domain/package-summary.html">org.rundeck.api.domain</a></li>
     <li class="api apilevel-">
+  <a href="../../../org/rundeck/api/generator/package-summary.html">org.rundeck.api.generator</a></li>
+    <li class="api apilevel-">
   <a href="../../../org/rundeck/api/parser/package-summary.html">org.rundeck.api.parser</a></li>
     <li class="api apilevel-">
   <a href="../../../org/rundeck/api/query/package-summary.html">org.rundeck.api.query</a></li>
@@ -194,6 +196,8 @@
       <ul>
           <li class="api apilevel-"><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></li>
           <li class="api apilevel-"><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiAuthException.html">RundeckApiException.RundeckApiAuthException</a></li>
+          <li class="api apilevel-"><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiHttpContentTypeException.html">RundeckApiException.RundeckApiHttpContentTypeException</a></li>
+          <li class="api apilevel-"><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiHttpStatusException.html">RundeckApiException.RundeckApiHttpStatusException</a></li>
           <li class="api apilevel-"><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></li>
           <li class="api apilevel-"><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></li>
       </ul>
@@ -492,6 +496,20 @@ Summary:
     </tr>
     
     
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></td>
+        <td class="jd-linkcol"><a href="../../../org/rundeck/api/RundeckClient.html#STORAGE_KEYS_PATH">STORAGE_KEYS_PATH</a></td>
+        <td class="jd-descrcol" width="100%"></td>
+    </tr>
+    
+    
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></td>
+        <td class="jd-linkcol"><a href="../../../org/rundeck/api/RundeckClient.html#STORAGE_ROOT_PATH">STORAGE_ROOT_PATH</a></td>
+        <td class="jd-descrcol" width="100%"></td>
+    </tr>
+    
+    
 
 </table>
 
@@ -634,6 +652,42 @@ Summary:
             
             
             
+            <a href="../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#createProject(java.lang.String, java.util.Map<java.lang.String, java.lang.String>)">createProject</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/Map.html">Map</a>&lt;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>,&nbsp;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>&gt; configuration)</nobr>
+        
+        <div class="jd-descrdiv">Create a new project, and return the new definition</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#deleteApiToken(java.lang.String)">deleteApiToken</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> token)</nobr>
+        
+        <div class="jd-descrdiv">Delete an existing token@return</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
             <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
@@ -670,6 +724,60 @@ Summary:
             
             
             
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#deleteKey(java.lang.String)">deleteKey</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> path)</nobr>
+        
+        <div class="jd-descrdiv">Delete an key file</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#deleteProject(java.lang.String)">deleteProject</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName)</nobr>
+        
+        <div class="jd-descrdiv">Delete a project</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#deleteProjectConfig(java.lang.String, java.lang.String)">deleteProjectConfig</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> key)</nobr>
+        
+        <div class="jd-descrdiv">Set a single project configuration property value</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
             boolean</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
@@ -679,7 +787,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -697,7 +805,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -715,7 +823,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -733,7 +841,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -751,7 +859,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -769,7 +877,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -788,7 +896,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -806,7 +914,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -825,7 +933,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -843,7 +951,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -862,7 +970,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -880,7 +988,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -899,7 +1007,43 @@ Summary:
 
 
 	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            int</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#exportProject(java.lang.String, java.io.File)">exportProject</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/File.html">File</a> out)</nobr>
+        
+        <div class="jd-descrdiv">Convenience method to export the archive of a project to the specified file.</div>
+  
+  </td></tr>
+
+
+	 
     <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            int</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#exportProject(java.lang.String, java.io.OutputStream)">exportProject</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/OutputStream.html">OutputStream</a> out)</nobr>
+        
+        <div class="jd-descrdiv">Export the archive of a project to the specified outputstream</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -912,6 +1056,24 @@ Summary:
         <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#findJob(java.lang.String, java.lang.String, java.lang.String)">findJob</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> project, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> groupPath, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> name)</nobr>
         
         <div class="jd-descrdiv">Find a job, identified by its project, group and name.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#generateApiToken(java.lang.String)">generateApiToken</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> user)</nobr>
+        
+        <div class="jd-descrdiv">Generate an API token for a user.@return</div>
   
   </td></tr>
 
@@ -942,6 +1104,24 @@ Summary:
             
             
             
+            <a href="../../../org/rundeck/api/domain/RundeckToken.html">RundeckToken</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#getApiToken(java.lang.String)">getApiToken</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> token)</nobr>
+        
+        <div class="jd-descrdiv">Return user info for an existing token</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
             <a href="../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
@@ -953,7 +1133,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -971,7 +1151,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -989,7 +1169,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1007,7 +1187,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1025,7 +1205,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1043,7 +1223,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1061,7 +1241,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1079,7 +1259,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1097,7 +1277,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1115,7 +1295,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1133,7 +1313,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1151,7 +1331,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1169,7 +1349,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1187,7 +1367,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1205,7 +1385,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1223,7 +1403,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1241,7 +1421,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1259,7 +1439,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1277,7 +1457,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1295,7 +1475,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1318,7 +1498,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1341,7 +1521,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1359,7 +1539,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1377,7 +1557,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1395,7 +1575,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1413,7 +1593,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1431,7 +1611,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1449,7 +1629,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1467,7 +1647,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1480,6 +1660,24 @@ Summary:
         <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#getJobs(java.lang.String, java.lang.String, java.lang.String, java.lang.String...)">getJobs</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> project, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> jobFilter, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> groupPath, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String...</a> jobIds)</nobr>
         
         <div class="jd-descrdiv">List the jobs that belongs to the given project, and matches the given criteria (jobFilter, groupPath and jobIds)</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../org/rundeck/api/domain/KeyResource.html">KeyResource</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#getKey(java.lang.String)">getKey</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> path)</nobr>
+        
+        <div class="jd-descrdiv">Get metadata for an key file</div>
   
   </td></tr>
 
@@ -1650,12 +1848,84 @@ Summary:
             
             
             
+            <a href="../../../org/rundeck/api/domain/ProjectConfig.html">ProjectConfig</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#getProjectConfig(java.lang.String)">getProjectConfig</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName)</nobr>
+        
+        <div class="jd-descrdiv">Return the configuration of a project</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#getProjectConfig(java.lang.String, java.lang.String)">getProjectConfig</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> key)</nobr>
+        
+        <div class="jd-descrdiv">Get a single project configuration key</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
             <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/List.html">List</a>&lt;<a href="../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a>&gt;</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#getProjects()">getProjects</a></span>()</nobr>
         
         <div class="jd-descrdiv">List all projects</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            int</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#getPublicKeyContent(java.lang.String, java.io.File)">getPublicKeyContent</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> path, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/File.html">File</a> out)</nobr>
+        
+        <div class="jd-descrdiv">Get content for a public key file</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            int</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#getPublicKeyContent(java.lang.String, java.io.OutputStream)">getPublicKeyContent</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> path, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/OutputStream.html">OutputStream</a> out)</nobr>
+        
+        <div class="jd-descrdiv">Get content for a public key file</div>
   
   </td></tr>
 
@@ -1786,6 +2056,24 @@ Summary:
             
             
             
+            <a href="../../../org/rundeck/api/domain/ArchiveImport.html">ArchiveImport</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#importArchive(java.lang.String, java.io.File, boolean, boolean)">importArchive</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/File.html">File</a> archiveFile, boolean includeExecutions, boolean preserveJobUuids)</nobr>
+        
+        <div class="jd-descrdiv">Import a archive file to the specified project.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
             <a href="../../../org/rundeck/api/domain/RundeckJobsImportResult.html">RundeckJobsImportResult</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
@@ -1797,7 +2085,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1815,7 +2103,79 @@ Summary:
 
 
 	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/List.html">List</a>&lt;<a href="../../../org/rundeck/api/domain/RundeckToken.html">RundeckToken</a>&gt;</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#listApiTokens()">listApiTokens</a></span>()</nobr>
+        
+        <div class="jd-descrdiv">List all API tokens</div>
+  
+  </td></tr>
+
+
+	 
     <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/List.html">List</a>&lt;<a href="../../../org/rundeck/api/domain/RundeckToken.html">RundeckToken</a>&gt;</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#listApiTokens(java.lang.String)">listApiTokens</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> user)</nobr>
+        
+        <div class="jd-descrdiv">List API tokens for a user.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/List.html">List</a>&lt;<a href="../../../org/rundeck/api/domain/KeyResource.html">KeyResource</a>&gt;</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#listKeyDirectory(java.lang.String)">listKeyDirectory</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> path)</nobr>
+        
+        <div class="jd-descrdiv">List contents of key directory</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/List.html">List</a>&lt;<a href="../../../org/rundeck/api/domain/KeyResource.html">KeyResource</a>&gt;</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#listKeyDirectoryRoot()">listKeyDirectoryRoot</a></span>()</nobr>
+        
+        <div class="jd-descrdiv">List contents of root key directory</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1833,7 +2193,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1851,7 +2211,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1869,7 +2229,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1887,7 +2247,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1905,7 +2265,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1923,7 +2283,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1941,7 +2301,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1954,6 +2314,60 @@ Summary:
         <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#runJob(org.rundeck.api.RunJob, long, java.util.concurrent.TimeUnit)">runJob</a></span>(<a href="../../../org/rundeck/api/RunJob.html">RunJob</a> jobRun, long poolingInterval, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/concurrent/TimeUnit.html">TimeUnit</a> poolingUnit)</nobr>
         
         <div class="jd-descrdiv">Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#setProjectConfig(java.lang.String, java.lang.String, java.lang.String)">setProjectConfig</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> key, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> value)</nobr>
+        
+        <div class="jd-descrdiv">Set a single project configuration property value</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../org/rundeck/api/domain/ProjectConfig.html">ProjectConfig</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#setProjectConfig(java.lang.String, java.util.Map<java.lang.String, java.lang.String>)">setProjectConfig</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/Map.html">Map</a>&lt;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>,&nbsp;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>&gt; configuration)</nobr>
+        
+        <div class="jd-descrdiv">Return the configuration of a project</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../org/rundeck/api/domain/KeyResource.html">KeyResource</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#storeKey(java.lang.String, java.io.File, boolean)">storeKey</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> path, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/File.html">File</a> keyfile, boolean privateKey)</nobr>
+        
+        <div class="jd-descrdiv">Store an key file</div>
   
   </td></tr>
 
@@ -2503,6 +2917,84 @@ From class
 
 
 
+<A NAME="STORAGE_KEYS_PATH"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+        static 
+        final 
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>
+      </span>
+        STORAGE_KEYS_PATH
+    </h4>
+      <div class="api-level">
+        
+
+
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    
+        <div class="jd-tagdata">
+        <span class="jd-tagtitle">Constant Value: </span>
+        <span>
+            
+                "keys/"
+            
+        </span>
+        </div>
+    
+    </div>
+</div>
+
+
+
+<A NAME="STORAGE_ROOT_PATH"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+        static 
+        final 
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>
+      </span>
+        STORAGE_ROOT_PATH
+    </h4>
+      <div class="api-level">
+        
+
+
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    
+        <div class="jd-tagdata">
+        <span class="jd-tagtitle">Constant Value: </span>
+        <span>
+            
+                "/storage/"
+            
+        </span>
+        </div>
+    
+    </div>
+</div>
+
+
+
 
 <!-- Fields -->
 
@@ -2823,6 +3315,116 @@ From class
 </div>
 
 
+<A NAME="createProject(java.lang.String, java.util.Map<java.lang.String, java.lang.String>)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a>
+      </span>
+      <span class="sympad">createProject</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/Map.html">Map</a>&lt;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>,&nbsp;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>&gt; configuration)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Create a new project, and return the new definition</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>projectName</td>
+          <td>name of the project - mandatory</td>
+        </tr>
+        <tr>
+          <th>configuration</td>
+          <td>project configuration properties</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>a <code><a href="../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></code> instance - won't be null</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td>in case of error when calling the API (non-existent project with this name)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></td>
+            <td>if the login fails (in case of login-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
+            <td>if the token is invalid (in case of token-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
+            <td>if the projectName is blank (null, empty or whitespace)
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="deleteApiToken(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        boolean
+      </span>
+      <span class="sympad">deleteApiToken</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> token)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Delete an existing token@return</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
 <A NAME="deleteJob(java.lang.String)"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -2946,6 +3548,179 @@ From class
         <tr>
             <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
             <td>if the jobId is blank (null, empty or whitespace)
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="deleteKey(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">deleteKey</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> path)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Delete an key file</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>path</td>
+          <td>a path to a key file, must start with "keys/"
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="deleteProject(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">deleteProject</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Delete a project</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>projectName</td>
+          <td>name of the project - mandatory</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td>in case of error when calling the API (non-existent project with this name)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></td>
+            <td>if the login fails (in case of login-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
+            <td>if the token is invalid (in case of token-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
+            <td>if the projectName is blank (null, empty or whitespace)
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="deleteProjectConfig(java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">deleteProjectConfig</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> key)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Set a single project configuration property value</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>projectName</td>
+          <td>name of the project - mandatory</td>
+        </tr>
+        <tr>
+          <th>key</td>
+          <td>name of the configuration property</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>new value</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td>in case of error when calling the API (non-existent project with this name)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></td>
+            <td>if the login fails (in case of login-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
+            <td>if the token is invalid (in case of token-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
+            <td>if the projectName is blank (null, empty or whitespace)
 </td>
         </tr>
       </table>
@@ -3958,6 +4733,150 @@ From class
 </div>
 
 
+<A NAME="exportProject(java.lang.String, java.io.File)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        int
+      </span>
+      <span class="sympad">exportProject</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/File.html">File</a> out)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Convenience method to export the archive of a project to the specified file.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>projectName</td>
+          <td>name of the project - mandatory</td>
+        </tr>
+        <tr>
+          <th>out</td>
+          <td>file to write to</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>number of bytes written to the stream</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td>in case of error when calling the API (non-existent project with this name)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></td>
+            <td>if the login fails (in case of login-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
+            <td>if the token is invalid (in case of token-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
+            <td>if the projectName is blank (null, empty or whitespace)
+</td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/IOException.html">IOException</a></td>
+            <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="exportProject(java.lang.String, java.io.OutputStream)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        int
+      </span>
+      <span class="sympad">exportProject</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/OutputStream.html">OutputStream</a> out)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Export the archive of a project to the specified outputstream</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>projectName</td>
+          <td>name of the project - mandatory</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>number of bytes written to the stream</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td>in case of error when calling the API (non-existent project with this name)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></td>
+            <td>if the login fails (in case of login-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
+            <td>if the token is invalid (in case of token-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
+            <td>if the projectName is blank (null, empty or whitespace)
+</td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/IOException.html">IOException</a></td>
+            <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
 <A NAME="findJob(java.lang.String, java.lang.String, java.lang.String)"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -4037,6 +4956,46 @@ From class
 </div>
 
 
+<A NAME="generateApiToken(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>
+      </span>
+      <span class="sympad">generateApiToken</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> user)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Generate an API token for a user.@return</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
 <A NAME="generateToken(java.lang.String)"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -4095,6 +5054,50 @@ From class
             <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
             <td>if the name or project is blank (null, empty or whitespace)
 </td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getApiToken(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../org/rundeck/api/domain/RundeckToken.html">RundeckToken</a>
+      </span>
+      <span class="sympad">getApiToken</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> token)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Return user info for an existing token</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>token info</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td></td>
         </tr>
       </table>
   </div>
@@ -6487,6 +7490,60 @@ From class
 </div>
 
 
+<A NAME="getKey(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../org/rundeck/api/domain/KeyResource.html">KeyResource</a>
+      </span>
+      <span class="sympad">getKey</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> path)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Get metadata for an key file</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>path</td>
+          <td>ssh key storage path, must start with "keys/"</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the ssh key resource</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td>if there is an error, or if the path is a directory not a file
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
 <A NAME="getLogin()"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -7020,6 +8077,142 @@ From class
 </div>
 
 
+<A NAME="getProjectConfig(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../org/rundeck/api/domain/ProjectConfig.html">ProjectConfig</a>
+      </span>
+      <span class="sympad">getProjectConfig</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Return the configuration of a project</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>projectName</td>
+          <td>name of the project - mandatory</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>a <code><a href="../../../org/rundeck/api/domain/ProjectConfig.html">ProjectConfig</a></code> instance - won't be null</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td>in case of error when calling the API (non-existent project with this name)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></td>
+            <td>if the login fails (in case of login-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
+            <td>if the token is invalid (in case of token-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
+            <td>if the projectName is blank (null, empty or whitespace)
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getProjectConfig(java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>
+      </span>
+      <span class="sympad">getProjectConfig</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> key)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Get a single project configuration key</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>projectName</td>
+          <td>name of the project - mandatory</td>
+        </tr>
+        <tr>
+          <th>key</td>
+          <td>name of the configuration key</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>value, or null if the value is not set</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td>in case of error when calling the API (non-existent project with this name)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></td>
+            <td>if the login fails (in case of login-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
+            <td>if the token is invalid (in case of token-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
+            <td>if the projectName is blank (null, empty or whitespace)
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
 <A NAME="getProjects()"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -7065,6 +8258,128 @@ From class
             <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
             <td>if the token is invalid (in case of token-based authentication)
 </td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getPublicKeyContent(java.lang.String, java.io.File)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        int
+      </span>
+      <span class="sympad">getPublicKeyContent</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> path, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/File.html">File</a> out)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Get content for a public key file</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>path</td>
+          <td>ssh key storage path, must start with "keys/"</td>
+        </tr>
+        <tr>
+          <th>out</td>
+          <td>file to write data to</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>length of written data</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/IOException.html">IOException</a></td>
+            <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getPublicKeyContent(java.lang.String, java.io.OutputStream)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        int
+      </span>
+      <span class="sympad">getPublicKeyContent</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> path, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/OutputStream.html">OutputStream</a> out)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Get content for a public key file</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>path</td>
+          <td>ssh key storage path, must start with "keys/"</td>
+        </tr>
+        <tr>
+          <th>out</td>
+          <td>outputstream to write data to</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>length of written data</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/IOException.html">IOException</a></td>
+            <td></td>
         </tr>
       </table>
   </div>
@@ -7392,6 +8707,88 @@ From class
 </div>
 
 
+<A NAME="importArchive(java.lang.String, java.io.File, boolean, boolean)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../org/rundeck/api/domain/ArchiveImport.html">ArchiveImport</a>
+      </span>
+      <span class="sympad">importArchive</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/File.html">File</a> archiveFile, boolean includeExecutions, boolean preserveJobUuids)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Import a archive file to the specified project.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>projectName</td>
+          <td>name of the project - mandatory</td>
+        </tr>
+        <tr>
+          <th>archiveFile</td>
+          <td>zip archive file</td>
+        </tr>
+        <tr>
+          <th>includeExecutions</td>
+          <td>if true, import executions defined in the archive, otherwise skip them</td>
+        </tr>
+        <tr>
+          <th>preserveJobUuids</td>
+          <td>if true, do not remove UUIDs from imported jobs, otherwise remove them</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>Result of the import request, may contain a list of import error messages</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td>in case of error when calling the API (non-existent project with this name)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></td>
+            <td>if the login fails (in case of login-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
+            <td>if the token is invalid (in case of token-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
+            <td>if the projectName is blank (null, empty or whitespace)
+</td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/IOException.html">IOException</a></td>
+            <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
 <A NAME="importJobs(java.lang.String, org.rundeck.api.RundeckJobsImport)"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -7530,6 +8927,197 @@ From class
       <h5 class="jd-tagtitle">See Also</h5>
       <ul class="nolist"><li>#importJobs(String, FileType, RundeckJobsImportMethod)</li>
       </ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="listApiTokens()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/List.html">List</a>&lt;<a href="../../../org/rundeck/api/domain/RundeckToken.html">RundeckToken</a>&gt;
+      </span>
+      <span class="sympad">listApiTokens</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>List all API tokens</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>list of tokens</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="listApiTokens(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/List.html">List</a>&lt;<a href="../../../org/rundeck/api/domain/RundeckToken.html">RundeckToken</a>&gt;
+      </span>
+      <span class="sympad">listApiTokens</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> user)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>List API tokens for a user.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>user</td>
+          <td>username</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>list of tokens</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="listKeyDirectory(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/List.html">List</a>&lt;<a href="../../../org/rundeck/api/domain/KeyResource.html">KeyResource</a>&gt;
+      </span>
+      <span class="sympad">listKeyDirectory</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> path)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>List contents of key directory</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>path</td>
+          <td>ssh key storage path, must start with "keys/"</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td>if there is an error, or if the path is a file not a directory
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="listKeyDirectoryRoot()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/List.html">List</a>&lt;<a href="../../../org/rundeck/api/domain/KeyResource.html">KeyResource</a>&gt;
+      </span>
+      <span class="sympad">listKeyDirectoryRoot</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>List contents of root key directory</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>list of key resources</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td></td>
+        </tr>
+      </table>
   </div>
 
     </div>
@@ -8126,6 +9714,207 @@ From class
       <h5 class="jd-tagtitle">See Also</h5>
       <ul class="nolist"><li><code><a href="../../../org/rundeck/api/RundeckClient.html#triggerJob(org.rundeck.api.RunJob)">triggerJob(RunJob)</a></code></li>
       </ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="setProjectConfig(java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>
+      </span>
+      <span class="sympad">setProjectConfig</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> key, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> value)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Set a single project configuration property value</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>projectName</td>
+          <td>name of the project - mandatory</td>
+        </tr>
+        <tr>
+          <th>key</td>
+          <td>name of the configuration property</td>
+        </tr>
+        <tr>
+          <th>value</td>
+          <td>value of the property</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>new value</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td>in case of error when calling the API (non-existent project with this name)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></td>
+            <td>if the login fails (in case of login-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
+            <td>if the token is invalid (in case of token-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
+            <td>if the projectName is blank (null, empty or whitespace)
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="setProjectConfig(java.lang.String, java.util.Map<java.lang.String, java.lang.String>)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../org/rundeck/api/domain/ProjectConfig.html">ProjectConfig</a>
+      </span>
+      <span class="sympad">setProjectConfig</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/Map.html">Map</a>&lt;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>,&nbsp;<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>&gt; configuration)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Return the configuration of a project</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>projectName</td>
+          <td>name of the project - mandatory</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>a <code><a href="../../../org/rundeck/api/domain/ProjectConfig.html">ProjectConfig</a></code> instance - won't be null</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td>in case of error when calling the API (non-existent project with this name)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></td>
+            <td>if the login fails (in case of login-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
+            <td>if the token is invalid (in case of token-based authentication)</td>
+        </tr>  
+        <tr>
+            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
+            <td>if the projectName is blank (null, empty or whitespace)
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="storeKey(java.lang.String, java.io.File, boolean)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../org/rundeck/api/domain/KeyResource.html">KeyResource</a>
+      </span>
+      <span class="sympad">storeKey</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> path, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/io/File.html">File</a> keyfile, boolean privateKey)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Store an key file</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>path</td>
+          <td>ssh key storage path, must start with "keys/"</td>
+        </tr>
+        <tr>
+          <th>keyfile</td>
+          <td>key file</td>
+        </tr>
+        <tr>
+          <th>privateKey</td>
+          <td>true to store private key, false to store public key</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the key resource</li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
+            <td></td>
+        </tr>
+      </table>
   </div>
 
     </div>

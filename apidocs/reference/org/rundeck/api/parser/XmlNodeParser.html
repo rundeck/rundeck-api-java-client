@@ -146,6 +146,8 @@
   <a href="../../../../org/rundeck/api/package-summary.html">org.rundeck.api</a></li>
     <li class="api apilevel-">
   <a href="../../../../org/rundeck/api/domain/package-summary.html">org.rundeck.api.domain</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/rundeck/api/generator/package-summary.html">org.rundeck.api.generator</a></li>
     <li class="selected api apilevel-">
   <a href="../../../../org/rundeck/api/parser/package-summary.html">org.rundeck.api.parser</a></li>
     <li class="api apilevel-">
@@ -167,7 +169,9 @@
     <li><h2>Classes</h2>
       <ul>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/AbortParser.html">AbortParser</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ArchiveImportParser.html">ArchiveImportParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/BaseStateParser.html">BaseStateParser</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/BaseXpathParser.html">BaseXpathParser</a>&lt;T&gt;</li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/BulkDeleteParser.html">BulkDeleteParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/DeleteParser.html">DeleteParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/EventParser.html">EventParser</a></li>
@@ -184,7 +188,13 @@
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/OutputParser.html">OutputParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/PagedResultParser.html">PagedResultParser</a>&lt;T&gt;</li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ParserHelper.html">ParserHelper</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ProjectConfigParser.html">ProjectConfigParser</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ProjectConfigPropertyParser.html">ProjectConfigPropertyParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ProjectParser.html">ProjectParser</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ProjectParserV11.html">ProjectParserV11</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/RundeckTokenParser.html">RundeckTokenParser</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/SSHKeyResourceParser.html">SSHKeyResourceParser</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/StorageResourceParser.html">StorageResourceParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/StringParser.html">StringParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/SystemInfoParser.html">SystemInfoParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/WorkflowStateParser.html">WorkflowStateParser</a></li>
@@ -326,7 +336,17 @@ Summary:
               
             
               
+                <a href="../../../../org/rundeck/api/parser/ArchiveImportParser.html">ArchiveImportParser</a>,
+              
+              
+            
+              
                 <a href="../../../../org/rundeck/api/parser/BaseStateParser.html">BaseStateParser</a>,
+              
+              
+            
+              
+                <a href="../../../../org/rundeck/api/parser/BaseXpathParser.html">BaseXpathParser</a>&lt;T&gt;,
               
               
             
@@ -383,18 +403,8 @@ Summary:
               
                 <a href="../../../../org/rundeck/api/parser/NodeParser.html">NodeParser</a>,
               
-              
-            
-              
-                <a href="../../../../org/rundeck/api/parser/OutputEntryParser.html">OutputEntryParser</a>,
-              
-              
-            
-              
-                <a href="../../../../org/rundeck/api/parser/OutputEntryParserV5.html">OutputEntryParserV5</a>,
-              
               and
-                <a href="#" onclick="return toggleInherited(document.getElementById('subclasses-indirect', null))">8 others.</a>
+                <a href="#" onclick="return toggleInherited(document.getElementById('subclasses-indirect', null))">16 others.</a>
               
             
           
@@ -408,8 +418,16 @@ Summary:
               <td class="jd-descrcol" width="100%">Parser for a single <code><a href="../../../../org/rundeck/api/domain/RundeckAbort.html">RundeckAbort</a></code>&nbsp;</td>
           </tr>
         <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/parser/ArchiveImportParser.html">ArchiveImportParser</a></td>
+              <td class="jd-descrcol" width="100%">ArchiveImportParser is ...&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/parser/BaseStateParser.html">BaseStateParser</a></td>
               <td class="jd-descrcol" width="100%">$INTERFACE is ...&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/parser/BaseXpathParser.html">BaseXpathParser</a>&lt;T&gt;</td>
+              <td class="jd-descrcol" width="100%">BaseXpathParser is ...&nbsp;</td>
           </tr>
         <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/parser/BulkDeleteParser.html">BulkDeleteParser</a></td>
@@ -474,8 +492,33 @@ Summary:
               <td class="jd-descrcol" width="100%">PagedResultParser extracts paging data from an xpath node, and includes the List result from a ListParser&nbsp;</td>
           </tr>
         <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/parser/ProjectConfigParser.html">ProjectConfigParser</a></td>
+              <td class="jd-descrcol" width="100%">ProjectConfigParser parses project "config" element contents&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/parser/ProjectConfigPropertyParser.html">ProjectConfigPropertyParser</a></td>
+              <td class="jd-descrcol" width="100%">ProjectConfigPropertyParser parses a &lt;property/&gt; element representing
+ a configuration property.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/parser/ProjectParser.html">ProjectParser</a></td>
               <td class="jd-descrcol" width="100%">Parser for a single <code><a href="../../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></code>&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/parser/ProjectParserV11.html">ProjectParserV11</a></td>
+              <td class="jd-descrcol" width="100%">ProjectParserV11 supports embedded "config" element.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/parser/RundeckTokenParser.html">RundeckTokenParser</a></td>
+              <td class="jd-descrcol" width="100%">RundeckTokenParser is ...&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/parser/SSHKeyResourceParser.html">SSHKeyResourceParser</a></td>
+              <td class="jd-descrcol" width="100%">SSHKeyResourceParser is ...&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/parser/StorageResourceParser.html">StorageResourceParser</a></td>
+              <td class="jd-descrcol" width="100%">StorageResourceParser is ...&nbsp;</td>
           </tr>
         <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/parser/StringParser.html">StringParser</a></td>

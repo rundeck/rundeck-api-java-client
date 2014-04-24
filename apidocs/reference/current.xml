@@ -1,6 +1,29 @@
 <api>
 <package name="org.rundeck.api"
 >
+<interface name="ApiPathBuilder.BuildsParameters"
+ abstract="true"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="buildParameters"
+ return="boolean"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="builder" type="org.rundeck.api.ApiPathBuilder">
+</parameter>
+<parameter name="doPost" type="boolean">
+</parameter>
+</method>
+</interface>
 <class name="DefaultJobsImport"
  extends="java.lang.Object"
  abstract="false"
@@ -1096,6 +1119,125 @@
 </parameter>
 </constructor>
 </class>
+<class name="RundeckApiException.RundeckApiHttpContentTypeException"
+ extends="org.rundeck.api.RundeckApiException.RundeckApiAuthException"
+ abstract="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="RundeckApiException.RundeckApiHttpContentTypeException"
+ type="org.rundeck.api.RundeckApiException.RundeckApiHttpContentTypeException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="contentType" type="java.lang.String">
+</parameter>
+<parameter name="requiredContentType" type="java.lang.String">
+</parameter>
+</constructor>
+<constructor name="RundeckApiException.RundeckApiHttpContentTypeException"
+ type="org.rundeck.api.RundeckApiException.RundeckApiHttpContentTypeException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="message" type="java.lang.String">
+</parameter>
+<parameter name="contentType" type="java.lang.String">
+</parameter>
+<parameter name="requiredContentType" type="java.lang.String">
+</parameter>
+</constructor>
+<constructor name="RundeckApiException.RundeckApiHttpContentTypeException"
+ type="org.rundeck.api.RundeckApiException.RundeckApiHttpContentTypeException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="message" type="java.lang.String">
+</parameter>
+<parameter name="cause" type="java.lang.Throwable">
+</parameter>
+<parameter name="contentType" type="java.lang.String">
+</parameter>
+<parameter name="requiredContentType" type="java.lang.String">
+</parameter>
+</constructor>
+<method name="getContentType"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getRequiredContentType"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<class name="RundeckApiException.RundeckApiHttpStatusException"
+ extends="org.rundeck.api.RundeckApiException.RundeckApiAuthException"
+ abstract="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="RundeckApiException.RundeckApiHttpStatusException"
+ type="org.rundeck.api.RundeckApiException.RundeckApiHttpStatusException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="message" type="java.lang.String">
+</parameter>
+<parameter name="statusCode" type="int">
+</parameter>
+</constructor>
+<constructor name="RundeckApiException.RundeckApiHttpStatusException"
+ type="org.rundeck.api.RundeckApiException.RundeckApiHttpStatusException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="message" type="java.lang.String">
+</parameter>
+<parameter name="cause" type="java.lang.Throwable">
+</parameter>
+<parameter name="statusCode" type="int">
+</parameter>
+</constructor>
+<method name="getStatusCode"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
 <class name="RundeckApiException.RundeckApiLoginException"
  extends="org.rundeck.api.RundeckApiException.RundeckApiAuthException"
  abstract="false"
@@ -1251,6 +1393,44 @@
  visibility="public"
 >
 </method>
+<method name="createProject"
+ return="org.rundeck.api.domain.RundeckProject"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="projectName" type="java.lang.String">
+</parameter>
+<parameter name="configuration" type="java.util.Map&lt;java.lang.String, java.lang.String&gt;">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="deleteApiToken"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="token" type="java.lang.String">
+</parameter>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+</method>
 <method name="deleteJob"
  return="java.lang.String"
  abstract="false"
@@ -1293,6 +1473,63 @@
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
 </exception>
 </method>
+<method name="deleteKey"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="path" type="java.lang.String">
+</parameter>
+</method>
+<method name="deleteProject"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="projectName" type="java.lang.String">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="deleteProjectConfig"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="projectName" type="java.lang.String">
+</parameter>
+<parameter name="key" type="java.lang.String">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
 <method name="exportJob"
  return="java.io.InputStream"
  abstract="false"
@@ -1605,6 +1842,56 @@
 <parameter name="groupPath" type="java.lang.String">
 </parameter>
 <parameter name="jobIds" type="java.lang.String...">
+</parameter>
+<exception name="IOException" type="java.io.IOException">
+</exception>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="exportProject"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="projectName" type="java.lang.String">
+</parameter>
+<parameter name="out" type="java.io.File">
+</parameter>
+<exception name="IOException" type="java.io.IOException">
+</exception>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="exportProject"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="projectName" type="java.lang.String">
+</parameter>
+<parameter name="out" type="java.io.OutputStream">
 </parameter>
 <exception name="IOException" type="java.io.IOException">
 </exception>
@@ -1642,6 +1929,21 @@
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
 </exception>
 </method>
+<method name="generateApiToken"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="user" type="java.lang.String">
+</parameter>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+</method>
 <method name="generateToken"
  return="java.io.InputStream"
  abstract="false"
@@ -1661,6 +1963,21 @@
 <exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
 </exception>
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="getApiToken"
+ return="org.rundeck.api.domain.RundeckToken"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="token" type="java.lang.String">
+</parameter>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
 </exception>
 </method>
 <method name="getExecution"
@@ -2455,6 +2772,21 @@
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
 </exception>
 </method>
+<method name="getKey"
+ return="org.rundeck.api.domain.KeyResource"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="path" type="java.lang.String">
+</parameter>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+</method>
 <method name="getLogin"
  return="java.lang.String"
  abstract="false"
@@ -2624,6 +2956,50 @@
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
 </exception>
 </method>
+<method name="getProjectConfig"
+ return="org.rundeck.api.domain.ProjectConfig"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="projectName" type="java.lang.String">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="getProjectConfig"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="projectName" type="java.lang.String">
+</parameter>
+<parameter name="key" type="java.lang.String">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
 <method name="getProjects"
  return="java.util.List&lt;org.rundeck.api.domain.RundeckProject&gt;"
  abstract="false"
@@ -2639,6 +3015,44 @@
 <exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
 </exception>
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="getPublicKeyContent"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="path" type="java.lang.String">
+</parameter>
+<parameter name="out" type="java.io.File">
+</parameter>
+<exception name="IOException" type="java.io.IOException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+</method>
+<method name="getPublicKeyContent"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="path" type="java.lang.String">
+</parameter>
+<parameter name="out" type="java.io.OutputStream">
+</parameter>
+<exception name="IOException" type="java.io.IOException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
 </exception>
 </method>
 <method name="getRunningExecutions"
@@ -2729,6 +3143,35 @@
  visibility="public"
 >
 </method>
+<method name="importArchive"
+ return="org.rundeck.api.domain.ArchiveImport"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="projectName" type="java.lang.String">
+</parameter>
+<parameter name="archiveFile" type="java.io.File">
+</parameter>
+<parameter name="includeExecutions" type="boolean">
+</parameter>
+<parameter name="preserveJobUuids" type="boolean">
+</parameter>
+<exception name="IOException" type="java.io.IOException">
+</exception>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
 <method name="importJobs"
  return="org.rundeck.api.domain.RundeckJobsImportResult"
  abstract="false"
@@ -2773,6 +3216,62 @@
 <exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
 </exception>
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="listApiTokens"
+ return="java.util.List&lt;org.rundeck.api.domain.RundeckToken&gt;"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+</method>
+<method name="listApiTokens"
+ return="java.util.List&lt;org.rundeck.api.domain.RundeckToken&gt;"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="user" type="java.lang.String">
+</parameter>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+</method>
+<method name="listKeyDirectory"
+ return="java.util.List&lt;org.rundeck.api.domain.KeyResource&gt;"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="path" type="java.lang.String">
+</parameter>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+</method>
+<method name="listKeyDirectoryRoot"
+ return="java.util.List&lt;org.rundeck.api.domain.KeyResource&gt;"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
 </exception>
 </method>
 <method name="ping"
@@ -2957,6 +3456,73 @@
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
 </exception>
 </method>
+<method name="setProjectConfig"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="projectName" type="java.lang.String">
+</parameter>
+<parameter name="key" type="java.lang.String">
+</parameter>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="setProjectConfig"
+ return="org.rundeck.api.domain.ProjectConfig"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="projectName" type="java.lang.String">
+</parameter>
+<parameter name="configuration" type="java.util.Map&lt;java.lang.String, java.lang.String&gt;">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="storeKey"
+ return="org.rundeck.api.domain.KeyResource"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="path" type="java.lang.String">
+</parameter>
+<parameter name="keyfile" type="java.io.File">
+</parameter>
+<parameter name="privateKey" type="boolean">
+</parameter>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+</method>
 <method name="testAuth"
  return="java.lang.String"
  abstract="false"
@@ -3121,6 +3687,28 @@
  transient="false"
  volatile="false"
  value="&quot;/jobs/import&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="STORAGE_KEYS_PATH"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;keys/&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="STORAGE_ROOT_PATH"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;/storage/&quot;"
  static="true"
  final="true"
  deprecated="not deprecated"
@@ -3491,6 +4079,105 @@
 </package>
 <package name="org.rundeck.api.domain"
 >
+<class name="ArchiveImport"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="ArchiveImport"
+ type="org.rundeck.api.domain.ArchiveImport"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="successful" type="boolean">
+</parameter>
+<parameter name="errorMessages" type="java.util.List&lt;java.lang.String&gt;">
+</parameter>
+</constructor>
+<method name="getErrorMessages"
+ return="java.util.List&lt;java.lang.String&gt;"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isSuccessful"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<class name="BaseKeyResource"
+ extends="org.rundeck.api.domain.BaseStorageResource"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.domain.KeyResource">
+</implements>
+<constructor name="BaseKeyResource"
+ type="org.rundeck.api.domain.BaseKeyResource"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="from"
+ return="org.rundeck.api.domain.BaseKeyResource"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="source" type="org.rundeck.api.domain.StorageResource">
+</parameter>
+</method>
+<method name="isPrivateKey"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setPrivateKey"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="privateKey" type="boolean">
+</parameter>
+</method>
+</class>
 <class name="BaseState"
  extends="java.lang.Object"
  abstract="false"
@@ -3601,6 +4288,357 @@
  visibility="public"
 >
 <parameter name="updateTime" type="java.util.Date">
+</parameter>
+</method>
+</class>
+<class name="BaseStorageResource"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.domain.StorageResource">
+</implements>
+<constructor name="BaseStorageResource"
+ type="org.rundeck.api.domain.BaseStorageResource"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="getDirectoryContents"
+ return="java.util.List&lt;? extends org.rundeck.api.domain.StorageResource&gt;"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getMetadata"
+ return="java.util.Map&lt;java.lang.String, java.lang.String&gt;"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getName"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getPath"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getUrl"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isDirectory"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setDirectory"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="directory" type="boolean">
+</parameter>
+</method>
+<method name="setDirectoryContents"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="directoryContents" type="java.util.List&lt;? extends org.rundeck.api.domain.StorageResource&gt;">
+</parameter>
+</method>
+<method name="setMetadata"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="metadata" type="java.util.Map&lt;java.lang.String, java.lang.String&gt;">
+</parameter>
+</method>
+<method name="setName"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="name" type="java.lang.String">
+</parameter>
+</method>
+<method name="setPath"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="path" type="java.lang.String">
+</parameter>
+</method>
+<method name="setUrl"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="url" type="java.lang.String">
+</parameter>
+</method>
+</class>
+<class name="ConfigProperty"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="ConfigProperty"
+ type="org.rundeck.api.domain.ConfigProperty"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="ConfigProperty"
+ type="org.rundeck.api.domain.ConfigProperty"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="key" type="java.lang.String">
+</parameter>
+<parameter name="value" type="java.lang.String">
+</parameter>
+</constructor>
+<method name="getKey"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getValue"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setKey"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="key" type="java.lang.String">
+</parameter>
+</method>
+<method name="setValue"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+</method>
+</class>
+<interface name="KeyResource"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.domain.StorageResource">
+</implements>
+<method name="getDirectoryContents"
+ return="java.util.List&lt;org.rundeck.api.domain.KeyResource&gt;"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isPrivateKey"
+ return="boolean"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</interface>
+<class name="ProjectConfig"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="ProjectConfig"
+ type="org.rundeck.api.domain.ProjectConfig"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="ProjectConfig"
+ type="org.rundeck.api.domain.ProjectConfig"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="properties" type="java.util.Map&lt;java.lang.String, java.lang.String&gt;">
+</parameter>
+</constructor>
+<method name="addProperties"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="values" type="java.util.Map&lt;java.lang.String, java.lang.String&gt;">
+</parameter>
+</method>
+<method name="getProperties"
+ return="java.util.Map&lt;java.lang.String, java.lang.String&gt;"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setProperties"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="properties" type="java.util.Map&lt;java.lang.String, java.lang.String&gt;">
+</parameter>
+</method>
+<method name="setProperty"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="key" type="java.lang.String">
+</parameter>
+<parameter name="value" type="java.lang.String">
 </parameter>
 </method>
 </class>
@@ -6358,6 +7396,17 @@
  visibility="public"
 >
 </method>
+<method name="getProjectConfig"
+ return="org.rundeck.api.domain.ProjectConfig"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="getResourceModelProviderUrl"
  return="java.lang.String"
  abstract="false"
@@ -6393,6 +7442,19 @@
  visibility="public"
 >
 <parameter name="name" type="java.lang.String">
+</parameter>
+</method>
+<method name="setProjectConfig"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="projectConfig" type="org.rundeck.api.domain.ProjectConfig">
 </parameter>
 </method>
 <method name="setResourceModelProviderUrl"
@@ -6893,6 +7955,83 @@
 </parameter>
 </method>
 </class>
+<class name="RundeckToken"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="RundeckToken"
+ type="org.rundeck.api.domain.RundeckToken"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="RundeckToken"
+ type="org.rundeck.api.domain.RundeckToken"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="user" type="java.lang.String">
+</parameter>
+<parameter name="token" type="java.lang.String">
+</parameter>
+</constructor>
+<method name="getToken"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getUser"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setToken"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="token" type="java.lang.String">
+</parameter>
+</method>
+<method name="setUser"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="user" type="java.lang.String">
+</parameter>
+</method>
+</class>
 <class name="RundeckWFExecState"
  extends="java.lang.Enum"
  abstract="false"
@@ -6926,6 +8065,80 @@
 >
 </method>
 </class>
+<interface name="StorageResource"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="getDirectoryContents"
+ return="java.util.List&lt;? extends org.rundeck.api.domain.StorageResource&gt;"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getMetadata"
+ return="java.util.Map&lt;java.lang.String, java.lang.String&gt;"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getName"
+ return="java.lang.String"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getPath"
+ return="java.lang.String"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getUrl"
+ return="java.lang.String"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isDirectory"
+ return="boolean"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</interface>
 <class name="WorkflowState"
  extends="org.rundeck.api.domain.BaseState"
  abstract="false"
@@ -7170,6 +8383,159 @@
 </method>
 </class>
 </package>
+<package name="org.rundeck.api.generator"
+>
+<class name="BaseDocGenerator"
+ extends="java.lang.Object"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.generator.XmlDocumentGenerator">
+</implements>
+<constructor name="BaseDocGenerator"
+ type="org.rundeck.api.generator.BaseDocGenerator"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="generateXmlDocument"
+ return="org.dom4j.Document"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<class name="ProjectConfigGenerator"
+ extends="org.rundeck.api.generator.BaseDocGenerator"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="ProjectConfigGenerator"
+ type="org.rundeck.api.generator.ProjectConfigGenerator"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="config" type="org.rundeck.api.domain.ProjectConfig">
+</parameter>
+</constructor>
+<method name="generateXmlElement"
+ return="org.dom4j.Element"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<class name="ProjectConfigPropertyGenerator"
+ extends="org.rundeck.api.generator.BaseDocGenerator"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="ProjectConfigPropertyGenerator"
+ type="org.rundeck.api.generator.ProjectConfigPropertyGenerator"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="property" type="org.rundeck.api.domain.ConfigProperty">
+</parameter>
+</constructor>
+<method name="generateXmlElement"
+ return="org.dom4j.Element"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<class name="ProjectGenerator"
+ extends="org.rundeck.api.generator.BaseDocGenerator"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="ProjectGenerator"
+ type="org.rundeck.api.generator.ProjectGenerator"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="project" type="org.rundeck.api.domain.RundeckProject">
+</parameter>
+</constructor>
+<method name="generateXmlElement"
+ return="org.dom4j.Element"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<interface name="XmlDocumentGenerator"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="generateXmlDocument"
+ return="org.dom4j.Document"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="generateXmlElement"
+ return="org.dom4j.Element"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</interface>
+</package>
 <package name="org.rundeck.api.parser"
 >
 <class name="AbortParser"
@@ -7202,6 +8568,48 @@
 </constructor>
 <method name="parseXmlNode"
  return="org.rundeck.api.domain.RundeckAbort"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="node" type="org.dom4j.Node">
+</parameter>
+</method>
+</class>
+<class name="ArchiveImportParser"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.parser.XmlNodeParser">
+</implements>
+<constructor name="ArchiveImportParser"
+ type="org.rundeck.api.parser.ArchiveImportParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="ArchiveImportParser"
+ type="org.rundeck.api.parser.ArchiveImportParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</constructor>
+<method name="parseXmlNode"
+ return="org.rundeck.api.domain.ArchiveImport"
  abstract="false"
  native="false"
  synchronized="false"
@@ -7259,6 +8667,61 @@
 </method>
 <method name="parseXmlNode"
  return="org.rundeck.api.domain.BaseState"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="node" type="org.dom4j.Node">
+</parameter>
+</method>
+</class>
+<class name="BaseXpathParser"
+ extends="java.lang.Object"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.parser.XmlNodeParser">
+</implements>
+<constructor name="BaseXpathParser"
+ type="org.rundeck.api.parser.BaseXpathParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="BaseXpathParser"
+ type="org.rundeck.api.parser.BaseXpathParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</constructor>
+<method name="parse"
+ return="T"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="node" type="org.dom4j.Node">
+</parameter>
+</method>
+<method name="parseXmlNode"
+ return="T"
  abstract="false"
  native="false"
  synchronized="false"
@@ -7924,6 +9387,125 @@
 </exception>
 </method>
 </class>
+<class name="ProjectConfigParser"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.parser.XmlNodeParser">
+</implements>
+<constructor name="ProjectConfigParser"
+ type="org.rundeck.api.parser.ProjectConfigParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="ProjectConfigParser"
+ type="org.rundeck.api.parser.ProjectConfigParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</constructor>
+<method name="getXpath"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="parseXmlNode"
+ return="org.rundeck.api.domain.ProjectConfig"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="node" type="org.dom4j.Node">
+</parameter>
+</method>
+</class>
+<class name="ProjectConfigPropertyParser"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.parser.XmlNodeParser">
+</implements>
+<constructor name="ProjectConfigPropertyParser"
+ type="org.rundeck.api.parser.ProjectConfigPropertyParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="ProjectConfigPropertyParser"
+ type="org.rundeck.api.parser.ProjectConfigPropertyParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</constructor>
+<method name="getXpath"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="parseXmlNode"
+ return="org.rundeck.api.domain.ConfigProperty"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="node" type="org.dom4j.Node">
+</parameter>
+</method>
+<method name="setXpath"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</method>
+</class>
 <class name="ProjectParser"
  extends="java.lang.Object"
  abstract="false"
@@ -7952,8 +9534,180 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
+<method name="getXpath"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</method>
 <method name="parseXmlNode"
  return="org.rundeck.api.domain.RundeckProject"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="node" type="org.dom4j.Node">
+</parameter>
+</method>
+</class>
+<class name="ProjectParserV11"
+ extends="org.rundeck.api.parser.ProjectParser"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="ProjectParserV11"
+ type="org.rundeck.api.parser.ProjectParserV11"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="ProjectParserV11"
+ type="org.rundeck.api.parser.ProjectParserV11"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</constructor>
+</class>
+<class name="RundeckTokenParser"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.parser.XmlNodeParser">
+</implements>
+<constructor name="RundeckTokenParser"
+ type="org.rundeck.api.parser.RundeckTokenParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="RundeckTokenParser"
+ type="org.rundeck.api.parser.RundeckTokenParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</constructor>
+<method name="parseXmlNode"
+ return="org.rundeck.api.domain.RundeckToken"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="node" type="org.dom4j.Node">
+</parameter>
+</method>
+</class>
+<class name="SSHKeyResourceParser"
+ extends="org.rundeck.api.parser.BaseXpathParser"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.parser.XmlNodeParser">
+</implements>
+<constructor name="SSHKeyResourceParser"
+ type="org.rundeck.api.parser.SSHKeyResourceParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="SSHKeyResourceParser"
+ type="org.rundeck.api.parser.SSHKeyResourceParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</constructor>
+<method name="parse"
+ return="org.rundeck.api.domain.KeyResource"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="node" type="org.dom4j.Node">
+</parameter>
+</method>
+</class>
+<class name="StorageResourceParser"
+ extends="org.rundeck.api.parser.BaseXpathParser"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="StorageResourceParser"
+ type="org.rundeck.api.parser.StorageResourceParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="StorageResourceParser"
+ type="org.rundeck.api.parser.StorageResourceParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</constructor>
+<constructor name="StorageResourceParser"
+ type="org.rundeck.api.parser.StorageResourceParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="holder" type="org.rundeck.api.domain.BaseStorageResource">
+</parameter>
+</constructor>
+<method name="parse"
+ return="org.rundeck.api.domain.StorageResource"
  abstract="false"
  native="false"
  synchronized="false"
@@ -8834,6 +10588,52 @@
 <parameter name="errorMessage" type="java.lang.String">
 </parameter>
 <exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+</method>
+</class>
+<class name="DocumentContentProducer"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="DocumentContentProducer"
+ type="org.rundeck.api.util.DocumentContentProducer"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="document" type="org.dom4j.Document">
+</parameter>
+</constructor>
+<constructor name="DocumentContentProducer"
+ type="org.rundeck.api.util.DocumentContentProducer"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="document" type="org.dom4j.Document">
+</parameter>
+<parameter name="format" type="org.dom4j.io.OutputFormat">
+</parameter>
+</constructor>
+<method name="writeTo"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="outstream" type="java.io.OutputStream">
+</parameter>
+<exception name="IOException" type="java.io.IOException">
 </exception>
 </method>
 </class>

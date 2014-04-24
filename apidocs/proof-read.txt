@@ -9,6 +9,9 @@ javadoc proofread file: ./proof-read.txt
         Domain classes that are returned to the client of the API.
 
 
+=== reference/org/rundeck/api/generator/package-descr.html ===
+
+
 === reference/org/rundeck/api/parser/package-descr.html ===
         Internal parsers for parsing the RunDeck responses.
 
@@ -158,6 +161,8 @@ FIELD: DEFAULT_POOLING_INTERVAL
 FIELD: DEFAULT_POOLING_UNIT
         Default unit of the "pooling interval" used when running jobs/commands/scripts
 FIELD: JOBS_IMPORT
+FIELD: STORAGE_KEYS_PATH
+FIELD: STORAGE_ROOT_PATH
 CONSTRUCTOR: RundeckClient
         Instantiate a new
         {@link ... RundeckClient}
@@ -174,10 +179,21 @@ METHOD: abortExecution
         Abort an execution (identified by the given ID). The execution should be running...
 METHOD: builder
         Create a builder for RundeckClient
+METHOD: createProject
+        Create a new project, and return the new definition
+METHOD: deleteApiToken
+        Delete an existing token
+        @return
 METHOD: deleteJob
         Delete a single job, identified by the given ID
 METHOD: deleteJobs
         Delete multiple jobs, identified by the given IDs
+METHOD: deleteKey
+        Delete an key file
+METHOD: deleteProject
+        Delete a project
+METHOD: deleteProjectConfig
+        Set a single project configuration property value
 METHOD: equals
 METHOD: exportJob
         Export the definition of a single job, identified by the given ID
@@ -207,11 +223,20 @@ METHOD: exportJobsToFile
 METHOD: exportJobsToFile
         Export the definitions of the jobs that belongs to the given project, and matches the given criteria (jobFilter,
          groupPath and jobIds)
+METHOD: exportProject
+        Convenience method to export the archive of a project to the specified file.
+METHOD: exportProject
+        Export the archive of a project to the specified outputstream
 METHOD: findJob
         Find a job, identified by its project, group and name. Note that the groupPath is optional, as a job does not
          need to belong to a group (either pass null, or an empty string).
+METHOD: generateApiToken
+        Generate an API token for a user.
+        @return
 METHOD: generateToken
         Generate a new token and get the result page (which is the html page of the user's profile)
+METHOD: getApiToken
+        Return user info for an existing token
 METHOD: getExecution
         Get a single execution, identified by the given ID
 METHOD: getExecutionOutput
@@ -272,6 +297,8 @@ METHOD: getJobs
         List all jobs that belongs to the given project
 METHOD: getJobs
         List the jobs that belongs to the given project, and matches the given criteria (jobFilter, groupPath and jobIds)
+METHOD: getKey
+        Get metadata for an key file
 METHOD: getLogin
 METHOD: getNode
         Get the definition of a single node
@@ -288,8 +315,16 @@ METHOD: getProfilePage
         Get the html page of the user's profile
 METHOD: getProject
         Get the definition of a single project, identified by the given name
+METHOD: getProjectConfig
+        Return the configuration of a project
+METHOD: getProjectConfig
+        Get a single project configuration key
 METHOD: getProjects
         List all projects
+METHOD: getPublicKeyContent
+        Get content for a public key file
+METHOD: getPublicKeyContent
+        Get content for a public key file
 METHOD: getRunningExecutions
         Get all running executions (for all projects)
 METHOD: getRunningExecutions
@@ -300,10 +335,20 @@ METHOD: getSystemInfo
 METHOD: getToken
 METHOD: getUrl
 METHOD: hashCode
+METHOD: importArchive
+        Import a archive file to the specified project.
 METHOD: importJobs
         Import the definitions of jobs, from the given input stream, using the given behavior
 METHOD: importJobs
         Import the definitions of jobs, from the given input stream, using the given behavior
+METHOD: listApiTokens
+        List all API tokens
+METHOD: listApiTokens
+        List API tokens for a user.
+METHOD: listKeyDirectory
+        List contents of key directory
+METHOD: listKeyDirectoryRoot
+        List contents of root key directory
 METHOD: ping
         Try to "ping" the RunDeck instance to see if it is alive
 METHOD: runAdhocCommand
@@ -337,6 +382,12 @@ METHOD: runJob
         Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
          We will poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
          know if the execution is finished (or aborted) or is still running.
+METHOD: setProjectConfig
+        Set a single project configuration property value
+METHOD: setProjectConfig
+        Return the configuration of a project
+METHOD: storeKey
+        Store an key file
 METHOD: testAuth
         Test the authentication on the RunDeck instance.
 METHOD: testCredentials
@@ -358,6 +409,7 @@ METHOD: triggerJob
 === org/rundeck/api/RundeckClient.Version.html ===
         Supported version numbers
 ENUM: V10
+ENUM: V11
 ENUM: V5
 ENUM: V6
 ENUM: V7
@@ -390,6 +442,22 @@ CONSTRUCTOR: RundeckApiException.RundeckApiLoginException
         Specific authentication-related error (in case of token-based authentication)
 CONSTRUCTOR: RundeckApiException.RundeckApiTokenException
 CONSTRUCTOR: RundeckApiException.RundeckApiTokenException
+
+
+=== org/rundeck/api/RundeckApiException.RundeckApiHttpStatusException.html ===
+        Error due to unexpected HTTP status
+CONSTRUCTOR: RundeckApiException.RundeckApiHttpStatusException
+CONSTRUCTOR: RundeckApiException.RundeckApiHttpStatusException
+METHOD: getStatusCode
+
+
+=== org/rundeck/api/RundeckApiException.RundeckApiHttpContentTypeException.html ===
+        Error due to unexpected HTTP content-type
+CONSTRUCTOR: RundeckApiException.RundeckApiHttpContentTypeException
+CONSTRUCTOR: RundeckApiException.RundeckApiHttpContentTypeException
+CONSTRUCTOR: RundeckApiException.RundeckApiHttpContentTypeException
+METHOD: getContentType
+METHOD: getRequiredContentType
 
 
 === org/rundeck/api/RunAdhocScriptBuilder.html ===
@@ -582,6 +650,22 @@ METHOD: setSteps
 METHOD: setTargetNodes
 
 
+=== org/rundeck/api/domain/StorageResource.html ===
+        StorageResource represents a directory or a file
+METHOD: getDirectoryContents
+        Return the list of directory contents if this is a directory
+METHOD: getMetadata
+        Return the metadata for this file if this is a file
+METHOD: getName
+        Return the file name if this is a file
+METHOD: getPath
+        Return the storage path for this resource
+METHOD: getUrl
+        Return the URL for this resource
+METHOD: isDirectory
+        Return true if this is a directory, false if this is a file
+
+
 === org/rundeck/api/domain/RundeckWFExecState.html ===
         An execution state for a workflow or node step
 ENUM: ABORTED
@@ -604,6 +688,16 @@ ENUM: WAITING
         Waiting to start running
 METHOD: valueOf
 METHOD: values
+
+
+=== org/rundeck/api/domain/RundeckToken.html ===
+        RundeckToken is ...
+CONSTRUCTOR: RundeckToken
+CONSTRUCTOR: RundeckToken
+METHOD: getToken
+METHOD: getUser
+METHOD: setToken
+METHOD: setUser
 
 
 === org/rundeck/api/domain/RundeckSystemInfo.html ===
@@ -659,10 +753,12 @@ CONSTRUCTOR: RundeckProject
 METHOD: equals
 METHOD: getDescription
 METHOD: getName
+METHOD: getProjectConfig
 METHOD: getResourceModelProviderUrl
 METHOD: hashCode
 METHOD: setDescription
 METHOD: setName
+METHOD: setProjectConfig
 METHOD: setResourceModelProviderUrl
 METHOD: toString
 
@@ -1041,6 +1137,58 @@ METHOD: valueOf
 METHOD: values
 
 
+=== org/rundeck/api/domain/ProjectConfig.html ===
+        ProjectConfig is ...
+CONSTRUCTOR: ProjectConfig
+CONSTRUCTOR: ProjectConfig
+METHOD: addProperties
+METHOD: equals
+METHOD: getProperties
+METHOD: hashCode
+METHOD: setProperties
+METHOD: setProperty
+METHOD: toString
+
+
+=== org/rundeck/api/domain/KeyResource.html ===
+        KeyResource represents a directory or an SSH key file
+METHOD: getDirectoryContents
+        Return the list of SSH Key resources if this is a directory
+METHOD: isPrivateKey
+        Return true if this is a file and is a private SSH key file.
+
+
+=== org/rundeck/api/domain/ConfigProperty.html ===
+        ConfigProperty is a single configuration property key and value.
+CONSTRUCTOR: ConfigProperty
+CONSTRUCTOR: ConfigProperty
+METHOD: equals
+METHOD: getKey
+METHOD: getValue
+METHOD: hashCode
+METHOD: setKey
+METHOD: setValue
+METHOD: toString
+
+
+=== org/rundeck/api/domain/BaseStorageResource.html ===
+        BaseStorageResource is ...
+CONSTRUCTOR: BaseStorageResource
+METHOD: getDirectoryContents
+METHOD: getMetadata
+METHOD: getName
+METHOD: getPath
+METHOD: getUrl
+METHOD: isDirectory
+METHOD: setDirectory
+METHOD: setDirectoryContents
+METHOD: setMetadata
+METHOD: setName
+METHOD: setPath
+METHOD: setUrl
+METHOD: toString
+
+
 === org/rundeck/api/domain/BaseState.html ===
         Base execution status for a step
 CONSTRUCTOR: BaseState
@@ -1056,6 +1204,63 @@ METHOD: setEndTime
 METHOD: setExecutionState
 METHOD: setStartTime
 METHOD: setUpdateTime
+
+
+=== org/rundeck/api/domain/BaseKeyResource.html ===
+        BaseKeyResource is ...
+CONSTRUCTOR: BaseKeyResource
+METHOD: from
+METHOD: getDirectoryContents
+METHOD: isPrivateKey
+METHOD: setDirectoryContents
+METHOD: setPrivateKey
+
+
+=== org/rundeck/api/domain/ArchiveImport.html ===
+        ArchiveImport describes the result of an
+        {@link ... importArchive(String, java.io.File, boolean, boolean)}
+        request.
+CONSTRUCTOR: ArchiveImport
+METHOD: getErrorMessages
+        Return a list of error messages if unsuccessful
+METHOD: isSuccessful
+        Return true if successful
+
+
+=== org/rundeck/api/generator/XmlDocumentGenerator.html ===
+        XmlDocumentGenerator is ...
+METHOD: generateXmlDocument
+        Generate the XML
+        {@link/org.dom4j.Node}
+METHOD: generateXmlElement
+        Generate the XML
+        {@link/org.dom4j.Node}
+
+
+=== org/rundeck/api/generator/ProjectGenerator.html ===
+        ProjectGenerator is ...
+CONSTRUCTOR: ProjectGenerator
+METHOD: generateXmlElement
+
+
+=== org/rundeck/api/generator/ProjectConfigPropertyGenerator.html ===
+        ProjectConfigPropertyGenerator generates a
+        &lt;property/&gt;
+        element representing a configuration property.
+CONSTRUCTOR: ProjectConfigPropertyGenerator
+METHOD: generateXmlElement
+
+
+=== org/rundeck/api/generator/ProjectConfigGenerator.html ===
+        ProjectConfigGenerator is ...
+CONSTRUCTOR: ProjectConfigGenerator
+METHOD: generateXmlElement
+
+
+=== org/rundeck/api/generator/BaseDocGenerator.html ===
+        BaseDocGenerator generates a document using the element as the root.
+CONSTRUCTOR: BaseDocGenerator
+METHOD: generateXmlDocument
 
 
 === org/rundeck/api/parser/XmlNodeParser.html ===
@@ -1106,11 +1311,61 @@ CONSTRUCTOR: StringParser
 METHOD: parseXmlNode
 
 
+=== org/rundeck/api/parser/StorageResourceParser.html ===
+        StorageResourceParser is ...
+CONSTRUCTOR: StorageResourceParser
+CONSTRUCTOR: StorageResourceParser
+CONSTRUCTOR: StorageResourceParser
+METHOD: parse
+
+
+=== org/rundeck/api/parser/SSHKeyResourceParser.html ===
+        SSHKeyResourceParser is ...
+CONSTRUCTOR: SSHKeyResourceParser
+CONSTRUCTOR: SSHKeyResourceParser
+METHOD: parse
+
+
+=== org/rundeck/api/parser/RundeckTokenParser.html ===
+        RundeckTokenParser is ...
+CONSTRUCTOR: RundeckTokenParser
+CONSTRUCTOR: RundeckTokenParser
+METHOD: parseXmlNode
+
+
+=== org/rundeck/api/parser/ProjectParserV11.html ===
+        ProjectParserV11 supports embedded "config" element.
+CONSTRUCTOR: ProjectParserV11
+CONSTRUCTOR: ProjectParserV11
+METHOD: parseXmlNode
+
+
 === org/rundeck/api/parser/ProjectParser.html ===
         Parser for a single
         {@link ... RundeckProject}
 CONSTRUCTOR: ProjectParser
 CONSTRUCTOR: ProjectParser
+METHOD: getXpath
+METHOD: parseXmlNode
+
+
+=== org/rundeck/api/parser/ProjectConfigPropertyParser.html ===
+        ProjectConfigPropertyParser parses a
+        &lt;property/&gt;
+        element representing
+         a configuration property.
+CONSTRUCTOR: ProjectConfigPropertyParser
+CONSTRUCTOR: ProjectConfigPropertyParser
+METHOD: getXpath
+METHOD: parseXmlNode
+METHOD: setXpath
+
+
+=== org/rundeck/api/parser/ProjectConfigParser.html ===
+        ProjectConfigParser parses project "config" element contents
+CONSTRUCTOR: ProjectConfigParser
+CONSTRUCTOR: ProjectConfigParser
+METHOD: getXpath
 METHOD: parseXmlNode
 
 
@@ -1238,11 +1493,26 @@ CONSTRUCTOR: BulkDeleteParser
 METHOD: parseXmlNode
 
 
+=== org/rundeck/api/parser/BaseXpathParser.html ===
+        BaseXpathParser is ...
+CONSTRUCTOR: BaseXpathParser
+CONSTRUCTOR: BaseXpathParser
+METHOD: parse
+METHOD: parseXmlNode
+
+
 === org/rundeck/api/parser/BaseStateParser.html ===
         $INTERFACE is ... User: greg Date: 1/17/14 Time: 12:19 PM
 CONSTRUCTOR: BaseStateParser
 CONSTRUCTOR: BaseStateParser
 METHOD: parseBaseState
+METHOD: parseXmlNode
+
+
+=== org/rundeck/api/parser/ArchiveImportParser.html ===
+        ArchiveImportParser is ...
+CONSTRUCTOR: ArchiveImportParser
+CONSTRUCTOR: ArchiveImportParser
 METHOD: parseXmlNode
 
 
@@ -1363,6 +1633,13 @@ METHOD: getResults
         Results list
 METHOD: getTotal
         Total items to be paged
+
+
+=== org/rundeck/api/util/DocumentContentProducer.html ===
+        DocumentContentProducer writes XML document to a stream
+CONSTRUCTOR: DocumentContentProducer
+CONSTRUCTOR: DocumentContentProducer
+METHOD: writeTo
 
 
 === org/rundeck/api/util/AssertUtil.html ===

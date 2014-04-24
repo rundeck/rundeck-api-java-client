@@ -1,5 +1,6 @@
 org.rundeck.api
 org.rundeck.api.domain
+org.rundeck.api.generator
 org.rundeck.api.parser
 org.rundeck.api.query
 org.rundeck.api.util

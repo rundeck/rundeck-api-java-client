@@ -147,6 +147,8 @@
     <li class="selected api apilevel-">
   <a href="../../../../org/rundeck/api/domain/package-summary.html">org.rundeck.api.domain</a></li>
     <li class="api apilevel-">
+  <a href="../../../../org/rundeck/api/generator/package-summary.html">org.rundeck.api.generator</a></li>
+    <li class="api apilevel-">
   <a href="../../../../org/rundeck/api/parser/package-summary.html">org.rundeck.api.parser</a></li>
     <li class="api apilevel-">
   <a href="../../../../org/rundeck/api/query/package-summary.html">org.rundeck.api.query</a></li>
@@ -160,13 +162,20 @@
               
     <li><h2>Interfaces</h2>
       <ul>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/KeyResource.html">KeyResource</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckNodeIdentity.html">RundeckNodeIdentity</a></li>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/StorageResource.html">StorageResource</a></li>
       </ul>
     </li>
               
     <li><h2>Classes</h2>
       <ul>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/ArchiveImport.html">ArchiveImport</a></li>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/BaseKeyResource.html">BaseKeyResource</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/BaseState.html">BaseState</a></li>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/BaseStorageResource.html">BaseStorageResource</a></li>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/ConfigProperty.html">ConfigProperty</a></li>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/ProjectConfig.html">ProjectConfig</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckAbort.html">RundeckAbort</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckEvent.html">RundeckEvent</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckEvent.NodeSummary.html">RundeckEvent.NodeSummary</a></li>
@@ -182,6 +191,7 @@
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html">RundeckOutputEntry</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckSystemInfo.html">RundeckSystemInfo</a></li>
+        <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckToken.html">RundeckToken</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowState.html">WorkflowState</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowStepContextState.html">WorkflowStepContextState</a></li>
         <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowStepState.html">WorkflowStepState</a></li>
@@ -278,9 +288,17 @@
     
   <table class="jd-sumtable-expando">
         <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/KeyResource.html">KeyResource</a></td>
+              <td class="jd-descrcol" width="100%">KeyResource represents a directory or an SSH key file&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckNodeIdentity.html">RundeckNodeIdentity</a></td>
               <td class="jd-descrcol" width="100%">Identifies a node by name
 &nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/StorageResource.html">StorageResource</a></td>
+              <td class="jd-descrcol" width="100%">StorageResource represents a directory or a file&nbsp;</td>
           </tr>
   </table>
     </div>
@@ -293,76 +311,100 @@
     
   <table class="jd-sumtable-expando">
         <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/ArchiveImport.html">ArchiveImport</a></td>
+              <td class="jd-descrcol" width="100%">ArchiveImport describes the result of an <code><a href="../../../../org/rundeck/api/RundeckClient.html#importArchive(java.lang.String, java.io.File, boolean, boolean)">importArchive(String, java.io.File, boolean, boolean)</a></code> request.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/BaseKeyResource.html">BaseKeyResource</a></td>
+              <td class="jd-descrcol" width="100%">BaseKeyResource is ...&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/BaseState.html">BaseState</a></td>
               <td class="jd-descrcol" width="100%">Base execution status for a step
 &nbsp;</td>
           </tr>
         <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/BaseStorageResource.html">BaseStorageResource</a></td>
+              <td class="jd-descrcol" width="100%">BaseStorageResource is ...&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/ConfigProperty.html">ConfigProperty</a></td>
+              <td class="jd-descrcol" width="100%">ConfigProperty is a single configuration property key and value.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/ProjectConfig.html">ProjectConfig</a></td>
+              <td class="jd-descrcol" width="100%">ProjectConfig is ...&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckAbort.html">RundeckAbort</a></td>
               <td class="jd-descrcol" width="100%">Represents an abort of a <code><a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a></code>&nbsp;</td>
           </tr>
-        <tr class="alt-color api apilevel-" >
+        <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckEvent.html">RundeckEvent</a></td>
               <td class="jd-descrcol" width="100%">Represents a RunDeck event&nbsp;</td>
           </tr>
-        <tr class=" api apilevel-" >
+        <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckEvent.NodeSummary.html">RundeckEvent.NodeSummary</a></td>
               <td class="jd-descrcol" width="100%">Summary for nodes
 &nbsp;</td>
           </tr>
-        <tr class="alt-color api apilevel-" >
+        <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a></td>
               <td class="jd-descrcol" width="100%">Represents a RunDeck execution, usually triggered by an API call.&nbsp;</td>
           </tr>
-        <tr class=" api apilevel-" >
+        <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckExecutionState.html">RundeckExecutionState</a></td>
               <td class="jd-descrcol" width="100%">The state of an Execution
 &nbsp;</td>
           </tr>
-        <tr class="alt-color api apilevel-" >
+        <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckHistory.html">RundeckHistory</a></td>
               <td class="jd-descrcol" width="100%">Represents a portion of the RunDeck (events) history&nbsp;</td>
           </tr>
-        <tr class=" api apilevel-" >
+        <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckJob.html">RundeckJob</a></td>
               <td class="jd-descrcol" width="100%">Represents a RunDeck job&nbsp;</td>
           </tr>
-        <tr class="alt-color api apilevel-" >
+        <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckJobDelete.html">RundeckJobDelete</a></td>
               <td class="jd-descrcol" width="100%">RundeckJobDelete represents a result of a job delete request.&nbsp;</td>
           </tr>
-        <tr class=" api apilevel-" >
+        <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckJobDeleteBulk.html">RundeckJobDeleteBulk</a></td>
               <td class="jd-descrcol" width="100%">RundeckJobDeleteBulk represents the result of a bulk job delete request and contains
  a list of <code><a href="../../../../org/rundeck/api/domain/RundeckJobDelete.html">RundeckJobDelete</a></code> objects.&nbsp;</td>
           </tr>
-        <tr class="alt-color api apilevel-" >
+        <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckJobsImportResult.html">RundeckJobsImportResult</a></td>
               <td class="jd-descrcol" width="100%">Result of importing some jobs into RunDeck&nbsp;</td>
           </tr>
-        <tr class=" api apilevel-" >
+        <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckNode.html">RundeckNode</a></td>
               <td class="jd-descrcol" width="100%">Represents a RunDeck node (server on which RunDeck can execute jobs and commands)&nbsp;</td>
           </tr>
-        <tr class="alt-color api apilevel-" >
+        <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckOutput.html">RundeckOutput</a></td>
               <td class="jd-descrcol" width="100%">Represents a RunDeck output
  
 &nbsp;</td>
           </tr>
-        <tr class=" api apilevel-" >
+        <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html">RundeckOutputEntry</a></td>
               <td class="jd-descrcol" width="100%">Represents a RunDeck output entry
  
 &nbsp;</td>
           </tr>
-        <tr class="alt-color api apilevel-" >
+        <tr class=" api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></td>
               <td class="jd-descrcol" width="100%">Represents a RunDeck project&nbsp;</td>
           </tr>
-        <tr class=" api apilevel-" >
+        <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckSystemInfo.html">RundeckSystemInfo</a></td>
               <td class="jd-descrcol" width="100%">Represents the RunDeck system info&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/RundeckToken.html">RundeckToken</a></td>
+              <td class="jd-descrcol" width="100%">RundeckToken is ...&nbsp;</td>
           </tr>
         <tr class="alt-color api apilevel-" >
               <td class="jd-linkcol"><a href="../../../../org/rundeck/api/domain/WorkflowState.html">WorkflowState</a></td>

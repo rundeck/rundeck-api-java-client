@@ -147,6 +147,8 @@
     <li class="selected api apilevel-">
   <a href="../../../../org/rundeck/api/domain/package-summary.html">org.rundeck.api.domain</a></li>
     <li class="api apilevel-">
+  <a href="../../../../org/rundeck/api/generator/package-summary.html">org.rundeck.api.generator</a></li>
+    <li class="api apilevel-">
   <a href="../../../../org/rundeck/api/parser/package-summary.html">org.rundeck.api.parser</a></li>
     <li class="api apilevel-">
   <a href="../../../../org/rundeck/api/query/package-summary.html">org.rundeck.api.query</a></li>
@@ -160,13 +162,20 @@
               
     <li><h2>Interfaces</h2>
       <ul>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/KeyResource.html">KeyResource</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckNodeIdentity.html">RundeckNodeIdentity</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/StorageResource.html">StorageResource</a></li>
       </ul>
     </li>
               
     <li><h2>Classes</h2>
       <ul>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/ArchiveImport.html">ArchiveImport</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/BaseKeyResource.html">BaseKeyResource</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/BaseState.html">BaseState</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/BaseStorageResource.html">BaseStorageResource</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/ConfigProperty.html">ConfigProperty</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/ProjectConfig.html">ProjectConfig</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckAbort.html">RundeckAbort</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckEvent.html">RundeckEvent</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckEvent.NodeSummary.html">RundeckEvent.NodeSummary</a></li>
@@ -182,6 +191,7 @@
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckOutputEntry.html">RundeckOutputEntry</a></li>
           <li class="selected api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckSystemInfo.html">RundeckSystemInfo</a></li>
+          <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/RundeckToken.html">RundeckToken</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowState.html">WorkflowState</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowStepContextState.html">WorkflowStepContextState</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/domain/WorkflowStepState.html">WorkflowStepState</a></li>
@@ -492,6 +502,22 @@ Summary:
             
             
             
+            <a href="../../../../org/rundeck/api/domain/ProjectConfig.html">ProjectConfig</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckProject.html#getProjectConfig()">getProjectConfig</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
             <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
@@ -501,7 +527,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -517,7 +543,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -533,7 +559,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -544,6 +570,22 @@ Summary:
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckProject.html#setName(java.lang.String)">setName</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> name)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/domain/RundeckProject.html#setProjectConfig(org.rundeck.api.domain.ProjectConfig)">setProjectConfig</a></span>(<a href="../../../../org/rundeck/api/domain/ProjectConfig.html">ProjectConfig</a> projectConfig)</nobr>
         
   </td></tr>
 
@@ -971,6 +1013,37 @@ From class
 </div>
 
 
+<A NAME="getProjectConfig()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../org/rundeck/api/domain/ProjectConfig.html">ProjectConfig</a>
+      </span>
+      <span class="sympad">getProjectConfig</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
 <A NAME="getResourceModelProviderUrl()"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -1078,6 +1151,37 @@ From class
       </span>
       <span class="sympad">setName</span>
       <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> name)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setProjectConfig(org.rundeck.api.domain.ProjectConfig)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setProjectConfig</span>
+      <span class="normal">(<a href="../../../../org/rundeck/api/domain/ProjectConfig.html">ProjectConfig</a> projectConfig)</span>
     </h4>
       <div class="api-level">
         <div>

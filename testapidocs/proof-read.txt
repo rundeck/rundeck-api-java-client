@@ -4,6 +4,9 @@ javadoc proofread file: ./proof-read.txt
 === reference/org/rundeck/api/package-descr.html ===
 
 
+=== reference/org/rundeck/api/generator/package-descr.html ===
+
+
 === reference/org/rundeck/api/parser/package-descr.html ===
 
 
@@ -11,6 +14,18 @@ javadoc proofread file: ./proof-read.txt
 
 
 === reference/packages.html ===
+
+
+=== org/rundeck/api/generator/ProjectGeneratorTest.html ===
+        ProjectGeneratorTest is ...
+CONSTRUCTOR: ProjectGeneratorTest
+METHOD: generate
+
+
+=== org/rundeck/api/generator/ProjectConfigGeneratorTest.html ===
+        ProjectConfigGeneratorTest is ...
+CONSTRUCTOR: ProjectConfigGeneratorTest
+METHOD: generate
 
 
 === org/rundeck/api/parser/WorkflowStepStateParserTest.html ===
@@ -42,10 +57,29 @@ CONSTRUCTOR: StringParserTest
 METHOD: parseJob
 
 
+=== org/rundeck/api/parser/ProjectParserV11Test.html ===
+        ProjectParserV11Test is ...
+CONSTRUCTOR: ProjectParserV11Test
+METHOD: parseProject
+
+
 === org/rundeck/api/parser/ProjectParserTest.html ===
         Test the
         {@link/ProjectParser}
 CONSTRUCTOR: ProjectParserTest
+METHOD: parseProject
+
+
+=== org/rundeck/api/parser/ProjectConfigPropertyParserTest.html ===
+        Test
+CONSTRUCTOR: ProjectConfigPropertyParserTest
+METHOD: parseFromProject
+METHOD: parseProperty
+
+
+=== org/rundeck/api/parser/ProjectConfigParserTest.html ===
+        ProjectConfigParserTest is ...
+CONSTRUCTOR: ProjectConfigParserTest
 METHOD: parseProject
 
 
@@ -198,6 +232,7 @@ FIELD: TEST_TOKEN_3
 FIELD: TEST_TOKEN_4
 FIELD: TEST_TOKEN_5
 FIELD: TEST_TOKEN_6
+FIELD: TEST_TOKEN_7
 FIELD: recorder
 CONSTRUCTOR: RundeckClientTest
 METHOD: abortExecution
@@ -207,6 +242,13 @@ METHOD: apiVersionDefaultLatest
 METHOD: bulkDelete
 METHOD: bulkDeleteFailDNE
 METHOD: bulkDeleteFailUnauthorized
+METHOD: createProject
+METHOD: deleteApiToken
+        get api token
+METHOD: deleteKey
+        delete ssh key
+METHOD: deleteProject
+METHOD: deleteProjectConfigKeyed
 METHOD: executionOutputBasic
         Execution output
 METHOD: executionOutputForNode
@@ -221,6 +263,11 @@ METHOD: executionOutputStateOnly
         Execution output state sequence
 METHOD: executionState
         Execution state structure
+METHOD: exportProject
+METHOD: generateApiToken
+        generate api token
+METHOD: getApiToken
+        get api token
 METHOD: getExecutions
 METHOD: getExecutionsPaging
         Test paging values from results
@@ -228,6 +275,17 @@ METHOD: getHistory
 METHOD: getHistoryExcludeJoblist
 METHOD: getHistoryJoblist
 METHOD: getHistoryUser
+METHOD: getKeyData_private
+        get ssh key data
+METHOD: getKeyData_public
+        get ssh key data
+METHOD: getKey_private
+        get ssh key
+METHOD: getKey_public
+        get ssh key
+METHOD: getProjectConfig
+METHOD: getProjectConfigKeyed
+METHOD: getProjectConfigKeyedDNE
 METHOD: getProjects
 METHOD: importJobsContextProject
         Import jobs, xml contains project context
@@ -243,12 +301,28 @@ METHOD: importJobsUUIDParamPreserveV9
         Import jobs, project parameter v7 doesn' use parameter
 METHOD: importJobsUUIDParamRemoveV9
         Import jobs, project parameter v7 doesn' use parameter
+METHOD: importProjectFailure
+METHOD: importProjectSuccess
+METHOD: listApiTokens
+        list api tokens all
+METHOD: listApiTokens_user
+        list api tokens for user
+METHOD: listKeyDirectory
+        list directory
+METHOD: listKeyDirectoryRoot
+        list root
 METHOD: runningExecutionsV8
         Running executions for all projects using API v8, which queries for project list and then individually
          queries each project's now running
 METHOD: runningExecutionsV9
         Running executions for all projects using API v9
+METHOD: setProjectConfig
+METHOD: setProjectConfigKeyed
 METHOD: setUp
+METHOD: storeKey_private
+        Store ssh key
+METHOD: storeKey_public
+        Store ssh key
 METHOD: triggerAdhocCommand
 METHOD: triggerAdhocCommandAsUser
 METHOD: triggerAdhocCommandAsUserUnauthorized

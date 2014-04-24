@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2014-02-27T09:52:14.647">
+<pmd version="4.2.5" timestamp="2014-04-23T18:00:41.637">
 <file name="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/ApiCall.java">
-<violation beginline="24" endline="24" begincolumn="1" endcolumn="37" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
-Avoid unused imports such as 'org.apache.http.NameValuePair'
+<violation beginline="40" endline="40" begincolumn="1" endcolumn="26" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.dom4j.Document'
+</violation>
+<violation beginline="313" endline="315" begincolumn="43" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="org.rundeck.api" class="ApiCall" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+Avoid empty if statements
+</violation>
+</file>
+<file name="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/RundeckClient.java">
+<violation beginline="442" endline="442" begincolumn="99" endcolumn="99" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="org.rundeck.api" class="RundeckClient" method="importArchive" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+An empty statement (semicolon) not part of a loop
 </violation>
 </file>
 <file name="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/domain/BaseState.java">
@@ -31,6 +39,21 @@ Avoid unused imports such as 'java.util.Map'
 Avoid unused imports such as 'java.util.List'
 </violation>
 </file>
+<file name="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/generator/ProjectConfigGenerator.java">
+<violation beginline="3" endline="3" begincolumn="1" endcolumn="26" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api.generator" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.dom4j.Document'
+</violation>
+</file>
+<file name="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/generator/ProjectGenerator.java">
+<violation beginline="3" endline="3" begincolumn="1" endcolumn="26" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api.generator" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.dom4j.Document'
+</violation>
+</file>
+<file name="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/generator/XmlDocumentGenerator.java">
+<violation beginline="5" endline="5" begincolumn="1" endcolumn="22" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api.generator" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.dom4j.Node'
+</violation>
+</file>
 <file name="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/parser/BulkDeleteParser.java">
 <violation beginline="28" endline="28" begincolumn="1" endcolumn="25" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api.parser" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.dom4j.Element'
@@ -47,6 +70,14 @@ Avoid unused imports such as 'org.dom4j.Element'
 <file name="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/parser/PagedResultParser.java">
 <violation beginline="112" endline="113" begincolumn="11" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.rundeck.api.parser" class="PagedResultParser" method="integerAttribute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
 Avoid empty catch blocks
+</violation>
+</file>
+<file name="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/parser/ProjectParserV11.java">
+<violation beginline="4" endline="4" begincolumn="1" endcolumn="44" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api.parser" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.rundeck.api.domain.ProjectConfig'
+</violation>
+<violation beginline="7" endline="7" begincolumn="1" endcolumn="22" rule="UnusedImports" ruleset="Import Statement Rules" package="org.rundeck.api.parser" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.util.List'
 </violation>
 </file>
 <file name="/Users/greg/devel/rundeck-api-java-client/target/checkout/src/main/java/org/rundeck/api/parser/WorkflowStateParser.java">
