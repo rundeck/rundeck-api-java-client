@@ -23,6 +23,7 @@ import org.rundeck.api.RundeckApiException.RundeckApiLoginException;
 import org.rundeck.api.RundeckApiException.RundeckApiTokenException;
 import org.rundeck.api.domain.*;
 import org.rundeck.api.domain.RundeckExecution.ExecutionStatus;
+import org.rundeck.api.generator.DeleteExecutionsGenerator;
 import org.rundeck.api.generator.ProjectConfigGenerator;
 import org.rundeck.api.generator.ProjectConfigPropertyGenerator;
 import org.rundeck.api.generator.ProjectGenerator;
@@ -95,6 +96,7 @@ public class RundeckClient implements Serializable {
         V9(9),
         V10(10),
         V11(11),
+        V12(12),
         ;
 
         private int versionNumber;
@@ -108,7 +110,7 @@ public class RundeckClient implements Serializable {
         }
     }
     /** Version of the API supported */
-    public static final transient int API_VERSION = Version.V11.getVersionNumber();
+    public static final transient int API_VERSION = Version.V12.getVersionNumber();
 
     private static final String API = "/api/";
 
@@ -1641,6 +1643,30 @@ public class RundeckClient implements Serializable {
             apiPath.param("asUser", asUser);
         }
         return new ApiCall(this).get(apiPath, new AbortParser(rootXpath()+"/abort"));
+    }
+
+    /**
+     * Delete a set of executions, identified by the given IDs
+     *
+     * @param executionIds set of identifiers for the executions - mandatory
+     * @return a {@link RundeckExecution} instance - won't be null
+     * @throws RundeckApiException in case of error when calling the API (non-existent execution with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the executionId is null
+     */
+    public DeleteExecutionsResponse deleteExecutions(Set<Long> executionIds)
+            throws RundeckApiException, RundeckApiLoginException,
+                   RundeckApiTokenException, IllegalArgumentException
+    {
+        AssertUtil.notNull(executionIds, "executionIds is mandatory to abort an execution !");
+        final ApiPathBuilder apiPath = new ApiPathBuilder("/executions/delete").xml(
+                new DeleteExecutionsGenerator(executionIds)
+        );
+        return new ApiCall(this).post(
+                apiPath,
+                new DeleteExecutionsResponseParser( rootXpath() + "/deleteExecutions")
+        );
     }
 
     /*

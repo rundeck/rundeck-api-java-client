@@ -56,6 +56,7 @@ public class RundeckClientTest {
     public static final String TEST_TOKEN_5 = "C3O6d5O98Kr6Dpv71sdE4ERdCuU12P6d";
     public static final String TEST_TOKEN_6 = "Do4d3NUD5DKk21DR4sNK755RcPk618vn";
     public static final String TEST_TOKEN_7 = "8Dp9op111ER6opsDRkddvE86K9sE499s";
+    public static final String TEST_TOKEN_8 = "GG7uj1y6UGahOs7QlmeN2sIwz1Y2j7zI";
 
     @Rule
     public Recorder recorder = new Recorder();
@@ -1490,6 +1491,87 @@ public class RundeckClientTest {
         }
     }
 
+    /**
+     * delete executions with failure
+     */
+    @Test
+    @Betamax(tape = "delete_executions_unauthorized", mode = TapeMode.READ_ONLY)
+    public void deleteExecutionsUnauthorized() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_8, 12);
+        final DeleteExecutionsResponse response = client.deleteExecutions(
+                new HashSet<Long>() {{
+                    add(640L);
+                    add(641L);
+                }}
+        );
+        Assert.assertEquals(2, response.getRequestCount());
+        Assert.assertEquals(0, response.getSuccessCount());
+        Assert.assertEquals(2, response.getFailedCount());
+        Assert.assertFalse(response.isAllsuccessful());
+        Assert.assertNotNull(response.getFailures());
+        Assert.assertEquals(2, response.getFailures().size());
+        Assert.assertEquals(Long.valueOf(641L), response.getFailures().get(0).getExecutionId());
+        Assert.assertEquals(
+                "Unauthorized: Delete execution in project test",
+                response.getFailures().get(0).getMessage()
+        );
+        Assert.assertEquals(Long.valueOf(640L), response.getFailures().get(1).getExecutionId());
+        Assert.assertEquals(
+                "Unauthorized: Delete execution in project test",
+                response.getFailures().get(1).getMessage()
+        );
+    }
+    /**
+     * delete executions with success
+     */
+    @Test
+    @Betamax(tape = "delete_executions_success", mode = TapeMode.READ_ONLY)
+    public void deleteExecutionsSuccess() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_8, 12);
+        final DeleteExecutionsResponse response = client.deleteExecutions(
+                new HashSet<Long>() {{
+                    add(640L);
+                    add(641L);
+                }}
+        );
+        Assert.assertEquals(2, response.getRequestCount());
+        Assert.assertEquals(2, response.getSuccessCount());
+        Assert.assertEquals(0, response.getFailedCount());
+        Assert.assertTrue(response.isAllsuccessful());
+        Assert.assertNotNull(response.getFailures());
+        Assert.assertEquals(0, response.getFailures().size());
+    }
+    /**
+     * delete executions mixed success
+     */
+    @Test
+    @Betamax(tape = "delete_executions_mixed", mode = TapeMode.READ_ONLY)
+    public void deleteExecutionsMixed() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_8, 12);
+        final DeleteExecutionsResponse response = client.deleteExecutions(
+                new HashSet<Long>() {{
+                    add(642L);
+                    add(640L);
+                    add(1640L);
+                }}
+        );
+        Assert.assertEquals(3, response.getRequestCount());
+        Assert.assertEquals(1, response.getSuccessCount());
+        Assert.assertEquals(2, response.getFailedCount());
+        Assert.assertFalse(response.isAllsuccessful());
+        Assert.assertNotNull(response.getFailures());
+        Assert.assertEquals(2, response.getFailures().size());
+        Assert.assertEquals(Long.valueOf(1640L), response.getFailures().get(0).getExecutionId());
+        Assert.assertEquals(
+                "Execution Not found: 1640",
+                response.getFailures().get(0).getMessage()
+        );
+        Assert.assertEquals(Long.valueOf(640L), response.getFailures().get(1).getExecutionId());
+        Assert.assertEquals(
+                "Execution Not found: 640",
+                response.getFailures().get(1).getMessage()
+        );
+    }
     @Before
     public void setUp() throws Exception {
         // not that you can put whatever here, because we don't actually connect to the RunDeck instance
