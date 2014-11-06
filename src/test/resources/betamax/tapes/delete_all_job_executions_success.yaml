@@ -1,0 +1,23 @@
+!tape
+name: delete_all_job_executions_success
+interactions:
+- recorded: 2014-11-06T18:03:44.789Z
+  request:
+    method: DELETE
+    uri: http://rundeck.local:4440/api/12/job/764c1209-68ed-4185-8d43-a739364bf156/executions
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 12
+      X-RunDeck-Auth-Token: GG7uj1y6UGahOs7QlmeN2sIwz1Y2j7zI
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=cqqoff205qus10sz1v3t54rk7;Path=/
+      X-Rundeck-API-Version: '12'
+      X-Rundeck-API-XML-Response-Wrapper: 'false'
+    body: !!binary |-
+      PGRlbGV0ZUV4ZWN1dGlvbnMgcmVxdWVzdENvdW50PScyJyBhbGxzdWNjZXNzZnVsPSd0cnVlJz4KICA8c3VjY2Vzc2Z1bCBjb3VudD0nMicgLz4KPC9kZWxldGVFeGVjdXRpb25zPg==

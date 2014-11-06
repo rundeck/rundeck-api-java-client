@@ -1642,7 +1642,32 @@ public class RundeckClient implements Serializable {
         if(null!=asUser) {
             apiPath.param("asUser", asUser);
         }
-        return new ApiCall(this).get(apiPath, new AbortParser(rootXpath()+"/abort"));
+        return new ApiCall(this).get(apiPath, new AbortParser(rootXpath() + "/abort"));
+    }
+
+    /**
+     * Delete all executions for a job specified by a job ID
+     *
+     * @param jobId Identifier for the job
+     *
+     * @return a {@link DeleteExecutionsResponse} instance - won't be null
+     *
+     * @throws RundeckApiException      in case of error when calling the API (non-existent
+     *                                  execution with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based
+     *                                  authentication)
+     * @throws IllegalArgumentException if the executionIds is null
+     */
+    public DeleteExecutionsResponse deleteAllJobExecutions(final String jobId)
+            throws RundeckApiException, RundeckApiLoginException,
+                   RundeckApiTokenException, IllegalArgumentException
+    {
+        AssertUtil.notNull(jobId, "jobId is mandatory to delete executions!");
+        return new ApiCall(this).delete(
+                new ApiPathBuilder("/job/",jobId,"/executions"),
+                new DeleteExecutionsResponseParser(rootXpath() + "/deleteExecutions")
+        );
     }
 
     /**
@@ -1659,7 +1684,7 @@ public class RundeckClient implements Serializable {
             throws RundeckApiException, RundeckApiLoginException,
                    RundeckApiTokenException, IllegalArgumentException
     {
-        AssertUtil.notNull(executionIds, "executionIds is mandatory to abort an execution !");
+        AssertUtil.notNull(executionIds, "executionIds is mandatory to delete executions!");
         if (executionIds.size() < 1) {
             throw new IllegalArgumentException("executionIds cannot be empty");
         }
@@ -1685,7 +1710,7 @@ public class RundeckClient implements Serializable {
             throws RundeckApiException, RundeckApiLoginException,
                    RundeckApiTokenException, IllegalArgumentException
     {
-        AssertUtil.notNull(executionId, "executionId is mandatory to abort an execution !");
+        AssertUtil.notNull(executionId, "executionId is mandatory to delete an execution!");
         new ApiCall(this).delete(new ApiPathBuilder("/execution/", executionId.toString()));
     }
 

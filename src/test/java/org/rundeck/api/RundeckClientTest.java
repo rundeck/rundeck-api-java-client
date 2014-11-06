@@ -1573,6 +1573,42 @@ public class RundeckClientTest {
         );
     }
     /**
+     * delete executions with failure
+     */
+    @Test
+    @Betamax(tape = "delete_all_job_executions_unauthorized", mode = TapeMode.READ_ONLY)
+    public void deleteAllJobExecutionsUnauthorized() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_8, 12);
+        try {
+            final DeleteExecutionsResponse response = client.deleteAllJobExecutions(
+                    "764c1209-68ed-4185-8d43-a739364bf156"
+            );
+            Assert.fail();
+        } catch (RundeckApiException.RundeckApiTokenException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "delete_all_job_executions_success", mode = TapeMode.READ_ONLY)
+    public void deleteAllJobExecutionsSuccess() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_8, 12);
+        final DeleteExecutionsResponse response = client.deleteAllJobExecutions(
+                "764c1209-68ed-4185-8d43-a739364bf156"
+        );
+        Assert.assertEquals(2, response.getRequestCount());
+        Assert.assertEquals(2, response.getSuccessCount());
+        Assert.assertEquals(0, response.getFailedCount());
+        Assert.assertTrue(response.isAllsuccessful());
+        Assert.assertNotNull(response.getFailures());
+        Assert.assertEquals(0, response.getFailures().size());
+    }
+
+    /**
      * delete single execution success
      */
     @Test
