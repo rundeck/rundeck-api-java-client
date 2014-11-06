@@ -1,0 +1,19 @@
+!tape
+name: delete_job
+interactions:
+- recorded: 2014-11-06T18:14:48.773Z
+  request:
+    method: DELETE
+    uri: http://rundeck.local:4440/api/11/job/api-test-job-run-scheduled
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 204
+    headers:
+      Content-Type: text/html;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1hb33nx0a7qv21gyuoqes2pahg;Path=/

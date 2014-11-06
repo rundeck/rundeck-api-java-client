@@ -1039,7 +1039,8 @@ public class RundeckClient implements Serializable {
     public String deleteJob(String jobId) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(jobId, "jobId is mandatory to delete a job !");
-        return new ApiCall(this).delete(new ApiPathBuilder("/job/", jobId), new StringParser(rootXpath()+"/success/message"));
+        new ApiCall(this).delete(new ApiPathBuilder("/job/", jobId));
+        return "Job " + jobId + " was deleted successfully";
     }
     /**
      * Delete multiple jobs, identified by the given IDs

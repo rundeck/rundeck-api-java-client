@@ -1489,6 +1489,32 @@ public class RundeckClientTest {
             Assert.assertEquals(404,e.getStatusCode());
         }
     }
+    /**
+     * delete job
+     */
+    @Test
+    @Betamax(tape = "delete_job", mode = TapeMode.READ_ONLY)
+    public void deleteJob() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        String result = client.deleteJob("api-test-job-run-scheduled");
+
+        Assert.assertEquals("Job api-test-job-run-scheduled was deleted successfully", result);
+    }
+    /**
+     * delete job (DNE)
+     */
+    @Test
+    @Betamax(tape = "delete_job_not_found", mode = TapeMode.READ_ONLY)
+    public void deleteJobNotFound() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        try {
+            String result = client.deleteJob("does-not-exist");
+            Assert.fail();
+        } catch (RundeckApiException.RundeckApiHttpStatusException e) {
+            Assert.assertEquals(404, e.getStatusCode());
+        }
+
+    }
 
     @Before
     public void setUp() throws Exception {

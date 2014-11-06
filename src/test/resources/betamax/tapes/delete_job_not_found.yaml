@@ -1,0 +1,21 @@
+!tape
+name: delete_job_not_found
+interactions:
+- recorded: 2014-11-06T18:21:13.147Z
+  request:
+    method: DELETE
+    uri: http://rundeck.local:4440/api/11/job/does-not-exist
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 404
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1sxop3bupsrqb1gupbru3vklba;Path=/
+      X-Rundeck-API-Version: '12'
+    body: "<result error='true' apiversion='12'>\n  <error code='api.error.item.doesnotexist'>\n    <message>Job ID does not exist: does-not-exist</message>\n  </error>\n</result>"
