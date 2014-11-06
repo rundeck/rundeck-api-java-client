@@ -6160,6 +6160,8 @@
  deprecated="not deprecated"
  visibility="public"
 >
+<implements name="java.lang.Iterable">
+</implements>
 <constructor name="RundeckJobDeleteBulk"
  type="org.rundeck.api.domain.RundeckJobDeleteBulk"
  static="false"
@@ -10644,6 +10646,8 @@
  deprecated="not deprecated"
  visibility="public"
 >
+<implements name="java.lang.Iterable">
+</implements>
 <method name="getCount"
  return="int"
  abstract="true"

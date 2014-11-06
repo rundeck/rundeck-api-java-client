@@ -245,6 +245,10 @@ METHOD: bulkDeleteFailUnauthorized
 METHOD: createProject
 METHOD: deleteApiToken
         get api token
+METHOD: deleteJob
+        delete job
+METHOD: deleteJobNotFound
+        delete job (DNE)
 METHOD: deleteKey
         delete ssh key
 METHOD: deleteProject

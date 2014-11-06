@@ -1499,29 +1499,55 @@
 <a class="jxr_linenumber" name="1489" href="#1489">1489</a>             Assert.assertEquals(404,e.getStatusCode());
 <a class="jxr_linenumber" name="1490" href="#1490">1490</a>         }
 <a class="jxr_linenumber" name="1491" href="#1491">1491</a>     }
-<a class="jxr_linenumber" name="1492" href="#1492">1492</a> 
-<a class="jxr_linenumber" name="1493" href="#1493">1493</a>     @Before
-<a class="jxr_linenumber" name="1494" href="#1494">1494</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setUp() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="1495" href="#1495">1495</a>         <em class="jxr_comment">// not that you can put whatever here, because we don't actually connect to the RunDeck instance</em>
-<a class="jxr_linenumber" name="1496" href="#1496">1496</a>         <em class="jxr_comment">// but instead use betamax as a proxy to serve the previously recorded tapes (in src/test/resources)</em>
-<a class="jxr_linenumber" name="1497" href="#1497">1497</a>         client = createClient(TEST_TOKEN_0, 5);
-<a class="jxr_linenumber" name="1498" href="#1498">1498</a>     }
-<a class="jxr_linenumber" name="1499" href="#1499">1499</a> 
-<a class="jxr_linenumber" name="1500" href="#1500">1500</a>     <strong class="jxr_keyword">private</strong> RundeckClient createClient(<strong class="jxr_keyword">final</strong> String token, <strong class="jxr_keyword">int</strong> version) {
-<a class="jxr_linenumber" name="1501" href="#1501">1501</a>         <strong class="jxr_keyword">return</strong> createBuilder(token).version(version).build();
+<a class="jxr_linenumber" name="1492" href="#1492">1492</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="1493" href="#1493">1493</a> <em class="jxr_javadoccomment">     * delete job</em>
+<a class="jxr_linenumber" name="1494" href="#1494">1494</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="1495" href="#1495">1495</a>     @Test
+<a class="jxr_linenumber" name="1496" href="#1496">1496</a>     @Betamax(tape = <span class="jxr_string">"delete_job"</span>, mode = TapeMode.READ_ONLY)
+<a class="jxr_linenumber" name="1497" href="#1497">1497</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> deleteJob() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="1498" href="#1498">1498</a>         <strong class="jxr_keyword">final</strong> RundeckClient client = createClient(TEST_TOKEN_7, 11);
+<a class="jxr_linenumber" name="1499" href="#1499">1499</a>         String result = client.deleteJob(<span class="jxr_string">"api-test-job-run-scheduled"</span>);
+<a class="jxr_linenumber" name="1500" href="#1500">1500</a> 
+<a class="jxr_linenumber" name="1501" href="#1501">1501</a>         Assert.assertEquals(<span class="jxr_string">"Job api-test-job-run-scheduled was deleted successfully"</span>, result);
 <a class="jxr_linenumber" name="1502" href="#1502">1502</a>     }
-<a class="jxr_linenumber" name="1503" href="#1503">1503</a> 
-<a class="jxr_linenumber" name="1504" href="#1504">1504</a>     <strong class="jxr_keyword">private</strong> RundeckClient createClient(String token) {
-<a class="jxr_linenumber" name="1505" href="#1505">1505</a>         <strong class="jxr_keyword">return</strong> createBuilder(token)
-<a class="jxr_linenumber" name="1506" href="#1506">1506</a>             .build();
-<a class="jxr_linenumber" name="1507" href="#1507">1507</a>     }
-<a class="jxr_linenumber" name="1508" href="#1508">1508</a> 
-<a class="jxr_linenumber" name="1509" href="#1509">1509</a>     <strong class="jxr_keyword">private</strong> RundeckClientBuilder createBuilder(String token) {
-<a class="jxr_linenumber" name="1510" href="#1510">1510</a>         <strong class="jxr_keyword">return</strong> RundeckClient.builder().url(<span class="jxr_string">"http://rundeck.local:4440"</span>)
-<a class="jxr_linenumber" name="1511" href="#1511">1511</a>             .token(token);
-<a class="jxr_linenumber" name="1512" href="#1512">1512</a>     }
-<a class="jxr_linenumber" name="1513" href="#1513">1513</a> 
-<a class="jxr_linenumber" name="1514" href="#1514">1514</a> }
+<a class="jxr_linenumber" name="1503" href="#1503">1503</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="1504" href="#1504">1504</a> <em class="jxr_javadoccomment">     * delete job (DNE)</em>
+<a class="jxr_linenumber" name="1505" href="#1505">1505</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="1506" href="#1506">1506</a>     @Test
+<a class="jxr_linenumber" name="1507" href="#1507">1507</a>     @Betamax(tape = <span class="jxr_string">"delete_job_not_found"</span>, mode = TapeMode.READ_ONLY)
+<a class="jxr_linenumber" name="1508" href="#1508">1508</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> deleteJobNotFound() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="1509" href="#1509">1509</a>         <strong class="jxr_keyword">final</strong> RundeckClient client = createClient(TEST_TOKEN_7, 11);
+<a class="jxr_linenumber" name="1510" href="#1510">1510</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="1511" href="#1511">1511</a>             String result = client.deleteJob(<span class="jxr_string">"does-not-exist"</span>);
+<a class="jxr_linenumber" name="1512" href="#1512">1512</a>             Assert.fail();
+<a class="jxr_linenumber" name="1513" href="#1513">1513</a>         } <strong class="jxr_keyword">catch</strong> (RundeckApiException.RundeckApiHttpStatusException e) {
+<a class="jxr_linenumber" name="1514" href="#1514">1514</a>             Assert.assertEquals(404, e.getStatusCode());
+<a class="jxr_linenumber" name="1515" href="#1515">1515</a>         }
+<a class="jxr_linenumber" name="1516" href="#1516">1516</a> 
+<a class="jxr_linenumber" name="1517" href="#1517">1517</a>     }
+<a class="jxr_linenumber" name="1518" href="#1518">1518</a> 
+<a class="jxr_linenumber" name="1519" href="#1519">1519</a>     @Before
+<a class="jxr_linenumber" name="1520" href="#1520">1520</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setUp() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="1521" href="#1521">1521</a>         <em class="jxr_comment">// not that you can put whatever here, because we don't actually connect to the RunDeck instance</em>
+<a class="jxr_linenumber" name="1522" href="#1522">1522</a>         <em class="jxr_comment">// but instead use betamax as a proxy to serve the previously recorded tapes (in src/test/resources)</em>
+<a class="jxr_linenumber" name="1523" href="#1523">1523</a>         client = createClient(TEST_TOKEN_0, 5);
+<a class="jxr_linenumber" name="1524" href="#1524">1524</a>     }
+<a class="jxr_linenumber" name="1525" href="#1525">1525</a> 
+<a class="jxr_linenumber" name="1526" href="#1526">1526</a>     <strong class="jxr_keyword">private</strong> RundeckClient createClient(<strong class="jxr_keyword">final</strong> String token, <strong class="jxr_keyword">int</strong> version) {
+<a class="jxr_linenumber" name="1527" href="#1527">1527</a>         <strong class="jxr_keyword">return</strong> createBuilder(token).version(version).build();
+<a class="jxr_linenumber" name="1528" href="#1528">1528</a>     }
+<a class="jxr_linenumber" name="1529" href="#1529">1529</a> 
+<a class="jxr_linenumber" name="1530" href="#1530">1530</a>     <strong class="jxr_keyword">private</strong> RundeckClient createClient(String token) {
+<a class="jxr_linenumber" name="1531" href="#1531">1531</a>         <strong class="jxr_keyword">return</strong> createBuilder(token)
+<a class="jxr_linenumber" name="1532" href="#1532">1532</a>             .build();
+<a class="jxr_linenumber" name="1533" href="#1533">1533</a>     }
+<a class="jxr_linenumber" name="1534" href="#1534">1534</a> 
+<a class="jxr_linenumber" name="1535" href="#1535">1535</a>     <strong class="jxr_keyword">private</strong> RundeckClientBuilder createBuilder(String token) {
+<a class="jxr_linenumber" name="1536" href="#1536">1536</a>         <strong class="jxr_keyword">return</strong> RundeckClient.builder().url(<span class="jxr_string">"http://rundeck.local:4440"</span>)
+<a class="jxr_linenumber" name="1537" href="#1537">1537</a>             .token(token);
+<a class="jxr_linenumber" name="1538" href="#1538">1538</a>     }
+<a class="jxr_linenumber" name="1539" href="#1539">1539</a> 
+<a class="jxr_linenumber" name="1540" href="#1540">1540</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
