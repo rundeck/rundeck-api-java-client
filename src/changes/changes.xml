@@ -22,6 +22,11 @@
     <author>Vincent Behar</author>
   </properties>
   <body>
+      <release date='2014-11-06' description='Bugfix' version='11.1'>
+          <action type='fix' dev='gschueler'>
+              Issue #14: deleteJob fails
+          </action>
+      </release>
       <release date='2014-04-24' description='Rundeck API version 11' version='11.0'>
           <action type='add' dev='gschueler'>Project creation</action>
           <action type='add' dev='gschueler'>Get Project configuration</action>
