@@ -1672,6 +1672,23 @@ public class RundeckClient implements Serializable {
         );
     }
 
+    /**
+     * Delete a single execution, identified by the given ID
+     *
+     * @param executionId identifier for the execution - mandatory
+     * @throws RundeckApiException in case of error when calling the API (non-existent execution with this ID)
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     * @throws IllegalArgumentException if the executionId is null
+     */
+    public void deleteExecution(final Long executionId)
+            throws RundeckApiException, RundeckApiLoginException,
+                   RundeckApiTokenException, IllegalArgumentException
+    {
+        AssertUtil.notNull(executionId, "executionId is mandatory to abort an execution !");
+        new ApiCall(this).delete(new ApiPathBuilder("/execution/", executionId.toString()));
+    }
+
     /*
      * History
      */

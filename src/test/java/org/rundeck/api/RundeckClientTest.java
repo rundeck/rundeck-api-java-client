@@ -1572,6 +1572,42 @@ public class RundeckClientTest {
                 response.getFailures().get(1).getMessage()
         );
     }
+    /**
+     * delete single execution success
+     */
+    @Test
+    @Betamax(tape = "delete_execution_success", mode = TapeMode.READ_ONLY)
+    public void deleteExecutionSuccess() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_8, 12);
+        client.deleteExecution(643L);
+    }
+    /**
+     * delete single execution failure (does not exist)
+     */
+    @Test
+    @Betamax(tape = "delete_execution_failure", mode = TapeMode.READ_ONLY)
+    public void deleteExecutionFailure() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_8, 12);
+        try {
+            client.deleteExecution(640L);
+            Assert.fail();
+        } catch (RundeckApiException.RundeckApiHttpStatusException e) {
+            Assert.assertEquals(404, e.getStatusCode());
+        }
+    }
+    /**
+     * delete single execution null input
+     */
+    @Test
+    public void deleteExecutionNullInput() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_8, 12);
+        try {
+            client.deleteExecution(null);
+            Assert.fail();
+        } catch (IllegalArgumentException e) {
+
+        }
+    }
     @Before
     public void setUp() throws Exception {
         // not that you can put whatever here, because we don't actually connect to the RunDeck instance

@@ -1,0 +1,19 @@
+!tape
+name: delete_execution_success
+interactions:
+- recorded: 2014-11-06T17:45:47.749Z
+  request:
+    method: DELETE
+    uri: http://rundeck.local:4440/api/12/execution/643
+    headers:
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 12
+      X-RunDeck-Auth-Token: GG7uj1y6UGahOs7QlmeN2sIwz1Y2j7zI
+  response:
+    status: 204
+    headers:
+      Content-Type: text/html;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1hlysemt7deir1j9r7l6ildg5x;Path=/
