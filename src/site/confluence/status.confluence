@@ -118,6 +118,6 @@ h2. Rundeck API version 12
 
 [Documentation of the RunDeck API version 12|http://rundeck.org/2.2.0/api/index.html]
 
-* Bulk delete executions - TBD
-* Delete execution - TBD
-* Delete all executions for a job - TBD
+* Bulk delete executions - OK
+* Delete execution - OK
+* Delete all executions for a job - OK
