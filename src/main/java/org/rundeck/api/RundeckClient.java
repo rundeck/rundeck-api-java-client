@@ -1649,17 +1649,20 @@ public class RundeckClient implements Serializable {
      * Delete a set of executions, identified by the given IDs
      *
      * @param executionIds set of identifiers for the executions - mandatory
-     * @return a {@link RundeckExecution} instance - won't be null
+     * @return a {@link DeleteExecutionsResponse} instance - won't be null
      * @throws RundeckApiException in case of error when calling the API (non-existent execution with this ID)
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the executionId is null
+     * @throws IllegalArgumentException if the executionIds is null
      */
-    public DeleteExecutionsResponse deleteExecutions(Set<Long> executionIds)
+    public DeleteExecutionsResponse deleteExecutions(final Set<Long> executionIds)
             throws RundeckApiException, RundeckApiLoginException,
                    RundeckApiTokenException, IllegalArgumentException
     {
         AssertUtil.notNull(executionIds, "executionIds is mandatory to abort an execution !");
+        if (executionIds.size() < 1) {
+            throw new IllegalArgumentException("executionIds cannot be empty");
+        }
         final ApiPathBuilder apiPath = new ApiPathBuilder("/executions/delete").xml(
                 new DeleteExecutionsGenerator(executionIds)
         );
