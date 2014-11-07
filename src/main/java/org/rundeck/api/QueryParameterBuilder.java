@@ -36,6 +36,9 @@ import java.util.*;
 abstract class QueryParameterBuilder implements ApiPathBuilder.BuildsParameters {
     public static final String W3C_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     static final SimpleDateFormat format = new SimpleDateFormat(W3C_DATE_FORMAT);
+    static {
+        format.setTimeZone(TimeZone.getTimeZone("GMT"));
+    }
 
     /**
      * Add a value to the builder for a given key
