@@ -1,0 +1,26 @@
+!tape
+name: delete_executions_success
+interactions:
+- recorded: 2014-11-06T17:15:24.673Z
+  request:
+    method: POST
+    uri: http://rundeck.local:4440/api/12/executions/delete
+    headers:
+      Accept: text/xml
+      Content-Type: application/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      Transfer-Encoding: chunked
+      User-Agent: RunDeck API Java Client 12
+      X-RunDeck-Auth-Token: GG7uj1y6UGahOs7QlmeN2sIwz1Y2j7zI
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1kzmot0r2scpjfxlcpfthh7tz;Path=/
+      X-Rundeck-API-Version: '12'
+      X-Rundeck-API-XML-Response-Wrapper: 'false'
+    body: !!binary |-
+      PGRlbGV0ZUV4ZWN1dGlvbnMgcmVxdWVzdENvdW50PScyJyBhbGxzdWNjZXNzZnVsPSdmYWxzZSc+CiAgPHN1Y2Nlc3NmdWwgY291bnQ9JzAnIC8+CiAgPGZhaWxlZCBjb3VudD0nMic+CiAgICA8ZXhlY3V0aW9uIGlkPSc2NDEnIG1lc3NhZ2U9J1VuYXV0aG9yaXplZDogRGVsZXRlIGV4ZWN1dGlvbiBpbiBwcm9qZWN0IHRlc3QnIC8+CiAgICA8ZXhlY3V0aW9uIGlkPSc2NDAnIG1lc3NhZ2U9J1VuYXV0aG9yaXplZDogRGVsZXRlIGV4ZWN1dGlvbiBpbiBwcm9qZWN0IHRlc3QnIC8+CiAgPC9mYWlsZWQ+CjwvZGVsZXRlRXhlY3V0aW9ucz4=

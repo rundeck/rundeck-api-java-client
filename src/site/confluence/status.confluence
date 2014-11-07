@@ -113,3 +113,11 @@ h2. RunDeck API version 11
 * API Token create - OK
 * API Token list - OK
 * API Token delete - OK
+
+h2. Rundeck API version 12
+
+[Documentation of the RunDeck API version 12|http://rundeck.org/2.2.0/api/index.html]
+
+* Bulk delete executions - OK
+* Delete execution - OK
+* Delete all executions for a job - OK
