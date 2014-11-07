@@ -402,6 +402,132 @@ public class RundeckClientTest {
                                                                            .build(), 2L, 0L);
         assertPageResults(adhocTest, 2, 2, 2, 0, 2);
     }
+    @Test
+    @Betamax(tape = "get_executions_v11",
+             mode = TapeMode.READ_ONLY,
+             match = {MatchRule.uri, MatchRule.headers, MatchRule.method, MatchRule.path, MatchRule.query})
+    public void getExecutionsV11() throws Exception {
+
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+
+
+        final String projectName = "blah";
+        final PagedResults<RundeckExecution> jobTest = client.getExecutions(ExecutionQuery.builder()
+                                                                        .project(projectName)
+                                                                        .job("test job")
+                                                                        .build(),
+                                                                    2L,
+                                                                    0L);
+        assertPageResults(jobTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> jobExactTest = client.getExecutions(ExecutionQuery.builder()
+                                                                             .project(projectName)
+                                                                             .jobExact("test job")
+                                                                             .build(),
+                                                                         2L,
+                                                                         0L);
+        assertPageResults(jobExactTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> excludeJobTest = client.getExecutions(ExecutionQuery.builder()
+                                                                        .project(projectName)
+                                                                        .excludeJob("test job")
+                                                                        .build(),
+                                                                    2L,
+                                                                    0L);
+        assertPageResults(excludeJobTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> excludeJobExactTest = client.getExecutions(ExecutionQuery.builder()
+                                                                             .project(projectName)
+                                                                             .excludeJobExact("test job")
+                                                                             .build(),
+                                                                         2L,
+                                                                         0L);
+        assertPageResults(excludeJobExactTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> descriptionTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                .project(projectName)
+                                                                                .description("a description")
+                                                                                .build(), 2L, 0L);
+        assertPageResults(descriptionTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> abortedbyTest = client.getExecutions(ExecutionQuery.builder()
+                                                                              .project(projectName)
+                                                                              .abortedby("admin")
+                                                                              .build(),
+                                                                          2L,
+                                                                          0L);
+        assertPageResults(abortedbyTest, 1, 1, 2, 0, 1);
+        final PagedResults<RundeckExecution> beginTest = client.getExecutions(ExecutionQuery.builder()
+                                                                          .project(projectName)
+                                                                          .begin(new Date(1347581178168L))
+                                                                          .build(), 2L, 0L);
+        assertPageResults(beginTest, 2, 2, 2, 0, 6);
+        final PagedResults<RundeckExecution> endTest = client.getExecutions(ExecutionQuery.builder()
+                                                                        .project(projectName)
+                                                                        .end(new Date(1415388156385L))
+                                                                        .build(), 2L, 0L);
+        assertPageResults(endTest, 2, 2, 2, 0, 4);
+        final List<String> excludeJobIdList = Arrays.asList("123", "456");
+        final PagedResults<RundeckExecution> excludeJobIdListTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                     .project(projectName)
+                                                                                     .excludeJobIdList(excludeJobIdList)
+                                                                                     .build(), 2L, 0L);
+        assertPageResults(excludeJobIdListTest, 2, 2, 2, 0, 4);
+        final List<String> jobList = Arrays.asList("fruit/mango", "fruit/lemon");
+        final PagedResults<RundeckExecution> jobListTest = client.getExecutions(ExecutionQuery.builder()
+                                                                            .project(projectName)
+                                                                            .jobList(jobList)
+                                                                            .build(), 2L, 0L);
+        assertPageResults(jobListTest, 2, 2, 2, 0, 2);
+        final List<String> excludeJobList = Arrays.asList("a/path/job1", "path/to/job2");
+        final PagedResults<RundeckExecution> excludeJobListTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                   .project(projectName)
+                                                                                   .excludeJobList(excludeJobList)
+                                                                                   .build(), 2L, 0L);
+        assertPageResults(excludeJobListTest, 2, 2, 2, 0, 4);
+        final List<String> list = Arrays.asList("9aa33253-17a3-4dce-890c-e5f10f9f00d6",
+                                                "2dd94199-00c4-4690-9b4d-beda4812bed0");
+        final PagedResults<RundeckExecution> jobIdListTest = client.getExecutions(ExecutionQuery.builder()
+                                                                              .project(projectName)
+                                                                              .jobIdList(list)
+                                                                              .build(), 2L, 0L);
+        assertPageResults(jobIdListTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> groupPathTest = client.getExecutions(ExecutionQuery.builder()
+                                                                              .project(projectName)
+                                                                              .groupPath("fruit")
+                                                                              .build(),
+                                                                          2L,
+                                                                          0L);
+        assertPageResults(groupPathTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> groupPathExactTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                   .project(projectName)
+                                                                                   .groupPathExact("fruit")
+                                                                                   .build(), 2L, 0L);
+        assertPageResults(groupPathExactTest, 2, 2, 2, 0, 2);
+
+        final PagedResults<RundeckExecution> excludeGroupPathTest = client.getExecutions(ExecutionQuery.builder()
+                                                                              .project(projectName)
+                                                                              .excludeGroupPath("fruit")
+                                                                              .build(),
+                                                                          2L,
+                                                                          0L);
+        assertPageResults(excludeGroupPathTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> excliudeGroupPathExactTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                   .project(projectName)
+                                                                                   .excludeGroupPathExact("fruit")
+                                                                                   .build(), 2L, 0L);
+        assertPageResults(excliudeGroupPathExactTest, 2, 2, 2, 0, 2);
+
+        final PagedResults<RundeckExecution> recentTest = client.getExecutions(ExecutionQuery.builder()
+                                                                           .project(projectName)
+                                                                           .recent("1h").build(), 2L, 0L);
+        assertPageResults(recentTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> statusTest = client.getExecutions(ExecutionQuery.builder()
+                                                                           .project(projectName)
+                                                                           .status(RundeckExecution.ExecutionStatus.SUCCEEDED)
+                                                                           .build(), 2L, 0L);
+        assertPageResults(statusTest, 2, 2, 2, 0, 3);
+        final PagedResults<RundeckExecution> adhocTest = client.getExecutions(ExecutionQuery.builder()
+                                                                           .project(projectName)
+                                                                           .adhoc(true)
+                                                                           .build(), 2L, 0L);
+        assertPageResults(adhocTest, 2, 2, 2, 0, 2);
+    }
 
     /**
      * Test paging values from results

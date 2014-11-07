@@ -1,0 +1,419 @@
+!tape
+name: get_executions_v11
+interactions:
+- recorded: 2014-11-07T23:18:13.076Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?jobFilter=test+job&project=blah&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1jt4f1ctz8i6rfsou34u5suz2;Path=/
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='2' offset='0' max='2'>\n    <execution id='937' href='http://dignan:4440/execution/follow/937' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386304167'>2014-11-07T18:51:44Z</date-started>\n      <date-ended unixtime='1415386309757'>2014-11-07T18:51:49Z</date-ended>\n      <job id='5985a8cb-d155-4585-9fe0-c2342e07c999' averageDuration='5590'>\n        <name>test job</name>\n\
+      \        <group></group>\n        <project>blah</project>\n        <description>a description</description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='936' href='http://dignan:4440/execution/follow/936' status='aborted' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386292080'>2014-11-07T18:51:32Z</date-started>\n      <date-ended unixtime='1415386299535'>2014-11-07T18:51:39Z</date-ended>\n\
+      \      <abortedby>admin</abortedby>\n      <job id='5985a8cb-d155-4585-9fe0-c2342e07c999' averageDuration='5590'>\n        <name>test job</name>\n        <group></group>\n        <project>blah</project>\n        <description>a description</description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <failedNodes>\n        <node name='dignan' />\n      </failedNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:18:13.426Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?jobExactFilter=test+job&project=blah&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='2' offset='0' max='2'>\n    <execution id='937' href='http://dignan:4440/execution/follow/937' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386304167'>2014-11-07T18:51:44Z</date-started>\n      <date-ended unixtime='1415386309757'>2014-11-07T18:51:49Z</date-ended>\n      <job id='5985a8cb-d155-4585-9fe0-c2342e07c999' averageDuration='5590'>\n        <name>test job</name>\n\
+      \        <group></group>\n        <project>blah</project>\n        <description>a description</description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='936' href='http://dignan:4440/execution/follow/936' status='aborted' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386292080'>2014-11-07T18:51:32Z</date-started>\n      <date-ended unixtime='1415386299535'>2014-11-07T18:51:39Z</date-ended>\n\
+      \      <abortedby>admin</abortedby>\n      <job id='5985a8cb-d155-4585-9fe0-c2342e07c999' averageDuration='5590'>\n        <name>test job</name>\n        <group></group>\n        <project>blah</project>\n        <description>a description</description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <failedNodes>\n        <node name='dignan' />\n      </failedNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:18:13.591Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?excludeJobFilter=test+job&project=blah&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='2' offset='0' max='2'>\n    <execution id='939' href='http://dignan:4440/execution/follow/939' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386450856'>2014-11-07T18:54:10Z</date-started>\n      <date-ended unixtime='1415386456531'>2014-11-07T18:54:16Z</date-ended>\n      <job id='2dd94199-00c4-4690-9b4d-beda4812bed0' averageDuration='5675'>\n        <name>mango</name>\n   \
+      \     <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='938' href='http://dignan:4440/execution/follow/938' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386448511'>2014-11-07T18:54:08Z</date-started>\n      <date-ended\
+      \ unixtime='1415386454083'>2014-11-07T18:54:14Z</date-ended>\n      <job id='9aa33253-17a3-4dce-890c-e5f10f9f00d6' averageDuration='5572'>\n        <name>lemon</name>\n        <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:18:13.748Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?excludeJobExactFilter=test+job&project=blah&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='2' offset='0' max='2'>\n    <execution id='939' href='http://dignan:4440/execution/follow/939' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386450856'>2014-11-07T18:54:10Z</date-started>\n      <date-ended unixtime='1415386456531'>2014-11-07T18:54:16Z</date-ended>\n      <job id='2dd94199-00c4-4690-9b4d-beda4812bed0' averageDuration='5675'>\n        <name>mango</name>\n   \
+      \     <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='938' href='http://dignan:4440/execution/follow/938' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386448511'>2014-11-07T18:54:08Z</date-started>\n      <date-ended\
+      \ unixtime='1415386454083'>2014-11-07T18:54:14Z</date-ended>\n      <job id='9aa33253-17a3-4dce-890c-e5f10f9f00d6' averageDuration='5572'>\n        <name>lemon</name>\n        <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:18:13.897Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&descFilter=a+description&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='2' offset='0' max='2'>\n    <execution id='937' href='http://dignan:4440/execution/follow/937' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386304167'>2014-11-07T18:51:44Z</date-started>\n      <date-ended unixtime='1415386309757'>2014-11-07T18:51:49Z</date-ended>\n      <job id='5985a8cb-d155-4585-9fe0-c2342e07c999' averageDuration='5590'>\n        <name>test job</name>\n\
+      \        <group></group>\n        <project>blah</project>\n        <description>a description</description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='936' href='http://dignan:4440/execution/follow/936' status='aborted' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386292080'>2014-11-07T18:51:32Z</date-started>\n      <date-ended unixtime='1415386299535'>2014-11-07T18:51:39Z</date-ended>\n\
+      \      <abortedby>admin</abortedby>\n      <job id='5985a8cb-d155-4585-9fe0-c2342e07c999' averageDuration='5590'>\n        <name>test job</name>\n        <group></group>\n        <project>blah</project>\n        <description>a description</description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <failedNodes>\n        <node name='dignan' />\n      </failedNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:18:14.025Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&abortedbyFilter=admin&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='1' total='1' offset='0' max='2'>\n    <execution id='936' href='http://dignan:4440/execution/follow/936' status='aborted' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386292080'>2014-11-07T18:51:32Z</date-started>\n      <date-ended unixtime='1415386299535'>2014-11-07T18:51:39Z</date-ended>\n      <abortedby>admin</abortedby>\n      <job id='5985a8cb-d155-4585-9fe0-c2342e07c999' averageDuration='5590'>\n\
+      \        <name>test job</name>\n        <group></group>\n        <project>blah</project>\n        <description>a description</description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <failedNodes>\n        <node\
+      \ name='dignan' />\n      </failedNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:18:14.155Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&begin=2012-09-14T00%3A06%3A18Z&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='6' offset='0' max='2'>\n    <execution id='941' href='http://dignan:4440/execution/follow/941' status='failed' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415402275736'>2014-11-07T23:17:55Z</date-started>\n\
+      \      <date-ended unixtime='1415402276329'>2014-11-07T23:17:56Z</date-ended>\n      <description>echo bye ; false</description>\n      <argstring />\n      <failedNodes>\n        <node name='dignan' />\n      </failedNodes>\n    </execution>\n    <execution\
+      \ id='940' href='http://dignan:4440/execution/follow/940' status='failed' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415402267951'>2014-11-07T23:17:47Z</date-started>\n      <date-ended unixtime='1415402270687'>2014-11-07T23:17:50Z</date-ended>\n\
+      \      <description>echo hi ; false</description>\n      <argstring />\n      <failedNodes>\n        <node name='dignan' />\n      </failedNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:19:50.560Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&end=2014-11-07T19%3A22%3A36Z&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1olgmevldd8n2d4lib3pzifep;Path=/
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='4' offset='0' max='2'>\n    <execution id='939' href='http://dignan:4440/execution/follow/939' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386450856'>2014-11-07T18:54:10Z</date-started>\n      <date-ended unixtime='1415386456531'>2014-11-07T18:54:16Z</date-ended>\n      <job id='2dd94199-00c4-4690-9b4d-beda4812bed0' averageDuration='5675'>\n        <name>mango</name>\n   \
+      \     <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='938' href='http://dignan:4440/execution/follow/938' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386448511'>2014-11-07T18:54:08Z</date-started>\n      <date-ended\
+      \ unixtime='1415386454083'>2014-11-07T18:54:14Z</date-ended>\n      <job id='9aa33253-17a3-4dce-890c-e5f10f9f00d6' averageDuration='5572'>\n        <name>lemon</name>\n        <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:19:50.701Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&excludeJobIdListFilter=123&excludeJobIdListFilter=456&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='4' offset='0' max='2'>\n    <execution id='939' href='http://dignan:4440/execution/follow/939' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386450856'>2014-11-07T18:54:10Z</date-started>\n      <date-ended unixtime='1415386456531'>2014-11-07T18:54:16Z</date-ended>\n      <job id='2dd94199-00c4-4690-9b4d-beda4812bed0' averageDuration='5675'>\n        <name>mango</name>\n   \
+      \     <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='938' href='http://dignan:4440/execution/follow/938' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386448511'>2014-11-07T18:54:08Z</date-started>\n      <date-ended\
+      \ unixtime='1415386454083'>2014-11-07T18:54:14Z</date-ended>\n      <job id='9aa33253-17a3-4dce-890c-e5f10f9f00d6' averageDuration='5572'>\n        <name>lemon</name>\n        <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:19:50.837Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&jobListFilter=fruit%2Fmango&jobListFilter=fruit%2Flemon&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='2' offset='0' max='2'>\n    <execution id='939' href='http://dignan:4440/execution/follow/939' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386450856'>2014-11-07T18:54:10Z</date-started>\n      <date-ended unixtime='1415386456531'>2014-11-07T18:54:16Z</date-ended>\n      <job id='2dd94199-00c4-4690-9b4d-beda4812bed0' averageDuration='5675'>\n        <name>mango</name>\n   \
+      \     <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='938' href='http://dignan:4440/execution/follow/938' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386448511'>2014-11-07T18:54:08Z</date-started>\n      <date-ended\
+      \ unixtime='1415386454083'>2014-11-07T18:54:14Z</date-ended>\n      <job id='9aa33253-17a3-4dce-890c-e5f10f9f00d6' averageDuration='5572'>\n        <name>lemon</name>\n        <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:19:50.966Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&excludeJobListFilter=a%2Fpath%2Fjob1&excludeJobListFilter=path%2Fto%2Fjob2&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='4' offset='0' max='2'>\n    <execution id='939' href='http://dignan:4440/execution/follow/939' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386450856'>2014-11-07T18:54:10Z</date-started>\n      <date-ended unixtime='1415386456531'>2014-11-07T18:54:16Z</date-ended>\n      <job id='2dd94199-00c4-4690-9b4d-beda4812bed0' averageDuration='5675'>\n        <name>mango</name>\n   \
+      \     <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='938' href='http://dignan:4440/execution/follow/938' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386448511'>2014-11-07T18:54:08Z</date-started>\n      <date-ended\
+      \ unixtime='1415386454083'>2014-11-07T18:54:14Z</date-ended>\n      <job id='9aa33253-17a3-4dce-890c-e5f10f9f00d6' averageDuration='5572'>\n        <name>lemon</name>\n        <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:19:51.097Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&jobIdListFilter=9aa33253-17a3-4dce-890c-e5f10f9f00d6&jobIdListFilter=2dd94199-00c4-4690-9b4d-beda4812bed0&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='2' offset='0' max='2'>\n    <execution id='939' href='http://dignan:4440/execution/follow/939' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386450856'>2014-11-07T18:54:10Z</date-started>\n      <date-ended unixtime='1415386456531'>2014-11-07T18:54:16Z</date-ended>\n      <job id='2dd94199-00c4-4690-9b4d-beda4812bed0' averageDuration='5675'>\n        <name>mango</name>\n   \
+      \     <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='938' href='http://dignan:4440/execution/follow/938' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386448511'>2014-11-07T18:54:08Z</date-started>\n      <date-ended\
+      \ unixtime='1415386454083'>2014-11-07T18:54:14Z</date-ended>\n      <job id='9aa33253-17a3-4dce-890c-e5f10f9f00d6' averageDuration='5572'>\n        <name>lemon</name>\n        <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:19:51.229Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&groupPath=fruit&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='2' offset='0' max='2'>\n    <execution id='939' href='http://dignan:4440/execution/follow/939' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386450856'>2014-11-07T18:54:10Z</date-started>\n      <date-ended unixtime='1415386456531'>2014-11-07T18:54:16Z</date-ended>\n      <job id='2dd94199-00c4-4690-9b4d-beda4812bed0' averageDuration='5675'>\n        <name>mango</name>\n   \
+      \     <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='938' href='http://dignan:4440/execution/follow/938' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386448511'>2014-11-07T18:54:08Z</date-started>\n      <date-ended\
+      \ unixtime='1415386454083'>2014-11-07T18:54:14Z</date-ended>\n      <job id='9aa33253-17a3-4dce-890c-e5f10f9f00d6' averageDuration='5572'>\n        <name>lemon</name>\n        <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:19:51.358Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&groupPathExact=fruit&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='2' offset='0' max='2'>\n    <execution id='939' href='http://dignan:4440/execution/follow/939' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386450856'>2014-11-07T18:54:10Z</date-started>\n      <date-ended unixtime='1415386456531'>2014-11-07T18:54:16Z</date-ended>\n      <job id='2dd94199-00c4-4690-9b4d-beda4812bed0' averageDuration='5675'>\n        <name>mango</name>\n   \
+      \     <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='938' href='http://dignan:4440/execution/follow/938' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386448511'>2014-11-07T18:54:08Z</date-started>\n      <date-ended\
+      \ unixtime='1415386454083'>2014-11-07T18:54:14Z</date-ended>\n      <job id='9aa33253-17a3-4dce-890c-e5f10f9f00d6' averageDuration='5572'>\n        <name>lemon</name>\n        <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:19:51.483Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&excludeGroupPath=fruit&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='2' offset='0' max='2'>\n    <execution id='937' href='http://dignan:4440/execution/follow/937' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386304167'>2014-11-07T18:51:44Z</date-started>\n      <date-ended unixtime='1415386309757'>2014-11-07T18:51:49Z</date-ended>\n      <job id='5985a8cb-d155-4585-9fe0-c2342e07c999' averageDuration='5590'>\n        <name>test job</name>\n\
+      \        <group></group>\n        <project>blah</project>\n        <description>a description</description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='936' href='http://dignan:4440/execution/follow/936' status='aborted' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386292080'>2014-11-07T18:51:32Z</date-started>\n      <date-ended unixtime='1415386299535'>2014-11-07T18:51:39Z</date-ended>\n\
+      \      <abortedby>admin</abortedby>\n      <job id='5985a8cb-d155-4585-9fe0-c2342e07c999' averageDuration='5590'>\n        <name>test job</name>\n        <group></group>\n        <project>blah</project>\n        <description>a description</description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <failedNodes>\n        <node name='dignan' />\n      </failedNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:19:51.607Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&excludeGroupPathExact=fruit&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='2' offset='0' max='2'>\n    <execution id='937' href='http://dignan:4440/execution/follow/937' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386304167'>2014-11-07T18:51:44Z</date-started>\n      <date-ended unixtime='1415386309757'>2014-11-07T18:51:49Z</date-ended>\n      <job id='5985a8cb-d155-4585-9fe0-c2342e07c999' averageDuration='5590'>\n        <name>test job</name>\n\
+      \        <group></group>\n        <project>blah</project>\n        <description>a description</description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='936' href='http://dignan:4440/execution/follow/936' status='aborted' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386292080'>2014-11-07T18:51:32Z</date-started>\n      <date-ended unixtime='1415386299535'>2014-11-07T18:51:39Z</date-ended>\n\
+      \      <abortedby>admin</abortedby>\n      <job id='5985a8cb-d155-4585-9fe0-c2342e07c999' averageDuration='5590'>\n        <name>test job</name>\n        <group></group>\n        <project>blah</project>\n        <description>a description</description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <failedNodes>\n        <node name='dignan' />\n      </failedNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:19:51.724Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&recentFilter=1h&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='2' offset='0' max='2'>\n    <execution id='941' href='http://dignan:4440/execution/follow/941' status='failed' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415402275736'>2014-11-07T23:17:55Z</date-started>\n\
+      \      <date-ended unixtime='1415402276329'>2014-11-07T23:17:56Z</date-ended>\n      <description>echo bye ; false</description>\n      <argstring />\n      <failedNodes>\n        <node name='dignan' />\n      </failedNodes>\n    </execution>\n    <execution\
+      \ id='940' href='http://dignan:4440/execution/follow/940' status='failed' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415402267951'>2014-11-07T23:17:47Z</date-started>\n      <date-ended unixtime='1415402270687'>2014-11-07T23:17:50Z</date-ended>\n\
+      \      <description>echo hi ; false</description>\n      <argstring />\n      <failedNodes>\n        <node name='dignan' />\n      </failedNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:19:51.845Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&statusFilter=succeeded&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='3' offset='0' max='2'>\n    <execution id='939' href='http://dignan:4440/execution/follow/939' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started\
+      \ unixtime='1415386450856'>2014-11-07T18:54:10Z</date-started>\n      <date-ended unixtime='1415386456531'>2014-11-07T18:54:16Z</date-ended>\n      <job id='2dd94199-00c4-4690-9b4d-beda4812bed0' averageDuration='5675'>\n        <name>mango</name>\n   \
+      \     <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n\
+      \    </execution>\n    <execution id='938' href='http://dignan:4440/execution/follow/938' status='succeeded' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415386448511'>2014-11-07T18:54:08Z</date-started>\n      <date-ended\
+      \ unixtime='1415386454083'>2014-11-07T18:54:14Z</date-ended>\n      <job id='9aa33253-17a3-4dce-890c-e5f10f9f00d6' averageDuration='5572'>\n        <name>lemon</name>\n        <group>fruit</group>\n        <project>blah</project>\n        <description></description>\n\
+      \      </job>\n      <description>sleep 5</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n    </execution>\n  </executions>\n</result>"
+- recorded: 2014-11-07T23:20:12.975Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/executions?project=blah&adhoc=true&max=2&offset=0
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=11ubcx5ejb1sr6nycorkmdrg3;Path=/
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='2' total='2' offset='0' max='2'>\n    <execution id='941' href='http://dignan:4440/execution/follow/941' status='failed' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415402275736'>2014-11-07T23:17:55Z</date-started>\n\
+      \      <date-ended unixtime='1415402276329'>2014-11-07T23:17:56Z</date-ended>\n      <description>echo bye ; false</description>\n      <argstring />\n      <failedNodes>\n        <node name='dignan' />\n      </failedNodes>\n    </execution>\n    <execution\
+      \ id='940' href='http://dignan:4440/execution/follow/940' status='failed' project='blah'>\n      <user>admin</user>\n      <date-started unixtime='1415402267951'>2014-11-07T23:17:47Z</date-started>\n      <date-ended unixtime='1415402270687'>2014-11-07T23:17:50Z</date-ended>\n\
+      \      <description>echo hi ; false</description>\n      <argstring />\n      <failedNodes>\n        <node name='dignan' />\n      </failedNodes>\n    </execution>\n  </executions>\n</result>"
