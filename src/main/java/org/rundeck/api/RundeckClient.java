@@ -1622,8 +1622,15 @@ public class RundeckClient implements Serializable {
     public RundeckExecution getExecution(Long executionId) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(executionId, "executionId is mandatory to get the details of an execution !");
-        return new ApiCall(this).get(new ApiPathBuilder("/execution/", executionId.toString()),
-                                     new ExecutionParser(rootXpath()+"/executions/execution"));
+        return new ApiCall(this).get(
+                new ApiPathBuilder("/execution/", executionId.toString()),
+                APIV11Helper.unwrapIfNeeded(
+                        new ExecutionParser(
+                                rootXpath() + "/executions/execution"
+                        ),
+                        rootXpath() + "/executions/execution"
+                )
+        );
     }
 
     /**
