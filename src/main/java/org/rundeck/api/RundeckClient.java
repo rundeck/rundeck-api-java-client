@@ -1085,7 +1085,16 @@ public class RundeckClient implements Serializable {
         if(null!=jobRun.getAsUser()) {
             apiPath.param("asUser", jobRun.getAsUser());
         }
-        return new ApiCall(this).get(apiPath, new ExecutionParser(rootXpath()+"/executions/execution"));
+        return new ApiCall(this).get(apiPath,
+                                     APIV11Helper.unwrapIfNeeded(
+                                             new ExecutionParser(
+                                                     rootXpath() +
+                                                     "/executions/execution"
+                                             ), rootXpath() +
+                                                "/executions/execution"
+                                     )
+
+        );
     }
 
 
