@@ -1,0 +1,25 @@
+!tape
+name: get_execution
+interactions:
+- recorded: 2014-11-10T19:43:41.415Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/5/execution/945
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 5
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1x4pkxxmmforonss2ga8ylvdc;Path=/
+      X-Rundeck-API-Version: '12'
+      X-Rundeck-API-XML-Response-Wrapper: 'true'
+    body: "<result success='true' apiversion='12'>\n  <executions count='1'>\n    <execution id='945' href='http://dignan:4440/execution/follow/945' status='succeeded' project='test'>\n      <user>admin</user>\n      <date-started unixtime='1415647116739'>2014-11-10T19:18:36Z</date-started>\n\
+      \      <date-ended unixtime='1415647118931'>2014-11-10T19:18:38Z</date-ended>\n      <description>echo test trigger_adhoc_command</description>\n      <argstring />\n      <successfulNodes>\n        <node name='dignan' />\n      </successfulNodes>\n  \
+      \  </execution>\n  </executions>\n</result>"

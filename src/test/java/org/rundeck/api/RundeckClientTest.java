@@ -275,7 +275,47 @@ public class RundeckClientTest {
         }
         Assert.assertEquals(Arrays.asList("bob"), names);
     }
+    @Test
+    @Betamax(tape="get_execution")
+    public void getExecution() throws  Exception{
+        RundeckClient client = createClient(TEST_TOKEN_7, 5);
+        RundeckExecution execution = client.getExecution(945L);
+        Assert.assertEquals("echo test trigger_adhoc_command", execution.getDescription());
+        Assert.assertEquals("2 seconds", execution.getDuration());
+        Assert.assertEquals("test", execution.getProject());
+        Assert.assertEquals("admin", execution.getStartedBy());
+        Assert.assertEquals(null, execution.getJob());
+        Assert.assertEquals(null, execution.getAbortedBy());
+    }
+    @Test
+    @Betamax(tape="get_execution_v11")
+    public void getExecution_v11() throws  Exception{
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        RundeckExecution execution = client.getExecution(945L);
+        Assert.assertEquals("echo test trigger_adhoc_command", execution.getDescription());
+        Assert.assertEquals("2 seconds", execution.getDuration());
+        Assert.assertEquals("test", execution.getProject());
+        Assert.assertEquals("admin", execution.getStartedBy());
+        Assert.assertEquals(null, execution.getJob());
+        Assert.assertEquals(null, execution.getAbortedBy());
+    }
 
+    /**
+     * Test incorrect &lt;result&gt; wrapper is handled correctly
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape="get_execution_v11_buggy")
+    public void getExecution_v11_buggy() throws  Exception{
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        RundeckExecution execution = client.getExecution(945L);
+        Assert.assertEquals("echo test trigger_adhoc_command", execution.getDescription());
+        Assert.assertEquals("2 seconds", execution.getDuration());
+        Assert.assertEquals("test", execution.getProject());
+        Assert.assertEquals("admin", execution.getStartedBy());
+        Assert.assertEquals(null, execution.getJob());
+        Assert.assertEquals(null, execution.getAbortedBy());
+    }
     @Test
     @Betamax(tape = "get_executions",
              mode = TapeMode.READ_ONLY,
@@ -402,6 +442,132 @@ public class RundeckClientTest {
                                                                            .build(), 2L, 0L);
         assertPageResults(adhocTest, 2, 2, 2, 0, 2);
     }
+    @Test
+    @Betamax(tape = "get_executions_v11",
+             mode = TapeMode.READ_ONLY,
+             match = {MatchRule.uri, MatchRule.headers, MatchRule.method, MatchRule.path, MatchRule.query})
+    public void getExecutionsV11() throws Exception {
+
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+
+
+        final String projectName = "blah";
+        final PagedResults<RundeckExecution> jobTest = client.getExecutions(ExecutionQuery.builder()
+                                                                        .project(projectName)
+                                                                        .job("test job")
+                                                                        .build(),
+                                                                    2L,
+                                                                    0L);
+        assertPageResults(jobTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> jobExactTest = client.getExecutions(ExecutionQuery.builder()
+                                                                             .project(projectName)
+                                                                             .jobExact("test job")
+                                                                             .build(),
+                                                                         2L,
+                                                                         0L);
+        assertPageResults(jobExactTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> excludeJobTest = client.getExecutions(ExecutionQuery.builder()
+                                                                        .project(projectName)
+                                                                        .excludeJob("test job")
+                                                                        .build(),
+                                                                    2L,
+                                                                    0L);
+        assertPageResults(excludeJobTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> excludeJobExactTest = client.getExecutions(ExecutionQuery.builder()
+                                                                             .project(projectName)
+                                                                             .excludeJobExact("test job")
+                                                                             .build(),
+                                                                         2L,
+                                                                         0L);
+        assertPageResults(excludeJobExactTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> descriptionTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                .project(projectName)
+                                                                                .description("a description")
+                                                                                .build(), 2L, 0L);
+        assertPageResults(descriptionTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> abortedbyTest = client.getExecutions(ExecutionQuery.builder()
+                                                                              .project(projectName)
+                                                                              .abortedby("admin")
+                                                                              .build(),
+                                                                          2L,
+                                                                          0L);
+        assertPageResults(abortedbyTest, 1, 1, 2, 0, 1);
+        final PagedResults<RundeckExecution> beginTest = client.getExecutions(ExecutionQuery.builder()
+                                                                          .project(projectName)
+                                                                          .begin(new Date(1347581178168L))
+                                                                          .build(), 2L, 0L);
+        assertPageResults(beginTest, 2, 2, 2, 0, 6);
+        final PagedResults<RundeckExecution> endTest = client.getExecutions(ExecutionQuery.builder()
+                                                                        .project(projectName)
+                                                                        .end(new Date(1415388156385L))
+                                                                        .build(), 2L, 0L);
+        assertPageResults(endTest, 2, 2, 2, 0, 4);
+        final List<String> excludeJobIdList = Arrays.asList("123", "456");
+        final PagedResults<RundeckExecution> excludeJobIdListTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                     .project(projectName)
+                                                                                     .excludeJobIdList(excludeJobIdList)
+                                                                                     .build(), 2L, 0L);
+        assertPageResults(excludeJobIdListTest, 2, 2, 2, 0, 4);
+        final List<String> jobList = Arrays.asList("fruit/mango", "fruit/lemon");
+        final PagedResults<RundeckExecution> jobListTest = client.getExecutions(ExecutionQuery.builder()
+                                                                            .project(projectName)
+                                                                            .jobList(jobList)
+                                                                            .build(), 2L, 0L);
+        assertPageResults(jobListTest, 2, 2, 2, 0, 2);
+        final List<String> excludeJobList = Arrays.asList("a/path/job1", "path/to/job2");
+        final PagedResults<RundeckExecution> excludeJobListTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                   .project(projectName)
+                                                                                   .excludeJobList(excludeJobList)
+                                                                                   .build(), 2L, 0L);
+        assertPageResults(excludeJobListTest, 2, 2, 2, 0, 4);
+        final List<String> list = Arrays.asList("9aa33253-17a3-4dce-890c-e5f10f9f00d6",
+                                                "2dd94199-00c4-4690-9b4d-beda4812bed0");
+        final PagedResults<RundeckExecution> jobIdListTest = client.getExecutions(ExecutionQuery.builder()
+                                                                              .project(projectName)
+                                                                              .jobIdList(list)
+                                                                              .build(), 2L, 0L);
+        assertPageResults(jobIdListTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> groupPathTest = client.getExecutions(ExecutionQuery.builder()
+                                                                              .project(projectName)
+                                                                              .groupPath("fruit")
+                                                                              .build(),
+                                                                          2L,
+                                                                          0L);
+        assertPageResults(groupPathTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> groupPathExactTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                   .project(projectName)
+                                                                                   .groupPathExact("fruit")
+                                                                                   .build(), 2L, 0L);
+        assertPageResults(groupPathExactTest, 2, 2, 2, 0, 2);
+
+        final PagedResults<RundeckExecution> excludeGroupPathTest = client.getExecutions(ExecutionQuery.builder()
+                                                                              .project(projectName)
+                                                                              .excludeGroupPath("fruit")
+                                                                              .build(),
+                                                                          2L,
+                                                                          0L);
+        assertPageResults(excludeGroupPathTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> excliudeGroupPathExactTest = client.getExecutions(ExecutionQuery.builder()
+                                                                                   .project(projectName)
+                                                                                   .excludeGroupPathExact("fruit")
+                                                                                   .build(), 2L, 0L);
+        assertPageResults(excliudeGroupPathExactTest, 2, 2, 2, 0, 2);
+
+        final PagedResults<RundeckExecution> recentTest = client.getExecutions(ExecutionQuery.builder()
+                                                                           .project(projectName)
+                                                                           .recent("1h").build(), 2L, 0L);
+        assertPageResults(recentTest, 2, 2, 2, 0, 2);
+        final PagedResults<RundeckExecution> statusTest = client.getExecutions(ExecutionQuery.builder()
+                                                                           .project(projectName)
+                                                                           .status(RundeckExecution.ExecutionStatus.SUCCEEDED)
+                                                                           .build(), 2L, 0L);
+        assertPageResults(statusTest, 2, 2, 2, 0, 3);
+        final PagedResults<RundeckExecution> adhocTest = client.getExecutions(ExecutionQuery.builder()
+                                                                           .project(projectName)
+                                                                           .adhoc(true)
+                                                                           .build(), 2L, 0L);
+        assertPageResults(adhocTest, 2, 2, 2, 0, 2);
+    }
 
     /**
      * Test paging values from results
@@ -509,6 +675,48 @@ public class RundeckClientTest {
 
     }
 
+    /**
+     * API v11 request to trigger job, with expected xml response without &lt;result&gt; wrapper
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "trigger_job_basic_v11")
+    public void triggerJobBasic_v11() throws Exception {
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+
+        final RundeckExecution test
+            = client.triggerJob(RunJobBuilder.builder().setJobId("bda8b956-43a5-4eef-9c67" +
+                                                                 "-3f27cc0ee1a5").build());
+
+        Assert.assertEquals((Long) 943L, test.getId());
+        Assert.assertEquals(null, test.getArgstring());
+        Assert.assertEquals(null, test.getAbortedBy());
+        Assert.assertEquals("echo hi there ${job.username} ; sleep 90", test.getDescription());
+        Assert.assertEquals("admin", test.getStartedBy());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
+    }
+
+    /**
+     * Response for API v11 incorrectly includes &lt;result&gt;, but we should handle this case
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "trigger_job_basic_v11_patch")
+    public void triggerJobBasic_v11_patch() throws Exception {
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+
+        final RundeckExecution test
+            = client.triggerJob(RunJobBuilder.builder().setJobId("bda8b956-43a5-4eef-9c67" +
+                                                                 "-3f27cc0ee1a5").build());
+
+        Assert.assertEquals((Long) 944L, test.getId());
+        Assert.assertEquals(null, test.getArgstring());
+        Assert.assertEquals(null, test.getAbortedBy());
+        Assert.assertEquals("echo hi there ${job.username} ; sleep 90", test.getDescription());
+        Assert.assertEquals("admin", test.getStartedBy());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
+    }
+
     @Test
     @Betamax(tape = "trigger_job_as_user")
     public void triggerJobAsUser() throws Exception {
@@ -565,6 +773,43 @@ public class RundeckClientTest {
         Assert.assertEquals("echo test trigger_adhoc_command", test.getDescription());
         Assert.assertEquals("admin", test.getStartedBy());
         Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, test.getStatus());
+    }
+
+    @Test
+    @Betamax(tape = "trigger_adhoc_command_v11_buggy")
+    public void triggerAdhocCommand_v11_buggy() throws Exception {
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+
+        final RundeckExecution test
+                = client.triggerAdhocCommand(RunAdhocCommandBuilder.builder()
+                .setProject("test")
+                .setCommand("echo test trigger_adhoc_command")
+                .build());
+
+        Assert.assertEquals((Long) 945L, test.getId());
+        Assert.assertEquals(null, test.getArgstring());
+        Assert.assertEquals(null, test.getAbortedBy());
+        Assert.assertEquals("echo test trigger_adhoc_command", test.getDescription());
+        Assert.assertEquals("admin", test.getStartedBy());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
+    }
+    @Test
+    @Betamax(tape = "trigger_adhoc_command_v11")
+    public void triggerAdhocCommand_v11() throws Exception {
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+
+        final RundeckExecution test
+                = client.triggerAdhocCommand(RunAdhocCommandBuilder.builder()
+                .setProject("test")
+                .setCommand("echo test trigger_adhoc_command")
+                .build());
+
+        Assert.assertEquals((Long) 946L, test.getId());
+        Assert.assertEquals(null, test.getArgstring());
+        Assert.assertEquals(null, test.getAbortedBy());
+        Assert.assertEquals("echo test trigger_adhoc_command", test.getDescription());
+        Assert.assertEquals("admin", test.getStartedBy());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
     }
 
 
@@ -624,6 +869,54 @@ public class RundeckClientTest {
                 (byteArrayInputStream).build());
 
         Assert.assertEquals((Long) 25L, test.getId());
+        Assert.assertEquals(null, test.getArgstring());
+        Assert.assertEquals(null, test.getAbortedBy());
+        Assert.assertEquals("#!/bin/bash\necho test trigger_adhoc_script", test.getDescription());
+        Assert.assertEquals("admin", test.getStartedBy());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
+    }
+
+
+    /**
+     * Handle incorrect &lt;result&gt; wrapper for v11 response
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "trigger_adhoc_script_v11_buggy")
+    public void triggerAdhocScript_v11_buggy() throws Exception {
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        String script = "#!/bin/bash\n" +
+                "echo test trigger_adhoc_script\n";
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
+
+        final RundeckExecution test
+                = client.triggerAdhocScript(RunAdhocScriptBuilder.builder().setProject("test").setScript
+                (byteArrayInputStream).build());
+
+        Assert.assertEquals((Long) 947L, test.getId());
+        Assert.assertEquals(null, test.getArgstring());
+        Assert.assertEquals(null, test.getAbortedBy());
+        Assert.assertEquals("#!/bin/bash\necho test trigger_adhoc_script", test.getDescription());
+        Assert.assertEquals("admin", test.getStartedBy());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
+    }
+    /**
+     * Handle v11 response without &lt;result&gt; wrapper
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "trigger_adhoc_script_v11")
+    public void triggerAdhocScript_v11() throws Exception {
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        String script = "#!/bin/bash\n" +
+                "echo test trigger_adhoc_script\n";
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
+
+        final RundeckExecution test
+                = client.triggerAdhocScript(RunAdhocScriptBuilder.builder().setProject("test").setScript
+                (byteArrayInputStream).build());
+
+        Assert.assertEquals((Long) 948L, test.getId());
         Assert.assertEquals(null, test.getArgstring());
         Assert.assertEquals(null, test.getAbortedBy());
         Assert.assertEquals("#!/bin/bash\necho test trigger_adhoc_script", test.getDescription());

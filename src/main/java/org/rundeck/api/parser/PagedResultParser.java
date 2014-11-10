@@ -26,6 +26,7 @@ package org.rundeck.api.parser;
 
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.rundeck.api.RundeckApiException;
 import org.rundeck.api.util.PagedResults;
 
 import java.util.*;
@@ -38,7 +39,7 @@ import java.util.*;
  */
 public class PagedResultParser<T> implements XmlNodeParser<PagedResults<T>> {
     ListParser<T> itemParser;
-    String xpath;
+    private String xpath;
 
     /**
      * Create a PagedResultParser
@@ -54,7 +55,9 @@ public class PagedResultParser<T> implements XmlNodeParser<PagedResults<T>> {
     @Override
     public PagedResults<T> parseXmlNode(Node node) {
         Node pagedNodeContainer = node.selectSingleNode(xpath);
-
+        if(null==pagedNodeContainer) {
+            throw new RundeckApiException("XML content did not match XPATH expression: " + xpath);
+        }
         Element el = (Element) pagedNodeContainer;
         final int max = integerAttribute(el, "max", -1);
         final int offset = integerAttribute(el, "offset", -1);
@@ -112,5 +115,9 @@ public class PagedResultParser<T> implements XmlNodeParser<PagedResults<T>> {
         } catch (NumberFormatException e) {
         }
         return parseMax;
+    }
+
+    public String getXpath() {
+        return xpath;
     }
 }
