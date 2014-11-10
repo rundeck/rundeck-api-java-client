@@ -1587,24 +1587,17 @@ public class RundeckClient implements Serializable {
                                          .param(new ExecutionQueryParameters(query))
                                          .param("max", max)
                                          .param("offset", offset),
-                                     patchApiV11Response(
+                                     APIV11Helper.unwrapIfNeeded(
                                              new PagedResultParser<RundeckExecution>(
-                                                     new ListParser<RundeckExecution>(new ExecutionParser(), "execution"),
+                                                     new ListParser<RundeckExecution>(
+                                                             new ExecutionParser(),
+                                                             "execution"
+                                                     ),
                                                      rootXpath() + "/executions"
-                                             )
+                                             ),
+                                             rootXpath() + "/executions"
                                      )
         );
-    }
-
-    /**
-     * Fix potential buggy response from Rundeck, where &lt;result&gt; wrapper exists
-     * even if it should not.
-     * @param parser
-     * @return
-     */
-    private XmlNodeParser<PagedResults<RundeckExecution>> patchApiV11Response
-            (final PagedResultParser<RundeckExecution> parser) {
-        return new PagedResultParser_BugPatchV11<RundeckExecution>(parser);
     }
 
     /**
