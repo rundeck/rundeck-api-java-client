@@ -1,0 +1,43 @@
+!tape
+name: trigger_adhoc_command_v11
+interactions:
+- recorded: 2014-11-10T19:37:31.471Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/run/command?project=test&exec=echo+test+trigger_adhoc_command
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1lzqzroq2oz9d1oiwcyb9qjsk8;Path=/
+      X-Rundeck-API-Version: '12'
+      X-Rundeck-API-XML-Response-Wrapper: 'false'
+    body: !!binary |-
+      PGV4ZWN1dGlvbiBpZD0nOTQ2JyAvPg==
+- recorded: 2014-11-10T19:37:31.807Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/execution/946
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=UTF-8
+      Server: Jetty(7.6.0.v20120127)
+      X-Rundeck-API-Version: '12'
+      X-Rundeck-API-XML-Response-Wrapper: 'false'
+    body: !!binary |-
+      PGV4ZWN1dGlvbnMgY291bnQ9JzEnPgogIDxleGVjdXRpb24gaWQ9Jzk0NicgaHJlZj0naHR0cDovL2RpZ25hbjo0NDQwL2V4ZWN1dGlvbi9mb2xsb3cvOTQ2JyBzdGF0dXM9J3J1bm5pbmcnIHByb2plY3Q9J3Rlc3QnPgogICAgPHVzZXI+YWRtaW48L3VzZXI+CiAgICA8ZGF0ZS1zdGFydGVkIHVuaXh0aW1lPScxNDE1NjQ4MjUxMTg0Jz4yMDE0LTExLTEwVDE5OjM3OjMxWjwvZGF0ZS1zdGFydGVkPgogICAgPGRlc2NyaXB0aW9uPmVjaG8gdGVzdCB0cmlnZ2VyX2FkaG9jX2NvbW1hbmQ8L2Rlc2NyaXB0aW9uPgogICAgPGFyZ3N0cmluZyAvPgogIDwvZXhlY3V0aW9uPgo8L2V4ZWN1dGlvbnM+

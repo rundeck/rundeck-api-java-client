@@ -275,7 +275,47 @@ public class RundeckClientTest {
         }
         Assert.assertEquals(Arrays.asList("bob"), names);
     }
+    @Test
+    @Betamax(tape="get_execution")
+    public void getExecution() throws  Exception{
+        RundeckClient client = createClient(TEST_TOKEN_7, 5);
+        RundeckExecution execution = client.getExecution(945L);
+        Assert.assertEquals("echo test trigger_adhoc_command", execution.getDescription());
+        Assert.assertEquals("2 seconds", execution.getDuration());
+        Assert.assertEquals("test", execution.getProject());
+        Assert.assertEquals("admin", execution.getStartedBy());
+        Assert.assertEquals(null, execution.getJob());
+        Assert.assertEquals(null, execution.getAbortedBy());
+    }
+    @Test
+    @Betamax(tape="get_execution_v11")
+    public void getExecution_v11() throws  Exception{
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        RundeckExecution execution = client.getExecution(945L);
+        Assert.assertEquals("echo test trigger_adhoc_command", execution.getDescription());
+        Assert.assertEquals("2 seconds", execution.getDuration());
+        Assert.assertEquals("test", execution.getProject());
+        Assert.assertEquals("admin", execution.getStartedBy());
+        Assert.assertEquals(null, execution.getJob());
+        Assert.assertEquals(null, execution.getAbortedBy());
+    }
 
+    /**
+     * Test incorrect &lt;result&gt; wrapper is handled correctly
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape="get_execution_v11_buggy")
+    public void getExecution_v11_buggy() throws  Exception{
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        RundeckExecution execution = client.getExecution(945L);
+        Assert.assertEquals("echo test trigger_adhoc_command", execution.getDescription());
+        Assert.assertEquals("2 seconds", execution.getDuration());
+        Assert.assertEquals("test", execution.getProject());
+        Assert.assertEquals("admin", execution.getStartedBy());
+        Assert.assertEquals(null, execution.getJob());
+        Assert.assertEquals(null, execution.getAbortedBy());
+    }
     @Test
     @Betamax(tape = "get_executions",
              mode = TapeMode.READ_ONLY,
@@ -634,6 +674,11 @@ public class RundeckClientTest {
         Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
 
     }
+
+    /**
+     * API v11 request to trigger job, with expected xml response without &lt;result&gt; wrapper
+     * @throws Exception
+     */
     @Test
     @Betamax(tape = "trigger_job_basic_v11")
     public void triggerJobBasic_v11() throws Exception {
@@ -730,6 +775,43 @@ public class RundeckClientTest {
         Assert.assertEquals(RundeckExecution.ExecutionStatus.SUCCEEDED, test.getStatus());
     }
 
+    @Test
+    @Betamax(tape = "trigger_adhoc_command_v11_buggy")
+    public void triggerAdhocCommand_v11_buggy() throws Exception {
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+
+        final RundeckExecution test
+                = client.triggerAdhocCommand(RunAdhocCommandBuilder.builder()
+                .setProject("test")
+                .setCommand("echo test trigger_adhoc_command")
+                .build());
+
+        Assert.assertEquals((Long) 945L, test.getId());
+        Assert.assertEquals(null, test.getArgstring());
+        Assert.assertEquals(null, test.getAbortedBy());
+        Assert.assertEquals("echo test trigger_adhoc_command", test.getDescription());
+        Assert.assertEquals("admin", test.getStartedBy());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
+    }
+    @Test
+    @Betamax(tape = "trigger_adhoc_command_v11")
+    public void triggerAdhocCommand_v11() throws Exception {
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+
+        final RundeckExecution test
+                = client.triggerAdhocCommand(RunAdhocCommandBuilder.builder()
+                .setProject("test")
+                .setCommand("echo test trigger_adhoc_command")
+                .build());
+
+        Assert.assertEquals((Long) 946L, test.getId());
+        Assert.assertEquals(null, test.getArgstring());
+        Assert.assertEquals(null, test.getAbortedBy());
+        Assert.assertEquals("echo test trigger_adhoc_command", test.getDescription());
+        Assert.assertEquals("admin", test.getStartedBy());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
+    }
+
 
     @Test
     @Betamax(tape = "trigger_adhoc_command_as_user")
@@ -787,6 +869,54 @@ public class RundeckClientTest {
                 (byteArrayInputStream).build());
 
         Assert.assertEquals((Long) 25L, test.getId());
+        Assert.assertEquals(null, test.getArgstring());
+        Assert.assertEquals(null, test.getAbortedBy());
+        Assert.assertEquals("#!/bin/bash\necho test trigger_adhoc_script", test.getDescription());
+        Assert.assertEquals("admin", test.getStartedBy());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
+    }
+
+
+    /**
+     * Handle incorrect &lt;result&gt; wrapper for v11 response
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "trigger_adhoc_script_v11_buggy")
+    public void triggerAdhocScript_v11_buggy() throws Exception {
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        String script = "#!/bin/bash\n" +
+                "echo test trigger_adhoc_script\n";
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
+
+        final RundeckExecution test
+                = client.triggerAdhocScript(RunAdhocScriptBuilder.builder().setProject("test").setScript
+                (byteArrayInputStream).build());
+
+        Assert.assertEquals((Long) 947L, test.getId());
+        Assert.assertEquals(null, test.getArgstring());
+        Assert.assertEquals(null, test.getAbortedBy());
+        Assert.assertEquals("#!/bin/bash\necho test trigger_adhoc_script", test.getDescription());
+        Assert.assertEquals("admin", test.getStartedBy());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
+    }
+    /**
+     * Handle v11 response without &lt;result&gt; wrapper
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "trigger_adhoc_script_v11")
+    public void triggerAdhocScript_v11() throws Exception {
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+        String script = "#!/bin/bash\n" +
+                "echo test trigger_adhoc_script\n";
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(script.getBytes());
+
+        final RundeckExecution test
+                = client.triggerAdhocScript(RunAdhocScriptBuilder.builder().setProject("test").setScript
+                (byteArrayInputStream).build());
+
+        Assert.assertEquals((Long) 948L, test.getId());
         Assert.assertEquals(null, test.getArgstring());
         Assert.assertEquals(null, test.getAbortedBy());
         Assert.assertEquals("#!/bin/bash\necho test trigger_adhoc_script", test.getDescription());
