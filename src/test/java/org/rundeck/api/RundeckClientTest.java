@@ -634,6 +634,43 @@ public class RundeckClientTest {
         Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
 
     }
+    @Test
+    @Betamax(tape = "trigger_job_basic_v11")
+    public void triggerJobBasic_v11() throws Exception {
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+
+        final RundeckExecution test
+            = client.triggerJob(RunJobBuilder.builder().setJobId("bda8b956-43a5-4eef-9c67" +
+                                                                 "-3f27cc0ee1a5").build());
+
+        Assert.assertEquals((Long) 943L, test.getId());
+        Assert.assertEquals(null, test.getArgstring());
+        Assert.assertEquals(null, test.getAbortedBy());
+        Assert.assertEquals("echo hi there ${job.username} ; sleep 90", test.getDescription());
+        Assert.assertEquals("admin", test.getStartedBy());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
+    }
+
+    /**
+     * Response for API v11 incorrectly includes &lt;result&gt;, but we should handle this case
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "trigger_job_basic_v11_patch")
+    public void triggerJobBasic_v11_patch() throws Exception {
+        RundeckClient client = createClient(TEST_TOKEN_7, 11);
+
+        final RundeckExecution test
+            = client.triggerJob(RunJobBuilder.builder().setJobId("bda8b956-43a5-4eef-9c67" +
+                                                                 "-3f27cc0ee1a5").build());
+
+        Assert.assertEquals((Long) 944L, test.getId());
+        Assert.assertEquals(null, test.getArgstring());
+        Assert.assertEquals(null, test.getAbortedBy());
+        Assert.assertEquals("echo hi there ${job.username} ; sleep 90", test.getDescription());
+        Assert.assertEquals("admin", test.getStartedBy());
+        Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
+    }
 
     @Test
     @Betamax(tape = "trigger_job_as_user")

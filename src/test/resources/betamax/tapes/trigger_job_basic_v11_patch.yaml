@@ -1,0 +1,24 @@
+!tape
+name: trigger_job_basic_v11_patch
+interactions:
+- recorded: 2014-11-08T00:05:15.235Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/11/job/bda8b956-43a5-4eef-9c67-3f27cc0ee1a5/run
+    headers:
+      Accept: text/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 11
+      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1dfooymrwshimhr8fe4ncoc93;Path=/
+      X-Rundeck-API-Version: '12'
+    body: "<result success='true' apiversion='12'>\n  <executions count='1'>\n    <execution id='944' href='http://dignan:4440/execution/follow/944' status='running' project='demo'>\n      <user>admin</user>\n      <date-started unixtime='1415405114785'>2014-11-08T00:05:14Z</date-started>\n\
+      \      <job id='bda8b956-43a5-4eef-9c67-3f27cc0ee1a5' averageDuration='90593'>\n        <name>a job</name>\n        <group></group>\n        <project>demo</project>\n        <description></description>\n      </job>\n      <description>echo hi there ${job.username}\
+      \ ; sleep 90</description>\n      <argstring />\n    </execution>\n  </executions>\n</result>"
