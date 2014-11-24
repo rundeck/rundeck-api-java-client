@@ -93,7 +93,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Dependencies version -->
-    <apache.httpcomponents.version>4.1.2</apache.httpcomponents.version>
+    <apache.httpcomponents.version>4.3.6</apache.httpcomponents.version>
     <commons-lang.version>2.6</commons-lang.version>
     <commons-io.version>2.1</commons-io.version>
     <dom4j.version>1.6.1</dom4j.version>
