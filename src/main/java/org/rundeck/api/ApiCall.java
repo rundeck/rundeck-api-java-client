@@ -37,7 +37,6 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-import org.dom4j.Document;
 import org.rundeck.api.RundeckApiException.RundeckApiLoginException;
 import org.rundeck.api.RundeckApiException.RundeckApiTokenException;
 import org.rundeck.api.parser.ParserHelper;
@@ -59,7 +58,7 @@ import java.util.Map.Entry;
 
 /**
  * Class responsible for making the HTTP API calls
- * 
+ *
  * @author Vincent Behar
  */
 class ApiCall {
@@ -72,10 +71,10 @@ class ApiCall {
 
     /** {@link RundeckClient} instance holding the RunDeck url and the credentials */
     private final RundeckClient client;
-    
+
     /**
      * Build a new instance, linked to the given RunDeck client
-     * 
+     *
      * @param client holding the RunDeck url and the credentials
      * @throws IllegalArgumentException if client is null
      */
@@ -87,7 +86,7 @@ class ApiCall {
 
     /**
      * Try to "ping" the RunDeck instance to see if it is alive
-     * 
+     *
      * @throws RundeckApiException if the ping fails
      */
     public void ping() throws RundeckApiException {
@@ -127,7 +126,7 @@ class ApiCall {
 
     /**
      * Test the login-based authentication on the RunDeck instance
-     * 
+     *
      * @throws RundeckApiLoginException if the login fails
      * @see #testAuth()
      */
@@ -144,7 +143,7 @@ class ApiCall {
 
     /**
      * Test the token-based authentication on the RunDeck instance
-     * 
+     *
      * @throws RundeckApiTokenException if the token is invalid
      * @see #testAuth()
      */
@@ -161,7 +160,7 @@ class ApiCall {
     /**
      * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
      * API call. At the end, the given parser will be used to convert the response to a more useful result object.
-     * 
+     *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
      * @param parser used to parse the response
      * @return the result of the call, as formatted by the parser
@@ -181,7 +180,7 @@ class ApiCall {
     /**
      * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
      * API call.
-     * 
+     *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
      * @return a new {@link InputStream} instance, not linked with network resources
      * @throws RundeckApiException in case of error when calling the API
@@ -206,7 +205,7 @@ class ApiCall {
     /**
      * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
      * API call without appending the API_ENDPOINT to the URL.
-     * 
+     *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
      * @return a new {@link InputStream} instance, not linked with network resources
      * @throws RundeckApiException in case of error when calling the API
@@ -248,11 +247,11 @@ class ApiCall {
             return get(apiPath, parser);
         }
     }
-    
+
     /**
      * Execute an HTTP POST request to the RunDeck instance, on the given path. We will login first, and then execute
      * the API call. At the end, the given parser will be used to convert the response to a more useful result object.
-     * 
+     *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
      * @param parser used to parse the response
      * @return the result of the call, as formatted by the parser
@@ -322,7 +321,7 @@ class ApiCall {
     /**
      * Execute an HTTP DELETE request to the RunDeck instance, on the given path. We will login first, and then execute
      * the API call. At the end, the given parser will be used to convert the response to a more useful result object.
-     * 
+     *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
      * @param parser used to parse the response
      * @return the result of the call, as formatted by the parser
@@ -354,7 +353,7 @@ class ApiCall {
     /**
      * Execute an HTTP request to the RunDeck instance. We will login first, and then execute the API call. At the end,
      * the given parser will be used to convert the response to a more useful result object.
-     * 
+     *
      * @param request to execute. see {@link HttpGet}, {@link HttpDelete}, and so on...
      * @param parser used to parse the response
      * @return the result of the call, as formatted by the parser
@@ -400,7 +399,7 @@ class ApiCall {
     }
     /**
      * Execute an HTTP request to the RunDeck instance. We will login first, and then execute the API call.
-     * 
+     *
      * @param request to execute. see {@link HttpGet}, {@link HttpDelete}, and so on...
      * @return a new {@link InputStream} instance, not linked with network resources
      * @throws RundeckApiException in case of error when calling the API
@@ -594,7 +593,7 @@ class ApiCall {
     /**
      * Do the actual work of login, using the given {@link HttpClient} instance. You'll need to re-use this instance
      * when making API calls (such as running a job). Only use this in case of login-based authentication.
-     * 
+     *
      * @param httpClient pre-instantiated
      * @throws RundeckApiLoginException if the login failed
      */
@@ -639,11 +638,11 @@ class ApiCall {
         while (true) {
             try {
                 HttpPost postLogin = new HttpPost(location);
-                List params = new ArrayList();
+                List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
                 params.add(new BasicNameValuePair("j_username", client.getLogin()));
                 params.add(new BasicNameValuePair("j_password", client.getPassword()));
                 params.add(new BasicNameValuePair("action", "login"));
-                postLogin.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+                postLogin.setEntity(new UrlEncodedFormEntity(params, Consts.UTF_8));
                 HttpResponse response = httpClient.execute(postLogin);
 
                 if (response.getStatusLine().getStatusCode() / 100 == 3) {
@@ -663,7 +662,7 @@ class ApiCall {
                 }
 
                 try {
-                    String content = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+                    String content = EntityUtils.toString(response.getEntity(), Consts.UTF_8);
                     if (StringUtils.contains(content, "j_security_check")) {
                         throw new RundeckApiLoginException("Login failed for user " + client.getLogin());
                     }
@@ -689,7 +688,7 @@ class ApiCall {
 
     /**
      * Instantiate a new {@link HttpClient} instance, configured to accept all SSL certificates
-     * 
+     *
      * @return an {@link HttpClient} instance - won't be null
      */
     private HttpClient instantiateHttpClient() {
