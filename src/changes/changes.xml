@@ -19,9 +19,21 @@
           xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
   <properties>
     <title>Changelog</title>
-    <author>Vincent Behar</author>
+    <author>Greg Schueler</author>
   </properties>
   <body>
+      <release date='2014-11-25' description='Rundeck API version 12' version='12.0'>
+          <action type='fix' dev='Sylvain-Bugat'>
+              Pull Request #18: OWASP A9 fix know vulnerabilities: CVE-2014-3577: in Apache
+              HttpComponents HttpClient before 4.3.5.
+          </action>
+          <action type='add' dev='gschueler'>
+              Add API v12 support
+          </action>
+          <action type='fix' dev='gschueler'>
+              Issue #17: Handle incorrect API v11 responses
+          </action>
+      </release>
       <release date='2014-11-06' description='Bugfix' version='11.1'>
           <action type='fix' dev='gschueler'>
               Issue #14: deleteJob fails
