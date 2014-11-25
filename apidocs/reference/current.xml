@@ -1416,6 +1416,27 @@
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
 </exception>
 </method>
+<method name="deleteAllJobExecutions"
+ return="org.rundeck.api.domain.DeleteExecutionsResponse"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="jobId" type="java.lang.String">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
 <method name="deleteApiToken"
  return="boolean"
  abstract="false"
@@ -1429,6 +1450,48 @@
 <parameter name="token" type="java.lang.String">
 </parameter>
 <exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+</method>
+<method name="deleteExecution"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="executionId" type="java.lang.Long">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
+</exception>
+</method>
+<method name="deleteExecutions"
+ return="org.rundeck.api.domain.DeleteExecutionsResponse"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="executionIds" type="java.util.Set&lt;java.lang.Long&gt;">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
+</exception>
+<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
+</exception>
+<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
 </exception>
 </method>
 <method name="deleteJob"
@@ -4528,6 +4591,208 @@
  visibility="public"
 >
 <parameter name="value" type="java.lang.String">
+</parameter>
+</method>
+</class>
+<class name="DeleteExecutionsResponse"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="DeleteExecutionsResponse"
+ type="org.rundeck.api.domain.DeleteExecutionsResponse"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="getFailedCount"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getFailures"
+ return="java.util.List&lt;org.rundeck.api.domain.DeleteExecutionsResponse.DeleteFailure&gt;"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getRequestCount"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getSuccessCount"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isAllsuccessful"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setAllsuccessful"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="allsuccessful" type="boolean">
+</parameter>
+</method>
+<method name="setFailedCount"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="failedCount" type="int">
+</parameter>
+</method>
+<method name="setFailures"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="failures" type="java.util.List&lt;org.rundeck.api.domain.DeleteExecutionsResponse.DeleteFailure&gt;">
+</parameter>
+</method>
+<method name="setRequestCount"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="requestCount" type="int">
+</parameter>
+</method>
+<method name="setSuccessCount"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="successCount" type="int">
+</parameter>
+</method>
+</class>
+<class name="DeleteExecutionsResponse.DeleteFailure"
+ extends="java.lang.Object"
+ abstract="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="DeleteExecutionsResponse.DeleteFailure"
+ type="org.rundeck.api.domain.DeleteExecutionsResponse.DeleteFailure"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="getExecutionId"
+ return="java.lang.Long"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getMessage"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setExecutionId"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="executionId" type="java.lang.Long">
+</parameter>
+</method>
+<method name="setMessage"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="message" type="java.lang.String">
 </parameter>
 </method>
 </class>
@@ -8417,6 +8682,60 @@
 >
 </method>
 </class>
+<class name="DeleteExecutionsGenerator"
+ extends="org.rundeck.api.generator.BaseDocGenerator"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="DeleteExecutionsGenerator"
+ type="org.rundeck.api.generator.DeleteExecutionsGenerator"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="executionIds" type="java.util.Set&lt;java.lang.Long&gt;">
+</parameter>
+</constructor>
+<method name="generateXmlElement"
+ return="org.dom4j.Element"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getExecutionIds"
+ return="java.util.Set&lt;java.lang.Long&gt;"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setExecutionIds"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="executionIds" type="java.util.Set&lt;java.lang.Long&gt;">
+</parameter>
+</method>
+</class>
 <class name="ProjectConfigGenerator"
  extends="org.rundeck.api.generator.BaseDocGenerator"
  abstract="false"
@@ -8540,6 +8859,53 @@
 </package>
 <package name="org.rundeck.api.parser"
 >
+<class name="APIV11Helper"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="APIV11Helper"
+ type="org.rundeck.api.parser.APIV11Helper"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="unwrapIfNeeded"
+ return="org.rundeck.api.parser.XmlNodeParser&lt;T&gt;"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="parser" type="org.rundeck.api.parser.XmlNodeParser&lt;T&gt;">
+</parameter>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</method>
+<method name="unwrapResultElement"
+ return="org.dom4j.Node"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="node" type="org.dom4j.Node">
+</parameter>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</method>
+</class>
 <class name="AbortParser"
  extends="java.lang.Object"
  abstract="false"
@@ -8766,6 +9132,40 @@
 </constructor>
 <method name="parseXmlNode"
  return="org.rundeck.api.domain.RundeckJobDeleteBulk"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="node" type="org.dom4j.Node">
+</parameter>
+</method>
+</class>
+<class name="DeleteExecutionsResponseParser"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.rundeck.api.parser.XmlNodeParser">
+</implements>
+<constructor name="DeleteExecutionsResponseParser"
+ type="org.rundeck.api.parser.DeleteExecutionsResponseParser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</constructor>
+<method name="parseXmlNode"
+ return="org.rundeck.api.domain.DeleteExecutionsResponse"
  abstract="false"
  native="false"
  synchronized="false"
@@ -9343,6 +9743,17 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
+<method name="getXpath"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="parseXmlNode"
  return="org.rundeck.api.util.PagedResults&lt;T&gt;"
  abstract="false"

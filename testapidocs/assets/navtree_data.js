@@ -1,5 +1,5 @@
 var NAVTREE_DATA =
-[ [ "org.rundeck.api", "org/rundeck/api/package-summary.html", [ [ "Description", "org/rundeck/api/package-descr.html", null, "" ], [ "Classes", null, [ [ "RundeckClientTest", "org/rundeck/api/RundeckClientTest.html", null, "" ] ]
+[ [ "org.rundeck.api", "org/rundeck/api/package-summary.html", [ [ "Description", "org/rundeck/api/package-descr.html", null, "" ], [ "Classes", null, [ [ "ExecutionQueryParametersTest", "org/rundeck/api/ExecutionQueryParametersTest.html", null, "" ], [ "RundeckClientTest", "org/rundeck/api/RundeckClientTest.html", null, "" ] ]
 , "" ] ]
 , "" ], [ "org.rundeck.api.generator", "org/rundeck/api/generator/package-summary.html", [ [ "Description", "org/rundeck/api/generator/package-descr.html", null, "" ], [ "Classes", null, [ [ "ProjectConfigGeneratorTest", "org/rundeck/api/generator/ProjectConfigGeneratorTest.html", null, "" ], [ "ProjectGeneratorTest", "org/rundeck/api/generator/ProjectGeneratorTest.html", null, "" ] ]
 , "" ] ]

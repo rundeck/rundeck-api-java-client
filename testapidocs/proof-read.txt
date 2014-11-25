@@ -16,6 +16,168 @@ javadoc proofread file: ./proof-read.txt
 === reference/packages.html ===
 
 
+=== org/rundeck/api/RundeckClientTest.html ===
+        Test the
+        {@link/RundeckClient}
+        . Uses betamax to unit-test HTTP requests without a live RunDeck instance.
+FIELD: TEST_TOKEN_0
+        Note: to add a new test, do the following:
+         1) start a rundeck server, available at hostname "rundeck.local"
+         2) login as test or admin user, and generate a token
+         3) add the test token as a new TEST_TOKEN_X, and use that in your test
+         4) run 'mvn test', and commit the new yml file generated at src/test/resources/betamax/tapes
+FIELD: TEST_TOKEN_1
+FIELD: TEST_TOKEN_2
+FIELD: TEST_TOKEN_3
+FIELD: TEST_TOKEN_4
+FIELD: TEST_TOKEN_5
+FIELD: TEST_TOKEN_6
+FIELD: TEST_TOKEN_7
+FIELD: TEST_TOKEN_8
+FIELD: recorder
+CONSTRUCTOR: RundeckClientTest
+METHOD: abortExecution
+METHOD: abortExecutionAsUser
+METHOD: abortExecutionAsUserUnauthorized
+METHOD: apiVersionDefaultLatest
+METHOD: bulkDelete
+METHOD: bulkDeleteFailDNE
+METHOD: bulkDeleteFailUnauthorized
+METHOD: createProject
+METHOD: deleteAllJobExecutionsSuccess
+METHOD: deleteAllJobExecutionsUnauthorized
+        delete executions with failure
+METHOD: deleteApiToken
+        get api token
+METHOD: deleteExecutionFailure
+        delete single execution failure (does not exist)
+METHOD: deleteExecutionNullInput
+        delete single execution null input
+METHOD: deleteExecutionSuccess
+        delete single execution success
+METHOD: deleteExecutionsMixed
+        delete executions mixed success
+METHOD: deleteExecutionsSuccess
+        delete executions with success
+METHOD: deleteExecutionsUnauthorized
+        delete executions with failure
+METHOD: deleteJob
+        delete job
+METHOD: deleteJobNotFound
+        delete job (DNE)
+METHOD: deleteKey
+        delete ssh key
+METHOD: deleteProject
+METHOD: deleteProjectConfigKeyed
+METHOD: executionOutputBasic
+        Execution output
+METHOD: executionOutputForNode
+        Execution output for a node
+METHOD: executionOutputForNodeAndStep
+        Execution output for a node and step
+METHOD: executionOutputForStep
+        Execution output for a step
+METHOD: executionOutputState
+        Execution output state sequence
+METHOD: executionOutputStateOnly
+        Execution output state sequence
+METHOD: executionState
+        Execution state structure
+METHOD: exportProject
+METHOD: generateApiToken
+        generate api token
+METHOD: getApiToken
+        get api token
+METHOD: getExecution
+METHOD: getExecution_v11
+METHOD: getExecution_v11_buggy
+        Test incorrect &lt;result&gt; wrapper is handled correctly
+METHOD: getExecutions
+METHOD: getExecutionsPaging
+        Test paging values from results
+METHOD: getExecutionsV11
+METHOD: getHistory
+METHOD: getHistoryExcludeJoblist
+METHOD: getHistoryJoblist
+METHOD: getHistoryUser
+METHOD: getKeyData_private
+        get ssh key data
+METHOD: getKeyData_public
+        get ssh key data
+METHOD: getKey_private
+        get ssh key
+METHOD: getKey_public
+        get ssh key
+METHOD: getProjectConfig
+METHOD: getProjectConfigKeyed
+METHOD: getProjectConfigKeyedDNE
+METHOD: getProjects
+METHOD: importJobsContextProject
+        Import jobs, xml contains project context
+METHOD: importJobsNoProject
+        Import jobs, xml no project defined
+METHOD: importJobsProjectParam
+        Import jobs, using project parameter
+METHOD: importJobsProjectParamOverride
+        Import jobs, project parameter overrides xml
+METHOD: importJobsProjectParamV7
+        Import jobs, project parameter v7 doesn' use parameter
+METHOD: importJobsUUIDParamPreserveV9
+        Import jobs, project parameter v7 doesn' use parameter
+METHOD: importJobsUUIDParamRemoveV9
+        Import jobs, project parameter v7 doesn' use parameter
+METHOD: importProjectFailure
+METHOD: importProjectSuccess
+METHOD: listApiTokens
+        list api tokens all
+METHOD: listApiTokens_user
+        list api tokens for user
+METHOD: listKeyDirectory
+        list directory
+METHOD: listKeyDirectoryRoot
+        list root
+METHOD: runningExecutionsV8
+        Running executions for all projects using API v8, which queries for project list and then individually
+         queries each project's now running
+METHOD: runningExecutionsV9
+        Running executions for all projects using API v9
+METHOD: setProjectConfig
+METHOD: setProjectConfigKeyed
+METHOD: setUp
+METHOD: storeKey_private
+        Store ssh key
+METHOD: storeKey_public
+        Store ssh key
+METHOD: triggerAdhocCommand
+METHOD: triggerAdhocCommandAsUser
+METHOD: triggerAdhocCommandAsUserUnauthorized
+METHOD: triggerAdhocCommand_v11
+METHOD: triggerAdhocCommand_v11_buggy
+METHOD: triggerAdhocScript
+METHOD: triggerAdhocScriptAsUser
+METHOD: triggerAdhocScriptAsUserUnauthorized
+METHOD: triggerAdhocScriptInpterpreter
+METHOD: triggerAdhocScript_v11
+        Handle v11 response without &lt;result&gt; wrapper
+METHOD: triggerAdhocScript_v11_buggy
+        Handle incorrect &lt;result&gt; wrapper for v11 response
+METHOD: triggerJobAsUser
+METHOD: triggerJobAsUserUnauthorized
+METHOD: triggerJobBasic
+METHOD: triggerJobBasic_v11
+        API v11 request to trigger job, with expected xml response without &lt;result&gt; wrapper
+METHOD: triggerJobBasic_v11_patch
+        Response for API v11 incorrectly includes &lt;result&gt;, but we should handle this case
+
+
+=== org/rundeck/api/ExecutionQueryParametersTest.html ===
+        ExecutionQueryParametersTest is ...
+CONSTRUCTOR: ExecutionQueryParametersTest
+METHOD: dateParameter
+METHOD: listParameter
+METHOD: stringParameter
+
+
 === org/rundeck/api/generator/ProjectGeneratorTest.html ===
         ProjectGeneratorTest is ...
 CONSTRUCTOR: ProjectGeneratorTest
@@ -214,129 +376,6 @@ METHOD: testBase2
 CONSTRUCTOR: AbortParserTest
 METHOD: parseFailedAbort
 METHOD: parsePendingAbort
-
-
-=== org/rundeck/api/RundeckClientTest.html ===
-        Test the
-        {@link/RundeckClient}
-        . Uses betamax to unit-test HTTP requests without a live RunDeck instance.
-FIELD: TEST_TOKEN_0
-        Note: to add a new test, do the following:
-         1) start a rundeck server, available at hostname "rundeck.local"
-         2) login as test or admin user, and generate a token
-         3) add the test token as a new TEST_TOKEN_X, and use that in your test
-         4) run 'mvn test', and commit the new yml file generated at src/test/resources/betamax/tapes
-FIELD: TEST_TOKEN_1
-FIELD: TEST_TOKEN_2
-FIELD: TEST_TOKEN_3
-FIELD: TEST_TOKEN_4
-FIELD: TEST_TOKEN_5
-FIELD: TEST_TOKEN_6
-FIELD: TEST_TOKEN_7
-FIELD: recorder
-CONSTRUCTOR: RundeckClientTest
-METHOD: abortExecution
-METHOD: abortExecutionAsUser
-METHOD: abortExecutionAsUserUnauthorized
-METHOD: apiVersionDefaultLatest
-METHOD: bulkDelete
-METHOD: bulkDeleteFailDNE
-METHOD: bulkDeleteFailUnauthorized
-METHOD: createProject
-METHOD: deleteApiToken
-        get api token
-METHOD: deleteJob
-        delete job
-METHOD: deleteJobNotFound
-        delete job (DNE)
-METHOD: deleteKey
-        delete ssh key
-METHOD: deleteProject
-METHOD: deleteProjectConfigKeyed
-METHOD: executionOutputBasic
-        Execution output
-METHOD: executionOutputForNode
-        Execution output for a node
-METHOD: executionOutputForNodeAndStep
-        Execution output for a node and step
-METHOD: executionOutputForStep
-        Execution output for a step
-METHOD: executionOutputState
-        Execution output state sequence
-METHOD: executionOutputStateOnly
-        Execution output state sequence
-METHOD: executionState
-        Execution state structure
-METHOD: exportProject
-METHOD: generateApiToken
-        generate api token
-METHOD: getApiToken
-        get api token
-METHOD: getExecutions
-METHOD: getExecutionsPaging
-        Test paging values from results
-METHOD: getHistory
-METHOD: getHistoryExcludeJoblist
-METHOD: getHistoryJoblist
-METHOD: getHistoryUser
-METHOD: getKeyData_private
-        get ssh key data
-METHOD: getKeyData_public
-        get ssh key data
-METHOD: getKey_private
-        get ssh key
-METHOD: getKey_public
-        get ssh key
-METHOD: getProjectConfig
-METHOD: getProjectConfigKeyed
-METHOD: getProjectConfigKeyedDNE
-METHOD: getProjects
-METHOD: importJobsContextProject
-        Import jobs, xml contains project context
-METHOD: importJobsNoProject
-        Import jobs, xml no project defined
-METHOD: importJobsProjectParam
-        Import jobs, using project parameter
-METHOD: importJobsProjectParamOverride
-        Import jobs, project parameter overrides xml
-METHOD: importJobsProjectParamV7
-        Import jobs, project parameter v7 doesn' use parameter
-METHOD: importJobsUUIDParamPreserveV9
-        Import jobs, project parameter v7 doesn' use parameter
-METHOD: importJobsUUIDParamRemoveV9
-        Import jobs, project parameter v7 doesn' use parameter
-METHOD: importProjectFailure
-METHOD: importProjectSuccess
-METHOD: listApiTokens
-        list api tokens all
-METHOD: listApiTokens_user
-        list api tokens for user
-METHOD: listKeyDirectory
-        list directory
-METHOD: listKeyDirectoryRoot
-        list root
-METHOD: runningExecutionsV8
-        Running executions for all projects using API v8, which queries for project list and then individually
-         queries each project's now running
-METHOD: runningExecutionsV9
-        Running executions for all projects using API v9
-METHOD: setProjectConfig
-METHOD: setProjectConfigKeyed
-METHOD: setUp
-METHOD: storeKey_private
-        Store ssh key
-METHOD: storeKey_public
-        Store ssh key
-METHOD: triggerAdhocCommand
-METHOD: triggerAdhocCommandAsUser
-METHOD: triggerAdhocCommandAsUserUnauthorized
-METHOD: triggerAdhocScript
-METHOD: triggerAdhocScriptAsUser
-METHOD: triggerAdhocScriptAsUserUnauthorized
-METHOD: triggerAdhocScriptInpterpreter
-METHOD: triggerJobAsUser
-METHOD: triggerJobAsUserUnauthorized
-METHOD: triggerJobBasic
 
 
 === org/rundeck/api/util/ParametersUtilTest.html ===

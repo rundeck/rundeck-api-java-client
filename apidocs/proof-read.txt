@@ -181,9 +181,15 @@ METHOD: builder
         Create a builder for RundeckClient
 METHOD: createProject
         Create a new project, and return the new definition
+METHOD: deleteAllJobExecutions
+        Delete all executions for a job specified by a job ID
 METHOD: deleteApiToken
         Delete an existing token
         @return
+METHOD: deleteExecution
+        Delete a single execution, identified by the given ID
+METHOD: deleteExecutions
+        Delete a set of executions, identified by the given IDs
 METHOD: deleteJob
         Delete a single job, identified by the given ID
 METHOD: deleteJobs
@@ -410,6 +416,7 @@ METHOD: triggerJob
         Supported version numbers
 ENUM: V10
 ENUM: V11
+ENUM: V12
 ENUM: V5
 ENUM: V6
 ENUM: V7
@@ -1158,6 +1165,29 @@ METHOD: isPrivateKey
         Return true if this is a file and is a private SSH key file.
 
 
+=== org/rundeck/api/domain/DeleteExecutionsResponse.html ===
+        DeleteExecutionsResponse is ...
+CONSTRUCTOR: DeleteExecutionsResponse
+METHOD: getFailedCount
+METHOD: getFailures
+METHOD: getRequestCount
+METHOD: getSuccessCount
+METHOD: isAllsuccessful
+METHOD: setAllsuccessful
+METHOD: setFailedCount
+METHOD: setFailures
+METHOD: setRequestCount
+METHOD: setSuccessCount
+
+
+=== org/rundeck/api/domain/DeleteExecutionsResponse.DeleteFailure.html ===
+CONSTRUCTOR: DeleteExecutionsResponse.DeleteFailure
+METHOD: getExecutionId
+METHOD: getMessage
+METHOD: setExecutionId
+METHOD: setMessage
+
+
 === org/rundeck/api/domain/ConfigProperty.html ===
         ConfigProperty is a single configuration property key and value.
 CONSTRUCTOR: ConfigProperty
@@ -1255,6 +1285,14 @@ METHOD: generateXmlElement
         ProjectConfigGenerator is ...
 CONSTRUCTOR: ProjectConfigGenerator
 METHOD: generateXmlElement
+
+
+=== org/rundeck/api/generator/DeleteExecutionsGenerator.html ===
+        DeleteExecutionsGenerator is ...
+CONSTRUCTOR: DeleteExecutionsGenerator
+METHOD: generateXmlElement
+METHOD: getExecutionIds
+METHOD: setExecutionIds
 
 
 === org/rundeck/api/generator/BaseDocGenerator.html ===
@@ -1383,6 +1421,7 @@ METHOD: loadDocument
         PagedResultParser extracts paging data from an xpath node, and includes the List result from a ListParser
 CONSTRUCTOR: PagedResultParser
         Create a PagedResultParser
+METHOD: getXpath
 METHOD: parseXmlNode
 
 
@@ -1486,6 +1525,12 @@ CONSTRUCTOR: DeleteParser
 METHOD: parseXmlNode
 
 
+=== org/rundeck/api/parser/DeleteExecutionsResponseParser.html ===
+        DeleteExecutionsResponseParser is ...
+CONSTRUCTOR: DeleteExecutionsResponseParser
+METHOD: parseXmlNode
+
+
 === org/rundeck/api/parser/BulkDeleteParser.html ===
         BulkDeleteParser is ...
 CONSTRUCTOR: BulkDeleteParser
@@ -1514,6 +1559,16 @@ METHOD: parseXmlNode
 CONSTRUCTOR: ArchiveImportParser
 CONSTRUCTOR: ArchiveImportParser
 METHOD: parseXmlNode
+
+
+=== org/rundeck/api/parser/APIV11Helper.html ===
+        Utility to handle API v11 responses with &lt;result&gt; wrapper element.
+CONSTRUCTOR: APIV11Helper
+METHOD: unwrapIfNeeded
+        Detect and remove extra &lt;result&gt; wrapper around xml response.
+METHOD: unwrapResultElement
+        Test the node for matching the xpath string, if it doesnt match, attempt to prefix it with
+         "result" and match that. If that matches, return the first child of the 'result' element.
 
 
 === org/rundeck/api/parser/AbortParser.html ===
