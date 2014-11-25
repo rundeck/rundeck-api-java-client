@@ -11,10 +11,10 @@ Save the following script in a file named "{{rundeck.groovy}}", and execute it w
 
 {code}
 // we use Grape (Ivy) to download the lib (and its dependencies) from Maven Central Repository
-@Grab(group='org.rundeck', module='rundeck-api-java-client', version='2.0')
+@Grab(group='org.rundeck', module='rundeck-api-java-client', version='12.0')
 import org.rundeck.api.RundeckClient
 
-rundeck = new RundeckClient("http://localhost:4440", "admin", "admin")
+rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
 println "RunDeck uptime : ${rundeck.systemInfo.uptime}"
 println "All RunDeck projects : ${rundeck.projects}"
@@ -28,7 +28,7 @@ You can also [download|./download.html] the lib and all its dependencies in 1 bi
 {code}
 import org.rundeck.api.RundeckClient
 
-rundeck = new RundeckClient("http://localhost:4440", "admin", "admin")
+rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
 println "RunDeck uptime : ${rundeck.systemInfo.uptime}"
 println "All RunDeck projects : ${rundeck.projects}"
@@ -44,18 +44,18 @@ Starting with RunDeck API 2, there are 2 ways to authenticate :
 * the *token-based authentication* : with a unique token that you can generate from the RunDeck webUI
 
 {code}
-// using login-based authentication (admin/admin is the default login/password for a new RunDeck instance) :
-rundeck = new RundeckClient("http://localhost:4440", "admin", "admin");
+// using login-based authentication (admin/admin is the default login/password for a new Rundeck instance) :
+rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
 // using token-based authentication :
-rundeck = new RundeckClient("http://localhost:4440", "PDDNKo5VE29kpk4prOUDr2rsKdRkEvsD");
+rundeck = RundeckClient.builder().url("http://localhost:4440").token("PDDNKo5VE29kpk4prOUDr2rsKdRkEvsD").build()
 {code}
 
 h2. Running a job
 
 {code}
 import org.rundeck.api.RundeckClient
-rundeck = new RundeckClient("http://localhost:4440", "admin", "admin")
+rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
 // find a job from its name, group and project
 job = rundeck.findJob("my-project", "main-group/sub-group", "job-name")
@@ -80,7 +80,7 @@ h2. Running an ad-hoc command
 
 {code}
 import org.rundeck.api.RundeckClient
-rundeck = new RundeckClient("http://localhost:4440", "admin", "admin")
+rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
 // trigger the execution of the "uptime" command on the RunDeck server
 execution = rundeck.triggerAdhocCommand("my-project", "uptime")
@@ -93,7 +93,7 @@ h2. Running an ad-hoc script
 
 {code}
 import org.rundeck.api.RundeckClient
-rundeck = new RundeckClient("http://localhost:4440", "admin", "admin")
+rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
 // trigger the execution of a custom bash script on the RunDeck server
 execution = rundeck.triggerAdhocScript("my-project", "/tmp/my-script.sh")
@@ -106,7 +106,7 @@ h2. Exporting jobs
 
 {code}
 import org.rundeck.api.RundeckClient
-rundeck = new RundeckClient("http://localhost:4440", "admin", "admin")
+rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
 rundeck.exportJobsToFile("/tmp/jobs.xml", "xml", "my-project")
 rundeck.exportJobToFile("/tmp/job.yaml", "yaml", "job-id")
@@ -116,7 +116,7 @@ h2. Importing jobs
 
 {code}
 import org.rundeck.api.RundeckClient
-rundeck = new RundeckClient("http://localhost:4440", "admin", "admin")
+rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
 result = rundeck.importJobs("/tmp/jobs.xml", "xml")
 println "${result.succeededJobs.size} jobs successfully imported, ${result.skippedJobs.size} jobs skipped, and ${result.failedJobs.size} jobs failed"
