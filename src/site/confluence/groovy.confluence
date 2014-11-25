@@ -1,5 +1,5 @@
 
-h1. Using the RunDeck API from Groovy scripts
+h1. Using the Rundeck API from Groovy scripts
 
 Here are some examples of what you can do with this lib and a few lines of [Groovy|http://groovy.codehaus.org/].
 
@@ -16,11 +16,11 @@ import org.rundeck.api.RundeckClient
 
 rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
-println "RunDeck uptime : ${rundeck.systemInfo.uptime}"
-println "All RunDeck projects : ${rundeck.projects}"
-println "All RunDeck nodes : ${rundeck.nodes}"
-println "All RunDeck jobs : ${rundeck.jobs}"
-println "All RunDeck running executions : ${rundeck.runningExecutions}"
+println "Rundeck uptime : ${rundeck.systemInfo.uptime}"
+println "All Rundeck projects : ${rundeck.projects}"
+println "All Rundeck nodes : ${rundeck.nodes}"
+println "All Rundeck jobs : ${rundeck.jobs}"
+println "All Rundeck running executions : ${rundeck.runningExecutions}"
 {code}
 
 You can also [download|./download.html] the lib and all its dependencies in 1 big jar file, and add it to your classpath before running your script : save the following script in a file named "{{rundeck.groovy}}", and execute it with "{{groovy -cp /path/to/rundeck-api-java-client-VERSION-jar-with-dependencies.jar rundeck.groovy}}".
@@ -30,18 +30,18 @@ import org.rundeck.api.RundeckClient
 
 rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
-println "RunDeck uptime : ${rundeck.systemInfo.uptime}"
-println "All RunDeck projects : ${rundeck.projects}"
-println "All RunDeck nodes : ${rundeck.nodes}"
-println "All RunDeck jobs : ${rundeck.jobs}"
-println "All RunDeck running executions : ${rundeck.runningExecutions}"
+println "Rundeck uptime : ${rundeck.systemInfo.uptime}"
+println "All Rundeck projects : ${rundeck.projects}"
+println "All Rundeck nodes : ${rundeck.nodes}"
+println "All Rundeck jobs : ${rundeck.jobs}"
+println "All Rundeck running executions : ${rundeck.runningExecutions}"
 {code}
 
 h2. Authentication
 
-Starting with RunDeck API 2, there are 2 ways to authenticate :
+Starting with Rundeck API 2, there are 2 ways to authenticate :
 * the *login-based authentication* : with your login and password
-* the *token-based authentication* : with a unique token that you can generate from the RunDeck webUI
+* the *token-based authentication* : with a unique token that you can generate from the Rundeck webUI
 
 {code}
 // using login-based authentication (admin/admin is the default login/password for a new Rundeck instance) :
@@ -82,7 +82,7 @@ h2. Running an ad-hoc command
 import org.rundeck.api.RundeckClient
 rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
-// trigger the execution of the "uptime" command on the RunDeck server
+// trigger the execution of the "uptime" command on the Rundeck server
 execution = rundeck.triggerAdhocCommand("my-project", "uptime")
 
 // run the "uptime" command on all unix nodes
@@ -95,7 +95,7 @@ h2. Running an ad-hoc script
 import org.rundeck.api.RundeckClient
 rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
-// trigger the execution of a custom bash script on the RunDeck server
+// trigger the execution of a custom bash script on the Rundeck server
 execution = rundeck.triggerAdhocScript("my-project", "/tmp/my-script.sh")
 
 // run a bash script (with options) on all unix nodes
@@ -124,5 +124,5 @@ println "${result.succeededJobs.size} jobs successfully imported, ${result.skipp
 
 h2. And more...
 
-See the API documentation of the [RundeckClient|./apidocs/reference/org/rundeck/api/RundeckClient.html] class for more interactions with your RunDeck instance...
+See the API documentation of the [RundeckClient|./apidocs/reference/org/rundeck/api/RundeckClient.html] class for more interactions with your Rundeck instance...
 

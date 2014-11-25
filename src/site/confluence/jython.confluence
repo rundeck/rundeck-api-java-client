@@ -1,5 +1,5 @@
 
-h1. Using the RunDeck API from Jython scripts
+h1. Using the Rundeck API from Jython scripts
 
 Here are some examples of what you can do with this lib and a few lines of [Python|http://www.jython.org/] (for the pythonist that don't fear running on the JVM !)
 
@@ -14,18 +14,18 @@ from org.rundeck.api import RundeckClient
 
 rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
-print("RunDeck uptime : %s" % rundeck.systemInfo.uptime)
-print("All RunDeck projects : %s" % rundeck.projects)
-print("All RunDeck nodes : %s" % rundeck.nodes)
-print("All RunDeck jobs : %s" % rundeck.jobs)
-print("All RunDeck running executions : %s" % rundeck.runningExecutions)
+print("Rundeck uptime : %s" % rundeck.systemInfo.uptime)
+print("All Rundeck projects : %s" % rundeck.projects)
+print("All Rundeck nodes : %s" % rundeck.nodes)
+print("All Rundeck jobs : %s" % rundeck.jobs)
+print("All Rundeck running executions : %s" % rundeck.runningExecutions)
 {code}
 
 h2. Authentication
 
-Starting with RunDeck API 2, there are 2 ways to authenticate :
+Starting with Rundeck API 2, there are 2 ways to authenticate :
 * the *login-based authentication* : with your login and password
-* the *token-based authentication* : with a unique token that you can generate from the RunDeck webUI
+* the *token-based authentication* : with a unique token that you can generate from the Rundeck webUI
 
 {code}
 // using login-based authentication (admin/admin is the default login/password for a new Rundeck instance) :
@@ -71,7 +71,7 @@ from org.rundeck.api import NodeFiltersBuilder
 
 rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
-// trigger the execution of the "uptime" command on the RunDeck server
+// trigger the execution of the "uptime" command on the Rundeck server
 execution = rundeck.triggerAdhocCommand("my-project", "uptime")
 
 // run the "uptime" command on all unix nodes
@@ -87,7 +87,7 @@ from org.rundeck.api import NodeFiltersBuilder
 
 rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
-// trigger the execution of a custom bash script on the RunDeck server
+// trigger the execution of a custom bash script on the Rundeck server
 execution = rundeck.triggerAdhocScript("my-project", "/tmp/my-script.sh")
 
 // run a bash script (with options) on all unix nodes
@@ -116,5 +116,5 @@ print("%s jobs successfully imported, %s jobs skipped, and %s jobs failed" % (re
 
 h2. And more...
 
-See the API documentation of the [RundeckClient|./apidocs/reference/org/rundeck/api/RundeckClient.html] class for more interactions with your RunDeck instance...
+See the API documentation of the [RundeckClient|./apidocs/reference/org/rundeck/api/RundeckClient.html] class for more interactions with your Rundeck instance...
 

@@ -28,8 +28,8 @@
   </skin>
   <body>
     <breadcrumbs>
-      <item name="RunDeck" href="http://rundeck.org" />
-      <item name="RunDeck API - Java Client" href="" />
+      <item name="Rundeck" href="http://rundeck.org" />
+      <item name="Rundeck API - Java Client" href="" />
     </breadcrumbs>
     <menu name="${project.name}">
       <item name="Introduction" href="index.html" />
@@ -46,7 +46,7 @@
       <item name="Jython" href="jython.html" />
     </menu>
     <!-- <menu name="Older versions">
-      <item name="1.x (RunDeck 1.2)" href="1.x/index.html" />
+      <item name="1.x (Rundeck 1.2)" href="1.x/index.html" />
     </menu> -->
     <menu ref="reports" />
   </body>

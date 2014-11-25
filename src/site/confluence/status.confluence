@@ -1,9 +1,9 @@
 
-h1. Status of the implementation of the RunDeck API
+h1. Status of the implementation of the Rundeck API
 
-h2. RunDeck API version 1
+h2. Rundeck API version 1
 
-[Documentation of the RunDeck API version 1|http://rundeck.org/1.2.1/RunDeck-Guide.html#rundeck-api]
+[Documentation of the Rundeck API version 1|http://rundeck.org/1.2.1/Rundeck-Guide.html#rundeck-api]
 
 * Login-based authentication - OK
 * System Info - OK
@@ -26,67 +26,67 @@ h2. RunDeck API version 1
 * Listing Resources - OK
 * Getting Resource Info - OK
 
-h2. RunDeck API version 2
+h2. Rundeck API version 2
 
-[Documentation of the RunDeck API version 2|http://rundeck.org/1.3.2/api/index.html]
+[Documentation of the Rundeck API version 2|http://rundeck.org/1.3.2/api/index.html]
 
 * Token-based authentication - OK
 * Listing Jobs for a Project - *TODO*
 * Updating and Listing Resources for a Project - *TODO*
 * Refreshing Resources for a Project - *TODO*
 
-h2. RunDeck API version 3
+h2. Rundeck API version 3
 
-[Documentation of the RunDeck API version 3|http://rundeck.org/1.4.2/api/index.html]
+[Documentation of the Rundeck API version 3|http://rundeck.org/1.4.2/api/index.html]
 
 * (only updates to Resource endpoints) - *TODO*
 
-h2. RunDeck API version 4
+h2. Rundeck API version 4
 
-[Documentation of the RunDeck API version 4|http://rundeck.org/1.4.3/api/index.html]
+[Documentation of the Rundeck API version 4|http://rundeck.org/1.4.3/api/index.html]
 
 * Running Adhoc Script URLs - *TODO*
 
-h2. RunDeck API version 5
+h2. Rundeck API version 5
 
-[Documentation of the RunDeck API version 5|http://rundeck.org/1.4.4/api/index.html]
+[Documentation of the Rundeck API version 5|http://rundeck.org/1.4.4/api/index.html]
 
 * Bulk Job Delete - OK
 * Execution Output - OK
 * Execution Query - OK
 * History list query - OK
 
-h2. RunDeck API version 6
+h2. Rundeck API version 6
 
-[Documentation of the RunDeck API version 6|http://rundeck.org/1.5/api/index.html]
+[Documentation of the Rundeck API version 6|http://rundeck.org/1.5/api/index.html]
 
 * Execution Output format fixed - OK
 
-h2. RunDeck API version 7
+h2. Rundeck API version 7
 
-[Documentation of the RunDeck API version 7|http://rundeck.org/1.5.3/api/index.html]
+[Documentation of the Rundeck API version 7|http://rundeck.org/1.5.3/api/index.html]
 
 * Incubator for cluster mode job takeover - *TODO*
 
-h2. RunDeck API version 8
+h2. Rundeck API version 8
 
-[Documentation of the RunDeck API version 8|http://rundeck.org/1.6.0/api/index.html]
+[Documentation of the Rundeck API version 8|http://rundeck.org/1.6.0/api/index.html]
 
 * scriptInterpreter addition to run script and run url - OK
 * project parameter added to jobs import - OK
 
 
-h2. RunDeck API version 9
+h2. Rundeck API version 9
 
-[Documentation of the RunDeck API version 9|http://rundeck.org/1.6.1/api/index.html]
+[Documentation of the Rundeck API version 9|http://rundeck.org/1.6.1/api/index.html]
 
 * list running executions across all projects - OK
 * include project name in execution results - OK
 * Add uuidOption parameter to allow removing imported UUIDs to avoid creation conflicts - OK
 
-h2. RunDeck API version 10
+h2. Rundeck API version 10
 
-[Documentation of the RunDeck API version 10|http://rundeck.org/2.0.0/api/index.html]
+[Documentation of the Rundeck API version 10|http://rundeck.org/2.0.0/api/index.html]
 
 * Execution State - Retrieve workflow step and node state information - OK
 * Execution Output with State - Retrieve log output with state change information - OK
@@ -95,9 +95,9 @@ h2. RunDeck API version 10
 * Deprecation: Remove methods deprecated until version 10. - OK
 
 
-h2. RunDeck API version 11
+h2. Rundeck API version 11
 
-[Documentation of the RunDeck API version 11|http://rundeck.org/2.1.0/api/index.html]
+[Documentation of the Rundeck API version 11|http://rundeck.org/2.1.0/api/index.html]
 
 * Project creation - OK
 * Get Project configuration - OK
@@ -116,7 +116,7 @@ h2. RunDeck API version 11
 
 h2. Rundeck API version 12
 
-[Documentation of the RunDeck API version 12|http://rundeck.org/2.2.0/api/index.html]
+[Documentation of the Rundeck API version 12|http://rundeck.org/2.2.0/api/index.html]
 
 * Bulk delete executions - OK
 * Delete execution - OK

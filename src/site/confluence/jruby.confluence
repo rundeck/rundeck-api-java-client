@@ -1,5 +1,5 @@
 
-h1. Using the RunDeck API from JRuby scripts
+h1. Using the Rundeck API from JRuby scripts
 
 Here are some examples of what you can do with this lib and a few lines of [Ruby|http://www.jruby.org/] (for the rubyist that don't fear running on the JVM !)
 
@@ -16,11 +16,11 @@ import org.rundeck.api.RundeckClient
 
 rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
-puts "RunDeck uptime : #{rundeck.systemInfo.uptime}"
-puts "All RunDeck projects : #{rundeck.projects}"
-puts "All RunDeck nodes : #{rundeck.nodes}"
-puts "All RunDeck jobs : #{rundeck.jobs}"
-puts "All RunDeck running executions : #{rundeck.runningExecutions}"
+puts "Rundeck uptime : #{rundeck.systemInfo.uptime}"
+puts "All Rundeck projects : #{rundeck.projects}"
+puts "All Rundeck nodes : #{rundeck.nodes}"
+puts "All Rundeck jobs : #{rundeck.jobs}"
+puts "All Rundeck running executions : #{rundeck.runningExecutions}"
 {code}
 
 You can also add the library to the classpath : save the following script in a file named "{{rundeck.rb}}", and execute it with "{{jruby -rjava -J-cp /path/to/rundeck-api-java-client-VERSION-jar-with-dependencies.jar rundeck.rb}}".
@@ -30,18 +30,18 @@ import org.rundeck.api.RundeckClient
 
 rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
-puts "RunDeck uptime : #{rundeck.systemInfo.uptime}"
-puts "All RunDeck projects : #{rundeck.projects}"
-puts "All RunDeck nodes : #{rundeck.nodes}"
-puts "All RunDeck jobs : #{rundeck.jobs}"
-puts "All RunDeck running executions : #{rundeck.runningExecutions}"
+puts "Rundeck uptime : #{rundeck.systemInfo.uptime}"
+puts "All Rundeck projects : #{rundeck.projects}"
+puts "All Rundeck nodes : #{rundeck.nodes}"
+puts "All Rundeck jobs : #{rundeck.jobs}"
+puts "All Rundeck running executions : #{rundeck.runningExecutions}"
 {code}
 
 h2. Authentication
 
-Starting with RunDeck API 2, there are 2 ways to authenticate :
+Starting with Rundeck API 2, there are 2 ways to authenticate :
 * the *login-based authentication* : with your login and password
-* the *token-based authentication* : with a unique token that you can generate from the RunDeck webUI
+* the *token-based authentication* : with a unique token that you can generate from the Rundeck webUI
 
 {code}
 // using login-based authentication (admin/admin is the default login/password for a new Rundeck instance) :
@@ -87,7 +87,7 @@ import org.rundeck.api.NodeFiltersBuilder
 
 rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
-// trigger the execution of the "uptime" command on the RunDeck server
+// trigger the execution of the "uptime" command on the Rundeck server
 execution = rundeck.triggerAdhocCommand("my-project", "uptime")
 
 // run the "uptime" command on all unix nodes
@@ -103,7 +103,7 @@ import org.rundeck.api.NodeFiltersBuilder
 
 rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
 
-// trigger the execution of a custom bash script on the RunDeck server
+// trigger the execution of a custom bash script on the Rundeck server
 execution = rundeck.triggerAdhocScript("my-project", "/tmp/my-script.sh")
 
 // run a bash script (with options) on all unix nodes
@@ -132,5 +132,5 @@ puts "#{result.succeededJobs.size} jobs successfully imported, #{result.skippedJ
 
 h2. And more...
 
-See the API documentation of the [RundeckClient|./apidocs/reference/org/rundeck/api/RundeckClient.html] class for more interactions with your RunDeck instance...
+See the API documentation of the [RundeckClient|./apidocs/reference/org/rundeck/api/RundeckClient.html] class for more interactions with your Rundeck instance...
 
