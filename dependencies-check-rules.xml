@@ -10,4 +10,13 @@
 		<ignoreVersion type="regex">.*[\.-](?i)rc?[0-9]*$</ignoreVersion>
 		<ignoreVersion type="regex">.*[\.-](?i)draft.*$</ignoreVersion>
 	</ignoreVersions>
+
+	<rules>
+		<!-- Ignore a strange version of dom4j -->
+		<rule groupId="dom4j" artifactId="dom4j">
+			<ignoreVersions>
+				<ignoreVersion>20040902.021138</ignoreVersion>
+			</ignoreVersions>
+		</rule>
+	</rules>
 </ruleset>
