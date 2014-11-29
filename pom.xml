@@ -98,9 +98,14 @@
     <commons-io.version>2.1</commons-io.version>
     <dom4j.version>1.6.1</dom4j.version>
     <jaxen.version>1.1.1</jaxen.version>
+
+    <!-- Test dependencies version -->
     <junit.version>4.10</junit.version>
     <betamax.version>1.0</betamax.version>
     <groovy.version>1.8.4</groovy.version>
+
+    <!-- Report dependencies version -->
+    <report.doxia.version>1.2</report.doxia.version>
 
     <!-- Plugins version -->
     <plugin.antrun.version>1.7</plugin.antrun.version>
@@ -129,6 +134,15 @@
     <plugin.surefire.version>2.10</plugin.surefire.version>
     <plugin.taglist.version>2.4</plugin.taglist.version>
     <plugin.versions.version>2.1</plugin.versions.version>
+
+    <!-- Extensions version -->
+    <extension.maven-scm-provider-gitexe.version>1.3</extension.maven-scm-provider-gitexe.version>
+    <extension.maven-scm-manager-plexus.version>1.3</extension.maven-scm-manager-plexus.version>
+    <extension.wagon-gitsite.version>0.3.1</extension.wagon-gitsite.version>
+
+    <!-- Doclet version -->
+    <doclet.doclava.version>1.0.3</doclet.doclava.version>
+
   </properties>
 
   <build>
@@ -161,12 +175,12 @@
           <dependency>
             <groupId>org.apache.maven.doxia</groupId>
             <artifactId>doxia-decoration-model</artifactId>
-            <version>1.2</version>
+            <version>${report.doxia.version}</version>
           </dependency>
           <dependency>
             <groupId>org.apache.maven.doxia</groupId>
             <artifactId>doxia-module-confluence</artifactId>
-            <version>1.2</version>
+            <version>${report.doxia.version}</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -285,17 +299,17 @@
       <extension>
         <groupId>org.apache.maven.scm</groupId>
         <artifactId>maven-scm-provider-gitexe</artifactId>
-        <version>1.3</version>
+        <version>${extension.maven-scm-provider-gitexe.version}</version>
       </extension>
       <extension>
         <groupId>org.apache.maven.scm</groupId>
         <artifactId>maven-scm-manager-plexus</artifactId>
-        <version>1.3</version>
+        <version>${extension.maven-scm-manager-plexus.version}</version>
       </extension>
       <extension>
         <groupId>org.kathrynhuxtable.maven.wagon</groupId>
         <artifactId>wagon-gitsite</artifactId>
-        <version>0.3.1</version>
+        <version>${extension.wagon-gitsite.version}</version>
       </extension>
     </extensions>
   </build>
@@ -332,7 +346,7 @@
           <docletArtifact>
             <groupId>com.google.doclava</groupId>
             <artifactId>doclava</artifactId>
-            <version>1.0.3</version>
+            <version>${doclet.doclava.version}</version>
           </docletArtifact>
           <doclet>com.google.doclava.Doclava</doclet>
           <!-- bootclasspath required by Sun's JVM -->
@@ -466,6 +480,7 @@
       <artifactId>jaxen</artifactId>
       <version>${jaxen.version}</version>
     </dependency>
+
     <!-- Test -->
     <dependency>
       <groupId>junit</groupId>
@@ -479,6 +494,7 @@
       <version>${betamax.version}</version>
       <scope>test</scope>
     </dependency>
+    <!-- needed for betamax -->
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
