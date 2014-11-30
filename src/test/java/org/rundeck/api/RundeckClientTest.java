@@ -15,10 +15,6 @@
  */
 package org.rundeck.api;
 
-import betamax.Betamax;
-import betamax.MatchRule;
-import betamax.Recorder;
-import betamax.TapeMode;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,6 +23,11 @@ import org.junit.Test;
 import org.rundeck.api.domain.*;
 import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.PagedResults;
+
+import co.freeside.betamax.Betamax;
+import co.freeside.betamax.MatchRule;
+import co.freeside.betamax.Recorder;
+import co.freeside.betamax.TapeMode;
 
 import java.io.*;
 import java.util.*;
