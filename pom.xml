@@ -109,7 +109,7 @@
 
     <!-- Plugins version -->
     <plugin.antrun.version>1.7</plugin.antrun.version>
-    <plugin.assembly.version>2.2.2</plugin.assembly.version>
+    <plugin.assembly.version>2.5.2</plugin.assembly.version>
     <plugin.changes.version>2.6</plugin.changes.version>
     <plugin.checkstyle.version>2.8</plugin.checkstyle.version>
     <plugin.clean.version>2.4.1</plugin.clean.version>
