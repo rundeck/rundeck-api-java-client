@@ -102,7 +102,7 @@
     <!-- Test dependencies version -->
     <junit.version>4.11</junit.version>
     <betamax.version>1.1.2</betamax.version>
-    <groovy.version>1.8.4</groovy.version>
+    <groovy.version>2.3.8</groovy.version>
 
     <!-- Report dependencies version -->
     <report.doxia.version>1.2</report.doxia.version>
