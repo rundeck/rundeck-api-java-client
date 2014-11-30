@@ -105,7 +105,7 @@
     <groovy.version>2.3.8</groovy.version>
 
     <!-- Report dependencies version -->
-    <report.doxia.version>1.2</report.doxia.version>
+    <report.doxia.version>1.6</report.doxia.version>
 
     <!-- Plugins version -->
     <plugin.antrun.version>1.7</plugin.antrun.version>
@@ -129,7 +129,7 @@
     <plugin.project-info-reports.version>2.4</plugin.project-info-reports.version>
     <plugin.release.version>2.2.1</plugin.release.version>
     <plugin.resources.version>2.5</plugin.resources.version>
-    <plugin.site.version>3.0</plugin.site.version>
+    <plugin.site.version>3.4</plugin.site.version>
     <plugin.source.version>2.1.2</plugin.source.version>
     <plugin.surefire.version>2.10</plugin.surefire.version>
     <plugin.taglist.version>2.4</plugin.taglist.version>
