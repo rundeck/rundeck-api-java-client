@@ -117,7 +117,7 @@
     <plugin.assembly.version>2.5.2</plugin.assembly.version>
     <plugin.changes.version>2.6</plugin.changes.version>
     <plugin.checkstyle.version>2.9</plugin.checkstyle.version>
-    <plugin.clean.version>2.4.1</plugin.clean.version>
+    <plugin.clean.version>2.6.1</plugin.clean.version>
     <plugin.compiler.version>2.3.2</plugin.compiler.version>
     <plugin.dependency.version>2.3</plugin.dependency.version>
     <plugin.deploy.version>2.7</plugin.deploy.version>
