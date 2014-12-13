@@ -128,15 +128,15 @@
     <plugin.help.version>2.1.1</plugin.help.version>
     <plugin.install.version>2.3.1</plugin.install.version>
     <plugin.jar.version>2.3.2</plugin.jar.version>
-    <plugin.javadoc.version>2.8</plugin.javadoc.version>
+    <plugin.javadoc.version>2.10.1</plugin.javadoc.version>
     <plugin.jxr.version>2.3</plugin.jxr.version>
     <plugin.pmd.version>3.3</plugin.pmd.version>
     <plugin.project-info-reports.version>2.4</plugin.project-info-reports.version>
     <plugin.release.version>2.2.1</plugin.release.version>
     <plugin.resources.version>2.5</plugin.resources.version>
     <plugin.site.version>3.4</plugin.site.version>
-    <plugin.source.version>2.1.2</plugin.source.version>
-    <plugin.surefire.version>2.10</plugin.surefire.version>
+    <plugin.source.version>2.4</plugin.source.version>
+    <plugin.surefire.version>2.18</plugin.surefire.version>
     <plugin.taglist.version>2.4</plugin.taglist.version>
     <plugin.versions.version>2.1</plugin.versions.version>
 
