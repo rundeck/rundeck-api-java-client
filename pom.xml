@@ -81,10 +81,15 @@
       <id>gschueler</id>
       <name>Greg Schueler</name>
     </developer>
-      <developer>
-          <id>connaryscott</id>
-          <name>Chuck Scott</name>
-      </developer>
+    <developer>
+      <id>connaryscott</id>
+      <name>Chuck Scott</name>
+    </developer>
+    <developer>
+      <id>Sylvain-Bugat</id>
+      <name>Sylvain Bugat</name>
+      <url>https://github.com/Sylvain-Bugat</url>
+    </developer>
   </developers>
 
   <properties>
