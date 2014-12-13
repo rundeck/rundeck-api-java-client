@@ -119,21 +119,21 @@
     <plugin.checkstyle.version>2.13</plugin.checkstyle.version>
     <plugin.clean.version>2.6.1</plugin.clean.version>
     <plugin.compiler.version>3.2</plugin.compiler.version>
-    <plugin.dependency.version>2.3</plugin.dependency.version>
-    <plugin.deploy.version>2.7</plugin.deploy.version>
-    <plugin.eclipse.version>2.8</plugin.eclipse.version>
-    <plugin.enforcer.version>1.0.1</plugin.enforcer.version>
+    <plugin.dependency.version>2.9</plugin.dependency.version>
+    <plugin.deploy.version>2.8.2</plugin.deploy.version>
+    <plugin.eclipse.version>2.9</plugin.eclipse.version>
+    <plugin.enforcer.version>1.3.1</plugin.enforcer.version>
     <plugin.findbugs.version>3.0.0</plugin.findbugs.version>
-    <plugin.gpg.version>1.4</plugin.gpg.version>
-    <plugin.help.version>2.1.1</plugin.help.version>
-    <plugin.install.version>2.3.1</plugin.install.version>
-    <plugin.jar.version>2.3.2</plugin.jar.version>
+    <plugin.gpg.version>1.5</plugin.gpg.version>
+    <plugin.help.version>2.2</plugin.help.version>
+    <plugin.install.version>2.5.2</plugin.install.version>
+    <plugin.jar.version>2.5</plugin.jar.version>
     <plugin.javadoc.version>2.10.1</plugin.javadoc.version>
     <plugin.jxr.version>2.3</plugin.jxr.version>
     <plugin.pmd.version>3.3</plugin.pmd.version>
     <plugin.project-info-reports.version>2.4</plugin.project-info-reports.version>
-    <plugin.release.version>2.2.1</plugin.release.version>
-    <plugin.resources.version>2.5</plugin.resources.version>
+    <plugin.release.version>2.5.1</plugin.release.version>
+    <plugin.resources.version>2.7</plugin.resources.version>
     <plugin.site.version>3.4</plugin.site.version>
     <plugin.source.version>2.4</plugin.source.version>
     <plugin.surefire.version>2.18</plugin.surefire.version>
