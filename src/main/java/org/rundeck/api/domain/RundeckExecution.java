@@ -307,7 +307,7 @@ public class RundeckExecution implements Serializable {
      * The status of an execution
      */
     public static enum ExecutionStatus {
-        RUNNING, SUCCEEDED, FAILED, ABORTED;
+        RUNNING, SUCCEEDED, FAILED, ABORTED, FAILED_WITH_RETRY,TIMEDOUT;
     }
 
 }

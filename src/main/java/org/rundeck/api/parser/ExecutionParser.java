@@ -58,7 +58,7 @@ public class ExecutionParser implements XmlNodeParser<RundeckExecution> {
         execution.setId(Long.valueOf(execNode.valueOf("@id")));
         execution.setUrl(StringUtils.trimToNull(execNode.valueOf("@href")));
         try {
-            execution.setStatus(ExecutionStatus.valueOf(StringUtils.upperCase(execNode.valueOf("@status"))));
+            execution.setStatus(ExecutionStatus.valueOf(StringUtils.replace(StringUtils.upperCase(execNode.valueOf("@status")),"-","_")));
         } catch (IllegalArgumentException e) {
             execution.setStatus(null);
         }
