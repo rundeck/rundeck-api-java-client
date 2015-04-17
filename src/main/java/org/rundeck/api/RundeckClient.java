@@ -135,6 +135,9 @@ public class RundeckClient implements Serializable {
     private String password;
 
     private String sessionID;
+    private boolean sslHostnameVerifyAllowAll = false;
+    private boolean sslCertificateTrustAllowSelfSigned = false;
+    private boolean systemProxyEnabled = false;
 
     void setToken(String token) {
         this.token = token;
@@ -167,6 +170,30 @@ public class RundeckClient implements Serializable {
     String getApiEndpoint() {
         return API + getApiVersion();
     }
+
+    boolean isSslHostnameVerifyAllowAll() {
+        return sslHostnameVerifyAllowAll;
+    }
+
+    void setSslHostnameVerifyAllowAll(boolean sslHostnameVerifyAllowAll) {
+        this.sslHostnameVerifyAllowAll = sslHostnameVerifyAllowAll;
+    }
+
+    boolean isSslCertificateTrustAllowSelfSigned() {
+        return sslCertificateTrustAllowSelfSigned;
+    }
+
+    void setSslCertificateTrustAllowSelfSigned(boolean sslCertificateTrustAllowSelfSigned) {
+        this.sslCertificateTrustAllowSelfSigned = sslCertificateTrustAllowSelfSigned;
+    }
+    boolean isSystemProxyEnabled() {
+        return systemProxyEnabled;
+    }
+
+    void setSystemProxyEnabled(boolean systemProxyEnabled) {
+        this.systemProxyEnabled = systemProxyEnabled;
+    }
+
 
     /**
      * Instantiate a new {@link RundeckClient} for the RunDeck instance at the given url, using login-based

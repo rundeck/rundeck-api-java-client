@@ -14,6 +14,24 @@ public class RundeckClientBuilder {
     private String token = null;
     private String id = null;
     private int version = -1;
+    private boolean sslHostnameVerifyAllowAll = "true".equals(
+            System.getProperty(
+                    "rundeck.api.client.ssl.hostnameVerifyAllowAll",
+                    "false"
+            )
+    );
+    private boolean sslCertificateTrustAllowSelfSigned = "true".equals(
+            System.getProperty(
+                    "rundeck.api.client.ssl.sslCertificateTrustAllowSelfSigned",
+                    "false"
+            )
+    );
+    private boolean systemProxyEnabled = "true".equals(
+            System.getProperty(
+                    "rundeck.api.client.systemProxyEnabled",
+                    "false"
+            )
+    );
 
     RundeckClientBuilder(){
 
@@ -73,6 +91,28 @@ public class RundeckClientBuilder {
         this.version = version;
         return this;
     }
+    /**
+     * Specify whether to use system proxy settings, default false
+     */
+    public RundeckClientBuilder systemProxyEnabled(final boolean systemProxyEnabled) {
+        this.systemProxyEnabled = systemProxyEnabled;
+        return this;
+    }
+    /**
+     * Specify whether SSL hostname verifier allows all, otherwise it will use the default
+     */
+    public RundeckClientBuilder sslHostnameVerifyAllowAll(final boolean sslHostnameVerifyAllowAll) {
+        this.sslHostnameVerifyAllowAll = sslHostnameVerifyAllowAll;
+        return this;
+    }
+
+    /**
+     * Specify whether SSL certificate trust allows self-signed certs, otherwise it will use the default
+     */
+    public RundeckClientBuilder sslCertificateTrustAllowSelfSigned(final boolean sslCertificateTrustAllowSelfSigned) {
+        this.sslCertificateTrustAllowSelfSigned = sslCertificateTrustAllowSelfSigned;
+        return this;
+    }
 
     /**
      * Create the RundeckClient instance
@@ -96,6 +136,10 @@ public class RundeckClientBuilder {
         } else {
             throw new IllegalStateException("login/password, token, or sessionID must be specified");
         }
+        client.setSslCertificateTrustAllowSelfSigned(sslCertificateTrustAllowSelfSigned);
+        client.setSslHostnameVerifyAllowAll(sslHostnameVerifyAllowAll);
+        client.setSystemProxyEnabled(systemProxyEnabled);
+
         if (version > 0) {
             client.setApiVersion(version);
         }

@@ -320,7 +320,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "get_executions",
              mode = TapeMode.READ_ONLY,
-             match = {MatchRule.uri, MatchRule.headers, MatchRule.method, MatchRule.path, MatchRule.query})
+             match = {MatchRule.uri, MatchRule.method, MatchRule.path, MatchRule.query})
     public void getExecutions() throws Exception {
 
         RundeckClient client = createClient(TEST_TOKEN_1, 5);
@@ -446,7 +446,7 @@ public class RundeckClientTest {
     @Test
     @Betamax(tape = "get_executions_v11",
              mode = TapeMode.READ_ONLY,
-             match = {MatchRule.uri, MatchRule.headers, MatchRule.method, MatchRule.path, MatchRule.query})
+             match = {MatchRule.uri, MatchRule.method, MatchRule.path, MatchRule.query})
     public void getExecutionsV11() throws Exception {
 
         RundeckClient client = createClient(TEST_TOKEN_7, 11);
