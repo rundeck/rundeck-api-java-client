@@ -17,16 +17,43 @@ package org.rundeck.api.util;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Utility class for assertions
- * 
+ *
  * @author Vincent Behar
  */
 public class AssertUtil {
 
     /**
+     * Test if the given value is in the list
+     *
+     * @param errorMessage message
+     * @param value        value
+     * @param list         list
+     */
+    public static void inList(String errorMessage, Object value, List<Object> list) {
+        if (!list.contains(value)) {
+            throw new IllegalArgumentException(errorMessage + ": " + list);
+        }
+    }
+
+    /**
+     * Test if the given value is in the list
+     *
+     * @param errorMessage message
+     * @param value        value
+     * @param list         list
+     */
+    public static void inList(String errorMessage, Object value, Object... list) {
+        inList(errorMessage, value, Arrays.asList(list));
+    }
+    /**
      * Test if the given {@link Object} is null
-     * 
+     *
      * @param object
      * @param errorMessage to be used if the object is null
      * @throws IllegalArgumentException if the given object is null
@@ -39,7 +66,7 @@ public class AssertUtil {
 
     /**
      * Test if the given {@link String} is blank (null, empty or only whitespace)
-     * 
+     *
      * @param input string
      * @param errorMessage to be used if the string is blank
      * @throws IllegalArgumentException if the given string is blank
