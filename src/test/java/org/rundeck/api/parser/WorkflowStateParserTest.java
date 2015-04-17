@@ -1,13 +1,12 @@
 package org.rundeck.api.parser;
 
-import junit.framework.Assert;
 import org.dom4j.Document;
+import org.junit.Assert;
 import org.junit.Test;
 import org.rundeck.api.domain.*;
 
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
 
 /**

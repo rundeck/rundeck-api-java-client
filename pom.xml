@@ -81,10 +81,15 @@
       <id>gschueler</id>
       <name>Greg Schueler</name>
     </developer>
-      <developer>
-          <id>connaryscott</id>
-          <name>Chuck Scott</name>
-      </developer>
+    <developer>
+      <id>connaryscott</id>
+      <name>Chuck Scott</name>
+    </developer>
+    <developer>
+      <id>Sylvain-Bugat</id>
+      <name>Sylvain Bugat</name>
+      <url>https://github.com/Sylvain-Bugat</url>
+    </developer>
   </developers>
 
   <properties>
@@ -95,40 +100,54 @@
     <!-- Dependencies version -->
     <apache.httpcomponents.version>4.3.6</apache.httpcomponents.version>
     <commons-lang.version>2.6</commons-lang.version>
-    <commons-io.version>2.1</commons-io.version>
+    <commons-io.version>2.4</commons-io.version>
     <dom4j.version>1.6.1</dom4j.version>
-    <jaxen.version>1.1.1</jaxen.version>
-    <junit.version>4.10</junit.version>
+    <jaxen.version>1.1.6</jaxen.version>
+
+    <!-- Test dependencies version -->
+    <junit.version>4.12</junit.version>
     <betamax.version>1.1.2</betamax.version>
-    <groovy.version>1.8.4</groovy.version>
+    <groovy.version>2.3.8</groovy.version>
+
+    <!-- Report dependencies version -->
+    <report.doxia.version>1.6</report.doxia.version>
 
     <!-- Plugins version -->
     <plugin.antrun.version>1.7</plugin.antrun.version>
-    <plugin.assembly.version>2.2.2</plugin.assembly.version>
+    <plugin.assembly.version>2.5.2</plugin.assembly.version>
     <plugin.changes.version>2.6</plugin.changes.version>
-    <plugin.checkstyle.version>2.8</plugin.checkstyle.version>
-    <plugin.clean.version>2.4.1</plugin.clean.version>
-    <plugin.compiler.version>2.3.2</plugin.compiler.version>
-    <plugin.dependency.version>2.3</plugin.dependency.version>
-    <plugin.deploy.version>2.7</plugin.deploy.version>
-    <plugin.eclipse.version>2.8</plugin.eclipse.version>
-    <plugin.enforcer.version>1.0.1</plugin.enforcer.version>
-    <plugin.findbugs.version>2.3.2</plugin.findbugs.version>
-    <plugin.gpg.version>1.4</plugin.gpg.version>
-    <plugin.help.version>2.1.1</plugin.help.version>
-    <plugin.install.version>2.3.1</plugin.install.version>
-    <plugin.jar.version>2.3.2</plugin.jar.version>
-    <plugin.javadoc.version>2.8</plugin.javadoc.version>
+    <plugin.checkstyle.version>2.13</plugin.checkstyle.version>
+    <plugin.clean.version>2.6.1</plugin.clean.version>
+    <plugin.compiler.version>3.2</plugin.compiler.version>
+    <plugin.dependency.version>2.9</plugin.dependency.version>
+    <plugin.deploy.version>2.8.2</plugin.deploy.version>
+    <plugin.eclipse.version>2.9</plugin.eclipse.version>
+    <plugin.enforcer.version>1.3.1</plugin.enforcer.version>
+    <plugin.findbugs.version>3.0.0</plugin.findbugs.version>
+    <plugin.gpg.version>1.5</plugin.gpg.version>
+    <plugin.help.version>2.2</plugin.help.version>
+    <plugin.install.version>2.5.2</plugin.install.version>
+    <plugin.jar.version>2.5</plugin.jar.version>
+    <plugin.javadoc.version>2.10.1</plugin.javadoc.version>
     <plugin.jxr.version>2.3</plugin.jxr.version>
-    <plugin.pmd.version>2.6</plugin.pmd.version>
+    <plugin.pmd.version>3.3</plugin.pmd.version>
     <plugin.project-info-reports.version>2.4</plugin.project-info-reports.version>
-    <plugin.release.version>2.2.1</plugin.release.version>
-    <plugin.resources.version>2.5</plugin.resources.version>
-    <plugin.site.version>3.0</plugin.site.version>
-    <plugin.source.version>2.1.2</plugin.source.version>
-    <plugin.surefire.version>2.10</plugin.surefire.version>
+    <plugin.release.version>2.5.1</plugin.release.version>
+    <plugin.resources.version>2.7</plugin.resources.version>
+    <plugin.site.version>3.4</plugin.site.version>
+    <plugin.source.version>2.4</plugin.source.version>
+    <plugin.surefire.version>2.18</plugin.surefire.version>
     <plugin.taglist.version>2.4</plugin.taglist.version>
     <plugin.versions.version>2.1</plugin.versions.version>
+
+    <!-- Extensions version -->
+    <extension.maven-scm-provider-gitexe.version>1.3</extension.maven-scm-provider-gitexe.version>
+    <extension.maven-scm-manager-plexus.version>1.3</extension.maven-scm-manager-plexus.version>
+    <extension.wagon-gitsite.version>0.3.1</extension.wagon-gitsite.version>
+
+    <!-- Doclet version -->
+    <doclet.doclava.version>1.0.3</doclet.doclava.version>
+
   </properties>
 
   <build>
@@ -161,12 +180,12 @@
           <dependency>
             <groupId>org.apache.maven.doxia</groupId>
             <artifactId>doxia-decoration-model</artifactId>
-            <version>1.2</version>
+            <version>${report.doxia.version}</version>
           </dependency>
           <dependency>
             <groupId>org.apache.maven.doxia</groupId>
             <artifactId>doxia-module-confluence</artifactId>
-            <version>1.2</version>
+            <version>${report.doxia.version}</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -285,17 +304,17 @@
       <extension>
         <groupId>org.apache.maven.scm</groupId>
         <artifactId>maven-scm-provider-gitexe</artifactId>
-        <version>1.3</version>
+        <version>${extension.maven-scm-provider-gitexe.version}</version>
       </extension>
       <extension>
         <groupId>org.apache.maven.scm</groupId>
         <artifactId>maven-scm-manager-plexus</artifactId>
-        <version>1.3</version>
+        <version>${extension.maven-scm-manager-plexus.version}</version>
       </extension>
       <extension>
         <groupId>org.kathrynhuxtable.maven.wagon</groupId>
         <artifactId>wagon-gitsite</artifactId>
-        <version>0.3.1</version>
+        <version>${extension.wagon-gitsite.version}</version>
       </extension>
     </extensions>
   </build>
@@ -332,7 +351,7 @@
           <docletArtifact>
             <groupId>com.google.doclava</groupId>
             <artifactId>doclava</artifactId>
-            <version>1.0.3</version>
+            <version>${doclet.doclava.version}</version>
           </docletArtifact>
           <doclet>com.google.doclava.Doclava</doclet>
           <!-- bootclasspath required by Sun's JVM -->
@@ -429,6 +448,11 @@
           <findbugsXmlWithMessages>true</findbugsXmlWithMessages>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${plugin.checkstyle.version}</version>
+      </plugin>
     </plugins>
   </reporting>
 
@@ -466,6 +490,7 @@
       <artifactId>jaxen</artifactId>
       <version>${jaxen.version}</version>
     </dependency>
+
     <!-- Test -->
     <dependency>
       <groupId>junit</groupId>
@@ -479,6 +504,7 @@
       <version>${betamax.version}</version>
       <scope>test</scope>
     </dependency>
+    <!-- needed for betamax -->
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>

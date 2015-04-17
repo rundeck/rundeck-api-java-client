@@ -15,10 +15,6 @@
  */
 package org.rundeck.api;
 
-import co.freeside.betamax.Betamax;
-import co.freeside.betamax.MatchRule;
-import co.freeside.betamax.Recorder;
-import co.freeside.betamax.TapeMode;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,13 +24,18 @@ import org.rundeck.api.domain.*;
 import org.rundeck.api.query.ExecutionQuery;
 import org.rundeck.api.util.PagedResults;
 
+import co.freeside.betamax.Betamax;
+import co.freeside.betamax.MatchRule;
+import co.freeside.betamax.Recorder;
+import co.freeside.betamax.TapeMode;
+
 import java.io.*;
 import java.util.*;
 
 
 /**
  * Test the {@link RundeckClient}. Uses betamax to unit-test HTTP requests without a live RunDeck instance.
- * 
+ *
  * @author Vincent Behar
  */
 public class RundeckClientTest {
@@ -943,7 +944,7 @@ public class RundeckClientTest {
         Assert.assertEquals("api-java-client-test-adhoc-script-as-user1", test.getStartedBy());
         Assert.assertEquals(RundeckExecution.ExecutionStatus.RUNNING, test.getStatus());
     }
-    
+
     @Test
     @Betamax(tape = "trigger_adhoc_script_as_user_unauthorized")
     public void triggerAdhocScriptAsUserUnauthorized() throws Exception {
@@ -1329,7 +1330,7 @@ public class RundeckClientTest {
     @Betamax(tape = "execution_output_basic", mode = TapeMode.READ_ONLY)
     public void executionOutputBasic() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_6, 10);
-        RundeckOutput output = client.getJobExecutionOutput(146L,0,0L,-1);
+        RundeckOutput output = client.getExecutionOutput(146L,0,0L,-1);
 
         Assert.assertEquals(new Long(1602), output.getExecDuration());
         Assert.assertEquals(new Long(146), output.getExecutionId());

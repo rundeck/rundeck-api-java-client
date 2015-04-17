@@ -1,12 +1,9 @@
 package org.rundeck.api.parser;
 
-import junit.framework.Assert;
 import org.dom4j.Document;
+import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runners.JUnit4;
 import org.rundeck.api.domain.ConfigProperty;
-import org.rundeck.api.domain.ProjectConfig;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
