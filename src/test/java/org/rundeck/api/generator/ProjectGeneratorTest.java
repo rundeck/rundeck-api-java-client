@@ -1,7 +1,7 @@
 package org.rundeck.api.generator;
 
-import junit.framework.Assert;
 import org.dom4j.Document;
+import org.junit.Assert;
 import org.junit.Test;
 import org.rundeck.api.domain.RundeckProject;
 

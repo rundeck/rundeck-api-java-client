@@ -1,10 +1,9 @@
 package org.rundeck.api.parser;
 
-import junit.framework.Assert;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
+import org.junit.Assert;
 import org.junit.Test;
 import org.rundeck.api.domain.WorkflowState;
 import org.rundeck.api.domain.WorkflowStepContextState;

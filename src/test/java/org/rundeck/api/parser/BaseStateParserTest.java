@@ -1,13 +1,12 @@
 package org.rundeck.api.parser;
 
-import junit.framework.Assert;
 import org.dom4j.Document;
+import org.junit.Assert;
 import org.junit.Test;
 import org.rundeck.api.domain.BaseState;
 import org.rundeck.api.domain.RundeckWFExecState;
 
 import java.io.InputStream;
-import java.util.Date;
 
 /**
  * $INTERFACE is ... User: greg Date: 1/18/14 Time: 8:33 AM
