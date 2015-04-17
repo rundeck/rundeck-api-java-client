@@ -99,7 +99,7 @@
     <dom4j.version>1.6.1</dom4j.version>
     <jaxen.version>1.1.1</jaxen.version>
     <junit.version>4.10</junit.version>
-    <betamax.version>1.0</betamax.version>
+    <betamax.version>1.1.2</betamax.version>
     <groovy.version>1.8.4</groovy.version>
 
     <!-- Plugins version -->
@@ -474,7 +474,7 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.github.robfletcher</groupId>
+      <groupId>co.freeside</groupId>
       <artifactId>betamax</artifactId>
       <version>${betamax.version}</version>
       <scope>test</scope>
