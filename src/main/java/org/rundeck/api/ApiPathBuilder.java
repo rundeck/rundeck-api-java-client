@@ -17,6 +17,7 @@ package org.rundeck.api;
 
 import java.io.File;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -48,6 +49,7 @@ class ApiPathBuilder {
     private final List<NameValuePair> form = new ArrayList<NameValuePair>();
     private Document xmlDocument;
     private InputStream contentStream;
+    private byte[] contents;
     private File contentFile;
     private String contentType;
     private String requiredContentType;
@@ -311,6 +313,32 @@ class ApiPathBuilder {
         return this;
     }
     /**
+     * When POSTing a request, use the given data as the content of the request. This
+     * will only add the stream if it is not null.
+     *
+     * @param contentType MIME content type ofr hte request
+     * @param contents content
+     * @return this, for method chaining
+     */
+    public ApiPathBuilder content(final String contentType, final byte[] contents) {
+        if (contents != null && contentType != null) {
+            this.contents=contents;
+            this.contentType=contentType;
+        }
+        return this;
+    }
+    /**
+     * When POSTing a request, use the given string as the content of the request. This
+     * will only add the stream if it is not null.
+     *
+     * @param contentType MIME content type ofr hte request
+     * @param contents content
+     * @return this, for method chaining
+     */
+    public ApiPathBuilder content(final String contentType, final String contents) {
+        return content(contentType, contents.getBytes(Charset.forName("UTF-8")));
+    }
+    /**
      * When POSTing a request, send an empty request.
      *
      * @return this, for method chaining
@@ -425,6 +453,10 @@ class ApiPathBuilder {
 
     public String getRequiredContentType() {
         return requiredContentType;
+    }
+
+    public byte[] getContents() {
+        return contents;
     }
 
     /**

@@ -42,6 +42,7 @@ import org.apache.http.util.EntityUtils;
 import org.rundeck.api.RundeckApiException.RundeckApiLoginException;
 import org.rundeck.api.RundeckApiException.RundeckApiTokenException;
 import org.rundeck.api.parser.ParserHelper;
+import org.rundeck.api.parser.ResponseParser;
 import org.rundeck.api.parser.XmlNodeParser;
 import org.rundeck.api.util.AssertUtil;
 import org.rundeck.api.util.DocumentContentProducer;
@@ -180,6 +181,27 @@ class ApiCall {
         return execute(request, parser);
     }
 
+
+    /**
+     * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
+     * API call. At the end, the given parser will be used to convert the response to a more useful result object.
+     *
+     * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
+     * @param parser used to parse the response
+     * @return the result of the call, as formatted by the parser
+     * @throws RundeckApiException in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    public <T> T get(ApiPathBuilder apiPath, ResponseParser<T> parser) throws RundeckApiException,
+            RundeckApiLoginException, RundeckApiTokenException {
+        HttpGet request = new HttpGet(client.getUrl() + client.getApiEndpoint() + apiPath);
+        if (null != apiPath.getAccept()) {
+            request.setHeader("Accept", apiPath.getAccept());
+        }
+        return execute(request, new ContentHandler<T>(parser));
+    }
+
     /**
      * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
      * API call.
@@ -286,41 +308,73 @@ class ApiCall {
         return requestWithEntity(apiPath, parser, httpPut);
     }
 
+    /**
+     * Execute an HTTP PUT request to the RunDeck instance, on the given path. We will login first, and then execute
+     * the API call. At the end, the given parser will be used to convert the response to a more useful result object.
+     *
+     * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
+     * @param parser used to parse the response
+     * @return the result of the call, as formatted by the parser
+     * @throws RundeckApiException in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    public <T> T put(ApiPathBuilder apiPath, ResponseParser<T> parser) throws RundeckApiException,
+            RundeckApiLoginException, RundeckApiTokenException {
+        HttpPut httpPut = new HttpPut(client.getUrl() + client.getApiEndpoint() + apiPath);
+        return requestWithEntity(apiPath, new ContentHandler<T>(parser), httpPut);
+    }
     private <T> T requestWithEntity(ApiPathBuilder apiPath, XmlNodeParser<T> parser, HttpEntityEnclosingRequestBase
+            httpPost) {
+        return new ParserHandler<T>(parser).handle(requestWithEntity(apiPath, new ResultHandler(), httpPost));
+    }
+    private <T> T requestWithEntity(ApiPathBuilder apiPath, Handler<HttpResponse,T> handler, HttpEntityEnclosingRequestBase
             httpPost) {
         if(null!= apiPath.getAccept()) {
             httpPost.setHeader("Accept", apiPath.getAccept());
         }
         // POST a multi-part request, with all attachments
-        if(apiPath.getAttachments().size()>0){
-            MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+        if (apiPath.getAttachments().size() > 0) {
+            MultipartEntityBuilder multipartEntityBuilder =
+                    MultipartEntityBuilder.create().setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
             for (Entry<String, InputStream> attachment : apiPath.getAttachments().entrySet()) {
-                entity.addPart(attachment.getKey(), new InputStreamBody(attachment.getValue(), attachment.getKey()));
+                multipartEntityBuilder.addPart(
+                        attachment.getKey(),
+                        new InputStreamBody(attachment.getValue(), attachment.getKey())
+                );
             }
-            httpPost.setEntity(entity);
-        }else if(apiPath.getForm().size()>0){
+            httpPost.setEntity(multipartEntityBuilder.build());
+        } else if (apiPath.getForm().size() > 0) {
             try {
                 httpPost.setEntity(new UrlEncodedFormEntity(apiPath.getForm(), HTTP.UTF_8));
             } catch (UnsupportedEncodingException e) {
                 throw new RundeckApiException("Unsupported encoding: " + e.getMessage(), e);
             }
-        }else if(apiPath.getContentStream() !=null && apiPath.getContentType()!=null){
-            BasicHttpEntity entity = new BasicHttpEntity();
-            entity.setContent(apiPath.getContentStream());
-            entity.setContentType(apiPath.getContentType());
+        } else if (apiPath.getContentStream() != null && apiPath.getContentType() != null) {
+            InputStreamEntity entity = new InputStreamEntity(
+                    apiPath.getContentStream(),
+                    ContentType.create(apiPath.getContentType())
+            );
             httpPost.setEntity(entity);
-        }else if(apiPath.getContentFile() !=null && apiPath.getContentType()!=null){
-            httpPost.setEntity(new FileEntity(apiPath.getContentFile(), apiPath.getContentType()));
-        }else if(apiPath.getXmlDocument()!=null) {
+        } else if (apiPath.getContents() != null && apiPath.getContentType() != null) {
+            ByteArrayEntity bae = new ByteArrayEntity(
+                    apiPath.getContents(),
+                    ContentType.create(apiPath.getContentType())
+            );
+
+            httpPost.setEntity(bae);
+        } else if (apiPath.getContentFile() != null && apiPath.getContentType() != null) {
+            httpPost.setEntity(new FileEntity(apiPath.getContentFile(), ContentType.create(apiPath.getContentType())));
+        } else if (apiPath.getXmlDocument() != null) {
             httpPost.setHeader("Content-Type", "application/xml");
             httpPost.setEntity(new EntityTemplate(new DocumentContentProducer(apiPath.getXmlDocument())));
-        }else if(apiPath.isEmptyContent()){
+        } else if (apiPath.isEmptyContent()) {
             //empty content
-        }else {
+        } else {
             throw new IllegalArgumentException("No Form or Multipart entity for POST content-body");
         }
 
-        return execute(httpPost, parser);
+        return execute(httpPost, handler);
     }
 
     /**
@@ -440,6 +494,41 @@ class ApiCall {
         public S handle(InputStream response) {
             // read and parse the response
             return parser.parseXmlNode(ParserHelper.loadDocument(response));
+        }
+    }
+
+    /**
+     * Converts to a string
+     */
+    public static class PlainTextHandler implements ResponseParser<String>{
+        @Override
+        public String parseResponse(final InputStream response) {
+            StringWriter output = new StringWriter();
+            try {
+                IOUtils.copy(response, output);
+            } catch (IOException e) {
+                throw new RundeckApiException("Failed to consume text/plain input to string", e);
+            }
+            return output.toString();
+        }
+    }
+
+    /**
+     * Handles parsing response via a {@link ResponseParser}
+     *
+     * @param <S>
+     */
+    private static class ContentHandler<S> implements Handler<HttpResponse, S> {
+        ResponseParser<S> parser;
+
+        private ContentHandler(ResponseParser<S> parser) {
+            this.parser = parser;
+        }
+
+        @Override
+        public S handle(HttpResponse response) {
+            // read and parse the response
+            return parser.parseResponse(new ResultHandler().handle(response));
         }
     }
 
