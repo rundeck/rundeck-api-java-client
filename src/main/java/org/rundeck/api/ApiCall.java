@@ -22,16 +22,18 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.entity.EntityTemplate;
-import org.apache.http.entity.FileEntity;
+import org.apache.http.conn.ssl.*;
+import org.apache.http.entity.*;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.apache.http.impl.conn.ProxySelectorRoutePlanner;
+import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
@@ -40,10 +42,13 @@ import org.apache.http.util.EntityUtils;
 import org.rundeck.api.RundeckApiException.RundeckApiLoginException;
 import org.rundeck.api.RundeckApiException.RundeckApiTokenException;
 import org.rundeck.api.parser.ParserHelper;
+import org.rundeck.api.parser.ResponseParser;
 import org.rundeck.api.parser.XmlNodeParser;
 import org.rundeck.api.util.AssertUtil;
 import org.rundeck.api.util.DocumentContentProducer;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.ProxySelector;
 import java.security.KeyManagementException;
@@ -132,11 +137,10 @@ class ApiCall {
      */
     public String testLoginAuth() throws RundeckApiLoginException {
         String sessionID = null;
-        HttpClient httpClient = instantiateHttpClient();
-        try {
+        try (CloseableHttpClient httpClient = instantiateHttpClient()){
             sessionID = login(httpClient);
-        } finally {
-            httpClient.getConnectionManager().shutdown();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return sessionID;
     }
@@ -175,6 +179,27 @@ class ApiCall {
             request.setHeader("Accept", apiPath.getAccept());
         }
         return execute(request, parser);
+    }
+
+
+    /**
+     * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
+     * API call. At the end, the given parser will be used to convert the response to a more useful result object.
+     *
+     * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
+     * @param parser used to parse the response
+     * @return the result of the call, as formatted by the parser
+     * @throws RundeckApiException in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    public <T> T get(ApiPathBuilder apiPath, ResponseParser<T> parser) throws RundeckApiException,
+            RundeckApiLoginException, RundeckApiTokenException {
+        HttpGet request = new HttpGet(client.getUrl() + client.getApiEndpoint() + apiPath);
+        if (null != apiPath.getAccept()) {
+            request.setHeader("Accept", apiPath.getAccept());
+        }
+        return execute(request, new ContentHandler<T>(parser));
     }
 
     /**
@@ -283,41 +308,73 @@ class ApiCall {
         return requestWithEntity(apiPath, parser, httpPut);
     }
 
+    /**
+     * Execute an HTTP PUT request to the RunDeck instance, on the given path. We will login first, and then execute
+     * the API call. At the end, the given parser will be used to convert the response to a more useful result object.
+     *
+     * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
+     * @param parser used to parse the response
+     * @return the result of the call, as formatted by the parser
+     * @throws RundeckApiException in case of error when calling the API
+     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
+     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
+     */
+    public <T> T put(ApiPathBuilder apiPath, ResponseParser<T> parser) throws RundeckApiException,
+            RundeckApiLoginException, RundeckApiTokenException {
+        HttpPut httpPut = new HttpPut(client.getUrl() + client.getApiEndpoint() + apiPath);
+        return requestWithEntity(apiPath, new ContentHandler<T>(parser), httpPut);
+    }
     private <T> T requestWithEntity(ApiPathBuilder apiPath, XmlNodeParser<T> parser, HttpEntityEnclosingRequestBase
+            httpPost) {
+        return new ParserHandler<T>(parser).handle(requestWithEntity(apiPath, new ResultHandler(), httpPost));
+    }
+    private <T> T requestWithEntity(ApiPathBuilder apiPath, Handler<HttpResponse,T> handler, HttpEntityEnclosingRequestBase
             httpPost) {
         if(null!= apiPath.getAccept()) {
             httpPost.setHeader("Accept", apiPath.getAccept());
         }
         // POST a multi-part request, with all attachments
-        if(apiPath.getAttachments().size()>0){
-            MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+        if (apiPath.getAttachments().size() > 0) {
+            MultipartEntityBuilder multipartEntityBuilder =
+                    MultipartEntityBuilder.create().setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
             for (Entry<String, InputStream> attachment : apiPath.getAttachments().entrySet()) {
-                entity.addPart(attachment.getKey(), new InputStreamBody(attachment.getValue(), attachment.getKey()));
+                multipartEntityBuilder.addPart(
+                        attachment.getKey(),
+                        new InputStreamBody(attachment.getValue(), attachment.getKey())
+                );
             }
-            httpPost.setEntity(entity);
-        }else if(apiPath.getForm().size()>0){
+            httpPost.setEntity(multipartEntityBuilder.build());
+        } else if (apiPath.getForm().size() > 0) {
             try {
                 httpPost.setEntity(new UrlEncodedFormEntity(apiPath.getForm(), HTTP.UTF_8));
             } catch (UnsupportedEncodingException e) {
                 throw new RundeckApiException("Unsupported encoding: " + e.getMessage(), e);
             }
-        }else if(apiPath.getContentStream() !=null && apiPath.getContentType()!=null){
-            BasicHttpEntity entity = new BasicHttpEntity();
-            entity.setContent(apiPath.getContentStream());
-            entity.setContentType(apiPath.getContentType());
+        } else if (apiPath.getContentStream() != null && apiPath.getContentType() != null) {
+            InputStreamEntity entity = new InputStreamEntity(
+                    apiPath.getContentStream(),
+                    ContentType.create(apiPath.getContentType())
+            );
             httpPost.setEntity(entity);
-        }else if(apiPath.getContentFile() !=null && apiPath.getContentType()!=null){
-            httpPost.setEntity(new FileEntity(apiPath.getContentFile(), apiPath.getContentType()));
-        }else if(apiPath.getXmlDocument()!=null) {
+        } else if (apiPath.getContents() != null && apiPath.getContentType() != null) {
+            ByteArrayEntity bae = new ByteArrayEntity(
+                    apiPath.getContents(),
+                    ContentType.create(apiPath.getContentType())
+            );
+
+            httpPost.setEntity(bae);
+        } else if (apiPath.getContentFile() != null && apiPath.getContentType() != null) {
+            httpPost.setEntity(new FileEntity(apiPath.getContentFile(), ContentType.create(apiPath.getContentType())));
+        } else if (apiPath.getXmlDocument() != null) {
             httpPost.setHeader("Content-Type", "application/xml");
             httpPost.setEntity(new EntityTemplate(new DocumentContentProducer(apiPath.getXmlDocument())));
-        }else if(apiPath.isEmptyContent()){
+        } else if (apiPath.isEmptyContent()) {
             //empty content
-        }else {
+        } else {
             throw new IllegalArgumentException("No Form or Multipart entity for POST content-body");
         }
 
-        return execute(httpPost, parser);
+        return execute(httpPost, handler);
     }
 
     /**
@@ -441,6 +498,41 @@ class ApiCall {
     }
 
     /**
+     * Converts to a string
+     */
+    public static class PlainTextHandler implements ResponseParser<String>{
+        @Override
+        public String parseResponse(final InputStream response) {
+            StringWriter output = new StringWriter();
+            try {
+                IOUtils.copy(response, output);
+            } catch (IOException e) {
+                throw new RundeckApiException("Failed to consume text/plain input to string", e);
+            }
+            return output.toString();
+        }
+    }
+
+    /**
+     * Handles parsing response via a {@link ResponseParser}
+     *
+     * @param <S>
+     */
+    private static class ContentHandler<S> implements Handler<HttpResponse, S> {
+        ResponseParser<S> parser;
+
+        private ContentHandler(ResponseParser<S> parser) {
+            this.parser = parser;
+        }
+
+        @Override
+        public S handle(HttpResponse response) {
+            // read and parse the response
+            return parser.parseResponse(new ResultHandler().handle(response));
+        }
+    }
+
+    /**
      * Handles writing response to an output stream
      */
     private static class ChainHandler<T> implements Handler<HttpResponse,T> {
@@ -532,8 +624,7 @@ class ApiCall {
     private <T> T execute(HttpUriRequest request, Handler<HttpResponse,T> handler) throws RundeckApiException,
             RundeckApiLoginException,
             RundeckApiTokenException {
-        HttpClient httpClient = instantiateHttpClient();
-        try {
+        try(CloseableHttpClient httpClient = instantiateHttpClient()) {
             // we only need to manually login in case of login-based authentication
             // note that in case of token-based auth, the auth (via an HTTP header) is managed by an interceptor.
             if (client.getToken() == null && client.getSessionID() == null) {
@@ -587,8 +678,8 @@ class ApiCall {
                                               + response.getStatusLine());
             }
             return handler.handle(response);
-        } finally {
-            httpClient.getConnectionManager().shutdown();
+        } catch (IOException e) {
+            throw new RundeckApiException("failed closing http client", e);
         }
     }
 
@@ -693,54 +784,48 @@ class ApiCall {
      *
      * @return an {@link HttpClient} instance - won't be null
      */
-    private HttpClient instantiateHttpClient() {
-        DefaultHttpClient httpClient = new DefaultHttpClient();
+    private CloseableHttpClient instantiateHttpClient() {
+        HttpClientBuilder httpClientBuilder = HttpClientBuilder.create().useSystemProperties();
 
         // configure user-agent
-        HttpProtocolParams.setUserAgent(httpClient.getParams(), "RunDeck API Java Client " + client.getApiVersion());
+        httpClientBuilder.setUserAgent( "RunDeck API Java Client " + client.getApiVersion());
 
-        // configure SSL
-        SSLSocketFactory socketFactory = null;
-        try {
-            socketFactory = new SSLSocketFactory(new TrustStrategy() {
-
-                @Override
-                public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-                    return true;
-                }
-            }, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-        } catch (KeyManagementException e) {
-            throw new RuntimeException(e);
-        } catch (UnrecoverableKeyException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (KeyStoreException e) {
-            throw new RuntimeException(e);
+        if (client.isSslHostnameVerifyAllowAll()) {
+            httpClientBuilder.setHostnameVerifier(SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
         }
-        httpClient.getConnectionManager().getSchemeRegistry().register(new Scheme("https", 443, socketFactory));
-
-        // configure proxy (use system env : http.proxyHost / http.proxyPort)
-        System.setProperty("java.net.useSystemProxies", "true");
-        httpClient.setRoutePlanner(new ProxySelectorRoutePlanner(httpClient.getConnectionManager().getSchemeRegistry(),
-                                                                 ProxySelector.getDefault()));
-
-        // in case of token-based authentication, add the correct HTTP header to all requests via an interceptor
-        httpClient.addRequestInterceptor(new HttpRequestInterceptor() {
-
-            @Override
-            public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
-                if (client.getToken() != null) {
-                    request.addHeader(AUTH_TOKEN_HEADER, client.getToken());
-                    //System.out.println("httpClient adding token header");
-                }
-                else if(client.getSessionID() != null) {
-                    request.addHeader(COOKIE_HEADER, "JSESSIONID="+client.getSessionID());
-                    //System.out.println("httpClient adding session header, sessionID="+client.getSessionID());
-                }
+        if (client.isSslCertificateTrustAllowSelfSigned()) {
+            // configure SSL
+            try {
+                httpClientBuilder.setSslcontext(
+                        new SSLContextBuilder()
+                                .loadTrustMaterial(null, new TrustSelfSignedStrategy())
+                                .build());
+            } catch (KeyManagementException | KeyStoreException | NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
             }
-        });
 
-        return httpClient;
+        }
+        if(client.isSystemProxyEnabled()) {
+            // configure proxy (use system env : http.proxyHost / http.proxyPort)
+            httpClientBuilder.setRoutePlanner(new SystemDefaultRoutePlanner(ProxySelector.getDefault()));
+        }
+        // in case of token-based authentication, add the correct HTTP header to all requests via an interceptor
+        httpClientBuilder.addInterceptorFirst(
+                new HttpRequestInterceptor() {
+
+                    @Override
+                    public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+                        if (client.getToken() != null) {
+                            request.addHeader(AUTH_TOKEN_HEADER, client.getToken());
+                            //System.out.println("httpClient adding token header");
+                        } else if (client.getSessionID() != null) {
+                            request.addHeader(COOKIE_HEADER, "JSESSIONID=" + client.getSessionID());
+                            //System.out.println("httpClient adding session header, sessionID="+client.getSessionID());
+                        }
+                    }
+                }
+        );
+
+        return httpClientBuilder.build();
     }
 }

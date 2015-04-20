@@ -97,6 +97,7 @@ public class RundeckClient implements Serializable {
         V10(10),
         V11(11),
         V12(12),
+        V13(13),
         ;
 
         private int versionNumber;
@@ -110,7 +111,7 @@ public class RundeckClient implements Serializable {
         }
     }
     /** Version of the API supported */
-    public static final transient int API_VERSION = Version.V12.getVersionNumber();
+    public static final transient int API_VERSION = Version.V13.getVersionNumber();
 
     private static final String API = "/api/";
 
@@ -135,6 +136,9 @@ public class RundeckClient implements Serializable {
     private String password;
 
     private String sessionID;
+    private boolean sslHostnameVerifyAllowAll = false;
+    private boolean sslCertificateTrustAllowSelfSigned = false;
+    private boolean systemProxyEnabled = false;
 
     void setToken(String token) {
         this.token = token;
@@ -167,6 +171,30 @@ public class RundeckClient implements Serializable {
     String getApiEndpoint() {
         return API + getApiVersion();
     }
+
+    boolean isSslHostnameVerifyAllowAll() {
+        return sslHostnameVerifyAllowAll;
+    }
+
+    void setSslHostnameVerifyAllowAll(boolean sslHostnameVerifyAllowAll) {
+        this.sslHostnameVerifyAllowAll = sslHostnameVerifyAllowAll;
+    }
+
+    boolean isSslCertificateTrustAllowSelfSigned() {
+        return sslCertificateTrustAllowSelfSigned;
+    }
+
+    void setSslCertificateTrustAllowSelfSigned(boolean sslCertificateTrustAllowSelfSigned) {
+        this.sslCertificateTrustAllowSelfSigned = sslCertificateTrustAllowSelfSigned;
+    }
+    boolean isSystemProxyEnabled() {
+        return systemProxyEnabled;
+    }
+
+    void setSystemProxyEnabled(boolean systemProxyEnabled) {
+        this.systemProxyEnabled = systemProxyEnabled;
+    }
+
 
     /**
      * Instantiate a new {@link RundeckClient} for the RunDeck instance at the given url, using login-based
@@ -595,6 +623,61 @@ public class RundeckClient implements Serializable {
         return new ProjectGenerator(project).generateXmlDocument();
     }
 
+    /**
+     * Store contents to a project readme.md or motd.md
+     * @param projectName project name
+     * @param filename filename, must be readme.md or motd.md
+     * @param content content
+     */
+    public void storeProjectFile(final String projectName, final String filename, final String content){
+        AssertUtil.notBlank(projectName, "projectName is mandatory to get the file!");
+        AssertUtil.notBlank(filename, "filename is mandatory to get choose the file!");
+        AssertUtil.notBlank(content, "content is mandatory to set content!");
+        AssertUtil.inList("filename must be in the list: ", filename, "readme.md", "motd.md");
+        new ApiCall(this)
+                .put(new ApiPathBuilder("/project/", projectName, "/", filename)
+                             .content( "text/plain; charset=utf-8", content)
+                              .accept("text/plain"),
+                     new ApiCall.PlainTextHandler()
+                );
+    }
+
+    /**
+     * Read contents of a project readme.md or motd.md if it exsts, or return null
+     * @param projectName  project name
+     * @param filename filename, must be readme.md or motd.md
+     * @return contents, or null
+     */
+    public String readProjectFile(final String projectName, final String filename){
+        AssertUtil.notBlank(projectName, "projectName is mandatory to get the readme file!");
+        AssertUtil.notBlank(filename, "filename is mandatory to get choose the readme file!");
+        AssertUtil.inList("filename must be in the list: ", filename, "readme.md", "motd.md");
+        try {
+            return new ApiCall(this)
+                    .get(
+                            new ApiPathBuilder("/project/", projectName, "/", filename)
+                                    .accept("text/plain"),
+                            new ApiCall.PlainTextHandler()
+                    );
+        } catch (RundeckApiException.RundeckApiHttpStatusException e) {
+            if (e.getStatusCode() == 404) {
+                return null;
+            }
+            throw e;
+        }
+    }
+
+    /**
+     * Delete a project readme.md or motd.md
+     * @param projectName project name
+     * @param filename filename, must be readme.md or motd.md
+     */
+    public void deleteProjectFile(final String projectName, final String filename){
+        AssertUtil.notBlank(projectName, "projectName is mandatory to get the readme file!");
+        AssertUtil.notBlank(filename, "filename is mandatory to get choose the readme file!");
+        AssertUtil.inList("filename must be in the list: ", filename, "readme.md", "motd.md");
+        new ApiCall(this).delete(new ApiPathBuilder("/project/", projectName, "/", filename));
+    }
     /*
      * Jobs
      */

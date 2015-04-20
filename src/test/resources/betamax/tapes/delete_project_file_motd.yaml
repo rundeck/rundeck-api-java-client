@@ -1,0 +1,19 @@
+!tape
+name: delete_project_file_motd
+interactions:
+- recorded: 2015-04-17T21:51:41.828Z
+  request:
+    method: DELETE
+    uri: http://rundeck.local:4440/api/13/project/test/motd.md
+    headers:
+      Accept-Encoding: gzip,deflate
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 13
+      X-RunDeck-Auth-Token: FGHg4cKAKOSXK51yGt9WhfZcX4VQJsxM
+  response:
+    status: 204
+    headers:
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=qzwtyssctzyl1e9qu5uwmrduj;Path=/

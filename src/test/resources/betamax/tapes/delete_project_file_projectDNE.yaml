@@ -1,0 +1,27 @@
+!tape
+name: delete_project_file_projectDNE
+interactions:
+- recorded: 2015-04-17T21:51:59.950Z
+  request:
+    method: DELETE
+    uri: http://rundeck.local:4440/api/13/project/projectDNE/motd.md
+    headers:
+      Accept-Encoding: gzip,deflate
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 13
+      X-RunDeck-Auth-Token: FGHg4cKAKOSXK51yGt9WhfZcX4VQJsxM
+  response:
+    status: 404
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1o222fjmht4ziwelfz86vn9w2;Path=/
+      X-Rundeck-API-Version: '13'
+    body: |-
+      <result error='true' apiversion='13'>
+        <error code='api.error.item.doesnotexist'>
+          <message>Project does not exist: projectDNE</message>
+        </error>
+      </result>
