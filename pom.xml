@@ -484,6 +484,13 @@
       <groupId>dom4j</groupId>
       <artifactId>dom4j</artifactId>
       <version>${dom4j.version}</version>
+
+      <exclusions>
+        <exclusion>  <!-- declare the exclusion here -->
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>jaxen</groupId>
