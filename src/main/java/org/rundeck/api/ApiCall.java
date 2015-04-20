@@ -374,7 +374,7 @@ class ApiCall {
      * API call. At the end, the given parser will be used to convert the response to a more useful result object.
      *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
-     * @param parser  used to parse the response
+     * @param outputStream write output to this stream
      *
      * @return the result of the call, as formatted by the parser
      *
