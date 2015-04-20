@@ -121,3 +121,9 @@ h2. Rundeck API version 12
 * Bulk delete executions - OK
 * Delete execution - OK
 * Delete all executions for a job - OK
+
+h2. Rundeck API version 13
+
+[Documentation of the Rundeck API version 13|http://rundeck.org/2.5.0/api/index.html]
+
+* Read, store, delete readme.md/motd.md for a project - OK
