@@ -187,7 +187,7 @@ class ApiCall {
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      */
-    public InputStream get(ApiPathBuilder apiPath) throws RundeckApiException, RundeckApiLoginException,
+    public InputStream get(ApiPathBuilder apiPath, boolean parseXml) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException {
         HttpGet request = new HttpGet(client.getUrl() + client.getApiEndpoint() + apiPath);
         if (null != apiPath.getAccept()) {
@@ -196,8 +196,10 @@ class ApiCall {
         ByteArrayInputStream response = execute(request);
 
         // try to load the document, to throw an exception in case of error
-        ParserHelper.loadDocument(response);
-        response.reset();
+        if(parseXml) {
+            ParserHelper.loadDocument(response);
+            response.reset();
+        }
 
         return response;
     }

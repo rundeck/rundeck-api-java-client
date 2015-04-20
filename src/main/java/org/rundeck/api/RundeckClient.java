@@ -840,7 +840,7 @@ public class RundeckClient implements Serializable {
                 .param("project", project)
                 .param("jobFilter", jobFilter)
                 .param("groupPath", groupPath)
-                .param("idlist", StringUtils.join(jobIds, ",")));
+                .param("idlist", StringUtils.join(jobIds, ",")),false);
     }
 
     /**
@@ -924,7 +924,7 @@ public class RundeckClient implements Serializable {
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(format, "format is mandatory to export a job !");
         AssertUtil.notBlank(jobId, "jobId is mandatory to export a job !");
-        return new ApiCall(this).get(new ApiPathBuilder("/job/", jobId).param("format", format));
+        return new ApiCall(this).get(new ApiPathBuilder("/job/", jobId).param("format", format), false);
     }
 
 
