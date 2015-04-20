@@ -58,6 +58,7 @@ public class RundeckClientTest {
     public static final String TEST_TOKEN_6 = "Do4d3NUD5DKk21DR4sNK755RcPk618vn";
     public static final String TEST_TOKEN_7 = "8Dp9op111ER6opsDRkddvE86K9sE499s";
     public static final String TEST_TOKEN_8 = "GG7uj1y6UGahOs7QlmeN2sIwz1Y2j7zI";
+    public static final String TEST_TOKEN_9 = "FGHg4cKAKOSXK51yGt9WhfZcX4VQJsxM";
 
     @Rule
     public Recorder recorder = new Recorder();
@@ -1964,6 +1965,151 @@ public class RundeckClientTest {
 
         }
     }
+
+
+    /**
+     * read project readme, motd
+     */
+    @Test
+    @Betamax(tape = "read_project_file",mode = TapeMode.READ_ONLY,
+             match = {MatchRule.uri, MatchRule.method, MatchRule.path, MatchRule.query})
+    public void readProjectFile() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_9, 13);
+        //does not exist
+        String readme = client.readProjectFile("test", "readme.md");
+        Assert.assertEquals(null, readme);
+        //content
+        String motd = client.readProjectFile("test", "motd.md");
+        Assert.assertEquals("this is the motd\r\n\r\ntest motd", motd);
+    }
+    /**
+     * read project readme, motd
+     */
+    @Test
+    public void readProjectFileInvalidName() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_9, 13);
+        try {
+            String readme = client.readProjectFile("test", "other.md");
+            Assert.fail();
+        } catch (IllegalArgumentException e) {
+            Assert.assertTrue(e.getMessage().contains("filename must be in the list"));
+        }
+    }
+    /**
+     * store project file
+     */
+    @Test
+    public void storeProjectFileInvalidName() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_9, 13);
+        try {
+            client.storeProjectFile("test", "other.md","blah");
+            Assert.fail();
+        } catch (IllegalArgumentException e) {
+            Assert.assertTrue(e.getMessage().contains("filename must be in the list"));
+        }
+    }
+    /**
+     * store project file
+     */
+    @Test
+    public void deleteProjectFileInvalidName() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_9, 13);
+        try {
+            client.deleteProjectFile("test", "other.md");
+            Assert.fail();
+        } catch (IllegalArgumentException e) {
+            Assert.assertTrue(e.getMessage().contains("filename must be in the list"));
+        }
+    }
+
+    /**
+     * store project readme
+     */
+    @Test
+    @Betamax(tape = "store_project_file_readme",mode = TapeMode.READ_ONLY,
+             match = {MatchRule.uri, MatchRule.method, MatchRule.path, MatchRule.query, MatchRule.headers})
+    public void storeProjectFileReadme() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_9, 13);
+        //does not exist
+        client.storeProjectFile("test", "readme.md", "new readme.md content\n\n* test\n* test2");
+        Assert.assertEquals("new readme.md content\n" +
+                            "\n" +
+                            "* test\n" +
+                            "* test2", client.readProjectFile("test", "readme.md"));
+    }
+
+    /**
+     * store project motd
+     */
+    @Test
+    @Betamax(tape = "store_project_file_motd",mode = TapeMode.READ_ONLY,
+             match = {MatchRule.uri, MatchRule.method, MatchRule.path, MatchRule.query,MatchRule.headers})
+    public void storeProjectFileMotd() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_9, 13);
+
+
+        client.storeProjectFile("test", "motd.md", "new motd.md content\n\n* test\n* test2");
+        Assert.assertEquals("new motd.md content\n" +
+                            "\n" +
+                            "* test\n" +
+                            "* test2", client.readProjectFile("test", "motd.md"));
+    }
+    /**
+     * project DNE
+     */
+    @Test
+    @Betamax(tape = "read_project_file_project_dne",mode = TapeMode.READ_ONLY,
+             match = {MatchRule.uri, MatchRule.method, MatchRule.path, MatchRule.query})
+    public void readProjectFileProjectDNE() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_9, 13);
+
+        String readme = client.readProjectFile("project1", "readme.md");
+        Assert.assertEquals(null, readme);
+
+        String motd = client.readProjectFile("project1", "motd.md");
+        Assert.assertEquals(null, motd);
+    }
+    /**
+     * delete project file
+     */
+    @Test
+    @Betamax(tape = "delete_project_file_readme",mode = TapeMode.READ_ONLY,
+             match = {MatchRule.uri, MatchRule.method, MatchRule.path, MatchRule.query})
+    public void deleteProjectFileReadme() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_9, 13);
+
+        client.deleteProjectFile("test", "readme.md");
+    }
+    /**
+     * delete project file
+     */
+    @Test
+    @Betamax(tape = "delete_project_file_motd",mode = TapeMode.READ_ONLY,
+             match = {MatchRule.uri, MatchRule.method, MatchRule.path, MatchRule.query})
+    public void deleteProjectFileMotd() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_9, 13);
+
+        client.deleteProjectFile("test", "motd.md");
+    }
+
+    /**
+     * delete project file
+     */
+    @Test
+    @Betamax(tape = "delete_project_file_projectDNE",
+             mode = TapeMode.READ_ONLY,
+             match = {MatchRule.uri, MatchRule.method, MatchRule.path, MatchRule.query})
+    public void deleteProjectFileProjectDNE() throws Exception {
+        final RundeckClient client = createClient(TEST_TOKEN_9, 13);
+
+        try {
+            client.deleteProjectFile("projectDNE", "motd.md");
+            Assert.fail();
+        } catch (RundeckApiException.RundeckApiHttpStatusException e) {
+            Assert.assertEquals(404, e.getStatusCode());
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
         // not that you can put whatever here, because we don't actually connect to the RunDeck instance

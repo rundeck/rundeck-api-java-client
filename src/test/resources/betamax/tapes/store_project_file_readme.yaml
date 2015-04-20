@@ -1,0 +1,54 @@
+!tape
+name: store_project_file_readme
+interactions:
+- recorded: 2015-04-17T21:45:18.045Z
+  request:
+    method: PUT
+    uri: http://rundeck.local:4440/api/13/project/test/readme.md
+    headers:
+      Accept: text/plain
+      Accept-Encoding: gzip,deflate
+      Content-Length: '37'
+      Content-Type: text/plain; charset=UTF-8
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 13
+      X-RunDeck-Auth-Token: FGHg4cKAKOSXK51yGt9WhfZcX4VQJsxM
+    body: |-
+      new readme.md content
+
+      * test
+      * test2
+  response:
+    status: 200
+    headers:
+      Content-Type: text/plain
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1nwxc7zyl5099dnxnt6czaggh;Path=/
+    body: |-
+      new readme.md content
+
+      * test
+      * test2
+- recorded: 2015-04-17T21:45:18.125Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/13/project/test/readme.md
+    headers:
+      Accept: text/plain
+      Accept-Encoding: gzip,deflate
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: RunDeck API Java Client 13
+      X-RunDeck-Auth-Token: FGHg4cKAKOSXK51yGt9WhfZcX4VQJsxM
+  response:
+    status: 200
+    headers:
+      Content-Type: text/plain
+      Server: Jetty(7.6.0.v20120127)
+    body: |-
+      new readme.md content
+
+      * test
+      * test2
