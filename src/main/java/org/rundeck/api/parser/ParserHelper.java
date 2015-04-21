@@ -44,7 +44,7 @@ public class ParserHelper {
         try {
             document = reader.read(inputStream);
         } catch (DocumentException e) {
-            throw new RundeckApiException("Failed to read RunDeck reponse", e);
+            throw new RundeckApiException("Failed to read RunDeck response", e);
         }
         document.setXMLEncoding("UTF-8");
 
