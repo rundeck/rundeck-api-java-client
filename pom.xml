@@ -94,7 +94,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Dependencies version -->
-    <apache.httpcomponents.version>4.3.6</apache.httpcomponents.version>
+    <apache.httpcomponents.client.version>4.3.6</apache.httpcomponents.client.version>
+    <apache.httpcomponents.core.version>4.3.3</apache.httpcomponents.core.version> <!-- match what http client uses -->
     <commons-lang.version>2.6</commons-lang.version>
     <commons-io.version>2.4</commons-io.version>
     <dom4j.version>1.6.1</dom4j.version>
@@ -457,12 +458,17 @@
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-      <version>${apache.httpcomponents.version}</version>
+      <version>${apache.httpcomponents.client.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpmime</artifactId>
-      <version>${apache.httpcomponents.version}</version>
+      <version>${apache.httpcomponents.client.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+      <version>${apache.httpcomponents.core.version}</version>
     </dependency>
     <!-- Commons -->
     <dependency>
