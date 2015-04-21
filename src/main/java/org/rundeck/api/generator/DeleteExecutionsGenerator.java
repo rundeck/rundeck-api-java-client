@@ -2,9 +2,7 @@ package org.rundeck.api.generator;
 
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
-import org.rundeck.api.domain.ProjectConfig;
 
-import java.util.List;
 import java.util.Set;
 
 /**

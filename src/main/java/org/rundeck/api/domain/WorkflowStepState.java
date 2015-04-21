@@ -1,6 +1,5 @@
 package org.rundeck.api.domain;
 
-import java.util.List;
 import java.util.Map;
 
 /**

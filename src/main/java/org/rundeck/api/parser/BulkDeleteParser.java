@@ -25,7 +25,6 @@
 package org.rundeck.api.parser;
 
 import org.apache.commons.lang.StringUtils;
-import org.dom4j.Element;
 import org.dom4j.Node;
 import org.rundeck.api.domain.RundeckJobDelete;
 import org.rundeck.api.domain.RundeckJobDeleteBulk;

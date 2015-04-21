@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 import java.io.Serializable;
 
-import org.rundeck.api.domain.RundeckExecution.ExecutionStatus;
-
 
 /**
  * Represents a Rundeck output

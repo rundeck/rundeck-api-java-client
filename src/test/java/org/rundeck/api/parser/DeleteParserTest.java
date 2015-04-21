@@ -24,17 +24,12 @@
 */
 package org.rundeck.api.parser;
 
-import junit.framework.TestCase;
 import org.dom4j.Document;
 import org.junit.Assert;
 import org.junit.Test;
-import org.rundeck.api.domain.RundeckAbort;
-import org.rundeck.api.domain.RundeckExecution;
-import org.rundeck.api.domain.RundeckJob;
 import org.rundeck.api.domain.RundeckJobDelete;
 
 import java.io.InputStream;
-import java.util.*;
 
 
 /**

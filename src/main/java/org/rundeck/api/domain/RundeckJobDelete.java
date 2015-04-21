@@ -24,8 +24,6 @@
 */
 package org.rundeck.api.domain;
 
-import java.util.*;
-
 
 /**
  * RundeckJobDelete represents a result of a job delete request.

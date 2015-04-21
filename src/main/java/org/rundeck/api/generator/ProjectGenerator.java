@@ -1,6 +1,5 @@
 package org.rundeck.api.generator;
 
-import org.dom4j.Document;
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
 import org.rundeck.api.domain.ProjectConfig;

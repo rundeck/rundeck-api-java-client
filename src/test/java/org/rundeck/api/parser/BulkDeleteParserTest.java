@@ -30,7 +30,6 @@ import org.junit.Test;
 import org.rundeck.api.domain.RundeckJobDeleteBulk;
 
 import java.io.InputStream;
-import java.util.*;
 
 
 /**

@@ -47,16 +47,11 @@ import org.rundeck.api.parser.XmlNodeParser;
 import org.rundeck.api.util.AssertUtil;
 import org.rundeck.api.util.DocumentContentProducer;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.ProxySelector;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
