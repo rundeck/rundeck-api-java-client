@@ -19,7 +19,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Represents a RunDeck node (server on which RunDeck can execute jobs and commands)
+ * Represents a Rundeck node (server on which Rundeck can execute jobs and commands)
  * 
  * @author Vincent Behar
  */

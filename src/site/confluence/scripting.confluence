@@ -1,5 +1,5 @@
 
-h1. Scripting with the RunDeck client
+h1. Scripting with the Rundeck client
 
 You can use this library with your prefered scripting language... as long as it runs on the JVM !
 

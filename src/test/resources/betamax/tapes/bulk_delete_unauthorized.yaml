@@ -10,8 +10,8 @@ interactions:
       Content-Type: application/x-www-form-urlencoded; charset=UTF-8
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: PP4s4SdCRO6KUoNPd1D303Dc304ORN87
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: PP4s4SdCRO6KUoNPd1D303Dc304ORN87
     body: ''
   response:
     status: 200

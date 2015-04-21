@@ -33,8 +33,8 @@
   <artifactId>rundeck-api-java-client</artifactId>
   <version>12.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>RunDeck API - Java Client</name>
-  <description>Java client for the RunDeck REST API</description>
+  <name>Rundeck API - Java Client</name>
+  <description>Java client for the Rundeck REST API</description>
   <inceptionYear>2011</inceptionYear>
   <url>http://rundeck.github.com/rundeck-api-java-client</url>
   <scm>

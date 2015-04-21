@@ -16,7 +16,7 @@
 package org.rundeck.api;
 
 /**
- * A generic (unchecked) exception when using the RunDeck API
+ * A generic (unchecked) exception when using the Rundeck API
  * 
  * @author Vincent Behar
  */

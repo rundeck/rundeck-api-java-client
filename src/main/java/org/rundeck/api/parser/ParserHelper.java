@@ -23,7 +23,7 @@ import org.dom4j.io.SAXReader;
 import org.rundeck.api.RundeckApiException;
 
 /**
- * Helper for parsing RunDeck responses
+ * Helper for parsing Rundeck responses
  * 
  * @author Vincent Behar
  */
@@ -32,7 +32,7 @@ public class ParserHelper {
     /**
      * Load an XML {@link Document} from the given {@link InputStream}
      * 
-     * @param inputStream from an API call to RunDeck
+     * @param inputStream from an API call to Rundeck
      * @return an XML {@link Document}
      * @throws RundeckApiException if we failed to read the response, or if the response is an error
      */
@@ -44,7 +44,7 @@ public class ParserHelper {
         try {
             document = reader.read(inputStream);
         } catch (DocumentException e) {
-            throw new RundeckApiException("Failed to read RunDeck response", e);
+            throw new RundeckApiException("Failed to read Rundeck response", e);
         }
         document.setXMLEncoding("UTF-8");
 

@@ -9,7 +9,7 @@ import org.rundeck.api.domain.RundeckExecution.ExecutionStatus;
 
 
 /**
- * Represents a RunDeck output
+ * Represents a Rundeck output
  * 
  */
 public class RundeckOutput implements Serializable {

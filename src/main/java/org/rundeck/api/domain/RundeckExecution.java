@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.time.DurationFormatUtils;
 
 /**
- * Represents a RunDeck execution, usually triggered by an API call. An execution could be a {@link RundeckJob}
+ * Represents a Rundeck execution, usually triggered by an API call. An execution could be a {@link RundeckJob}
  * execution or an "ad-hoc" execution.
  * 
  * @author Vincent Behar

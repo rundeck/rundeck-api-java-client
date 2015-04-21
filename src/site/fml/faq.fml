@@ -30,8 +30,8 @@
       <answer>
         <p>The versions of the library are aligned with the versions of the API :</p>
         <ul>
-          <li>Versions 1.x are for RunDeck API version 1 (RunDeck 1.2+)</li>
-          <li>Versions 2.x are for RunDeck API version 2 (RunDeck 1.3+)</li>
+          <li>Versions 1.x are for Rundeck API version 1 (Rundeck 1.2+)</li>
+          <li>Versions 2.x are for Rundeck API version 2 (Rundeck 1.3+)</li>
           <li>and so on...</li>
         </ul>
       </answer>
@@ -40,14 +40,14 @@
   </part>
 
   <part id="http">
-    <title>HTTP connections to RunDeck</title>
+    <title>HTTP connections to Rundeck</title>
 
     <faq id="ssl">
       <question>
         What about SSL (HTTPS) ?
       </question>
       <answer>
-        <p>The lib will trust any certificate when connecting to a RunDeck instance running on HTTPS (even self-signed certificates).</p>
+        <p>The lib will trust any certificate when connecting to a Rundeck instance running on HTTPS (even self-signed certificates).</p>
       </answer>
     </faq>
 

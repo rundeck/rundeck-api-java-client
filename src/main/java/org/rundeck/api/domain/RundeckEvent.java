@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.time.DurationFormatUtils;
 
 /**
- * Represents a RunDeck event
+ * Represents a Rundeck event
  * 
  * @author Vincent Behar
  */

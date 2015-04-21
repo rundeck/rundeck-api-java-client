@@ -20,7 +20,7 @@ import java.util.Date;
 import org.apache.commons.lang.time.DurationFormatUtils;
 
 /**
- * Represents the RunDeck system info
+ * Represents the Rundeck system info
  * 
  * @author Vincent Behar
  */

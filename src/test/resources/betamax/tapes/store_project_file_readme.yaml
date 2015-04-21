@@ -12,8 +12,8 @@ interactions:
       Content-Type: text/plain; charset=UTF-8
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 13
-      X-RunDeck-Auth-Token: FGHg4cKAKOSXK51yGt9WhfZcX4VQJsxM
+      User-Agent: Rundeck API Java Client 13
+      X-Rundeck-Auth-Token: FGHg4cKAKOSXK51yGt9WhfZcX4VQJsxM
     body: |-
       new readme.md content
 
@@ -40,8 +40,8 @@ interactions:
       Accept-Encoding: gzip,deflate
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 13
-      X-RunDeck-Auth-Token: FGHg4cKAKOSXK51yGt9WhfZcX4VQJsxM
+      User-Agent: Rundeck API Java Client 13
+      X-Rundeck-Auth-Token: FGHg4cKAKOSXK51yGt9WhfZcX4VQJsxM
   response:
     status: 200
     headers:

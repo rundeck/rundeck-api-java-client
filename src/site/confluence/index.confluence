@@ -1,18 +1,18 @@
 
-h1. Java client for the RunDeck REST API
+h1. Java client for the Rundeck REST API
 
 h2. What is it ?
 
-A Java client (library) for the RunDeck HTTP REST API.
+A Java client (library) for the Rundeck HTTP REST API.
 
-[RunDeck|http://rundeck.org/] is an open-source tool for automating tasks on multiple nodes, with a CLI, a web-based interface and an HTTP REST API. You can read more about its API on the [RunDeck User Manual|http://rundeck.org/docs/api/index.html].
+[Rundeck|http://rundeck.org/] is an open-source tool for automating tasks on multiple nodes, with a CLI, a web-based interface and an HTTP REST API. You can read more about its API on the [Rundeck User Manual|http://rundeck.org/docs/api/index.html].
 
 !images/rundeck.png!
 
 h2. What can I do with it ?
 
-* Use it to write [scripts|./scripting.html] (in [Groovy|./groovy.html], [JRuby|./jruby.html] or [Jython|./jython.html]), for example if you want to automate the execution of RunDeck jobs based on external events.
-* Use it in a Java application. A good example would be the [Jenkins RunDeck plugin|http://wiki.jenkins-ci.org/display/JENKINS/RunDeck+Plugin], that needs to trigger RunDeck jobs from within the [Jenkins|http://jenkins-ci.org] continuous-integration server. Or the [RunDeck Remote CLI|https://github.com/vbehar/rundeck-remote-cli], that provides a java-based CLI on top of the API.
+* Use it to write [scripts|./scripting.html] (in [Groovy|./groovy.html], [JRuby|./jruby.html] or [Jython|./jython.html]), for example if you want to automate the execution of Rundeck jobs based on external events.
+* Use it in a Java application. A good example would be the [Jenkins Rundeck plugin|http://wiki.jenkins-ci.org/display/JENKINS/Rundeck+Plugin], that needs to trigger Rundeck jobs from within the [Jenkins|http://jenkins-ci.org] continuous-integration server. Or the [Rundeck Remote CLI|https://github.com/vbehar/rundeck-remote-cli], that provides a java-based CLI on top of the API.
 
 h2. Where can I get more information ?
 

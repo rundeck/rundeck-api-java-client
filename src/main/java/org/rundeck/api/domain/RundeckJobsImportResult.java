@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Result of importing some jobs into RunDeck
+ * Result of importing some jobs into Rundeck
  * 
  * @author Vincent Behar
  */
