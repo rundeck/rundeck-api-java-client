@@ -48,7 +48,7 @@ public class ParametersUtil {
     }
 
     /**
-     * Generates a RunDeck "argString" representing the given options. Format of the argString is
+     * Generates a Rundeck "argString" representing the given options. Format of the argString is
      * <code>"-key1 value1 -key2 'value 2 with spaces'"</code>. You might want to url-encode this string...
      * 
      * @param options to be converted

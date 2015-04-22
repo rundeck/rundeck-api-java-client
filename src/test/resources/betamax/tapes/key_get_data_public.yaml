@@ -9,8 +9,8 @@ interactions:
       Accept: application/pgp-keys
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 11
-      X-RunDeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
+      User-Agent: Rundeck API Java Client 11
+      X-Rundeck-Auth-Token: 8Dp9op111ER6opsDRkddvE86K9sE499s
   response:
     status: 200
     headers:

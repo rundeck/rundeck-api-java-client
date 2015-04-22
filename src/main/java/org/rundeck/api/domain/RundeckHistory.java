@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a portion of the RunDeck (events) history
+ * Represents a portion of the Rundeck (events) history
  * 
  * @author Vincent Behar
  */

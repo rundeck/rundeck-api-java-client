@@ -9,8 +9,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -27,8 +27,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -43,8 +43,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -59,8 +59,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -75,8 +75,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -91,8 +91,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -107,8 +107,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -123,8 +123,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -139,8 +139,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -155,8 +155,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -171,8 +171,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -187,8 +187,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -203,8 +203,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -219,8 +219,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -235,8 +235,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -253,8 +253,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -271,8 +271,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -289,8 +289,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -305,8 +305,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:
@@ -323,8 +323,8 @@ interactions:
       Accept: text/xml
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: 0UUNkeRp4d58EDeCs7S6UdODp334DvK9
   response:
     status: 200
     headers:

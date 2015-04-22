@@ -1,9 +1,9 @@
-# Java client for the RunDeck REST API
+# Java client for the Rundeck REST API
 
 [![Build Status](https://travis-ci.org/rundeck/rundeck-api-java-client.svg?branch=master)](https://travis-ci.org/rundeck/rundeck-api-java-client)
 
 Documentation : <http://rundeck.github.com/rundeck-api-java-client/>
-RunDeck Home : <http://rundeck.org/>
+Rundeck Home : <http://rundeck.org/>
 
 ## License
 

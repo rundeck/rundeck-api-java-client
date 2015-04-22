@@ -2,7 +2,6 @@ package org.rundeck.api.parser;
 
 import org.dom4j.Node;
 import org.rundeck.api.domain.WorkflowStepContextState;
-import org.rundeck.api.domain.WorkflowStepState;
 
 /**
  * $INTERFACE is ... User: greg Date: 1/17/14 Time: 12:39 PM

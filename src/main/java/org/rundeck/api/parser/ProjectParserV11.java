@@ -1,10 +1,7 @@
 package org.rundeck.api.parser;
 
 import org.dom4j.Node;
-import org.rundeck.api.domain.ProjectConfig;
 import org.rundeck.api.domain.RundeckProject;
-
-import java.util.List;
 
 /**
  * ProjectParserV11 supports embedded "config" element.

@@ -42,7 +42,7 @@ import java.util.concurrent.TimeUnit;
  * <p>
  * There are three methods for authentication : login-based or token-based or session-based.
  * Login authentication requires
- * both a "login" and a "password". Token-based requires a "token" (also called "auth-token"). See the RunDeck
+ * both a "login" and a "password". Token-based requires a "token" (also called "auth-token"). See the Rundeck
  * documentation for generating such a token.</p>
  * <p>
  *     Session-based authentication allows re-use of a previous login session. See {@link #testAuth()}.
@@ -124,7 +124,7 @@ public class RundeckClient implements Serializable {
     /** Default unit of the "pooling interval" used when running jobs/commands/scripts */
     public static final TimeUnit DEFAULT_POOLING_UNIT = TimeUnit.SECONDS;
 
-    /** URL of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc) */
+    /** URL of the Rundeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc) */
     private final String url;
 
     private int apiVersion = API_VERSION;
@@ -197,12 +197,12 @@ public class RundeckClient implements Serializable {
 
 
     /**
-     * Instantiate a new {@link RundeckClient} for the RunDeck instance at the given url, using login-based
+     * Instantiate a new {@link RundeckClient} for the Rundeck instance at the given url, using login-based
      * authentication.
      *
-     * @param url of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
-     * @param login to use for authentication on the RunDeck instance
-     * @param password to use for authentication on the RunDeck instance
+     * @param url of the Rundeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
+     * @param login to use for authentication on the Rundeck instance
+     * @param password to use for authentication on the Rundeck instance
      * @throws IllegalArgumentException if the url, login or password is blank (null, empty or whitespace)
      *
      * @deprecated Use the builder {@link RundeckClientBuilder} or {@link #builder()}, this method will not be public in version 12 of this
@@ -210,20 +210,20 @@ public class RundeckClient implements Serializable {
      */
     public RundeckClient(String url, String login, String password) throws IllegalArgumentException {
         this(url);
-        AssertUtil.notBlank(login, "The RunDeck login is mandatory !");
-        AssertUtil.notBlank(password, "The RunDeck password is mandatory !");
+        AssertUtil.notBlank(login, "The Rundeck login is mandatory !");
+        AssertUtil.notBlank(password, "The Rundeck password is mandatory !");
         this.login = login;
         this.password = password;
         this.token = null;
     }
 
     /**
-     * Instantiate a new {@link RundeckClient} for the RunDeck instance at the given url,
+     * Instantiate a new {@link RundeckClient} for the Rundeck instance at the given url,
      * using token-based or session-based authentication. Either token or sessionID must be valid
      *
-     * @param url of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
-     * @param token to use for authentication on the RunDeck instance
-     * @param sessionID to use for session authentication on the RunDeck instance
+     * @param url of the Rundeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
+     * @param token to use for authentication on the Rundeck instance
+     * @param sessionID to use for session authentication on the Rundeck instance
      * @param useToken should be true if using token, false if using sessionID
      * @throws IllegalArgumentException if the url or token is blank (null, empty or whitespace)
      * @deprecated Use the builder {@link RundeckClientBuilder} or {@link #builder()}, this method will not be public in version 10 of this library.
@@ -247,10 +247,10 @@ public class RundeckClient implements Serializable {
 
 
     /**
-     * Instantiate a new {@link RundeckClient} for the RunDeck instance at the given url,
+     * Instantiate a new {@link RundeckClient} for the Rundeck instance at the given url,
      * using token-based authentication. Either token must be valid
-     * @param url of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
-     * @param token to use for authentication on the RunDeck instance
+     * @param url of the Rundeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
+     * @param token to use for authentication on the Rundeck instance
      * @throws IllegalArgumentException if the url or token is blank (null, empty or whitespace)
      * @deprecated Use the builder {@link RundeckClientBuilder} or {@link #builder()},
      * this method will not be public in version 12 of this
@@ -264,7 +264,7 @@ public class RundeckClient implements Serializable {
      * Used by RundeckClientBuilder
      */
     RundeckClient(final String url) throws IllegalArgumentException {
-        AssertUtil.notBlank(url, "The RunDeck URL is mandatory !");
+        AssertUtil.notBlank(url, "The Rundeck URL is mandatory !");
         this.url=url;
     }
 
@@ -276,7 +276,7 @@ public class RundeckClient implements Serializable {
     }
 
     /**
-     * Try to "ping" the RunDeck instance to see if it is alive
+     * Try to "ping" the Rundeck instance to see if it is alive
      *
      * @throws RundeckApiException if the ping fails
      */
@@ -285,7 +285,7 @@ public class RundeckClient implements Serializable {
     }
 
     /**
-     * Test the authentication on the RunDeck instance.
+     * Test the authentication on the Rundeck instance.
      *
      * @return sessionID if doing username+password login and it succeeded
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
@@ -1147,7 +1147,7 @@ public class RundeckClient implements Serializable {
     }
 
     /**
-     * Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
+     * Trigger the execution of a Rundeck job (identified by the given ID), and return immediately (without waiting the
      * end of the job execution)
      *
      * @param jobRun the RunJob, see {@link RunJobBuilder}
@@ -1182,8 +1182,8 @@ public class RundeckClient implements Serializable {
 
 
     /**
-     * Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
-     * We will poll the RunDeck server at regular interval (every 5 seconds) to know if the execution is finished (or
+     * Run a Rundeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
+     * We will poll the Rundeck server at regular interval (every 5 seconds) to know if the execution is finished (or
      * aborted) or is still running.
      *
      * @param runJob the RunJob, see {@link RunJobBuilder}
@@ -1203,8 +1203,8 @@ public class RundeckClient implements Serializable {
     }
 
     /**
-     * Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
-     * We will poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
+     * Run a Rundeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
+     * We will poll the Rundeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
      * know if the execution is finished (or aborted) or is still running.
      *
      * @param jobRun the RunJob, see {@link RunJobBuilder}
@@ -1282,7 +1282,7 @@ public class RundeckClient implements Serializable {
 
 
     /**
-     * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+     * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the Rundeck
      * server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
      * running. The command will be dispatched to nodes, accordingly to the nodeFilters parameter.
      *
@@ -1303,7 +1303,7 @@ public class RundeckClient implements Serializable {
     }
 
     /**
-     * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+     * Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the Rundeck
      * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
      * finished (or aborted) or is still running. The command will be dispatched to nodes, accordingly to the
      * nodeFilters parameter.
@@ -1416,7 +1416,7 @@ public class RundeckClient implements Serializable {
 
 
     /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the Rundeck
      * server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
      * running. The script will be dispatched to nodes, accordingly to the nodeFilters parameter.
      *
@@ -1439,7 +1439,7 @@ public class RundeckClient implements Serializable {
 
     /**
      * Run an ad-hoc script read from a file, and wait until its execution is finished (or aborted) to return. We will
-     * poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the
+     * poll the Rundeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the
      * execution is finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to
      * the nodeFilters parameter.
      *
@@ -1473,7 +1473,7 @@ public class RundeckClient implements Serializable {
         }
     }
     /**
-     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+     * Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the Rundeck
      * server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
      * finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to the nodeFilters
      * parameter.
@@ -2475,7 +2475,7 @@ public class RundeckClient implements Serializable {
      */
 
     /**
-     * Get system informations about the RunDeck server
+     * Get system informations about the Rundeck server
      *
      * @return a {@link RundeckSystemInfo} instance - won't be null
      * @throws RundeckApiException in case of error when calling the API
@@ -2685,35 +2685,35 @@ public class RundeckClient implements Serializable {
     }
 
     /**
-     * @return the URL of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
+     * @return the URL of the Rundeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
      */
     public String getUrl() {
         return url;
     }
 
     /**
-     * @return the auth-token used for authentication on the RunDeck instance (null if using login-based or session-based auth)
+     * @return the auth-token used for authentication on the Rundeck instance (null if using login-based or session-based auth)
      */
     public String getToken() {
         return token;
     }
 
     /**
-     * @return the login used for authentication on the RunDeck instance (null if using token-based or session-based auth)
+     * @return the login used for authentication on the Rundeck instance (null if using token-based or session-based auth)
      */
     public String getLogin() {
         return login;
     }
 
     /**
-     * @return the password used for authentication on the RunDeck instance (null if using token-based or session-based auth)
+     * @return the password used for authentication on the Rundeck instance (null if using token-based or session-based auth)
      */
     public String getPassword() {
         return password;
     }
 
     /**
-     * @return the sessionID used for authentication on the RunDeck instance (null if using login-based or token-based auth)
+     * @return the sessionID used for authentication on the Rundeck instance (null if using login-based or token-based auth)
      */
     public String getSessionID() {
         return sessionID;

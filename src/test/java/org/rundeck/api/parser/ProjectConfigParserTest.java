@@ -4,7 +4,6 @@ import org.dom4j.Document;
 import org.junit.Assert;
 import org.junit.Test;
 import org.rundeck.api.domain.ProjectConfig;
-import org.rundeck.api.domain.RundeckProject;
 
 import java.io.InputStream;
 

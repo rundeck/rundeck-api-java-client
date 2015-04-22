@@ -19,7 +19,7 @@ import java.io.Serializable;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * Represents a RunDeck job
+ * Represents a Rundeck job
  * 
  * @author Vincent Behar
  */

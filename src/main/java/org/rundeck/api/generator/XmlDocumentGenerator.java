@@ -2,7 +2,6 @@ package org.rundeck.api.generator;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
-import org.dom4j.Node;
 
 /**
  * XmlDocumentGenerator is ...

@@ -11,8 +11,8 @@ interactions:
       Content-Type: application/zip
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 11
-      X-RunDeck-Auth-Token: Do4d3NUD5DKk21DR4sNK755RcPk618vn
+      User-Agent: Rundeck API Java Client 11
+      X-Rundeck-Auth-Token: Do4d3NUD5DKk21DR4sNK755RcPk618vn
     body: ''
   response:
     status: 200

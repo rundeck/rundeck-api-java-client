@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * Represents a RunDeck output entry
+ * Represents a Rundeck output entry
  * 
  */
 public class RundeckOutputEntry implements Serializable {

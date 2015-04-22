@@ -47,16 +47,11 @@ import org.rundeck.api.parser.XmlNodeParser;
 import org.rundeck.api.util.AssertUtil;
 import org.rundeck.api.util.DocumentContentProducer;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.ProxySelector;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -68,29 +63,29 @@ import java.util.Map.Entry;
  */
 class ApiCall {
 
-    /** RunDeck HTTP header for the auth-token (in case of token-based authentication) */
-    private static final transient String AUTH_TOKEN_HEADER = "X-RunDeck-Auth-Token";
+    /** Rundeck HTTP header for the auth-token (in case of token-based authentication) */
+    private static final transient String AUTH_TOKEN_HEADER = "X-Rundeck-Auth-Token";
 
-    /** RunDeck HTTP header for the setting session cookie (in case of session-based authentication) */
+    /** Rundeck HTTP header for the setting session cookie (in case of session-based authentication) */
     private static final transient String COOKIE_HEADER = "Cookie";
 
-    /** {@link RundeckClient} instance holding the RunDeck url and the credentials */
+    /** {@link RundeckClient} instance holding the Rundeck url and the credentials */
     private final RundeckClient client;
 
     /**
-     * Build a new instance, linked to the given RunDeck client
+     * Build a new instance, linked to the given Rundeck client
      *
-     * @param client holding the RunDeck url and the credentials
+     * @param client holding the Rundeck url and the credentials
      * @throws IllegalArgumentException if client is null
      */
     public ApiCall(RundeckClient client) throws IllegalArgumentException {
         super();
         this.client = client;
-        AssertUtil.notNull(client, "The RunDeck Client must not be null !");
+        AssertUtil.notNull(client, "The Rundeck Client must not be null !");
     }
 
     /**
-     * Try to "ping" the RunDeck instance to see if it is alive
+     * Try to "ping" the Rundeck instance to see if it is alive
      *
      * @throws RundeckApiException if the ping fails
      */
@@ -103,14 +98,14 @@ class ApiCall {
                                               + client.getUrl());
             }
         } catch (IOException e) {
-            throw new RundeckApiException("Failed to ping RunDeck instance at " + client.getUrl(), e);
+            throw new RundeckApiException("Failed to ping Rundeck instance at " + client.getUrl(), e);
         } finally {
             httpClient.getConnectionManager().shutdown();
         }
     }
 
     /**
-     * Test the authentication on the RunDeck instance. Will delegate to either {@link #testLoginAuth()} (in case of
+     * Test the authentication on the Rundeck instance. Will delegate to either {@link #testLoginAuth()} (in case of
      * login-based auth) or {@link #testTokenAuth()} (in case of token-based auth).
      *
      * @return the login session ID if using login-based auth, otherwise null
@@ -130,7 +125,7 @@ class ApiCall {
     }
 
     /**
-     * Test the login-based authentication on the RunDeck instance
+     * Test the login-based authentication on the Rundeck instance
      *
      * @throws RundeckApiLoginException if the login fails
      * @see #testAuth()
@@ -146,7 +141,7 @@ class ApiCall {
     }
 
     /**
-     * Test the token-based authentication on the RunDeck instance
+     * Test the token-based authentication on the Rundeck instance
      *
      * @throws RundeckApiTokenException if the token is invalid
      * @see #testAuth()
@@ -162,7 +157,7 @@ class ApiCall {
     }
 
     /**
-     * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
+     * Execute an HTTP GET request to the Rundeck instance, on the given path. We will login first, and then execute the
      * API call. At the end, the given parser will be used to convert the response to a more useful result object.
      *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
@@ -183,7 +178,7 @@ class ApiCall {
 
 
     /**
-     * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
+     * Execute an HTTP GET request to the Rundeck instance, on the given path. We will login first, and then execute the
      * API call. At the end, the given parser will be used to convert the response to a more useful result object.
      *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
@@ -203,7 +198,7 @@ class ApiCall {
     }
 
     /**
-     * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
+     * Execute an HTTP GET request to the Rundeck instance, on the given path. We will login first, and then execute the
      * API call.
      *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
@@ -230,7 +225,7 @@ class ApiCall {
     }
 
     /**
-     * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
+     * Execute an HTTP GET request to the Rundeck instance, on the given path. We will login first, and then execute the
      * API call without appending the API_ENDPOINT to the URL.
      *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
@@ -252,7 +247,7 @@ class ApiCall {
     }
 
     /**
-     * Execute an HTTP POST or GET request to the RunDeck instance, on the given path, depend ing of the {@link
+     * Execute an HTTP POST or GET request to the Rundeck instance, on the given path, depend ing of the {@link
      * ApiPathBuilder} contains POST content or not (attachments or Form data). We will login first, and then execute
      * the API call. At the end, the given parser will be used to convert the response to a more useful result object.
      *
@@ -276,7 +271,7 @@ class ApiCall {
     }
 
     /**
-     * Execute an HTTP POST request to the RunDeck instance, on the given path. We will login first, and then execute
+     * Execute an HTTP POST request to the Rundeck instance, on the given path. We will login first, and then execute
      * the API call. At the end, the given parser will be used to convert the response to a more useful result object.
      *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
@@ -292,7 +287,7 @@ class ApiCall {
         return requestWithEntity(apiPath, parser, httpPost);
     }
     /**
-     * Execute an HTTP PUT request to the RunDeck instance, on the given path. We will login first, and then execute
+     * Execute an HTTP PUT request to the Rundeck instance, on the given path. We will login first, and then execute
      * the API call. At the end, the given parser will be used to convert the response to a more useful result object.
      *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
@@ -309,7 +304,7 @@ class ApiCall {
     }
 
     /**
-     * Execute an HTTP PUT request to the RunDeck instance, on the given path. We will login first, and then execute
+     * Execute an HTTP PUT request to the Rundeck instance, on the given path. We will login first, and then execute
      * the API call. At the end, the given parser will be used to convert the response to a more useful result object.
      *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
@@ -378,7 +373,7 @@ class ApiCall {
     }
 
     /**
-     * Execute an HTTP DELETE request to the RunDeck instance, on the given path. We will login first, and then execute
+     * Execute an HTTP DELETE request to the Rundeck instance, on the given path. We will login first, and then execute
      * the API call. At the end, the given parser will be used to convert the response to a more useful result object.
      *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
@@ -393,7 +388,7 @@ class ApiCall {
         return execute(new HttpDelete(client.getUrl() + client.getApiEndpoint() + apiPath), parser);
     }
     /**
-     * Execute an HTTP DELETE request to the RunDeck instance, on the given path, and expect a 204 response.
+     * Execute an HTTP DELETE request to the Rundeck instance, on the given path, and expect a 204 response.
      *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
      * @throws RundeckApiException in case of error when calling the API
@@ -410,7 +405,7 @@ class ApiCall {
     }
 
     /**
-     * Execute an HTTP request to the RunDeck instance. We will login first, and then execute the API call. At the end,
+     * Execute an HTTP request to the Rundeck instance. We will login first, and then execute the API call. At the end,
      * the given parser will be used to convert the response to a more useful result object.
      *
      * @param request to execute. see {@link HttpGet}, {@link HttpDelete}, and so on...
@@ -427,7 +422,7 @@ class ApiCall {
     }
 
     /**
-     * Execute an HTTP GET request to the RunDeck instance, on the given path. We will login first, and then execute the
+     * Execute an HTTP GET request to the Rundeck instance, on the given path. We will login first, and then execute the
      * API call. At the end, the given parser will be used to convert the response to a more useful result object.
      *
      * @param apiPath on which we will make the HTTP request - see {@link ApiPathBuilder}
@@ -457,7 +452,7 @@ class ApiCall {
         return wrote;
     }
     /**
-     * Execute an HTTP request to the RunDeck instance. We will login first, and then execute the API call.
+     * Execute an HTTP request to the Rundeck instance. We will login first, and then execute the API call.
      *
      * @param request to execute. see {@link HttpGet}, {@link HttpDelete}, and so on...
      * @return a new {@link InputStream} instance, not linked with network resources
@@ -613,7 +608,7 @@ class ApiCall {
         }
     }
     /**
-     * Execute an HTTP request to the RunDeck instance. We will login first, and then execute the API call.
+     * Execute an HTTP request to the Rundeck instance. We will login first, and then execute the API call.
      *
      * @param request to execute. see {@link HttpGet}, {@link HttpDelete}, and so on...
      * @return a new {@link InputStream} instance, not linked with network resources
@@ -674,7 +669,7 @@ class ApiCall {
                 return null;
             }
             if (response.getEntity() == null) {
-                throw new RundeckApiException("Empty RunDeck response ! HTTP status line is : "
+                throw new RundeckApiException("Empty Rundeck response ! HTTP status line is : "
                                               + response.getStatusLine());
             }
             return handler.handle(response);
@@ -766,9 +761,9 @@ class ApiCall {
                     }
                     break;
                 } catch (IOException io) {
-                    throw new RundeckApiLoginException("Failed to read RunDeck result", io);
+                    throw new RundeckApiLoginException("Failed to read Rundeck result", io);
                 } catch (ParseException p) {
-                    throw new RundeckApiLoginException("Failed to parse RunDeck response", p);
+                    throw new RundeckApiLoginException("Failed to parse Rundeck response", p);
                 }
             } catch (IOException e) {
                 throw new RundeckApiLoginException("Failed to post login form on " + location, e);
@@ -788,7 +783,7 @@ class ApiCall {
         HttpClientBuilder httpClientBuilder = HttpClientBuilder.create().useSystemProperties();
 
         // configure user-agent
-        httpClientBuilder.setUserAgent( "RunDeck API Java Client " + client.getApiVersion());
+        httpClientBuilder.setUserAgent( "Rundeck API Java Client " + client.getApiVersion());
 
         if (client.isSslHostnameVerifyAllowAll()) {
             httpClientBuilder.setHostnameVerifier(SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);

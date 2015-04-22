@@ -18,7 +18,7 @@ package org.rundeck.api.domain;
 import java.io.Serializable;
 
 /**
- * Represents a RunDeck project
+ * Represents a Rundeck project
  * 
  * @author Vincent Behar
  */

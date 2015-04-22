@@ -1,7 +1,5 @@
 package org.rundeck.api.parser;
 
-import org.apache.http.HttpResponse;
-
 import java.io.InputStream;
 
 /**

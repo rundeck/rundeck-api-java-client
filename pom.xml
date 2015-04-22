@@ -17,10 +17,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <prerequisites>
-     <maven>2.2.1</maven>
-  </prerequisites>
-
   <!-- For deploying to Sonatype OSS Nexus -->
   <parent>
     <groupId>org.sonatype.oss</groupId>
@@ -33,8 +29,8 @@
   <artifactId>rundeck-api-java-client</artifactId>
   <version>12.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>RunDeck API - Java Client</name>
-  <description>Java client for the RunDeck REST API</description>
+  <name>Rundeck API - Java Client</name>
+  <description>Java client for the Rundeck REST API</description>
   <inceptionYear>2011</inceptionYear>
   <url>http://rundeck.github.com/rundeck-api-java-client</url>
   <scm>
@@ -98,7 +94,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Dependencies version -->
-    <apache.httpcomponents.version>4.3.6</apache.httpcomponents.version>
+    <apache.httpcomponents.client.version>4.3.6</apache.httpcomponents.client.version>
+    <apache.httpcomponents.core.version>4.3.3</apache.httpcomponents.core.version> <!-- match what http client uses -->
     <commons-lang.version>2.6</commons-lang.version>
     <commons-io.version>2.4</commons-io.version>
     <dom4j.version>1.6.1</dom4j.version>
@@ -461,12 +458,17 @@
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-      <version>${apache.httpcomponents.version}</version>
+      <version>${apache.httpcomponents.client.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpmime</artifactId>
-      <version>${apache.httpcomponents.version}</version>
+      <version>${apache.httpcomponents.client.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+      <version>${apache.httpcomponents.core.version}</version>
     </dependency>
     <!-- Commons -->
     <dependency>

@@ -1,8 +1,6 @@
 package org.rundeck.api.domain;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Base execution status for a step

@@ -15,6 +15,6 @@
  */
 
 /**
- * Internal parsers for parsing the RunDeck responses.
+ * Internal parsers for parsing the Rundeck responses.
  */
 package org.rundeck.api.parser;

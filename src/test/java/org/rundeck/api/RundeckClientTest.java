@@ -34,7 +34,7 @@ import java.util.*;
 
 
 /**
- * Test the {@link RundeckClient}. Uses betamax to unit-test HTTP requests without a live RunDeck instance.
+ * Test the {@link RundeckClient}. Uses betamax to unit-test HTTP requests without a live Rundeck instance.
  *
  * @author Vincent Behar
  */
@@ -2112,7 +2112,7 @@ public class RundeckClientTest {
 
     @Before
     public void setUp() throws Exception {
-        // not that you can put whatever here, because we don't actually connect to the RunDeck instance
+        // not that you can put whatever here, because we don't actually connect to the Rundeck instance
         // but instead use betamax as a proxy to serve the previously recorded tapes (in src/test/resources)
         client = createClient(TEST_TOKEN_0, 5);
     }

@@ -15,6 +15,6 @@
  */
 
 /**
- * Java client for the RunDeck API.
+ * Java client for the Rundeck API.
  */
 package org.rundeck.api;

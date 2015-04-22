@@ -8,8 +8,8 @@ interactions:
     headers:
       Host: rundeck.local:4440
       Proxy-Connection: Keep-Alive
-      User-Agent: RunDeck API Java Client 5
-      X-RunDeck-Auth-Token: PVnN5K3OPc5vduS3uVuVnEsD57pDC5pd
+      User-Agent: Rundeck API Java Client 5
+      X-Rundeck-Auth-Token: PVnN5K3OPc5vduS3uVuVnEsD57pDC5pd
   response:
     status: 200
     headers:

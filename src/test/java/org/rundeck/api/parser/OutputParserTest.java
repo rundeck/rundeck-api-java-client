@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.rundeck.api.domain.RundeckExecution;
 import org.rundeck.api.domain.RundeckOutput;
-import org.rundeck.api.domain.RundeckProject;
 
 import java.io.InputStream;
 
