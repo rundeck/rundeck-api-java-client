@@ -21,22 +21,15 @@ import org.apache.http.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
-import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.*;
 import org.apache.http.entity.*;
 import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.SystemDefaultHttpClient;
-import org.apache.http.impl.conn.ProxySelectorRoutePlanner;
 import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.HttpProtocolParams;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.rundeck.api.RundeckApiException.RundeckApiLoginException;
@@ -90,7 +83,7 @@ class ApiCall {
      * @throws RundeckApiException if the ping fails
      */
     public void ping() throws RundeckApiException {
-        HttpClient httpClient = instantiateHttpClient();
+        CloseableHttpClient httpClient = instantiateHttpClient();
         try {
             HttpResponse response = httpClient.execute(new HttpGet(client.getUrl()));
             if (response.getStatusLine().getStatusCode() / 100 != 2) {
@@ -100,7 +93,11 @@ class ApiCall {
         } catch (IOException e) {
             throw new RundeckApiException("Failed to ping Rundeck instance at " + client.getUrl(), e);
         } finally {
-            httpClient.getConnectionManager().shutdown();
+            try {
+                httpClient.close();
+            } catch (IOException e) {
+                // ignore
+            }
         }
     }
 
@@ -341,7 +338,7 @@ class ApiCall {
             httpPost.setEntity(multipartEntityBuilder.build());
         } else if (apiPath.getForm().size() > 0) {
             try {
-                httpPost.setEntity(new UrlEncodedFormEntity(apiPath.getForm(), HTTP.UTF_8));
+                httpPost.setEntity(new UrlEncodedFormEntity(apiPath.getForm(), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 throw new RundeckApiException("Unsupported encoding: " + e.getMessage(), e);
             }
