@@ -2,7 +2,7 @@ javadoc proofread file: ./proof-read.txt
 
 
 === reference/org/rundeck/api/package-descr.html ===
-        Java client for the RunDeck API.
+        Java client for the Rundeck API.
 
 
 === reference/org/rundeck/api/domain/package-descr.html ===
@@ -13,7 +13,7 @@ javadoc proofread file: ./proof-read.txt
 
 
 === reference/org/rundeck/api/parser/package-descr.html ===
-        Internal parsers for parsing the RunDeck responses.
+        Internal parsers for parsing the Rundeck responses.
 
 
 === reference/org/rundeck/api/query/package-descr.html ===
@@ -98,6 +98,12 @@ METHOD: login
 METHOD: password
 METHOD: sessionId
         Specify a web session ID string for authentication
+METHOD: sslCertificateTrustAllowSelfSigned
+        Specify whether SSL certificate trust allows self-signed certs, otherwise it will use the default
+METHOD: sslHostnameVerifyAllowAll
+        Specify whether SSL hostname verifier allows all, otherwise it will use the default
+METHOD: systemProxyEnabled
+        Specify whether to use system proxy settings, default false
 METHOD: token
         Specify a Rundeck API Token string for authentication
 METHOD: url
@@ -113,19 +119,12 @@ METHOD: version
          <p>
          There are three methods for authentication : login-based or token-based or session-based.
          Login authentication requires
-         both a "login" and a "password". Token-based requires a "token" (also called "auth-token"). See the RunDeck
+         both a "login" and a "password". Token-based requires a "token" (also called "auth-token"). See the Rundeck
          documentation for generating such a token.</p>
          <p>
              Session-based authentication allows re-use of a previous login session. See
         {@link ... testAuth()}
         .
-         </p>
-         <p>
-             Deprecation notice: All public constructors for this class are deprecated. Use the
-        {@link ... RundeckClientBuilder}
-        or
-        {@link ... builder()}
-        convenience method to create a RundeckClient. The public constructors will be made non-public in version 12 of this library.
          </p>
          <br>
          Usage : <br>
@@ -163,16 +162,6 @@ FIELD: DEFAULT_POOLING_UNIT
 FIELD: JOBS_IMPORT
 FIELD: STORAGE_KEYS_PATH
 FIELD: STORAGE_ROOT_PATH
-CONSTRUCTOR: RundeckClient
-        Instantiate a new
-        {@link ... RundeckClient}
-        for the RunDeck instance at the given url,
-         using token-based authentication. Either token must be valid
-CONSTRUCTOR: RundeckClient
-        Instantiate a new
-        {@link ... RundeckClient}
-        for the RunDeck instance at the given url, using login-based
-         authentication.
 METHOD: abortExecution
         Abort an execution (identified by the given ID). The execution should be running...
 METHOD: abortExecution
@@ -200,6 +189,8 @@ METHOD: deleteProject
         Delete a project
 METHOD: deleteProjectConfig
         Set a single project configuration property value
+METHOD: deleteProjectFile
+        Delete a project readme.md or motd.md
 METHOD: equals
 METHOD: exportJob
         Export the definition of a single job, identified by the given ID
@@ -283,10 +274,6 @@ METHOD: getHistory
         Get the (events) history for the given project
 METHOD: getJob
         Get the definition of a single job, identified by the given ID
-METHOD: getJobExecutionOutput
-        Get the execution output of the given job
-METHOD: getJobExecutionOutput
-        Get the execution output of the given job
 METHOD: getJobExecutions
         Get the executions of the given job
 METHOD: getJobExecutions
@@ -337,7 +324,7 @@ METHOD: getRunningExecutions
         Get the running executions for the given project
 METHOD: getSessionID
 METHOD: getSystemInfo
-        Get system informations about the RunDeck server
+        Get system informations about the Rundeck server
 METHOD: getToken
 METHOD: getUrl
 METHOD: hashCode
@@ -356,37 +343,39 @@ METHOD: listKeyDirectory
 METHOD: listKeyDirectoryRoot
         List contents of root key directory
 METHOD: ping
-        Try to "ping" the RunDeck instance to see if it is alive
+        Try to "ping" the Rundeck instance to see if it is alive
+METHOD: readProjectFile
+        Read contents of a project readme.md or motd.md if it exsts, or return null
 METHOD: runAdhocCommand
-        Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+        Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the Rundeck
          server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
          running. The command will be dispatched to nodes, accordingly to the nodeFilters parameter.
 METHOD: runAdhocCommand
-        Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+        Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the Rundeck
          server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
          finished (or aborted) or is still running. The command will be dispatched to nodes, accordingly to the
          nodeFilters parameter.
 METHOD: runAdhocScript
-        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the Rundeck
          server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
          running. The script will be dispatched to nodes, accordingly to the nodeFilters parameter.
 METHOD: runAdhocScript
         Run an ad-hoc script read from a file, and wait until its execution is finished (or aborted) to return. We will
-         poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the
+         poll the Rundeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the
          execution is finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to
          the nodeFilters parameter.
 METHOD: runAdhocScript
-        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+        Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the Rundeck
          server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
          finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to the nodeFilters
          parameter.
 METHOD: runJob
-        Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
-         We will poll the RunDeck server at regular interval (every 5 seconds) to know if the execution is finished (or
+        Run a Rundeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
+         We will poll the Rundeck server at regular interval (every 5 seconds) to know if the execution is finished (or
          aborted) or is still running.
 METHOD: runJob
-        Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
-         We will poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
+        Run a Rundeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
+         We will poll the Rundeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
          know if the execution is finished (or aborted) or is still running.
 METHOD: setProjectConfig
         Set a single project configuration property value
@@ -394,9 +383,10 @@ METHOD: setProjectConfig
         Return the configuration of a project
 METHOD: storeKey
         Store an key file
+METHOD: storeProjectFile
+        Store contents to a project readme.md or motd.md
 METHOD: testAuth
-        Test the authentication on the RunDeck instance.
-METHOD: testCredentials
+        Test the authentication on the Rundeck instance.
 METHOD: toString
 METHOD: triggerAdhocCommand
         Trigger the execution of an ad-hoc command, and return immediately (without waiting the end of the execution).
@@ -408,7 +398,7 @@ METHOD: triggerAdhocScript
         Trigger the execution of an ad-hoc script read from a file, and return immediately (without waiting the end of
          the execution). The script will be dispatched to nodes, accordingly to the nodeFilters parameter.
 METHOD: triggerJob
-        Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
+        Trigger the execution of a Rundeck job (identified by the given ID), and return immediately (without waiting the
          end of the job execution)
 
 
@@ -417,6 +407,7 @@ METHOD: triggerJob
 ENUM: V10
 ENUM: V11
 ENUM: V12
+ENUM: V13
 ENUM: V5
 ENUM: V6
 ENUM: V7
@@ -428,7 +419,7 @@ METHOD: values
 
 
 === org/rundeck/api/RundeckApiException.html ===
-        A generic (unchecked) exception when using the RunDeck API
+        A generic (unchecked) exception when using the Rundeck API
 CONSTRUCTOR: RundeckApiException
 CONSTRUCTOR: RundeckApiException
 
@@ -708,7 +699,7 @@ METHOD: setUser
 
 
 === org/rundeck/api/domain/RundeckSystemInfo.html ===
-        Represents the RunDeck system info
+        Represents the Rundeck system info
 CONSTRUCTOR: RundeckSystemInfo
 METHOD: equals
 METHOD: getActiveThreads
@@ -755,7 +746,7 @@ METHOD: toString
 
 
 === org/rundeck/api/domain/RundeckProject.html ===
-        Represents a RunDeck project
+        Represents a Rundeck project
 CONSTRUCTOR: RundeckProject
 METHOD: equals
 METHOD: getDescription
@@ -771,7 +762,7 @@ METHOD: toString
 
 
 === org/rundeck/api/domain/RundeckOutputEntry.html ===
-        Represents a RunDeck output entry
+        Represents a Rundeck output entry
 CONSTRUCTOR: RundeckOutputEntry
 METHOD: equals
 METHOD: getAbsoluteTime
@@ -812,7 +803,7 @@ METHOD: values
 
 
 === org/rundeck/api/domain/RundeckOutput.html ===
-        Represents a RunDeck output
+        Represents a Rundeck output
 CONSTRUCTOR: RundeckOutput
 METHOD: addLogEntry
 METHOD: equals
@@ -859,7 +850,7 @@ METHOD: getName
 
 
 === org/rundeck/api/domain/RundeckNode.html ===
-        Represents a RunDeck node (server on which RunDeck can execute jobs and commands)
+        Represents a Rundeck node (server on which Rundeck can execute jobs and commands)
 CONSTRUCTOR: RundeckNode
 METHOD: equals
 METHOD: getDescription
@@ -899,7 +890,7 @@ METHOD: values
 
 
 === org/rundeck/api/domain/RundeckJobsImportResult.html ===
-        Result of importing some jobs into RunDeck
+        Result of importing some jobs into Rundeck
 CONSTRUCTOR: RundeckJobsImportResult
 METHOD: addFailedJob
 METHOD: addSkippedJob
@@ -960,7 +951,7 @@ METHOD: toString
 
 
 === org/rundeck/api/domain/RundeckJob.html ===
-        Represents a RunDeck job
+        Represents a Rundeck job
 CONSTRUCTOR: RundeckJob
 METHOD: equals
 METHOD: getAverageDuration
@@ -981,7 +972,7 @@ METHOD: toString
 
 
 === org/rundeck/api/domain/RundeckHistory.html ===
-        Represents a portion of the RunDeck (events) history
+        Represents a portion of the Rundeck (events) history
 CONSTRUCTOR: RundeckHistory
 METHOD: addEvent
 METHOD: equals
@@ -1014,7 +1005,7 @@ METHOD: setNodeStates
 
 
 === org/rundeck/api/domain/RundeckExecution.html ===
-        Represents a RunDeck execution, usually triggered by an API call. An execution could be a
+        Represents a Rundeck execution, usually triggered by an API call. An execution could be a
         {@link ... RundeckJob}
         execution or an "ad-hoc" execution.
 CONSTRUCTOR: RundeckExecution
@@ -1058,14 +1049,16 @@ METHOD: toString
         The status of an execution
 ENUM: ABORTED
 ENUM: FAILED
+ENUM: FAILED_WITH_RETRY
 ENUM: RUNNING
 ENUM: SUCCEEDED
+ENUM: TIMEDOUT
 METHOD: valueOf
 METHOD: values
 
 
 === org/rundeck/api/domain/RundeckEvent.html ===
-        Represents a RunDeck event
+        Represents a Rundeck event
 CONSTRUCTOR: RundeckEvent
 METHOD: equals
 METHOD: getAbortedBy
@@ -1371,6 +1364,12 @@ CONSTRUCTOR: RundeckTokenParser
 METHOD: parseXmlNode
 
 
+=== org/rundeck/api/parser/ResponseParser.html ===
+        Parse inputstream to some content
+METHOD: parseResponse
+        Parse the given content
+
+
 === org/rundeck/api/parser/ProjectParserV11.html ===
         ProjectParserV11 supports embedded "config" element.
 CONSTRUCTOR: ProjectParserV11
@@ -1408,7 +1407,7 @@ METHOD: parseXmlNode
 
 
 === org/rundeck/api/parser/ParserHelper.html ===
-        Helper for parsing RunDeck responses
+        Helper for parsing Rundeck responses
 CONSTRUCTOR: ParserHelper
 METHOD: loadDocument
         Load an XML
@@ -1667,7 +1666,7 @@ METHOD: user
         Utility class for API parameters that should be passed in URLs.
 CONSTRUCTOR: ParametersUtil
 METHOD: generateArgString
-        Generates a RunDeck "argString" representing the given options. Format of the argString is
+        Generates a Rundeck "argString" representing the given options. Format of the argString is
          <code>"-key1 value1 -key2 'value 2 with spaces'"</code>. You might want to url-encode this string...
 METHOD: generateNodeFiltersString
         Generates an url-encoded string representing the given nodeFilters. Format of the string is
@@ -1700,6 +1699,10 @@ METHOD: writeTo
 === org/rundeck/api/util/AssertUtil.html ===
         Utility class for assertions
 CONSTRUCTOR: AssertUtil
+METHOD: inList
+        Test if the given value is in the list
+METHOD: inList
+        Test if the given value is in the list
 METHOD: notBlank
         Test if the given
         {@link/String}

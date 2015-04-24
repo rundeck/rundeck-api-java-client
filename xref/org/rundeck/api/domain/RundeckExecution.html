@@ -32,7 +32,7 @@
 <a class="jxr_linenumber" name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.lang.time.DurationFormatUtils;
 <a class="jxr_linenumber" name="23" href="#23">23</a>  
 <a class="jxr_linenumber" name="24" href="#24">24</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="25" href="#25">25</a>  <em class="jxr_javadoccomment"> * Represents a RunDeck execution, usually triggered by an API call. An execution could be a {@link RundeckJob}</em>
+<a class="jxr_linenumber" name="25" href="#25">25</a>  <em class="jxr_javadoccomment"> * Represents a Rundeck execution, usually triggered by an API call. An execution could be a {@link RundeckJob}</em>
 <a class="jxr_linenumber" name="26" href="#26">26</a>  <em class="jxr_javadoccomment"> * execution or an "ad-hoc" execution.</em>
 <a class="jxr_linenumber" name="27" href="#27">27</a>  <em class="jxr_javadoccomment"> * </em>
 <a class="jxr_linenumber" name="28" href="#28">28</a>  <em class="jxr_javadoccomment"> * @author Vincent Behar</em>
@@ -317,7 +317,7 @@
 <a class="jxr_linenumber" name="307" href="#307">307</a> <em class="jxr_javadoccomment">     * The status of an execution</em>
 <a class="jxr_linenumber" name="308" href="#308">308</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="309" href="#309">309</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> enum <a href="../../../../org/rundeck/api/domain/RundeckExecution.html">ExecutionStatus</a> {
-<a class="jxr_linenumber" name="310" href="#310">310</a>         RUNNING, SUCCEEDED, FAILED, ABORTED;
+<a class="jxr_linenumber" name="310" href="#310">310</a>         RUNNING, SUCCEEDED, FAILED, ABORTED, FAILED_WITH_RETRY,TIMEDOUT;
 <a class="jxr_linenumber" name="311" href="#311">311</a>     }
 <a class="jxr_linenumber" name="312" href="#312">312</a> 
 <a class="jxr_linenumber" name="313" href="#313">313</a> }

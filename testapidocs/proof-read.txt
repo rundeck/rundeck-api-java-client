@@ -19,7 +19,7 @@ javadoc proofread file: ./proof-read.txt
 === org/rundeck/api/RundeckClientTest.html ===
         Test the
         {@link/RundeckClient}
-        . Uses betamax to unit-test HTTP requests without a live RunDeck instance.
+        . Uses betamax to unit-test HTTP requests without a live Rundeck instance.
 FIELD: TEST_TOKEN_0
         Note: to add a new test, do the following:
          1) start a rundeck server, available at hostname "rundeck.local"
@@ -34,6 +34,7 @@ FIELD: TEST_TOKEN_5
 FIELD: TEST_TOKEN_6
 FIELD: TEST_TOKEN_7
 FIELD: TEST_TOKEN_8
+FIELD: TEST_TOKEN_9
 FIELD: recorder
 CONSTRUCTOR: RundeckClientTest
 METHOD: abortExecution
@@ -69,6 +70,14 @@ METHOD: deleteKey
         delete ssh key
 METHOD: deleteProject
 METHOD: deleteProjectConfigKeyed
+METHOD: deleteProjectFileInvalidName
+        store project file
+METHOD: deleteProjectFileMotd
+        delete project file
+METHOD: deleteProjectFileProjectDNE
+        delete project file
+METHOD: deleteProjectFileReadme
+        delete project file
 METHOD: executionOutputBasic
         Execution output
 METHOD: executionOutputForNode
@@ -136,6 +145,12 @@ METHOD: listKeyDirectory
         list directory
 METHOD: listKeyDirectoryRoot
         list root
+METHOD: readProjectFile
+        read project readme, motd
+METHOD: readProjectFileInvalidName
+        read project readme, motd
+METHOD: readProjectFileProjectDNE
+        project DNE
 METHOD: runningExecutionsV8
         Running executions for all projects using API v8, which queries for project list and then individually
          queries each project's now running
@@ -148,6 +163,12 @@ METHOD: storeKey_private
         Store ssh key
 METHOD: storeKey_public
         Store ssh key
+METHOD: storeProjectFileInvalidName
+        store project file
+METHOD: storeProjectFileMotd
+        store project motd
+METHOD: storeProjectFileReadme
+        store project readme
 METHOD: triggerAdhocCommand
 METHOD: triggerAdhocCommandAsUser
 METHOD: triggerAdhocCommandAsUserUnauthorized
@@ -332,6 +353,8 @@ METHOD: testBasic
         {@link/ExecutionParser}
 CONSTRUCTOR: ExecutionParserTest
 METHOD: parseAdhocExecution
+METHOD: parseExecutionFailedWithRetry
+METHOD: parseExecutionTimedOut
 METHOD: parseMinimalistExecution
 METHOD: parseRunningExecution
 METHOD: parseSucceededExecution

@@ -68,7 +68,7 @@
 <a class="jxr_linenumber" name="58" href="#58">58</a>          execution.setId(Long.valueOf(execNode.valueOf(<span class="jxr_string">"@id"</span>)));
 <a class="jxr_linenumber" name="59" href="#59">59</a>          execution.setUrl(StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"@href"</span>)));
 <a class="jxr_linenumber" name="60" href="#60">60</a>          <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="61" href="#61">61</a>              execution.setStatus(ExecutionStatus.valueOf(StringUtils.upperCase(execNode.valueOf(<span class="jxr_string">"@status"</span>))));
+<a class="jxr_linenumber" name="61" href="#61">61</a>              execution.setStatus(ExecutionStatus.valueOf(StringUtils.replace(StringUtils.upperCase(execNode.valueOf(<span class="jxr_string">"@status"</span>)),<span class="jxr_string">"-"</span>,<span class="jxr_string">"_"</span>)));
 <a class="jxr_linenumber" name="62" href="#62">62</a>          } <strong class="jxr_keyword">catch</strong> (IllegalArgumentException e) {
 <a class="jxr_linenumber" name="63" href="#63">63</a>              execution.setStatus(<strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="64" href="#64">64</a>          }

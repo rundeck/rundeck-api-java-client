@@ -58,7 +58,7 @@
   RundeckClient
 
 
-| RunDeck API - Java Client
+| Rundeck API - Java Client
 
 </title>
 <link href="../../../../assets/android-developer-docs.css" rel="stylesheet" type="text/css" />
@@ -90,7 +90,7 @@
 <div id="header">
     <div id="headerLeft">
     
-      <span id="masthead-title">RunDeck API - Java Client</span>
+      <span id="masthead-title">Rundeck API - Java Client</span>
     
     </div>
     <div id="headerRight">
@@ -271,9 +271,6 @@ Summary:
 
 
 
-  &#124; <a href="#pubctors">Ctors</a>
-  
-
 
 
   &#124; <a href="#pubmethods">Methods</a>
@@ -363,13 +360,10 @@ Summary:
  <p>
  There are three methods for authentication : login-based or token-based or session-based.
  Login authentication requires
- both a "login" and a "password". Token-based requires a "token" (also called "auth-token"). See the RunDeck
+ both a "login" and a "password". Token-based requires a "token" (also called "auth-token"). See the Rundeck
  documentation for generating such a token.</p>
  <p>
      Session-based authentication allows re-use of a previous login session. See <code><a href="../../../org/rundeck/api/RundeckClient.html#testAuth()">testAuth()</a></code>.
- </p>
- <p>
-     Deprecation notice: All public constructors for this class are deprecated. Use the <code><a href="../../../org/rundeck/api/RundeckClientBuilder.html">RundeckClientBuilder</a></code> or <code><a href="../../../org/rundeck/api/RundeckClient.html#builder()">builder()</a></code> convenience method to create a RundeckClient. The public constructors will be made non-public in version 12 of this library.
  </p>
  <br>
  Usage : <br>
@@ -522,62 +516,6 @@ Summary:
 
 
 
-
-
-<!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<table id="pubctors" class="jd-sumtable"><tr><th colspan="12">Public Constructors</th></tr>
-
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol"><nobr>
-            
-            
-            
-            
-            
-            </nobr>
-        </td>
-        <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#RundeckClient(java.lang.String, java.lang.String)">RundeckClient</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> url, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> token)</nobr>
-        
-        <div class="jd-descrdiv">
-      <em>
-  This constructor is deprecated.
-      Use the builder <code><a href="../../../org/rundeck/api/RundeckClientBuilder.html">RundeckClientBuilder</a></code> or <code><a href="../../../org/rundeck/api/RundeckClient.html#builder()">builder()</a></code>,
- this method will not be public in version 12 of this
- library.
-</em></div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol"><nobr>
-            
-            
-            
-            
-            
-            </nobr>
-        </td>
-        <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#RundeckClient(java.lang.String, java.lang.String, java.lang.String)">RundeckClient</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> url, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> login, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> password)</nobr>
-        
-        <div class="jd-descrdiv">
-      <em>
-  This constructor is deprecated.
-      Use the builder <code><a href="../../../org/rundeck/api/RundeckClientBuilder.html">RundeckClientBuilder</a></code> or <code><a href="../../../org/rundeck/api/RundeckClient.html#builder()">builder()</a></code>, this method will not be public in version 12 of this
- library.
-</em></div>
-  
-  </td></tr>
-
-
-
-</table>
 
 
 
@@ -832,6 +770,24 @@ Summary:
             
             
             
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#deleteProjectFile(java.lang.String, java.lang.String)">deleteProjectFile</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> filename)</nobr>
+        
+        <div class="jd-descrdiv">Delete a project readme.md or motd.md</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
             boolean</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
@@ -841,7 +797,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -859,7 +815,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -877,7 +833,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -895,7 +851,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -913,7 +869,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -931,7 +887,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -950,7 +906,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -968,7 +924,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -987,7 +943,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1005,7 +961,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1024,7 +980,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1042,7 +998,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1061,7 +1017,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1079,7 +1035,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1097,7 +1053,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1115,7 +1071,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1133,7 +1089,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1151,7 +1107,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1169,7 +1125,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1187,7 +1143,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1205,7 +1161,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1223,7 +1179,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1241,7 +1197,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1259,7 +1215,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1277,7 +1233,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1295,7 +1251,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1313,7 +1269,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1331,7 +1287,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1349,7 +1305,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1367,7 +1323,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1385,7 +1341,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1403,7 +1359,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1421,7 +1377,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1439,7 +1395,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1457,7 +1413,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1475,7 +1431,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1493,7 +1449,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1511,7 +1467,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1529,53 +1485,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol"><nobr>
-            
-            
-            
-            
-            
-            <a href="../../../org/rundeck/api/domain/RundeckOutput.html">RundeckOutput</a></nobr>
-        </td>
-        <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#getJobExecutionOutput(java.lang.Long, int, int, long, int)">getJobExecutionOutput</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Long.html">Long</a> executionId, int offset, int lastlines, long lastmod, int maxlines)</nobr>
-        
-        <div class="jd-descrdiv">
-      <em>
-  This method is deprecated.
-      renamed for clarity use <code><a href="../../../org/rundeck/api/RundeckClient.html#getExecutionOutput(java.lang.Long, int, int, long, int)">getExecutionOutput(Long, int, int, long, int)</a></code>, will be removed in
- version 12 of this library
-</em></div>
-  
-  </td></tr>
-
-
-	 
     <tr class=" api apilevel-" >
-        <td class="jd-typecol"><nobr>
-            
-            
-            
-            
-            
-            <a href="../../../org/rundeck/api/domain/RundeckOutput.html">RundeckOutput</a></nobr>
-        </td>
-        <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#getJobExecutionOutput(java.lang.Long, int, long, int)">getJobExecutionOutput</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Long.html">Long</a> executionId, int offset, long lastmod, int maxlines)</nobr>
-        
-        <div class="jd-descrdiv">
-      <em>
-  This method is deprecated.
-      renamed for clarity use <code><a href="../../../org/rundeck/api/RundeckClient.html#getExecutionOutput(java.lang.Long, int, long, int)">getExecutionOutput(Long, int, long, int)</a></code>, will be removed in
- version 12 of this library
-</em></div>
-  
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1593,7 +1503,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1611,7 +1521,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1629,7 +1539,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1647,7 +1557,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1665,7 +1575,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1683,7 +1593,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1701,7 +1611,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1719,7 +1629,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1737,7 +1647,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1753,7 +1663,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1771,7 +1681,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1789,7 +1699,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1807,7 +1717,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1825,7 +1735,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1843,7 +1753,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1859,7 +1769,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1877,7 +1787,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1895,7 +1805,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1913,7 +1823,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1931,7 +1841,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1949,7 +1859,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1967,7 +1877,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -1985,7 +1895,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2003,7 +1913,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2021,7 +1931,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2037,7 +1947,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2049,13 +1959,13 @@ Summary:
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#getSystemInfo()">getSystemInfo</a></span>()</nobr>
         
-        <div class="jd-descrdiv">Get system informations about the RunDeck server</div>
+        <div class="jd-descrdiv">Get system informations about the Rundeck server</div>
   
   </td></tr>
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2071,7 +1981,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2087,7 +1997,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2103,7 +2013,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2121,7 +2031,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2139,7 +2049,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2157,7 +2067,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2175,7 +2085,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2193,7 +2103,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2211,7 +2121,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2229,7 +2139,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -2241,7 +2151,25 @@ Summary:
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#ping()">ping</a></span>()</nobr>
         
-        <div class="jd-descrdiv">Try to "ping" the RunDeck instance to see if it is alive</div>
+        <div class="jd-descrdiv">Try to "ping" the Rundeck instance to see if it is alive</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#readProjectFile(java.lang.String, java.lang.String)">readProjectFile</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> filename)</nobr>
+        
+        <div class="jd-descrdiv">Read contents of a project readme.md or motd.md if it exsts, or return null</div>
   
   </td></tr>
 
@@ -2349,7 +2277,7 @@ Summary:
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#runJob(org.rundeck.api.RunJob)">runJob</a></span>(<a href="../../../org/rundeck/api/RunJob.html">RunJob</a> runJob)</nobr>
         
-        <div class="jd-descrdiv">Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.</div>
+        <div class="jd-descrdiv">Run a Rundeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.</div>
   
   </td></tr>
 
@@ -2367,7 +2295,7 @@ Summary:
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#runJob(org.rundeck.api.RunJob, long, java.util.concurrent.TimeUnit)">runJob</a></span>(<a href="../../../org/rundeck/api/RunJob.html">RunJob</a> jobRun, long poolingInterval, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/util/concurrent/TimeUnit.html">TimeUnit</a> poolingUnit)</nobr>
         
-        <div class="jd-descrdiv">Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.</div>
+        <div class="jd-descrdiv">Run a Rundeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.</div>
   
   </td></tr>
 
@@ -2434,12 +2362,12 @@ Summary:
             
             
             
-            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+            void</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#testAuth()">testAuth</a></span>()</nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#storeProjectFile(java.lang.String, java.lang.String, java.lang.String)">storeProjectFile</a></span>(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> filename, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> content)</nobr>
         
-        <div class="jd-descrdiv">Test the authentication on the RunDeck instance.</div>
+        <div class="jd-descrdiv">Store contents to a project readme.md or motd.md</div>
   
   </td></tr>
 
@@ -2452,15 +2380,12 @@ Summary:
             
             
             
-            void</nobr>
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#testCredentials()">testCredentials</a></span>()</nobr>
+        <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#testAuth()">testAuth</a></span>()</nobr>
         
-        <div class="jd-descrdiv">
-      <em>
-  This method is deprecated.
-      Use <code><a href="../../../org/rundeck/api/RundeckClient.html#testAuth()">testAuth()</a></code>, will be removed in version 12 of this library.</em></div>
+        <div class="jd-descrdiv">Test the authentication on the Rundeck instance.</div>
   
   </td></tr>
 
@@ -2549,7 +2474,7 @@ Summary:
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../org/rundeck/api/RundeckClient.html#triggerJob(org.rundeck.api.RunJob)">triggerJob</a></span>(<a href="../../../org/rundeck/api/RunJob.html">RunJob</a> jobRun)</nobr>
         
-        <div class="jd-descrdiv">Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
+        <div class="jd-descrdiv">Trigger the execution of a Rundeck job (identified by the given ID), and return immediately (without waiting the
  end of the job execution)</div>
   
   </td></tr>
@@ -3054,138 +2979,6 @@ From class
 
 
 <!-- Public ctors -->
-
-
-<!-- ========= CONSTRUCTOR DETAIL ======== -->
-<h2>Public Constructors</h2>
-
-
-
-<A NAME="RundeckClient(java.lang.String, java.lang.String)"></A>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-         
-         
-        
-      </span>
-      <span class="sympad">RundeckClient</span>
-      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> url, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> token)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      <p>
-  <p class="caution">
-      <strong>
-  This constructor is deprecated.</strong><br/> Use the builder <code><a href="../../../org/rundeck/api/RundeckClientBuilder.html">RundeckClientBuilder</a></code> or <code><a href="../../../org/rundeck/api/RundeckClient.html#builder()">builder()</a></code>,
- this method will not be public in version 12 of this
- library.
-
-  </p>
-  <div class="jd-tagdata jd-tagdescr"><p>Instantiate a new <code><a href="../../../org/rundeck/api/RundeckClient.html">RundeckClient</a></code> for the RunDeck instance at the given url,
- using token-based authentication. Either token must be valid</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>url</td>
-          <td>of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)</td>
-        </tr>
-        <tr>
-          <th>token</td>
-          <td>to use for authentication on the RunDeck instance</td>
-        </tr>
-      </table>
-  </div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Throws</h5>
-      <table class="jd-tagtable">  
-        <tr>
-            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
-            <td>if the url or token is blank (null, empty or whitespace)</td>
-        </tr>
-      </table>
-  </div>
-
-    </div>
-</div>
-
-
-<A NAME="RundeckClient(java.lang.String, java.lang.String, java.lang.String)"></A>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-         
-         
-        
-      </span>
-      <span class="sympad">RundeckClient</span>
-      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> url, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> login, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> password)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      <p>
-  <p class="caution">
-      <strong>
-  This constructor is deprecated.</strong><br/> Use the builder <code><a href="../../../org/rundeck/api/RundeckClientBuilder.html">RundeckClientBuilder</a></code> or <code><a href="../../../org/rundeck/api/RundeckClient.html#builder()">builder()</a></code>, this method will not be public in version 12 of this
- library.
-
-  </p>
-  <div class="jd-tagdata jd-tagdescr"><p>Instantiate a new <code><a href="../../../org/rundeck/api/RundeckClient.html">RundeckClient</a></code> for the RunDeck instance at the given url, using login-based
- authentication.</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>url</td>
-          <td>of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)</td>
-        </tr>
-        <tr>
-          <th>login</td>
-          <td>to use for authentication on the RunDeck instance</td>
-        </tr>
-        <tr>
-          <th>password</td>
-          <td>to use for authentication on the RunDeck instance</td>
-        </tr>
-      </table>
-  </div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Throws</h5>
-      <table class="jd-tagtable">  
-        <tr>
-            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
-            <td>if the url, login or password is blank (null, empty or whitespace)</td>
-        </tr>
-      </table>
-  </div>
-
-    </div>
-</div>
-
-
 
 
 
@@ -3971,6 +3764,51 @@ From class
         <tr>
             <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
             <td>if the projectName is blank (null, empty or whitespace)
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="deleteProjectFile(java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">deleteProjectFile</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> filename)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Delete a project readme.md or motd.md</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>projectName</td>
+          <td>project name</td>
+        </tr>
+        <tr>
+          <th>filename</td>
+          <td>filename, must be readme.md or motd.md
 </td>
         </tr>
       </table>
@@ -6985,176 +6823,6 @@ From class
 </div>
 
 
-<A NAME="getJobExecutionOutput(java.lang.Long, int, int, long, int)"></A>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-         
-         
-        <a href="../../../org/rundeck/api/domain/RundeckOutput.html">RundeckOutput</a>
-      </span>
-      <span class="sympad">getJobExecutionOutput</span>
-      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Long.html">Long</a> executionId, int offset, int lastlines, long lastmod, int maxlines)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      <p>
-  <p class="caution">
-      <strong>
-  This method is deprecated.</strong><br/> renamed for clarity use <code><a href="../../../org/rundeck/api/RundeckClient.html#getExecutionOutput(java.lang.Long, int, int, long, int)">getExecutionOutput(Long, int, int, long, int)</a></code>, will be removed in
- version 12 of this library
-
-  </p>
-  <div class="jd-tagdata jd-tagdescr"><p>Get the execution output of the given job</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>executionId</td>
-          <td>identifier of the execution - mandatory</td>
-        </tr>
-        <tr>
-          <th>offset</td>
-          <td>byte offset to read from in the file. 0 indicates the beginning.</td>
-        </tr>
-        <tr>
-          <th>lastlines</td>
-          <td>nnumber of lines to retrieve from the end of the available output. If specified it will override the offset value and return only the specified number of lines at the end of the log.</td>
-        </tr>
-        <tr>
-          <th>lastmod</td>
-          <td>epoch datestamp in milliseconds, return results only if modification changed since the specified date OR if more data is available at the given offset</td>
-        </tr>
-        <tr>
-          <th>maxlines</td>
-          <td>maximum number of lines to retrieve forward from the specified offset.</td>
-        </tr>
-      </table>
-  </div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Returns</h5>
-      <ul class="nolist"><li><code><a href="../../../org/rundeck/api/domain/RundeckOutput.html">RundeckOutput</a></code></li></ul>
-  </div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Throws</h5>
-      <table class="jd-tagtable">  
-        <tr>
-            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
-            <td>in case of error when calling the API (non-existent job with this ID)</td>
-        </tr>  
-        <tr>
-            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></td>
-            <td>if the login fails (in case of login-based authentication)</td>
-        </tr>  
-        <tr>
-            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
-            <td>if the token is invalid (in case of token-based authentication)</td>
-        </tr>  
-        <tr>
-            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
-            <td>if the jobId is blank (null, empty or whitespace)</td>
-        </tr>
-      </table>
-  </div>
-
-    </div>
-</div>
-
-
-<A NAME="getJobExecutionOutput(java.lang.Long, int, long, int)"></A>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-         
-         
-        <a href="../../../org/rundeck/api/domain/RundeckOutput.html">RundeckOutput</a>
-      </span>
-      <span class="sympad">getJobExecutionOutput</span>
-      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Long.html">Long</a> executionId, int offset, long lastmod, int maxlines)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      <p>
-  <p class="caution">
-      <strong>
-  This method is deprecated.</strong><br/> renamed for clarity use <code><a href="../../../org/rundeck/api/RundeckClient.html#getExecutionOutput(java.lang.Long, int, long, int)">getExecutionOutput(Long, int, long, int)</a></code>, will be removed in
- version 12 of this library
-
-  </p>
-  <div class="jd-tagdata jd-tagdescr"><p>Get the execution output of the given job</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>executionId</td>
-          <td>identifier of the execution - mandatory</td>
-        </tr>
-        <tr>
-          <th>offset</td>
-          <td>byte offset to read from in the file. 0 indicates the beginning.</td>
-        </tr>
-        <tr>
-          <th>lastmod</td>
-          <td>epoch datestamp in milliseconds, return results only if modification changed since the specified date OR if more data is available at the given offset</td>
-        </tr>
-        <tr>
-          <th>maxlines</td>
-          <td>maximum number of lines to retrieve forward from the specified offset.</td>
-        </tr>
-      </table>
-  </div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Returns</h5>
-      <ul class="nolist"><li><code><a href="../../../org/rundeck/api/domain/RundeckOutput.html">RundeckOutput</a></code></li></ul>
-  </div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Throws</h5>
-      <table class="jd-tagtable">  
-        <tr>
-            <th><a href="../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a></td>
-            <td>in case of error when calling the API (non-existent job with this ID)</td>
-        </tr>  
-        <tr>
-            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></td>
-            <td>if the login fails (in case of login-based authentication)</td>
-        </tr>  
-        <tr>
-            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
-            <td>if the token is invalid (in case of token-based authentication)</td>
-        </tr>  
-        <tr>
-            <th><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/IllegalArgumentException.html">IllegalArgumentException</a></td>
-            <td>if the jobId is blank (null, empty or whitespace)</td>
-        </tr>
-      </table>
-  </div>
-
-    </div>
-</div>
-
-
 <A NAME="getJobExecutions(java.lang.String)"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -7822,7 +7490,7 @@ From class
   <div class="jd-tagdata jd-tagdescr"><p></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Returns</h5>
-      <ul class="nolist"><li>the login used for authentication on the RunDeck instance (null if using token-based or session-based auth)
+      <ul class="nolist"><li>the login used for authentication on the Rundeck instance (null if using token-based or session-based auth)
 </li></ul>
   </div>
 
@@ -8187,7 +7855,7 @@ From class
   <div class="jd-tagdata jd-tagdescr"><p></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Returns</h5>
-      <ul class="nolist"><li>the password used for authentication on the RunDeck instance (null if using token-based or session-based auth)
+      <ul class="nolist"><li>the password used for authentication on the Rundeck instance (null if using token-based or session-based auth)
 </li></ul>
   </div>
 
@@ -8793,7 +8461,7 @@ From class
   <div class="jd-tagdata jd-tagdescr"><p></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Returns</h5>
-      <ul class="nolist"><li>the sessionID used for authentication on the RunDeck instance (null if using login-based or token-based auth)
+      <ul class="nolist"><li>the sessionID used for authentication on the Rundeck instance (null if using login-based or token-based auth)
 </li></ul>
   </div>
 
@@ -8826,7 +8494,7 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Get system informations about the RunDeck server</p></div>
+  <div class="jd-tagdata jd-tagdescr"><p>Get system informations about the Rundeck server</p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Returns</h5>
       <ul class="nolist"><li>a <code><a href="../../../org/rundeck/api/domain/RundeckSystemInfo.html">RundeckSystemInfo</a></code> instance - won't be null</li></ul>
@@ -8882,7 +8550,7 @@ From class
   <div class="jd-tagdata jd-tagdescr"><p></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Returns</h5>
-      <ul class="nolist"><li>the auth-token used for authentication on the RunDeck instance (null if using login-based or session-based auth)
+      <ul class="nolist"><li>the auth-token used for authentication on the Rundeck instance (null if using login-based or session-based auth)
 </li></ul>
   </div>
 
@@ -8918,7 +8586,7 @@ From class
   <div class="jd-tagdata jd-tagdescr"><p></p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Returns</h5>
-      <ul class="nolist"><li>the URL of the RunDeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
+      <ul class="nolist"><li>the URL of the Rundeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
 </li></ul>
   </div>
 
@@ -9105,7 +8773,7 @@ From class
   </div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">See Also</h5>
-      <ul class="nolist"><li>#importJobs(String, FileType, RundeckJobsImportMethod)</li>
+      <ul class="nolist"><li><code><a href="../../../org/rundeck/api/RundeckClient.html#importJobs(org.rundeck.api.RundeckJobsImport)">importJobs(RundeckJobsImport)</a></code></li>
       </ul>
   </div>
 
@@ -9175,7 +8843,7 @@ From class
   </div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">See Also</h5>
-      <ul class="nolist"><li>#importJobs(String, FileType, RundeckJobsImportMethod)</li>
+      <ul class="nolist"><li><code><a href="../../../org/rundeck/api/RundeckClient.html#importJobs(java.lang.String, org.rundeck.api.RundeckJobsImport)">importJobs(String, RundeckJobsImport)</a></code></li>
       </ul>
   </div>
 
@@ -9399,7 +9067,7 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Try to "ping" the RunDeck instance to see if it is alive</p></div>
+  <div class="jd-tagdata jd-tagdescr"><p>Try to "ping" the Rundeck instance to see if it is alive</p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Throws</h5>
       <table class="jd-tagtable">  
@@ -9409,6 +9077,55 @@ From class
 </td>
         </tr>
       </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="readProjectFile(java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a>
+      </span>
+      <span class="sympad">readProjectFile</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> filename)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Read contents of a project readme.md or motd.md if it exsts, or return null</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>projectName</td>
+          <td>project name</td>
+        </tr>
+        <tr>
+          <th>filename</td>
+          <td>filename, must be readme.md or motd.md</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>contents, or null
+</li></ul>
   </div>
 
     </div>
@@ -9440,7 +9157,7 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+  <div class="jd-tagdata jd-tagdescr"><p>Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the Rundeck
  server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
  running. The command will be dispatched to nodes, accordingly to the nodeFilters parameter.</p></div>
   <div class="jd-tagdata">
@@ -9479,7 +9196,7 @@ From class
   </div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">See Also</h5>
-      <ul class="nolist"><li>#runAdhocCommand(String, String, Properties, Integer, Boolean, long, TimeUnit)</li><li><code><a href="../../../org/rundeck/api/RundeckClient.html#triggerAdhocCommand(org.rundeck.api.RunAdhocCommand)">triggerAdhocCommand(RunAdhocCommand)</a></code></li>
+      <ul class="nolist"><li><code><a href="../../../org/rundeck/api/RundeckClient.html#runAdhocCommand(org.rundeck.api.RunAdhocCommand, long, java.util.concurrent.TimeUnit)">runAdhocCommand(RunAdhocCommand, long, TimeUnit)</a></code></li><li><code><a href="../../../org/rundeck/api/RundeckClient.html#triggerAdhocCommand(org.rundeck.api.RunAdhocCommand)">triggerAdhocCommand(RunAdhocCommand)</a></code></li>
       </ul>
   </div>
 
@@ -9512,7 +9229,7 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+  <div class="jd-tagdata jd-tagdescr"><p>Run an ad-hoc command, and wait until its execution is finished (or aborted) to return. We will poll the Rundeck
  server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
  finished (or aborted) or is still running. The command will be dispatched to nodes, accordingly to the
  nodeFilters parameter.</p></div>
@@ -9593,7 +9310,7 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+  <div class="jd-tagdata jd-tagdescr"><p>Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the Rundeck
  server at regular interval (every 5 seconds) to know if the execution is finished (or aborted) or is still
  running. The script will be dispatched to nodes, accordingly to the nodeFilters parameter.</p></div>
   <div class="jd-tagdata">
@@ -9670,7 +9387,7 @@ From class
     <div class="jd-details-descr">
       
   <div class="jd-tagdata jd-tagdescr"><p>Run an ad-hoc script read from a file, and wait until its execution is finished (or aborted) to return. We will
- poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the
+ poll the Rundeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the
  execution is finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to
  the nodeFilters parameter.</p></div>
   <div class="jd-tagdata">
@@ -9758,7 +9475,7 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the RunDeck
+  <div class="jd-tagdata jd-tagdescr"><p>Run an ad-hoc script, and wait until its execution is finished (or aborted) to return. We will poll the Rundeck
  server at regular interval (configured by the poolingInterval/poolingUnit couple) to know if the execution is
  finished (or aborted) or is still running. The script will be dispatched to nodes, accordingly to the nodeFilters
  parameter.</p></div>
@@ -9810,7 +9527,7 @@ From class
   </div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">See Also</h5>
-      <ul class="nolist"><li>#runAdhocScript(String, String, Properties, Properties, Integer, Boolean, long, TimeUnit)</li><li>#triggerAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean)</li>
+      <ul class="nolist"><li><code><a href="../../../org/rundeck/api/RundeckClient.html#runAdhocScript(org.rundeck.api.RunAdhocScript, long, java.util.concurrent.TimeUnit)">runAdhocScript(RunAdhocScript, long, TimeUnit)</a></code></li><li><code><a href="../../../org/rundeck/api/RundeckClient.html#triggerAdhocScript(org.rundeck.api.RunAdhocScript)">triggerAdhocScript(RunAdhocScript)</a></code></li>
       </ul>
   </div>
 
@@ -9843,8 +9560,8 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
- We will poll the RunDeck server at regular interval (every 5 seconds) to know if the execution is finished (or
+  <div class="jd-tagdata jd-tagdescr"><p>Run a Rundeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
+ We will poll the Rundeck server at regular interval (every 5 seconds) to know if the execution is finished (or
  aborted) or is still running.</p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Parameters</h5>
@@ -9915,8 +9632,8 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Run a RunDeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
- We will poll the RunDeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
+  <div class="jd-tagdata jd-tagdescr"><p>Run a Rundeck job (identified by the given ID), and wait until its execution is finished (or aborted) to return.
+ We will poll the Rundeck server at regular interval (configured by the poolingInterval/poolingUnit couple) to
  know if the execution is finished (or aborted) or is still running.</p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Parameters</h5>
@@ -10171,6 +9888,55 @@ From class
 </div>
 
 
+<A NAME="storeProjectFile(java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">storeProjectFile</span>
+      <span class="normal">(<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> projectName, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> filename, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> content)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Store contents to a project readme.md or motd.md</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>projectName</td>
+          <td>project name</td>
+        </tr>
+        <tr>
+          <th>filename</td>
+          <td>filename, must be readme.md or motd.md</td>
+        </tr>
+        <tr>
+          <th>content</td>
+          <td>content
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
 <A NAME="testAuth()"></A>
 
 <div class="jd-details api apilevel-"> 
@@ -10196,7 +9962,7 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Test the authentication on the RunDeck instance.</p></div>
+  <div class="jd-tagdata jd-tagdescr"><p>Test the authentication on the Rundeck instance.</p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Returns</h5>
       <ul class="nolist"><li>sessionID if doing username+password login and it succeeded</li></ul>
@@ -10214,59 +9980,6 @@ From class
 </td>
         </tr>
       </table>
-  </div>
-
-    </div>
-</div>
-
-
-<A NAME="testCredentials()"></A>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-         
-         
-        void
-      </span>
-      <span class="sympad">testCredentials</span>
-      <span class="normal">()</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      <p>
-  <p class="caution">
-      <strong>
-  This method is deprecated.</strong><br/> Use <code><a href="../../../org/rundeck/api/RundeckClient.html#testAuth()">testAuth()</a></code>, will be removed in version 12 of this library.
-  </p>
-  <div class="jd-tagdata jd-tagdescr"><p></p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Throws</h5>
-      <table class="jd-tagtable">  
-        <tr>
-            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiLoginException.html">RundeckApiException.RundeckApiLoginException</a></td>
-            <td></td>
-        </tr>  
-        <tr>
-            <th><a href="../../../org/rundeck/api/RundeckApiException.RundeckApiTokenException.html">RundeckApiException.RundeckApiTokenException</a></td>
-            <td></td>
-        </tr>
-      </table>
-  </div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">See Also</h5>
-      <ul class="nolist"><li><code><a href="../../../org/rundeck/api/RundeckClient.html#testAuth()">testAuth()</a></code></li>
-      </ul>
   </div>
 
     </div>
@@ -10367,7 +10080,7 @@ From class
   </div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">See Also</h5>
-      <ul class="nolist"><li>#triggerAdhocCommand(String, String)</li><li>#runAdhocCommand(String, String, Properties)</li>
+      <ul class="nolist"><li><code><a href="../../../org/rundeck/api/RundeckClient.html#runAdhocCommand(org.rundeck.api.RunAdhocCommand)">runAdhocCommand(RunAdhocCommand)</a></code></li>
       </ul>
   </div>
 
@@ -10438,7 +10151,7 @@ From class
   </div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">See Also</h5>
-      <ul class="nolist"><li>#triggerAdhocScript(String, String, Properties, Properties, Integer, Boolean)</li><li>#runAdhocScript(String, InputStream, Properties, Properties, Integer, Boolean, long, TimeUnit)</li>
+      <ul class="nolist"><li><code><a href="../../../org/rundeck/api/RundeckClient.html#triggerAdhocScript(org.rundeck.api.RunAdhocScript, java.lang.String)">triggerAdhocScript(RunAdhocScript, String)</a></code></li><li><code><a href="../../../org/rundeck/api/RundeckClient.html#runAdhocScript(org.rundeck.api.RunAdhocScript)">runAdhocScript(RunAdhocScript)</a></code></li>
       </ul>
   </div>
 
@@ -10550,7 +10263,7 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Trigger the execution of a RunDeck job (identified by the given ID), and return immediately (without waiting the
+  <div class="jd-tagdata jd-tagdescr"><p>Trigger the execution of a Rundeck job (identified by the given ID), and return immediately (without waiting the
  end of the job execution)</p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Parameters</h5>
@@ -10588,7 +10301,7 @@ From class
   </div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">See Also</h5>
-      <ul class="nolist"><li>#triggerJob(String)</li><li>#runJob(String, Properties, Properties)</li>
+      <ul class="nolist"><li><code><a href="../../../org/rundeck/api/RundeckClient.html#runJob(org.rundeck.api.RunJob)">runJob(RunJob)</a></code></li>
       </ul>
   </div>
 

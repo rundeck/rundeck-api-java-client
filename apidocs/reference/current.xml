@@ -1308,36 +1308,6 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<constructor name="RundeckClient"
- type="org.rundeck.api.RundeckClient"
- static="false"
- final="false"
- deprecated="deprecated"
- visibility="public"
->
-<parameter name="url" type="java.lang.String">
-</parameter>
-<parameter name="token" type="java.lang.String">
-</parameter>
-<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
-</exception>
-</constructor>
-<constructor name="RundeckClient"
- type="org.rundeck.api.RundeckClient"
- static="false"
- final="false"
- deprecated="deprecated"
- visibility="public"
->
-<parameter name="url" type="java.lang.String">
-</parameter>
-<parameter name="login" type="java.lang.String">
-</parameter>
-<parameter name="password" type="java.lang.String">
-</parameter>
-<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
-</exception>
-</constructor>
 <method name="abortExecution"
  return="org.rundeck.api.domain.RundeckAbort"
  abstract="false"
@@ -1592,6 +1562,21 @@
 </exception>
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
 </exception>
+</method>
+<method name="deleteProjectFile"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="projectName" type="java.lang.String">
+</parameter>
+<parameter name="filename" type="java.lang.String">
+</parameter>
 </method>
 <method name="exportJob"
  return="java.io.InputStream"
@@ -2593,62 +2578,6 @@
 <exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
 </exception>
 </method>
-<method name="getJobExecutionOutput"
- return="org.rundeck.api.domain.RundeckOutput"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="deprecated"
- visibility="public"
->
-<parameter name="executionId" type="java.lang.Long">
-</parameter>
-<parameter name="offset" type="int">
-</parameter>
-<parameter name="lastlines" type="int">
-</parameter>
-<parameter name="lastmod" type="long">
-</parameter>
-<parameter name="maxlines" type="int">
-</parameter>
-<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
-</exception>
-<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
-</exception>
-<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
-</exception>
-<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
-</exception>
-</method>
-<method name="getJobExecutionOutput"
- return="org.rundeck.api.domain.RundeckOutput"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="deprecated"
- visibility="public"
->
-<parameter name="executionId" type="java.lang.Long">
-</parameter>
-<parameter name="offset" type="int">
-</parameter>
-<parameter name="lastmod" type="long">
-</parameter>
-<parameter name="maxlines" type="int">
-</parameter>
-<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
-</exception>
-<exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
-</exception>
-<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
-</exception>
-<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
-</exception>
-</method>
 <method name="getJobExecutions"
  return="java.util.List&lt;org.rundeck.api.domain.RundeckExecution&gt;"
  abstract="false"
@@ -3350,6 +3279,21 @@
 <exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
 </exception>
 </method>
+<method name="readProjectFile"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="projectName" type="java.lang.String">
+</parameter>
+<parameter name="filename" type="java.lang.String">
+</parameter>
+</method>
 <method name="runAdhocCommand"
  return="org.rundeck.api.domain.RundeckExecution"
  abstract="false"
@@ -3586,8 +3530,8 @@
 <exception name="RundeckApiException" type="org.rundeck.api.RundeckApiException">
 </exception>
 </method>
-<method name="testAuth"
- return="java.lang.String"
+<method name="storeProjectFile"
+ return="void"
  abstract="false"
  native="false"
  synchronized="false"
@@ -3596,19 +3540,21 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
-</exception>
-<exception name="RundeckApiException.RundeckApiTokenException" type="org.rundeck.api.RundeckApiException.RundeckApiTokenException">
-</exception>
+<parameter name="projectName" type="java.lang.String">
+</parameter>
+<parameter name="filename" type="java.lang.String">
+</parameter>
+<parameter name="content" type="java.lang.String">
+</parameter>
 </method>
-<method name="testCredentials"
- return="void"
+<method name="testAuth"
+ return="java.lang.String"
  abstract="false"
  native="false"
  synchronized="false"
  static="false"
  final="false"
- deprecated="deprecated"
+ deprecated="not deprecated"
  visibility="public"
 >
 <exception name="RundeckApiException.RundeckApiLoginException" type="org.rundeck.api.RundeckApiException.RundeckApiLoginException">
@@ -3894,6 +3840,45 @@
  visibility="public"
 >
 <parameter name="id" type="java.lang.String">
+</parameter>
+</method>
+<method name="sslCertificateTrustAllowSelfSigned"
+ return="org.rundeck.api.RundeckClientBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="sslCertificateTrustAllowSelfSigned" type="boolean">
+</parameter>
+</method>
+<method name="sslHostnameVerifyAllowAll"
+ return="org.rundeck.api.RundeckClientBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="sslHostnameVerifyAllowAll" type="boolean">
+</parameter>
+</method>
+<method name="systemProxyEnabled"
+ return="org.rundeck.api.RundeckClientBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="systemProxyEnabled" type="boolean">
 </parameter>
 </method>
 <method name="token"
@@ -9999,6 +9984,27 @@
 </parameter>
 </constructor>
 </class>
+<interface name="ResponseParser"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="parseResponse"
+ return="T"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="response" type="java.io.InputStream">
+</parameter>
+</method>
+</interface>
 <class name="RundeckTokenParser"
  extends="java.lang.Object"
  abstract="false"
@@ -10969,6 +10975,40 @@
  visibility="public"
 >
 </constructor>
+<method name="inList"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="errorMessage" type="java.lang.String">
+</parameter>
+<parameter name="value" type="java.lang.Object">
+</parameter>
+<parameter name="list" type="java.lang.Object...">
+</parameter>
+</method>
+<method name="inList"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="errorMessage" type="java.lang.String">
+</parameter>
+<parameter name="value" type="java.lang.Object">
+</parameter>
+<parameter name="list" type="java.util.List&lt;java.lang.Object&gt;">
+</parameter>
+</method>
 <method name="notBlank"
  return="void"
  abstract="false"
