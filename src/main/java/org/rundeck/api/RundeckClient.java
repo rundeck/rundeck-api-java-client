@@ -47,9 +47,6 @@ import java.util.concurrent.TimeUnit;
  * <p>
  *     Session-based authentication allows re-use of a previous login session. See {@link #testAuth()}.
  * </p>
- * <p>
- *     Deprecation notice: All public constructors for this class are deprecated. Use the {@link RundeckClientBuilder} or {@link #builder()} convenience method to create a RundeckClient. The public constructors will be made non-public in version 12 of this library.
- * </p>
  * <br>
  * Usage : <br>
  * <code>
@@ -197,70 +194,6 @@ public class RundeckClient implements Serializable {
 
 
     /**
-     * Instantiate a new {@link RundeckClient} for the Rundeck instance at the given url, using login-based
-     * authentication.
-     *
-     * @param url of the Rundeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
-     * @param login to use for authentication on the Rundeck instance
-     * @param password to use for authentication on the Rundeck instance
-     * @throws IllegalArgumentException if the url, login or password is blank (null, empty or whitespace)
-     *
-     * @deprecated Use the builder {@link RundeckClientBuilder} or {@link #builder()}, this method will not be public in version 12 of this
-     * library.
-     */
-    public RundeckClient(String url, String login, String password) throws IllegalArgumentException {
-        this(url);
-        AssertUtil.notBlank(login, "The Rundeck login is mandatory !");
-        AssertUtil.notBlank(password, "The Rundeck password is mandatory !");
-        this.login = login;
-        this.password = password;
-        this.token = null;
-    }
-
-    /**
-     * Instantiate a new {@link RundeckClient} for the Rundeck instance at the given url,
-     * using token-based or session-based authentication. Either token or sessionID must be valid
-     *
-     * @param url of the Rundeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
-     * @param token to use for authentication on the Rundeck instance
-     * @param sessionID to use for session authentication on the Rundeck instance
-     * @param useToken should be true if using token, false if using sessionID
-     * @throws IllegalArgumentException if the url or token is blank (null, empty or whitespace)
-     * @deprecated Use the builder {@link RundeckClientBuilder} or {@link #builder()}, this method will not be public in version 10 of this library.
-     */
-    private RundeckClient(String url, String token, String sessionID, boolean useToken) throws IllegalArgumentException {
-        this(url);
-
-        if(useToken){
-            AssertUtil.notBlank(token, "Token is mandatory!");
-            this.token = token;
-            this.sessionID = null;
-        }
-        else {
-            AssertUtil.notBlank(sessionID, "sessionID is mandatory!");
-            this.sessionID = sessionID;
-            this.token = null;
-        }
-        this.login = null;
-        this.password = null;
-    }
-
-
-    /**
-     * Instantiate a new {@link RundeckClient} for the Rundeck instance at the given url,
-     * using token-based authentication. Either token must be valid
-     * @param url of the Rundeck instance ("http://localhost:4440", "http://rundeck.your-compagny.com/", etc)
-     * @param token to use for authentication on the Rundeck instance
-     * @throws IllegalArgumentException if the url or token is blank (null, empty or whitespace)
-     * @deprecated Use the builder {@link RundeckClientBuilder} or {@link #builder()},
-     * this method will not be public in version 12 of this
-     * library.
-     */
-    public RundeckClient(String url, String token) throws IllegalArgumentException {
-        this(url, token, null, true);
-    }
-
-    /**
      * Used by RundeckClientBuilder
      */
     RundeckClient(final String url) throws IllegalArgumentException {
@@ -295,14 +228,6 @@ public class RundeckClient implements Serializable {
         return (new ApiCall(this)).testAuth();
     }
 
-    /**
-     * @deprecated Use {@link #testAuth()}, will be removed in version 12 of this library.
-     * @see #testAuth()
-     */
-    @Deprecated
-    public void testCredentials() throws RundeckApiLoginException, RundeckApiTokenException {
-        testAuth();
-    }
 
     /**
      * Return root xpath for xml api results. for v11 and later it is empty, for earlier it is "result"
@@ -2196,26 +2121,6 @@ public class RundeckClient implements Serializable {
      * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
      * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
      * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @deprecated renamed for clarity use {@link #getExecutionOutput(Long, int, int, long, int)}, will be removed in
-     * version 12 of this library
-     */
-    public RundeckOutput getJobExecutionOutput(Long executionId, int offset, int lastlines, long lastmod, int maxlines)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return getExecutionOutput(executionId, offset, lastlines, lastmod, maxlines);
-    }
-    /**
-     * Get the execution output of the given job
-     *
-     * @param executionId identifier of the execution - mandatory
-     * @param offset byte offset to read from in the file. 0 indicates the beginning.
-     * @param lastlines nnumber of lines to retrieve from the end of the available output. If specified it will override the offset value and return only the specified number of lines at the end of the log.
-     * @param lastmod epoch datestamp in milliseconds, return results only if modification changed since the specified date OR if more data is available at the given offset
-     * @param maxlines maximum number of lines to retrieve forward from the specified offset.
-     * @return {@link RundeckOutput}
-     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
      */
     public RundeckOutput getExecutionOutput(Long executionId, int offset, int lastlines, long lastmod, int maxlines)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
@@ -2384,25 +2289,6 @@ public class RundeckClient implements Serializable {
     }
 
 
-    /**
-     * Get the execution output of the given job
-     *
-     * @param executionId identifier of the execution - mandatory
-     * @param offset byte offset to read from in the file. 0 indicates the beginning.
-     * @param lastmod epoch datestamp in milliseconds, return results only if modification changed since the specified date OR if more data is available at the given offset
-     * @param maxlines maximum number of lines to retrieve forward from the specified offset.
-     * @return {@link RundeckOutput}
-     * @throws RundeckApiException in case of error when calling the API (non-existent job with this ID)
-     * @throws RundeckApiLoginException if the login fails (in case of login-based authentication)
-     * @throws RundeckApiTokenException if the token is invalid (in case of token-based authentication)
-     * @throws IllegalArgumentException if the jobId is blank (null, empty or whitespace)
-     * @deprecated renamed for clarity use {@link #getExecutionOutput(Long, int, long, int)}, will be removed in
-     * version 12 of this library
-     */
-    public RundeckOutput getJobExecutionOutput(Long executionId, int offset, long lastmod, int maxlines)
-            throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        return getExecutionOutput(executionId, offset, lastmod, maxlines);
-    }
     /**
      * Get the execution output of the given job
      *
