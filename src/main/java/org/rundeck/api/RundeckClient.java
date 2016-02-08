@@ -992,7 +992,7 @@ public class RundeckClient implements Serializable {
             //API v8
             request.param("project", rundeckJobsImport.getProject());
         }
-        return new ApiCall(this).post(request, new JobsImportResultParser(rootXpath()));
+        return new ApiCall(this).post(request, new JobsImportResultParser("result"));
     }
 
     /**

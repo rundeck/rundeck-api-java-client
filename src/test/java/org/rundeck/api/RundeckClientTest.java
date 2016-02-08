@@ -1065,6 +1065,45 @@ public class RundeckClientTest {
         Assert.assertEquals("test", rundeckJob.getProject());
     }
     /**
+     * Import jobs api > v11
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "import_jobs_context_project_v13", mode = TapeMode.READ_ONLY)
+    public void importJobsContextProject_v13() throws Exception {
+        final RundeckClient client = createBuilder("V4yhukF67G3tSOEvWYEh1ijROKfrULVN")
+                .version(13)
+                .build();
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>job1</name>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder
+                .builder()
+                .setStream(stream)
+                .setFileType(FileType.XML)
+                .setJobsImportMethod(RundeckJobsImportMethod.CREATE)
+                .setProject("test")
+                .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(0,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
+        Assert.assertEquals("job1", rundeckJob.getName());
+        Assert.assertEquals("test", rundeckJob.getProject());
+    }
+    /**
      * Import jobs, xml no project defined
      * @throws Exception
      */

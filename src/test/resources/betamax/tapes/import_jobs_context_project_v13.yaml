@@ -1,0 +1,42 @@
+!tape
+name: import_jobs_context_project_v13
+interactions:
+- recorded: 2016-02-08T18:48:19.570Z
+  request:
+    method: POST
+    uri: http://rundeck.local:4440/api/13/jobs/import?format=xml&dupeOption=create&project=test
+    headers:
+      Accept: text/xml
+      Accept-Encoding: gzip,deflate
+      Content-Length: '499'
+      Content-Type: multipart/form-data; boundary=l89fXhix6BLqTcBKck-x0kLVHtBIoiGB
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: Rundeck API Java Client 13
+      X-Rundeck-Auth-Token: V4yhukF67G3tSOEvWYEh1ijROKfrULVN
+    body: "--l89fXhix6BLqTcBKck-x0kLVHtBIoiGB\r\nContent-Disposition: form-data; name=\"xmlBatch\"; filename=\"post-data97094485886327197.tmp\"\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\n<joblist>\n  <job>\n    <loglevel>INFO</loglevel>\n\
+      \    <sequence keepgoing='false' strategy='node-first'>\n      <command>\n        <exec>echo hi</exec>\n      </command>\n    </sequence>\n    <description></description>\n    <name>job1</name>\n  </job>\n</joblist>\r\n--l89fXhix6BLqTcBKck-x0kLVHtBIoiGB--\r\
+      \n"
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=v36fjreavd2on3lusx9yjrfz;Path=/
+      X-Rundeck-API-Version: '15'
+      X-Rundeck-API-XML-Response-Wrapper: 'true'
+    body: |-
+      <result success='true' apiversion='15'>
+        <succeeded count='1'>
+          <job index='1' href='http://madmartigan.local:4440/api/15/job/cf5aade5-91ba-4548-8c16-63a1ab5f956c'>
+            <id>cf5aade5-91ba-4548-8c16-63a1ab5f956c</id>
+            <name>job1</name>
+            <group></group>
+            <project>test</project>
+            <permalink>http://madmartigan.local:4440/project/test/job/show/cf5aade5-91ba-4548-8c16-63a1ab5f956c</permalink>
+          </job>
+        </succeeded>
+        <failed count='0' />
+        <skipped count='0' />
+      </result>
