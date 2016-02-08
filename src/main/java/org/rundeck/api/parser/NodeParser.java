@@ -16,34 +16,29 @@
 package org.rundeck.api.parser;
 
 import java.util.Arrays;
+
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Node;
 import org.rundeck.api.domain.RundeckNode;
 
 /**
  * Parser for a single {@link RundeckNode}
- * 
+ *
  * @author Vincent Behar
  */
-public class NodeParser implements XmlNodeParser<RundeckNode> {
+public class NodeParser extends BaseXpathParser<RundeckNode> {
 
-    private String xpath;
 
-    public NodeParser() {
-        super();
+    public NodeParser(final String xpath) {
+        super(xpath);
     }
 
-    /**
-     * @param xpath of the rundeck-node element if it is not the root xml-node
-     */
-    public NodeParser(String xpath) {
-        super();
-        this.xpath = xpath;
+    public NodeParser() {
+
     }
 
     @Override
-    public RundeckNode parseXmlNode(Node node) {
-        Node rundeckNodeNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public RundeckNode parse(Node rundeckNodeNode) {
 
         RundeckNode rundeckNode = new RundeckNode();
 

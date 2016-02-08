@@ -37,19 +37,15 @@ import java.util.*;
  *
  * @author Greg Schueler <a href="mailto:greg@dtosolutions.com">greg@dtosolutions.com</a>
  */
-public class BulkDeleteParser implements XmlNodeParser<RundeckJobDeleteBulk> {
-    private String xpath;
+public class BulkDeleteParser extends BaseXpathParser<RundeckJobDeleteBulk> {
 
-    public BulkDeleteParser(String xpath) {
-        this.xpath = xpath;
-    }
 
-    public BulkDeleteParser() {
+    public BulkDeleteParser(final String xpath) {
+        super(xpath);
     }
 
     @Override
-    public RundeckJobDeleteBulk parseXmlNode(Node node) {
-        Node subnode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public RundeckJobDeleteBulk parse(Node subnode) {
         final ArrayList<RundeckJobDelete> deletes = new ArrayList<RundeckJobDelete>();
         final List results = subnode.selectNodes("(succeeded|failed)/deleteJobResult");
         final DeleteParser parser = new DeleteParser();

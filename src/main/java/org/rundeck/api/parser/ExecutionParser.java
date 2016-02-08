@@ -33,26 +33,19 @@ import org.rundeck.api.domain.RundeckNodeIdentity;
  * 
  * @author Vincent Behar
  */
-public class ExecutionParser implements XmlNodeParser<RundeckExecution> {
+public class ExecutionParser extends BaseXpathParser<RundeckExecution> {
 
-    private String xpath;
 
-    public ExecutionParser() {
-        super();
+    public ExecutionParser(final String xpath) {
+        super(xpath);
     }
 
-    /**
-     * @param xpath of the execution element if it is not the root node
-     */
-    public ExecutionParser(String xpath) {
-        super();
-        this.xpath = xpath;
+    public ExecutionParser() {
+
     }
 
     @Override
-    public RundeckExecution parseXmlNode(Node node) {
-        Node execNode = xpath != null ? node.selectSingleNode(xpath) : node;
-
+    public RundeckExecution parse(Node execNode) {
         RundeckExecution execution = new RundeckExecution();
 
         execution.setId(Long.valueOf(execNode.valueOf("@id")));

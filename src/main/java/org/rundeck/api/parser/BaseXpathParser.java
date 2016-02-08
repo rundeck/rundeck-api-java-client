@@ -1,5 +1,6 @@
 package org.rundeck.api.parser;
 
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Node;
 
 /**
@@ -23,7 +24,7 @@ public abstract class BaseXpathParser<T> implements XmlNodeParser<T> {
 
     @Override
     public T parseXmlNode(Node node) {
-        Node selectedNode = xpath != null ? node.selectSingleNode(xpath) : node;
+        Node selectedNode = StringUtils.isNotEmpty(xpath) ? node.selectSingleNode(xpath) : node;
         return parse(selectedNode);
     }
 }

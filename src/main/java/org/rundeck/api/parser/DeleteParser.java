@@ -34,19 +34,19 @@ import org.rundeck.api.domain.RundeckJobDelete;
  *
  * @author Greg Schueler <a href="mailto:greg@dtosolutions.com">greg@dtosolutions.com</a>
  */
-public class DeleteParser implements XmlNodeParser<RundeckJobDelete> {
-    private String xpath;
+public class DeleteParser extends BaseXpathParser<RundeckJobDelete> {
 
-    public DeleteParser(String xpath) {
-        this.xpath = xpath;
+
+    public DeleteParser(final String xpath) {
+        super(xpath);
     }
 
     public DeleteParser() {
+        super();
     }
 
     @Override
-    public RundeckJobDelete parseXmlNode(Node node) {
-        Node resultNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public RundeckJobDelete parse(Node resultNode) {
 
         final RundeckJobDelete delete = new RundeckJobDelete();
         delete.setError(StringUtils.trimToNull(resultNode.valueOf("error")));

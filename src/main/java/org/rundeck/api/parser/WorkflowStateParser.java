@@ -12,16 +12,8 @@ import java.util.*;
 /**
  * $INTERFACE is ... User: greg Date: 1/16/14 Time: 5:44 PM
  */
-public class WorkflowStateParser implements XmlNodeParser<WorkflowState> {
-    private String xpath;
+public class WorkflowStateParser extends BaseXpathParser<WorkflowState> {
 
-    public WorkflowStateParser() {
-    }
-
-    public WorkflowStateParser(String xpath) {
-        this();
-        this.xpath = xpath;
-    }
 
     private static final ThreadLocal<DateFormat> w3cDateFormat = new ThreadLocal<DateFormat>() {
         protected DateFormat initialValue() {
@@ -30,6 +22,11 @@ public class WorkflowStateParser implements XmlNodeParser<WorkflowState> {
             return fmt;
         }
     };
+
+    public WorkflowStateParser(final String xpath) {
+        super(xpath);
+    }
+
     public static Date parseDate(String s) {
         if (null == s) {
             return null;
@@ -52,8 +49,7 @@ public class WorkflowStateParser implements XmlNodeParser<WorkflowState> {
     }
 
     @Override
-    public WorkflowState parseXmlNode(Node node) {
-        Node targetNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public WorkflowState parse(Node targetNode) {
         WorkflowState state = new WorkflowState();
         parseWorkflowState(targetNode, state);
 

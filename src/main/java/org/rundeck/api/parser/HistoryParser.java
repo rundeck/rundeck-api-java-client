@@ -25,25 +25,15 @@ import org.rundeck.api.domain.RundeckHistory;
  * 
  * @author Vincent Behar
  */
-public class HistoryParser implements XmlNodeParser<RundeckHistory> {
+public class HistoryParser extends BaseXpathParser<RundeckHistory> {
 
-    private String xpath;
 
-    public HistoryParser() {
-        super();
-    }
-
-    /**
-     * @param xpath of the history element if it is not the root node
-     */
-    public HistoryParser(String xpath) {
-        super();
-        this.xpath = xpath;
+    public HistoryParser(final String xpath) {
+        super(xpath);
     }
 
     @Override
-    public RundeckHistory parseXmlNode(Node node) {
-        Node eventsNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public RundeckHistory parse(Node eventsNode) {
 
         RundeckHistory history = new RundeckHistory();
 

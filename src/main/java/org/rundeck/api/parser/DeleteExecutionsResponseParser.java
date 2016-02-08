@@ -12,15 +12,13 @@ import java.util.List;
  * @author Greg Schueler <greg@simplifyops.com>
  * @since 2014-11-06
  */
-public class DeleteExecutionsResponseParser implements XmlNodeParser<DeleteExecutionsResponse> {
-    private String xpath;
+public class DeleteExecutionsResponseParser extends BaseXpathParser<DeleteExecutionsResponse> {
 
     public DeleteExecutionsResponseParser(final String xpath) {
-        this.xpath = xpath;
+        super(xpath);
     }
 
-    @Override public DeleteExecutionsResponse parseXmlNode(final Node node) {
-        final Node baseNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    @Override public DeleteExecutionsResponse parse(final Node baseNode) {
 
         final DeleteExecutionsResponse response = new DeleteExecutionsResponse();
         response.setAllsuccessful(Boolean.parseBoolean(baseNode.valueOf("@allsuccessful")));

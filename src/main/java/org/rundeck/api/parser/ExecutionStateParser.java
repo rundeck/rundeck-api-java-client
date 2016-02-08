@@ -11,24 +11,15 @@ import java.util.List;
 /**
  * $INTERFACE is ... User: greg Date: 1/16/14 Time: 5:42 PM
  */
-public class ExecutionStateParser implements XmlNodeParser<RundeckExecutionState> {
-    private String xpath;
+public class ExecutionStateParser extends BaseXpathParser<RundeckExecutionState> {
 
-    public ExecutionStateParser() {
-        super();
-    }
 
-    /**
-     * @param xpath of the execution element if it is not the root node
-     */
-    public ExecutionStateParser(String xpath) {
-        this();
-        this.xpath = xpath;
+    public ExecutionStateParser(final String xpath) {
+        super(xpath);
     }
 
     @Override
-    public RundeckExecutionState parseXmlNode(Node node) {
-        Node targetNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public RundeckExecutionState parse(Node targetNode) {
         RundeckExecutionState rundeckExecutionState = new RundeckExecutionState();
         rundeckExecutionState.setExecutionId(Long.valueOf(targetNode.valueOf("@id")));
 

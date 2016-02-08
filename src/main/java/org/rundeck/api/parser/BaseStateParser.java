@@ -8,7 +8,7 @@ import org.rundeck.api.domain.RundeckWFExecState;
 /**
  * $INTERFACE is ... User: greg Date: 1/17/14 Time: 12:19 PM
  */
-public class BaseStateParser implements XmlNodeParser<BaseState> {
+public class BaseStateParser extends BaseXpathParser<BaseState> {
     public static void parseBaseState(Node targetNode, BaseState state) {
         state.setEndTime(WorkflowStateParser.parseDate(StringUtils.trimToNull(targetNode.valueOf("endTime"))));
         state.setStartTime(WorkflowStateParser.parseDate(StringUtils.trimToNull(targetNode.valueOf("startTime"))));
@@ -33,8 +33,7 @@ public class BaseStateParser implements XmlNodeParser<BaseState> {
     }
 
     @Override
-    public BaseState parseXmlNode(Node node) {
-        Node targetNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public BaseState parse(Node targetNode) {
         BaseState baseState = new BaseState();
         parseBaseState(targetNode, baseState);
         return baseState;

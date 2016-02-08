@@ -10,19 +10,9 @@ import java.util.HashMap;
 /**
  * $INTERFACE is ... User: greg Date: 1/17/14 Time: 12:09 PM
  */
-public class WorkflowStepStateParser implements XmlNodeParser<WorkflowStepState> {
-    private String xpath;
-
-    public WorkflowStepStateParser(final String xpath) {
-        this.xpath = xpath;
-    }
-
-    public WorkflowStepStateParser() {
-    }
-
+public class WorkflowStepStateParser extends BaseXpathParser<WorkflowStepState> {
     @Override
-    public WorkflowStepState parseXmlNode(final Node node) {
-        final Node targetNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public WorkflowStepState parse(final Node targetNode) {
         final WorkflowStepState state = new WorkflowStepState();
 
         BaseStateParser.parseBaseState(targetNode, state);

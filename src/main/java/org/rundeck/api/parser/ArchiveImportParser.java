@@ -1,5 +1,6 @@
 package org.rundeck.api.parser;
 
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Node;
 import org.rundeck.api.domain.ArchiveImport;
 
@@ -11,19 +12,11 @@ import java.util.ArrayList;
  * @author greg
  * @since 2014-03-09
  */
-public class ArchiveImportParser implements XmlNodeParser<ArchiveImport> {
-    String xpath;
+public class ArchiveImportParser extends BaseXpathParser<ArchiveImport> {
 
-    public ArchiveImportParser() {
-    }
-
-    public ArchiveImportParser(final String xpath) {
-        this.xpath = xpath;
-    }
 
     @Override
-    public ArchiveImport parseXmlNode(final Node node) {
-        final Node importNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public ArchiveImport parse(final Node importNode) {
 
         boolean issuccess = "successful".equals(importNode.valueOf("/import/@status"));
         final ArrayList<String> messages = new ArrayList<String>();

@@ -9,19 +9,19 @@ import org.rundeck.api.domain.RundeckToken;
  * @author Greg Schueler <greg@simplifyops.com>
  * @since 2014-04-04
  */
-public class RundeckTokenParser implements XmlNodeParser<RundeckToken> {
-    String xpath;
+public class RundeckTokenParser extends BaseXpathParser<RundeckToken> {
 
-    public RundeckTokenParser() {
+
+    public RundeckTokenParser(final String xpath) {
+        super(xpath);
     }
 
-    public RundeckTokenParser(String xpath) {
-        this.xpath = xpath;
+    public RundeckTokenParser() {
+
     }
 
     @Override
-    public RundeckToken parseXmlNode(Node node) {
-        Node targetNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public RundeckToken parse(Node targetNode) {
         RundeckToken rundeckToken = new RundeckToken();
         String token = targetNode.valueOf("@id");
         String user = targetNode.valueOf("@user");

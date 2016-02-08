@@ -16,34 +16,26 @@
 package org.rundeck.api.parser;
 
 import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Node;
 import org.rundeck.api.domain.RundeckJob;
 import org.rundeck.api.domain.RundeckJobsImportResult;
 
 /**
  * Parser for a single {@link RundeckJobsImportResult}
- * 
+ *
  * @author Vincent Behar
  */
-public class JobsImportResultParser implements XmlNodeParser<RundeckJobsImportResult> {
+public class JobsImportResultParser extends BaseXpathParser<RundeckJobsImportResult> {
 
-    private String xpath;
 
-    public JobsImportResultParser() {
-        super();
-    }
-
-    /**
-     * @param xpath of the result element if it is not the root node
-     */
-    public JobsImportResultParser(String xpath) {
-        super();
-        this.xpath = xpath;
+    public JobsImportResultParser(final String xpath) {
+        super(xpath);
     }
 
     @Override
-    public RundeckJobsImportResult parseXmlNode(Node node) {
-        Node resultNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public RundeckJobsImportResult parse(Node resultNode) {
 
         RundeckJobsImportResult result = new RundeckJobsImportResult();
 

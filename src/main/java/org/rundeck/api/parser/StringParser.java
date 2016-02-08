@@ -20,28 +20,17 @@ import org.dom4j.Node;
 
 /**
  * Parser for a single {@link String}
- * 
+ *
  * @author Vincent Behar
  */
-public class StringParser implements XmlNodeParser<String> {
+public class StringParser extends BaseXpathParser<String> {
 
-    private String xpath;
-
-    public StringParser() {
-        super();
-    }
-
-    /**
-     * @param xpath of the string element if it is not the root node
-     */
-    public StringParser(String xpath) {
-        super();
-        this.xpath = xpath;
+    public StringParser(final String xpath) {
+        super(xpath);
     }
 
     @Override
-    public String parseXmlNode(Node node) {
-        Node strNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public String parse(Node strNode) {
 
         return StringUtils.trimToNull(strNode.getStringValue());
     }

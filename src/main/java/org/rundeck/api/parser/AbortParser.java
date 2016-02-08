@@ -26,26 +26,14 @@ import org.rundeck.api.domain.RundeckAbort.AbortStatus;
  * 
  * @author Vincent Behar
  */
-public class AbortParser implements XmlNodeParser<RundeckAbort> {
+public class AbortParser extends BaseXpathParser<RundeckAbort>  {
 
-    private String xpath;
-
-    public AbortParser() {
-        super();
-    }
-
-    /**
-     * @param xpath of the abort element if it is not the root node
-     */
-    public AbortParser(String xpath) {
-        super();
-        this.xpath = xpath;
+    public AbortParser(final String xpath) {
+        super(xpath);
     }
 
     @Override
-    public RundeckAbort parseXmlNode(Node node) {
-        Node abortNode = xpath != null ? node.selectSingleNode(xpath) : node;
-
+    public RundeckAbort parse(Node abortNode) {
         RundeckAbort abort = new RundeckAbort();
 
         try {

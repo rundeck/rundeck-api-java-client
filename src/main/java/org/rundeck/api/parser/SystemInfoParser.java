@@ -25,26 +25,15 @@ import org.rundeck.api.domain.RundeckSystemInfo;
  * 
  * @author Vincent Behar
  */
-public class SystemInfoParser implements XmlNodeParser<RundeckSystemInfo> {
+public class SystemInfoParser extends BaseXpathParser<RundeckSystemInfo> {
 
-    private String xpath;
 
-    public SystemInfoParser() {
-        super();
-    }
-
-    /**
-     * @param xpath of the systemInfo element if it is not the root node
-     */
-    public SystemInfoParser(String xpath) {
-        super();
-        this.xpath = xpath;
+    public SystemInfoParser(final String xpath) {
+        super(xpath);
     }
 
     @Override
-    public RundeckSystemInfo parseXmlNode(Node node) {
-        Node infoNode = xpath != null ? node.selectSingleNode(xpath) : node;
-
+    public RundeckSystemInfo parse(Node infoNode) {
         RundeckSystemInfo info = new RundeckSystemInfo();
 
         String timestamp = StringUtils.trimToNull(infoNode.valueOf("timestamp/@epoch"));

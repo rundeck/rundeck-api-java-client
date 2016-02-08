@@ -21,28 +21,22 @@ import org.rundeck.api.domain.RundeckJob;
 
 /**
  * Parser for a single {@link RundeckJob}
- * 
+ *
  * @author Vincent Behar
  */
-public class JobParser implements XmlNodeParser<RundeckJob> {
+public class JobParser extends BaseXpathParser<RundeckJob> {
 
-    private String xpath;
 
-    public JobParser() {
-        super();
+    public JobParser(final String xpath) {
+        super(xpath);
     }
 
-    /**
-     * @param xpath of the job element if it is not the root node
-     */
-    public JobParser(String xpath) {
-        super();
-        this.xpath = xpath;
+    public JobParser() {
+
     }
 
     @Override
-    public RundeckJob parseXmlNode(Node node) {
-        Node jobNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public RundeckJob parse(Node jobNode) {
 
         RundeckJob job = new RundeckJob();
 

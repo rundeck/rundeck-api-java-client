@@ -13,10 +13,9 @@ import java.util.*;
 /**
  * Parses output message content for API v6
  */
-public class OutputEntryParser implements XmlNodeParser<RundeckOutputEntry> {
+public class OutputEntryParser extends BaseXpathParser<RundeckOutputEntry> {
 
 
-    private String xpath;
 
     public OutputEntryParser() {
         super();
@@ -29,8 +28,9 @@ public class OutputEntryParser implements XmlNodeParser<RundeckOutputEntry> {
      * @param xpath of the event element if it is not the root node
      */
     public OutputEntryParser(String xpath) {
-        this();
-        this.xpath = xpath;
+        super(xpath);
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
     static HashSet<String> nonMetaAttributes = new HashSet<String>();
     static {
@@ -44,8 +44,7 @@ public class OutputEntryParser implements XmlNodeParser<RundeckOutputEntry> {
     }
 
     @Override
-    public RundeckOutputEntry parseXmlNode(Node node) {
-        Node entryNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public RundeckOutputEntry parse(Node entryNode) {
 
         RundeckOutputEntry outputEntry = new RundeckOutputEntry();
         

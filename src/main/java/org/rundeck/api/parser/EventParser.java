@@ -16,6 +16,7 @@
 package org.rundeck.api.parser;
 
 import java.util.Date;
+
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Node;
 import org.rundeck.api.domain.RundeckEvent;
@@ -24,28 +25,22 @@ import org.rundeck.api.domain.RundeckEvent.NodeSummary;
 
 /**
  * Parser for a single {@link RundeckEvent}
- * 
+ *
  * @author Vincent Behar
  */
-public class EventParser implements XmlNodeParser<RundeckEvent> {
+public class EventParser extends BaseXpathParser<RundeckEvent> {
 
-    private String xpath;
+
+    public EventParser(final String xpath) {
+        super(xpath);
+    }
 
     public EventParser() {
         super();
     }
 
-    /**
-     * @param xpath of the event element if it is not the root node
-     */
-    public EventParser(String xpath) {
-        super();
-        this.xpath = xpath;
-    }
-
     @Override
-    public RundeckEvent parseXmlNode(Node node) {
-        Node eventNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public RundeckEvent parse(Node eventNode) {
 
         RundeckEvent event = new RundeckEvent();
 

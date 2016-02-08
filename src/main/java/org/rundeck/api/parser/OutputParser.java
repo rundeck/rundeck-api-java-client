@@ -9,22 +9,20 @@ import org.rundeck.api.domain.RundeckOutputEntry;
 import java.util.List;
 
 
-public class OutputParser implements XmlNodeParser<RundeckOutput> {
+public class OutputParser extends BaseXpathParser<RundeckOutput> {
 
 
-    private String xpath;
     XmlNodeParser<RundeckOutputEntry> parser;
 
     public OutputParser(String xpath, XmlNodeParser<RundeckOutputEntry> parser) {
-        this.xpath = xpath;
+        super(xpath);
         if (null != parser) {
             this.parser = parser;
         }
     }
 
     @Override
-    public RundeckOutput parseXmlNode(Node node) {
-        Node entryNode = xpath != null ? node.selectSingleNode(xpath) : node;
+    public RundeckOutput parse(Node entryNode) {
 
         RundeckOutput output = new RundeckOutput();
 
