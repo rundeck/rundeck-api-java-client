@@ -8,6 +8,7 @@ import org.rundeck.api.domain.*;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * $INTERFACE is ... User: greg Date: 1/18/14 Time: 9:00 AM
@@ -25,21 +26,22 @@ public class WorkflowStepStateParserTest {
         Assert.assertEquals(true, stepState.isNodeStep());
         Assert.assertEquals(null, stepState.getSubWorkflow());
         Assert.assertNotNull(stepState.getNodeStates());
+        Assert.assertEquals(3, stepState.getNodeStates().size());
         Assert.assertEquals("1", stepState.getStepContextId());
         Assert.assertEquals(1, stepState.getStepNum());
         Assert.assertEquals(1390066159000L, stepState.getStartTime().getTime());
         Assert.assertEquals(1390066160000L, stepState.getEndTime().getTime());
         Assert.assertEquals(1390066160000L, stepState.getUpdateTime().getTime());
         Assert.assertEquals(RundeckWFExecState.SUCCEEDED, stepState.getExecutionState());
-        HashSet<String> expectedTargetNodes = new HashSet<String>(Arrays.asList(
+        List<String> expectedTargetNodes = Arrays.asList(
                 "node-111.qa.subgroup.mycompany.com",
-                "node-14.qa.subgroup.mycompany.com",
-                "node-6.qa.subgroup.mycompany.com"
-        ));
+                "node-6.qa.subgroup.mycompany.com",
+                "node-14.qa.subgroup.mycompany.com"
+        );
 
         int i = 0;
-        for (String s : stepState.getNodeStates().keySet()) {
-            Assert.assertTrue(expectedTargetNodes.contains(s));
+        for (String s : expectedTargetNodes) {
+            Assert.assertTrue(stepState.getNodeStates().containsKey(s));
             WorkflowStepContextState workflowStepContextState = stepState.getNodeStates().get(s);
             Assert.assertEquals("1", workflowStepContextState.getStepContextId());
             Assert.assertEquals(1, workflowStepContextState.getStepNum());
