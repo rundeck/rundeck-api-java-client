@@ -24,25 +24,16 @@ import org.rundeck.api.domain.RundeckProject;
  * 
  * @author Vincent Behar
  */
-public class ProjectParser implements XmlNodeParser<RundeckProject> {
-
-    private String xpath;
-
+public class ProjectParser extends BaseXpathParser<RundeckProject> {
     public ProjectParser() {
-        super();
     }
 
-    /**
-     * @param xpath of the project element if it is not the root node
-     */
-    public ProjectParser(String xpath) {
-        super();
-        this.xpath = xpath;
+    public ProjectParser(final String xpath) {
+        super(xpath);
     }
 
     @Override
-    public RundeckProject parseXmlNode(Node node) {
-        Node projectNode = getXpath() != null ? node.selectSingleNode(getXpath()) : node;
+    public RundeckProject parse(Node projectNode) {
 
         RundeckProject project = new RundeckProject();
 
@@ -53,7 +44,4 @@ public class ProjectParser implements XmlNodeParser<RundeckProject> {
         return project;
     }
 
-    protected String getXpath() {
-        return xpath;
-    }
 }

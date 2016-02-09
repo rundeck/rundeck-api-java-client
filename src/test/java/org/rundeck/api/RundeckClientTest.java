@@ -86,6 +86,26 @@ public class RundeckClientTest {
         Assert.assertNull(projects.get(0).getDescription());
     }
     @Test
+    @Betamax(tape = "get_project_v10")
+    public void getProject_v10() throws Exception {
+
+        RundeckProject project = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN",10).getProject("test");
+        Assert.assertNotNull(project);
+        Assert.assertEquals("abc", project.getDescription());
+        Assert.assertEquals("test", project.getName());
+        Assert.assertNull(project.getProjectConfig());
+    }
+    @Test
+    @Betamax(tape = "get_project_v11")
+    public void getProject_v11() throws Exception {
+
+        RundeckProject project = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN",11).getProject("test");
+        Assert.assertNotNull(project);
+        Assert.assertEquals("abc", project.getDescription());
+        Assert.assertEquals("test", project.getName());
+        Assert.assertNotNull(project.getProjectConfig());
+    }
+    @Test
     @Betamax(tape = "create_projectv11")
     public void createProject() throws Exception {
 

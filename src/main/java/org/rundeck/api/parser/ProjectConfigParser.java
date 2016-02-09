@@ -11,19 +11,19 @@ import java.util.List;
  * @author greg
  * @since 2014-02-27
  */
-public class ProjectConfigParser implements XmlNodeParser<ProjectConfig> {
+public class ProjectConfigParser extends BaseXpathParser<ProjectConfig> {
     private String xpath;
 
     public ProjectConfigParser() {
+        super();
     }
 
     public ProjectConfigParser(String xpath) {
-        this.xpath = xpath;
+        super(xpath);
     }
 
     @Override
-    public ProjectConfig parseXmlNode(Node node) {
-        Node config1 = getXpath() != null ? node.selectSingleNode(getXpath()) : node;
+    public ProjectConfig parse(Node config1) {
         ProjectConfig config = new ProjectConfig();
         List property = config1.selectNodes("property");
         for (Object o : property) {
@@ -37,7 +37,4 @@ public class ProjectConfigParser implements XmlNodeParser<ProjectConfig> {
         return config;
     }
 
-    public String getXpath() {
-        return xpath;
-    }
 }

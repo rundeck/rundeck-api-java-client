@@ -1,0 +1,32 @@
+!tape
+name: get_project_v10
+interactions:
+- recorded: 2016-02-09T23:31:45.469Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/10/project/test
+    headers:
+      Accept: text/xml
+      Accept-Encoding: gzip,deflate
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: Rundeck API Java Client 10
+      X-Rundeck-Auth-Token: V4yhukF67G3tSOEvWYEh1ijROKfrULVN
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=1kmwzxgvfmc2g1djntv4s4t2vl;Path=/
+      X-Rundeck-API-Version: '15'
+      X-Rundeck-API-XML-Response-Wrapper: 'true'
+    body: |-
+      <result success='true' apiversion='15'>
+        <projects count='1'>
+          <project>
+            <name>test</name>
+            <description>abc</description>
+          </project>
+        </projects>
+      </result>

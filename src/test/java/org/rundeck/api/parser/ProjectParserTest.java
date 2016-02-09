@@ -38,5 +38,15 @@ public class ProjectParserTest {
         Assert.assertEquals("test", project.getName());
         Assert.assertEquals("test project", project.getDescription());
     }
+    @Test
+    public void parseProject_noresult() throws Exception {
+        InputStream input = getClass().getResourceAsStream("project.xml");
+        Document document = ParserHelper.loadDocument(input);
+
+        RundeckProject project = new ProjectParser("projects/project").parseXmlNode(document);
+
+        Assert.assertEquals("test", project.getName());
+        Assert.assertEquals("test project", project.getDescription());
+    }
 
 }

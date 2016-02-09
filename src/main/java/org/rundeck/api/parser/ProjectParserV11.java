@@ -18,9 +18,8 @@ public class ProjectParserV11 extends ProjectParser {
     }
 
     @Override
-    public RundeckProject parseXmlNode(final Node node) {
-        final RundeckProject rundeckProject = super.parseXmlNode(node);
-        final Node projectNode = getXpath() != null ? node.selectSingleNode(getXpath()) : node;
+    public RundeckProject parse(final Node projectNode) {
+        final RundeckProject rundeckProject = super.parse(projectNode);
         final Node config1 = projectNode.selectSingleNode("config");
         if (config1 == null) {
             return rundeckProject;
