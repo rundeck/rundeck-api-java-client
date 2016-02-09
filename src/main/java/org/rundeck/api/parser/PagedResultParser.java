@@ -54,7 +54,7 @@ public class PagedResultParser<T> implements XmlNodeParser<PagedResults<T>> {
 
     @Override
     public PagedResults<T> parseXmlNode(Node node) {
-        Node pagedNodeContainer = node.selectSingleNode(xpath);
+        Node pagedNodeContainer = BaseXpathParser.selectNodeAndUnwrap(node, xpath);
         if(null==pagedNodeContainer) {
             throw new RundeckApiException("XML content did not match XPATH expression: " + xpath);
         }

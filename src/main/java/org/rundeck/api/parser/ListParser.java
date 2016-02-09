@@ -45,7 +45,7 @@ public class ListParser<T> implements XmlNodeParser<List<T>> {
         List<T> elements = new ArrayList<T>();
 
         @SuppressWarnings("unchecked")
-        List<Node> elementNodes = node.selectNodes(xpath);
+        List<Node> elementNodes = node.selectNodes(BaseXpathParser.unwrapXpath(node, xpath));
 
         for (Node elementNode : elementNodes) {
             T element = parser.parseXmlNode(elementNode);
