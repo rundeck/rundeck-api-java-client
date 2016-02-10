@@ -78,7 +78,7 @@ public class RundeckClientTest {
         Assert.assertEquals(RundeckClient.Version.V9.getVersionNumber(), blah.getApiVersion());
     }
     @Test
-    @Betamax(tape = "get_projects")
+    @Betamax(tape = "get_projects", mode = TapeMode.READ_ONLY)
     public void getProjects() throws Exception {
         List<RundeckProject> projects = client.getProjects();
         Assert.assertEquals(1, projects.size());
@@ -1165,7 +1165,7 @@ public class RundeckClientTest {
      * @throws Exception
      */
     @Test
-    @Betamax(tape = "import_jobs_project_param")
+    @Betamax(tape = "import_jobs_project_param", mode = TapeMode.READ_ONLY)
     public void importJobsProjectParam() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_4, 8);
         InputStream stream=new ByteArrayInputStream(
@@ -1201,7 +1201,7 @@ public class RundeckClientTest {
      * @throws Exception
      */
     @Test
-    @Betamax(tape = "import_jobs_project_param_override")
+    @Betamax(tape = "import_jobs_project_param_override", mode = TapeMode.READ_ONLY)
     public void importJobsProjectParamOverride() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_4, 8);
         InputStream stream=new ByteArrayInputStream(
@@ -1240,7 +1240,7 @@ public class RundeckClientTest {
      * @throws Exception
      */
     @Test
-    @Betamax(tape = "import_jobs_project_param_v7")
+    @Betamax(tape = "import_jobs_project_param_v7", mode = TapeMode.READ_ONLY)
     public void importJobsProjectParamV7() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_4, 7);
         InputStream stream=new ByteArrayInputStream(
@@ -1279,7 +1279,7 @@ public class RundeckClientTest {
      * @throws Exception
      */
     @Test
-    @Betamax(tape = "import_jobs_uuid_param_remove_v9")
+    @Betamax(tape = "import_jobs_uuid_param_remove_v9", mode = TapeMode.READ_ONLY)
     public void importJobsUUIDParamRemoveV9() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_6, 9);
         InputStream stream=new ByteArrayInputStream(
@@ -1318,7 +1318,7 @@ public class RundeckClientTest {
      * @throws Exception
      */
     @Test
-    @Betamax(tape = "import_jobs_uuid_param_preserve_v9")
+    @Betamax(tape = "import_jobs_uuid_param_preserve_v9", mode = TapeMode.READ_ONLY)
     public void importJobsUUIDParamPreserveV9() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_6, 9);
         InputStream stream=new ByteArrayInputStream(

@@ -164,6 +164,9 @@ public class RundeckClient implements Serializable {
     int getApiVersion() {
         return (apiVersion > 0 ? apiVersion : API_VERSION);
     }
+    boolean isApiAtLeast(Version version){
+        return getApiVersion()>=version.getVersionNumber();
+    }
 
     void setApiVersion(int apiVersion) {
         this.apiVersion = (apiVersion > 0 ? apiVersion : API_VERSION);
@@ -657,11 +660,19 @@ public class RundeckClient implements Serializable {
     public List<RundeckJob> getJobs(String project, String jobFilter, String groupPath, String... jobIds)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(project, "project is mandatory to get all jobs !");
-        return new ApiCall(this).get(new ApiPathBuilder("/jobs").param("project", project)
-                                                                .param("jobFilter", jobFilter)
-                                                                .param("groupPath", groupPath)
-                                                                .param("idlist", StringUtils.join(jobIds, ",")),
-                                     new ListParser<RundeckJob>(new JobParser(), "/jobs/job"));
+        ApiPathBuilder builder;
+        if(isApiAtLeast(Version.V14)){
+            builder=new ApiPathBuilder("/project/",project,"/jobs");
+        }else{
+            builder=new ApiPathBuilder("/jobs").param("project", project);
+        }
+        return new ApiCall(this).get(
+                builder
+                        .param("jobFilter", jobFilter)
+                        .param("groupPath", groupPath)
+                        .param("idlist", StringUtils.join(jobIds, ",")),
+                new ListParser<>(new JobParser(), "/jobs/job")
+        );
     }
 
     /**
@@ -843,13 +854,18 @@ public class RundeckClient implements Serializable {
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notNull(format, "format is mandatory to export jobs !");
         AssertUtil.notBlank(project, "project is mandatory to export jobs !");
-        return new ApiCall(this).get(new ApiPathBuilder("/jobs/export")
+        ApiPathBuilder builder;
+        if(isApiAtLeast(Version.V14)){
+            builder = new ApiPathBuilder("/project/", project, "/jobs/export");
+        }else {
+            builder = new ApiPathBuilder("/jobs/export").param("project", project);
+        }
+        return new ApiCall(this).get(builder
                 .accept(format == FileType.XML ? "text/xml" : "text/yaml")
                 .param("format", format)
-                .param("project", project)
                 .param("jobFilter", jobFilter)
                 .param("groupPath", groupPath)
-                .param("idlist", StringUtils.join(jobIds, ",")),false);
+                .param("idlist", StringUtils.join(jobIds, ",")), false);
     }
 
     /**
@@ -982,15 +998,21 @@ public class RundeckClient implements Serializable {
 
         AssertUtil.notNull(rundeckJobsImport.getStream(), "inputStream of jobs is mandatory to import jobs !");
         AssertUtil.notNull(rundeckJobsImport.getFileType(), "fileType is mandatory to import jobs !");
-        final ApiPathBuilder request = new ApiPathBuilder(JOBS_IMPORT)
-                .param("format", rundeckJobsImport.getFileType())
+        ApiPathBuilder request;
+        if(isApiAtLeast(Version.V14)){
+            AssertUtil.notNull(rundeckJobsImport.getProject(), "project is mandatory to import jobs !");
+            request = new ApiPathBuilder("/project/", rundeckJobsImport.getProject(), "/jobs/import");
+        }else {
+            request = new ApiPathBuilder(JOBS_IMPORT);
+        }
+        request.param("format", rundeckJobsImport.getFileType())
                 .param("dupeOption", rundeckJobsImport.getImportMethod())
                 .attach("xmlBatch", rundeckJobsImport.getStream());
         if(null!=rundeckJobsImport.getUuidImportBehavior()) {
             //API v9
             request.param("uuidOption", rundeckJobsImport.getUuidImportBehavior());
         }
-        if(null!=rundeckJobsImport.getProject()) {
+        if(!isApiAtLeast(Version.V14) && null!=rundeckJobsImport.getProject()) {
             //API v8
             request.param("project", rundeckJobsImport.getProject());
         }
@@ -1221,14 +1243,17 @@ public class RundeckClient implements Serializable {
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(command.getProject(), "project is mandatory to trigger an ad-hoc command !");
         AssertUtil.notBlank(command.getCommand(), "command is mandatory to trigger an ad-hoc command !");
-        ApiPathBuilder apiPath = new ApiPathBuilder("/run/command").param("project", command.getProject())
-                .param("exec", command.getCommand())
-                .param("nodeThreadcount",
-                        command.getNodeThreadcount())
-                .param("nodeKeepgoing",
-                        command.getNodeKeepgoing())
-                .nodeFilters(command.getNodeFilters());
-        if(null!= command.getAsUser()) {
+        ApiPathBuilder apiPath;
+        if(isApiAtLeast(Version.V14)){
+            apiPath = new ApiPathBuilder("/project/", command.getProject(), "/run/command");
+        }else{
+            apiPath = new ApiPathBuilder("/run/command").param("project", command.getProject());
+        }
+        apiPath.param("exec", command.getCommand())
+               .param("nodeThreadcount", command.getNodeThreadcount())
+               .param("nodeKeepgoing", command.getNodeKeepgoing())
+               .nodeFilters(command.getNodeFilters());
+        if (null != command.getAsUser()) {
             apiPath.param("asUser", command.getAsUser());
         }
         RundeckExecution execution = new ApiCall(this).get(apiPath, new ExecutionParser("/execution"));
@@ -1349,20 +1374,20 @@ public class RundeckClient implements Serializable {
             RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(script.getProject(), "project is mandatory to trigger an ad-hoc script !");
         AssertUtil.notNull(script.getScript(), "script is mandatory to trigger an ad-hoc script !");
-        ApiPathBuilder apiPath = new ApiPathBuilder("/run/script").param("project", script.getProject())
-                .attach("scriptFile",
-                        script.getScript())
-                .param("argString",script.getArgString())
-                .param("nodeThreadcount",
-                        script.getNodeThreadcount())
-                .param("nodeKeepgoing",
-                        script.getNodeKeepgoing())
-                .param("scriptInterpreter",
-                        script.getScriptInterpreter())
-                .param("interpreterArgsQuoted",
-                        script.getInterpreterArgsQuoted())
-                .nodeFilters(script.getNodeFilters());
-        if(null!=script.getAsUser()) {
+        ApiPathBuilder apiPath ;
+        if(isApiAtLeast(Version.V14)){
+            apiPath = new ApiPathBuilder("/project/", script.getProject(), "/run/script");
+        }else{
+            apiPath = new ApiPathBuilder("/run/script").param("project", script.getProject());
+        }
+        apiPath.attach("scriptFile", script.getScript())
+               .param("argString", script.getArgString())
+               .param("nodeThreadcount", script.getNodeThreadcount())
+               .param("nodeKeepgoing", script.getNodeKeepgoing())
+               .param("scriptInterpreter", script.getScriptInterpreter())
+               .param("interpreterArgsQuoted", script.getInterpreterArgsQuoted())
+               .nodeFilters(script.getNodeFilters());
+        if (null != script.getAsUser()) {
             apiPath.param("asUser", script.getAsUser());
         }
         RundeckExecution execution = new ApiCall(this).post(apiPath, new ExecutionParser("/execution"));
@@ -1510,11 +1535,13 @@ public class RundeckClient implements Serializable {
     public List<RundeckExecution> getRunningExecutions(String project) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(project, "project is mandatory get all running executions !");
-        return new ApiCall(this).get(new ApiPathBuilder("/executions/running").param("project", project),
-                                     new ListParser<>(
-                                             new ExecutionParser(),
-                                             "/executions/execution"
-                                     ));
+        ApiPathBuilder builder;
+        if (isApiAtLeast(Version.V14)) {
+            builder = new ApiPathBuilder("/project/", project, "/executions/running");
+        } else {
+            builder = new ApiPathBuilder("/executions/running").param("project", project);
+        }
+        return new ApiCall(this).get(builder, new ListParser<>(new ExecutionParser(), "/executions/execution"));
     }
 
     /**
@@ -1633,11 +1660,17 @@ public class RundeckClient implements Serializable {
             throw new IllegalArgumentException("Some execution query parameter must be set");
         }
         AssertUtil.notBlank(query.getProject(), "project is required for execution query");
+        ApiPathBuilder builder ;
+        if (isApiAtLeast(Version.V14)) {
+            builder = new ApiPathBuilder("/project/",query.getProject(),"/executions");
+        } else {
+            builder = new ApiPathBuilder("/executions");
+        }
+
         return new ApiCall(this).get(
-                new ApiPathBuilder("/executions")
-                        .param(new ExecutionQueryParameters(query))
-                        .param("max", max)
-                        .param("offset", offset),
+                builder.param(new ExecutionQueryParameters(query))
+                       .param("max", max)
+                       .param("offset", offset),
                 new PagedResultParser<>(new ListParser<>(new ExecutionParser(), "execution"), "/executions")
         );
     }
@@ -1945,16 +1978,23 @@ public class RundeckClient implements Serializable {
             Date begin, Date end, Long max, Long offset) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(project, "project is mandatory to get the history !");
-        return new ApiCall(this).get(new ApiPathBuilder("/history").param("project", project)
-                                         .param("jobIdFilter", jobId)
-                                         .param("reportIdFilter", reportId)
-                                         .param("userFilter", user)
-                                         .param("recentFilter", recent)
-                                         .param("begin", begin)
-                                         .param("end", end)
-                                         .param("max", max)
-                                         .param("offset", offset),
-                                     new HistoryParser("/events"));
+        ApiPathBuilder builder;
+        if(isApiAtLeast(Version.V14)){
+            builder = new ApiPathBuilder("/project/",project,"/history");
+        }else {
+            builder = new ApiPathBuilder("/history").param("project", project);
+        }
+        return new ApiCall(this).get(
+                builder.param("jobIdFilter", jobId)
+                       .param("reportIdFilter", reportId)
+                       .param("userFilter", user)
+                       .param("recentFilter", recent)
+                       .param("begin", begin)
+                       .param("end", end)
+                       .param("max", max)
+                       .param("offset", offset),
+                new HistoryParser("/events")
+        );
     }
 
     /**
@@ -2054,9 +2094,16 @@ public class RundeckClient implements Serializable {
     public List<RundeckNode> getNodes(String project, Properties nodeFilters) throws RundeckApiException,
             RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(project, "project is mandatory to get all nodes !");
-        return new ApiCall(this).get(new ApiPathBuilder("/resources").param("project", project)
-                                                                     .nodeFilters(nodeFilters),
-                                     new ListParser<RundeckNode>(new NodeParser(), "project/node"));
+        ApiPathBuilder builder ;
+        if(isApiAtLeast(Version.V14)){
+            builder = new ApiPathBuilder("/project/", project, "/resources");
+        }else{
+            builder = new ApiPathBuilder("/resources").param("project", project);
+        }
+        return new ApiCall(this).get(
+                builder.nodeFilters(nodeFilters),
+                new ListParser<>(new NodeParser(), "project/node")
+        );
     }
 
     /**
@@ -2074,8 +2121,14 @@ public class RundeckClient implements Serializable {
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(name, "the name of the node is mandatory to get a node !");
         AssertUtil.notBlank(project, "project is mandatory to get a node !");
-        return new ApiCall(this).get(new ApiPathBuilder("/resource/", name).param("project", project),
-                                     new NodeParser("project/node"));
+        ApiPathBuilder builder;
+        if(isApiAtLeast(Version.V14)){
+            builder = new ApiPathBuilder("/project/", project, "/resource/", name);
+        }else{
+            builder = new ApiPathBuilder("/resource/", name).param("project", project);
+        }
+
+        return new ApiCall(this).get(builder, new NodeParser("project/node"));
     }
 
     /**
