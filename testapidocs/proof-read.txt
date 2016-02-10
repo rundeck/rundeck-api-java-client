@@ -120,9 +120,13 @@ METHOD: getKey_public
 METHOD: getProjectConfig
 METHOD: getProjectConfigKeyed
 METHOD: getProjectConfigKeyedDNE
+METHOD: getProject_v10
+METHOD: getProject_v11
 METHOD: getProjects
 METHOD: importJobsContextProject
         Import jobs, xml contains project context
+METHOD: importJobsContextProject_v13
+        Import jobs api > v11
 METHOD: importJobsNoProject
         Import jobs, xml no project defined
 METHOD: importJobsProjectParam
@@ -251,6 +255,7 @@ METHOD: parseProject
         {@link/ProjectParser}
 CONSTRUCTOR: ProjectParserTest
 METHOD: parseProject
+METHOD: parseProject_noresult
 
 
 === org/rundeck/api/parser/ProjectConfigPropertyParserTest.html ===
@@ -346,6 +351,7 @@ METHOD: parseHistory
         $INTERFACE is ... User: greg Date: 1/16/14 Time: 5:42 PM
 CONSTRUCTOR: ExecutionStateParserTest
 METHOD: testBasic
+METHOD: testNoResultBasic
 
 
 === org/rundeck/api/parser/ExecutionParserTest.html ===
@@ -384,6 +390,21 @@ METHOD: successfulResult
 CONSTRUCTOR: BulkDeleteParserTest
 METHOD: bulkParser
 METHOD: bulkParserAllsuccessful
+
+
+=== org/rundeck/api/parser/BaseXpathParserTest.html ===
+        Created by greg on 2/9/16.
+CONSTRUCTOR: BaseXpathParserTest
+METHOD: emptyXpath_noresultdoc_withoutResult
+METHOD: emptyXpath_resultdoc_removesResult
+METHOD: resultXpath_noresultdoc_withoutResult
+METHOD: resultXpath_resultdoc_withoutResult
+METHOD: slashresultXpath_noresultdoc_withoutResult
+METHOD: slashresultXpath_resultdoc_withoutResult
+METHOD: unemptyXpath_noresultdoc_removesResult
+METHOD: unemptyXpath_noresultdoc_withoutResult
+METHOD: unemptyXpath_resultdoc_withResult
+METHOD: unemptyXpath_resultdoc_withoutResult
 
 
 === org/rundeck/api/parser/BaseStateParserTest.html ===

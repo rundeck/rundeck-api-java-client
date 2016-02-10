@@ -1306,8 +1306,7 @@ METHOD: parseXmlNode
 === org/rundeck/api/parser/WorkflowStepStateParser.html ===
         $INTERFACE is ... User: greg Date: 1/17/14 Time: 12:09 PM
 CONSTRUCTOR: WorkflowStepStateParser
-CONSTRUCTOR: WorkflowStepStateParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/WorkflowStepContextStateParser.html ===
@@ -1319,27 +1318,24 @@ METHOD: parseXmlNode
 === org/rundeck/api/parser/WorkflowStateParser.html ===
         $INTERFACE is ... User: greg Date: 1/16/14 Time: 5:44 PM
 CONSTRUCTOR: WorkflowStateParser
-CONSTRUCTOR: WorkflowStateParser
+METHOD: parse
 METHOD: parseDate
 METHOD: parseWorkflowState
         Parse the workflow state components from the given dom node
-METHOD: parseXmlNode
 
 
 === org/rundeck/api/parser/SystemInfoParser.html ===
         Parser for a single
         {@link ... RundeckSystemInfo}
 CONSTRUCTOR: SystemInfoParser
-CONSTRUCTOR: SystemInfoParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/StringParser.html ===
         Parser for a single
         {@link/String}
 CONSTRUCTOR: StringParser
-CONSTRUCTOR: StringParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/StorageResourceParser.html ===
@@ -1361,7 +1357,7 @@ METHOD: parse
         RundeckTokenParser is ...
 CONSTRUCTOR: RundeckTokenParser
 CONSTRUCTOR: RundeckTokenParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/ResponseParser.html ===
@@ -1374,7 +1370,7 @@ METHOD: parseResponse
         ProjectParserV11 supports embedded "config" element.
 CONSTRUCTOR: ProjectParserV11
 CONSTRUCTOR: ProjectParserV11
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/ProjectParser.html ===
@@ -1382,8 +1378,7 @@ METHOD: parseXmlNode
         {@link ... RundeckProject}
 CONSTRUCTOR: ProjectParser
 CONSTRUCTOR: ProjectParser
-METHOD: getXpath
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/ProjectConfigPropertyParser.html ===
@@ -1393,17 +1388,14 @@ METHOD: parseXmlNode
          a configuration property.
 CONSTRUCTOR: ProjectConfigPropertyParser
 CONSTRUCTOR: ProjectConfigPropertyParser
-METHOD: getXpath
-METHOD: parseXmlNode
-METHOD: setXpath
+METHOD: parse
 
 
 === org/rundeck/api/parser/ProjectConfigParser.html ===
         ProjectConfigParser parses project "config" element contents
 CONSTRUCTOR: ProjectConfigParser
 CONSTRUCTOR: ProjectConfigParser
-METHOD: getXpath
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/ParserHelper.html ===
@@ -1426,7 +1418,7 @@ METHOD: parseXmlNode
 
 === org/rundeck/api/parser/OutputParser.html ===
 CONSTRUCTOR: OutputParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/OutputEntryParserV5.html ===
@@ -1440,9 +1432,9 @@ METHOD: parseMessage
         Parses output message content for API v6
 CONSTRUCTOR: OutputEntryParser
 CONSTRUCTOR: OutputEntryParser
+METHOD: parse
 METHOD: parseMessage
         Parse the message content
-METHOD: parseXmlNode
 
 
 === org/rundeck/api/parser/NodeParser.html ===
@@ -1450,7 +1442,7 @@ METHOD: parseXmlNode
         {@link ... RundeckNode}
 CONSTRUCTOR: NodeParser
 CONSTRUCTOR: NodeParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/ListParser.html ===
@@ -1465,8 +1457,7 @@ METHOD: parseXmlNode
         Parser for a single
         {@link ... RundeckJobsImportResult}
 CONSTRUCTOR: JobsImportResultParser
-CONSTRUCTOR: JobsImportResultParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/JobParser.html ===
@@ -1474,7 +1465,7 @@ METHOD: parseXmlNode
         {@link ... RundeckJob}
 CONSTRUCTOR: JobParser
 CONSTRUCTOR: JobParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/IndexedWorkflowStepStateParser.html ===
@@ -1490,15 +1481,13 @@ METHOD: parseXmlNode
         Parser for a single
         {@link ... RundeckHistory}
 CONSTRUCTOR: HistoryParser
-CONSTRUCTOR: HistoryParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/ExecutionStateParser.html ===
         $INTERFACE is ... User: greg Date: 1/16/14 Time: 5:42 PM
 CONSTRUCTOR: ExecutionStateParser
-CONSTRUCTOR: ExecutionStateParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/ExecutionParser.html ===
@@ -1506,7 +1495,7 @@ METHOD: parseXmlNode
         {@link ... RundeckExecution}
 CONSTRUCTOR: ExecutionParser
 CONSTRUCTOR: ExecutionParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/EventParser.html ===
@@ -1514,27 +1503,26 @@ METHOD: parseXmlNode
         {@link ... RundeckEvent}
 CONSTRUCTOR: EventParser
 CONSTRUCTOR: EventParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/DeleteParser.html ===
         DeleteParser is ...
 CONSTRUCTOR: DeleteParser
 CONSTRUCTOR: DeleteParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/DeleteExecutionsResponseParser.html ===
         DeleteExecutionsResponseParser is ...
 CONSTRUCTOR: DeleteExecutionsResponseParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/BulkDeleteParser.html ===
         BulkDeleteParser is ...
 CONSTRUCTOR: BulkDeleteParser
-CONSTRUCTOR: BulkDeleteParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/parser/BaseXpathParser.html ===
@@ -1543,39 +1531,31 @@ CONSTRUCTOR: BaseXpathParser
 CONSTRUCTOR: BaseXpathParser
 METHOD: parse
 METHOD: parseXmlNode
+METHOD: selectNodeAndUnwrap
+        Select appropriate node based on xpath, will automatically look for "result" top-level element and alter xpath if
+         necessary
+METHOD: unwrapXpath
 
 
 === org/rundeck/api/parser/BaseStateParser.html ===
         $INTERFACE is ... User: greg Date: 1/17/14 Time: 12:19 PM
 CONSTRUCTOR: BaseStateParser
 CONSTRUCTOR: BaseStateParser
+METHOD: parse
 METHOD: parseBaseState
-METHOD: parseXmlNode
 
 
 === org/rundeck/api/parser/ArchiveImportParser.html ===
         ArchiveImportParser is ...
 CONSTRUCTOR: ArchiveImportParser
-CONSTRUCTOR: ArchiveImportParser
-METHOD: parseXmlNode
-
-
-=== org/rundeck/api/parser/APIV11Helper.html ===
-        Utility to handle API v11 responses with &lt;result&gt; wrapper element.
-CONSTRUCTOR: APIV11Helper
-METHOD: unwrapIfNeeded
-        Detect and remove extra &lt;result&gt; wrapper around xml response.
-METHOD: unwrapResultElement
-        Test the node for matching the xpath string, if it doesnt match, attempt to prefix it with
-         "result" and match that. If that matches, return the first child of the 'result' element.
+METHOD: parse
 
 
 === org/rundeck/api/parser/AbortParser.html ===
         Parser for a single
         {@link ... RundeckAbort}
 CONSTRUCTOR: AbortParser
-CONSTRUCTOR: AbortParser
-METHOD: parseXmlNode
+METHOD: parse
 
 
 === org/rundeck/api/query/ExecutionQuery.html ===

@@ -8844,71 +8844,14 @@
 </package>
 <package name="org.rundeck.api.parser"
 >
-<class name="APIV11Helper"
- extends="java.lang.Object"
- abstract="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<constructor name="APIV11Helper"
- type="org.rundeck.api.parser.APIV11Helper"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-</constructor>
-<method name="unwrapIfNeeded"
- return="org.rundeck.api.parser.XmlNodeParser&lt;T&gt;"
- abstract="false"
- native="false"
- synchronized="false"
- static="true"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="parser" type="org.rundeck.api.parser.XmlNodeParser&lt;T&gt;">
-</parameter>
-<parameter name="xpath" type="java.lang.String">
-</parameter>
-</method>
-<method name="unwrapResultElement"
- return="org.dom4j.Node"
- abstract="false"
- native="false"
- synchronized="false"
- static="true"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="node" type="org.dom4j.Node">
-</parameter>
-<parameter name="xpath" type="java.lang.String">
-</parameter>
-</method>
-</class>
 <class name="AbortParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
-<constructor name="AbortParser"
- type="org.rundeck.api.parser.AbortParser"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-</constructor>
 <constructor name="AbortParser"
  type="org.rundeck.api.parser.AbortParser"
  static="false"
@@ -8919,7 +8862,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckAbort"
  abstract="false"
  native="false"
@@ -8929,20 +8872,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="abortNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="ArchiveImportParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="ArchiveImportParser"
  type="org.rundeck.api.parser.ArchiveImportParser"
  static="false"
@@ -8951,17 +8892,7 @@
  visibility="public"
 >
 </constructor>
-<constructor name="ArchiveImportParser"
- type="org.rundeck.api.parser.ArchiveImportParser"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="xpath" type="java.lang.String">
-</parameter>
-</constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.ArchiveImport"
  abstract="false"
  native="false"
@@ -8971,20 +8902,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="importNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="BaseStateParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="BaseStateParser"
  type="org.rundeck.api.parser.BaseStateParser"
  static="false"
@@ -9003,6 +8932,19 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
+<method name="parse"
+ return="org.rundeck.api.domain.BaseState"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="targetNode" type="org.dom4j.Node">
+</parameter>
+</method>
 <method name="parseBaseState"
  return="void"
  abstract="false"
@@ -9016,19 +8958,6 @@
 <parameter name="targetNode" type="org.dom4j.Node">
 </parameter>
 <parameter name="state" type="org.rundeck.api.domain.BaseState">
-</parameter>
-</method>
-<method name="parseXmlNode"
- return="org.rundeck.api.domain.BaseState"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="node" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
@@ -9079,32 +9008,52 @@
  native="false"
  synchronized="false"
  static="false"
- final="false"
+ final="true"
  deprecated="not deprecated"
  visibility="public"
 >
 <parameter name="node" type="org.dom4j.Node">
 </parameter>
 </method>
+<method name="selectNodeAndUnwrap"
+ return="org.dom4j.Node"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="node" type="org.dom4j.Node">
+</parameter>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</method>
+<method name="unwrapXpath"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="node" type="org.dom4j.Node">
+</parameter>
+<parameter name="xpath" type="java.lang.String">
+</parameter>
+</method>
 </class>
 <class name="BulkDeleteParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
-<constructor name="BulkDeleteParser"
- type="org.rundeck.api.parser.BulkDeleteParser"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-</constructor>
 <constructor name="BulkDeleteParser"
  type="org.rundeck.api.parser.BulkDeleteParser"
  static="false"
@@ -9115,7 +9064,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckJobDeleteBulk"
  abstract="false"
  native="false"
@@ -9125,20 +9074,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="subnode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="DeleteExecutionsResponseParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="DeleteExecutionsResponseParser"
  type="org.rundeck.api.parser.DeleteExecutionsResponseParser"
  static="false"
@@ -9149,7 +9096,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.DeleteExecutionsResponse"
  abstract="false"
  native="false"
@@ -9159,20 +9106,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="baseNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="DeleteParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="DeleteParser"
  type="org.rundeck.api.parser.DeleteParser"
  static="false"
@@ -9191,7 +9136,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckJobDelete"
  abstract="false"
  native="false"
@@ -9201,20 +9146,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="resultNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="EventParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="EventParser"
  type="org.rundeck.api.parser.EventParser"
  static="false"
@@ -9233,7 +9176,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckEvent"
  abstract="false"
  native="false"
@@ -9243,20 +9186,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="eventNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="ExecutionParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="ExecutionParser"
  type="org.rundeck.api.parser.ExecutionParser"
  static="false"
@@ -9275,7 +9216,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckExecution"
  abstract="false"
  native="false"
@@ -9285,28 +9226,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="execNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="ExecutionStateParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
-<constructor name="ExecutionStateParser"
- type="org.rundeck.api.parser.ExecutionStateParser"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-</constructor>
 <constructor name="ExecutionStateParser"
  type="org.rundeck.api.parser.ExecutionStateParser"
  static="false"
@@ -9317,7 +9248,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckExecutionState"
  abstract="false"
  native="false"
@@ -9327,28 +9258,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="targetNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="HistoryParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
-<constructor name="HistoryParser"
- type="org.rundeck.api.parser.HistoryParser"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-</constructor>
 <constructor name="HistoryParser"
  type="org.rundeck.api.parser.HistoryParser"
  static="false"
@@ -9359,7 +9280,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckHistory"
  abstract="false"
  native="false"
@@ -9369,7 +9290,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="eventsNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
@@ -9425,15 +9346,13 @@
 </method>
 </class>
 <class name="JobParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="JobParser"
  type="org.rundeck.api.parser.JobParser"
  static="false"
@@ -9452,7 +9371,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckJob"
  abstract="false"
  native="false"
@@ -9462,28 +9381,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="jobNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="JobsImportResultParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
-<constructor name="JobsImportResultParser"
- type="org.rundeck.api.parser.JobsImportResultParser"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-</constructor>
 <constructor name="JobsImportResultParser"
  type="org.rundeck.api.parser.JobsImportResultParser"
  static="false"
@@ -9494,7 +9403,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckJobsImportResult"
  abstract="false"
  native="false"
@@ -9504,7 +9413,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="resultNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
@@ -9545,15 +9454,13 @@
 </method>
 </class>
 <class name="NodeParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="NodeParser"
  type="org.rundeck.api.parser.NodeParser"
  static="false"
@@ -9572,7 +9479,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckNode"
  abstract="false"
  native="false"
@@ -9582,20 +9489,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="rundeckNodeNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="OutputEntryParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="OutputEntryParser"
  type="org.rundeck.api.parser.OutputEntryParser"
  static="false"
@@ -9614,6 +9519,19 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
+<method name="parse"
+ return="org.rundeck.api.domain.RundeckOutputEntry"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="entryNode" type="org.dom4j.Node">
+</parameter>
+</method>
 <method name="parseMessage"
  return="java.lang.String"
  abstract="false"
@@ -9625,19 +9543,6 @@
  visibility="protected"
 >
 <parameter name="entryNode" type="org.dom4j.Node">
-</parameter>
-</method>
-<method name="parseXmlNode"
- return="org.rundeck.api.domain.RundeckOutputEntry"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="node" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
@@ -9671,15 +9576,13 @@
 </constructor>
 </class>
 <class name="OutputParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="OutputParser"
  type="org.rundeck.api.parser.OutputParser"
  static="false"
@@ -9692,7 +9595,7 @@
 <parameter name="parser" type="org.rundeck.api.parser.XmlNodeParser&lt;org.rundeck.api.domain.RundeckOutputEntry&gt;">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckOutput"
  abstract="false"
  native="false"
@@ -9702,7 +9605,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="entryNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
@@ -9786,15 +9689,13 @@
 </method>
 </class>
 <class name="ProjectConfigParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="ProjectConfigParser"
  type="org.rundeck.api.parser.ProjectConfigParser"
  static="false"
@@ -9813,18 +9714,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="getXpath"
- return="java.lang.String"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-</method>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.ProjectConfig"
  abstract="false"
  native="false"
@@ -9834,20 +9724,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="config1" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="ProjectConfigPropertyParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="ProjectConfigPropertyParser"
  type="org.rundeck.api.parser.ProjectConfigPropertyParser"
  static="false"
@@ -9866,18 +9754,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="getXpath"
- return="java.lang.String"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-</method>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.ConfigProperty"
  abstract="false"
  native="false"
@@ -9887,33 +9764,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
-</parameter>
-</method>
-<method name="setXpath"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="xpath" type="java.lang.String">
+<parameter name="propnode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="ProjectParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="ProjectParser"
  type="org.rundeck.api.parser.ProjectParser"
  static="false"
@@ -9932,18 +9794,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="getXpath"
- return="java.lang.String"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="protected"
->
-</method>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckProject"
  abstract="false"
  native="false"
@@ -9953,7 +9804,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="projectNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
@@ -10006,15 +9857,13 @@
 </method>
 </interface>
 <class name="RundeckTokenParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="RundeckTokenParser"
  type="org.rundeck.api.parser.RundeckTokenParser"
  static="false"
@@ -10033,7 +9882,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckToken"
  abstract="false"
  native="false"
@@ -10043,7 +9892,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="targetNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
@@ -10140,23 +9989,13 @@
 </method>
 </class>
 <class name="StringParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
-<constructor name="StringParser"
- type="org.rundeck.api.parser.StringParser"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-</constructor>
 <constructor name="StringParser"
  type="org.rundeck.api.parser.StringParser"
  static="false"
@@ -10167,7 +10006,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="java.lang.String"
  abstract="false"
  native="false"
@@ -10177,28 +10016,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="strNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="SystemInfoParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
-<constructor name="SystemInfoParser"
- type="org.rundeck.api.parser.SystemInfoParser"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-</constructor>
 <constructor name="SystemInfoParser"
  type="org.rundeck.api.parser.SystemInfoParser"
  static="false"
@@ -10209,7 +10038,7 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.RundeckSystemInfo"
  abstract="false"
  native="false"
@@ -10219,28 +10048,18 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="infoNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
 <class name="WorkflowStateParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
-<constructor name="WorkflowStateParser"
- type="org.rundeck.api.parser.WorkflowStateParser"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-</constructor>
 <constructor name="WorkflowStateParser"
  type="org.rundeck.api.parser.WorkflowStateParser"
  static="false"
@@ -10251,6 +10070,19 @@
 <parameter name="xpath" type="java.lang.String">
 </parameter>
 </constructor>
+<method name="parse"
+ return="org.rundeck.api.domain.WorkflowState"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="targetNode" type="org.dom4j.Node">
+</parameter>
+</method>
 <method name="parseDate"
  return="java.util.Date"
  abstract="false"
@@ -10277,19 +10109,6 @@
 <parameter name="targetNode" type="org.dom4j.Node">
 </parameter>
 <parameter name="state" type="org.rundeck.api.domain.WorkflowState">
-</parameter>
-</method>
-<method name="parseXmlNode"
- return="org.rundeck.api.domain.WorkflowState"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="node" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>
@@ -10328,15 +10147,13 @@
 </method>
 </class>
 <class name="WorkflowStepStateParser"
- extends="java.lang.Object"
+ extends="org.rundeck.api.parser.BaseXpathParser"
  abstract="false"
  static="false"
  final="false"
  deprecated="not deprecated"
  visibility="public"
 >
-<implements name="org.rundeck.api.parser.XmlNodeParser">
-</implements>
 <constructor name="WorkflowStepStateParser"
  type="org.rundeck.api.parser.WorkflowStepStateParser"
  static="false"
@@ -10345,17 +10162,7 @@
  visibility="public"
 >
 </constructor>
-<constructor name="WorkflowStepStateParser"
- type="org.rundeck.api.parser.WorkflowStepStateParser"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="xpath" type="java.lang.String">
-</parameter>
-</constructor>
-<method name="parseXmlNode"
+<method name="parse"
  return="org.rundeck.api.domain.WorkflowStepState"
  abstract="false"
  native="false"
@@ -10365,7 +10172,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="node" type="org.dom4j.Node">
+<parameter name="targetNode" type="org.dom4j.Node">
 </parameter>
 </method>
 </class>

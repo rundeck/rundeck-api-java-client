@@ -169,7 +169,6 @@
               
     <li><h2>Classes</h2>
       <ul>
-          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/APIV11Helper.html">APIV11Helper</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/AbortParser.html">AbortParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ArchiveImportParser.html">ArchiveImportParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/BaseStateParser.html">BaseStateParser</a></li>
@@ -553,7 +552,7 @@ From class
         <td class="jd-typecol"><nobr>
             
             
-            
+            final
             
             
             T</nobr>
@@ -563,6 +562,41 @@ From class
         
         <div class="jd-descrdiv">Parse the given XML Node</div>
   
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            static
+            
+            Node</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/BaseXpathParser.html#selectNodeAndUnwrap(org.dom4j.Node, java.lang.String)">selectNodeAndUnwrap</a></span>(Node node, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> xpath)</nobr>
+        
+        <div class="jd-descrdiv">Select appropriate node based on xpath, will automatically look for "result" top-level element and alter xpath if
+ necessary</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            static
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/BaseXpathParser.html#unwrapXpath(org.dom4j.Node, java.lang.String)">unwrapXpath</a></span>(Node node, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> xpath)</nobr>
+        
   </td></tr>
 
 

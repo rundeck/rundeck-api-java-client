@@ -64,7 +64,7 @@
 <a class="jxr_linenumber" name="54" href="#54">54</a>  
 <a class="jxr_linenumber" name="55" href="#55">55</a>      @Override
 <a class="jxr_linenumber" name="56" href="#56">56</a>      <strong class="jxr_keyword">public</strong> PagedResults&lt;T&gt; parseXmlNode(Node node) {
-<a class="jxr_linenumber" name="57" href="#57">57</a>          Node pagedNodeContainer = node.selectSingleNode(xpath);
+<a class="jxr_linenumber" name="57" href="#57">57</a>          Node pagedNodeContainer = BaseXpathParser.selectNodeAndUnwrap(node, xpath);
 <a class="jxr_linenumber" name="58" href="#58">58</a>          <strong class="jxr_keyword">if</strong>(<strong class="jxr_keyword">null</strong>==pagedNodeContainer) {
 <a class="jxr_linenumber" name="59" href="#59">59</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/rundeck/api/RundeckApiException.html">RundeckApiException</a>(<span class="jxr_string">"XML content did not match XPATH expression: "</span> + xpath);
 <a class="jxr_linenumber" name="60" href="#60">60</a>          }

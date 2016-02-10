@@ -169,7 +169,6 @@
               
     <li><h2>Classes</h2>
       <ul>
-          <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/APIV11Helper.html">APIV11Helper</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/AbortParser.html">AbortParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/ArchiveImportParser.html">ArchiveImportParser</a></li>
           <li class="api apilevel-"><a href="../../../../org/rundeck/api/parser/BaseStateParser.html">BaseStateParser</a></li>
@@ -267,6 +266,13 @@
   
   
 
+  
+   
+  
+  
+  
+  
+
 
 <div class="sum-details-links">
 
@@ -323,6 +329,10 @@ Summary:
   
 
   
+  
+  
+
+  
     extends <a href="../../../../org/rundeck/api/parser/ProjectParser.html">ProjectParser</a><br/>
   
   
@@ -343,11 +353,21 @@ Summary:
 
     <tr>
          	
-        <td colspan="3" class="jd-inheritance-class-cell"><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Object.html">java.lang.Object</a></td>
+        <td colspan="4" class="jd-inheritance-class-cell"><a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/Object.html">java.lang.Object</a></td>
     </tr>
     
 
     <tr>
+        
+            <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
+         	
+        <td colspan="3" class="jd-inheritance-class-cell"><a href="../../../../org/rundeck/api/parser/BaseXpathParser.html">org.rundeck.api.parser.BaseXpathParser</a>&lt;T&gt;</td>
+    </tr>
+    
+
+    <tr>
+        
+            <td class="jd-inheritance-space">&nbsp;</td>
         
             <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
          	
@@ -356,6 +376,8 @@ Summary:
     
 
     <tr>
+        
+            <td class="jd-inheritance-space">&nbsp;</td>
         
             <td class="jd-inheritance-space">&nbsp;</td>
         
@@ -488,10 +510,8 @@ Summary:
             <a href="../../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../org/rundeck/api/parser/ProjectParserV11.html#parseXmlNode(org.dom4j.Node)">parseXmlNode</a></span>(Node node)</nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/ProjectParserV11.html#parse(org.dom4j.Node)">parse</a></span>(Node projectNode)</nobr>
         
-        <div class="jd-descrdiv">Parse the given XML Node</div>
-  
   </td></tr>
 
 
@@ -537,10 +557,52 @@ From class
             
             
             
-            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+            <a href="../../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../org/rundeck/api/parser/ProjectParser.html#getXpath()">getXpath</a></span>()</nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/ProjectParser.html#parse(org.dom4j.Node)">parse</a></span>(Node projectNode)</nobr>
+        
+  </td></tr>
+
+
+</table>
+  </div>
+</div>
+</td></tr>
+
+
+
+<tr class="api apilevel-" >
+<td colspan="12">
+  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-org.rundeck.api.parser.BaseXpathParser" class="jd-expando-trigger closed"
+          ><img id="inherited-methods-org.rundeck.api.parser.BaseXpathParser-trigger"
+          src="../../../../../assets/images/triangle-closed.png"
+          class="jd-expando-trigger-img" /></a>
+From class
+
+  <a href="../../../../org/rundeck/api/parser/BaseXpathParser.html">org.rundeck.api.parser.BaseXpathParser</a>
+
+<div id="inherited-methods-org.rundeck.api.parser.BaseXpathParser">
+  <div id="inherited-methods-org.rundeck.api.parser.BaseXpathParser-list"
+        class="jd-inheritedlinks">
+  </div>
+  <div id="inherited-methods-org.rundeck.api.parser.BaseXpathParser-summary" style="display: none;">
+    <table class="jd-sumtable-expando">
+    
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            T</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/BaseXpathParser.html#parse(org.dom4j.Node)">parse</a></span>(Node node)</nobr>
         
   </td></tr>
 
@@ -550,16 +612,51 @@ From class
         <td class="jd-typecol"><nobr>
             
             
+            final
             
             
-            
-            <a href="../../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a></nobr>
+            T</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../org/rundeck/api/parser/ProjectParser.html#parseXmlNode(org.dom4j.Node)">parseXmlNode</a></span>(Node node)</nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/BaseXpathParser.html#parseXmlNode(org.dom4j.Node)">parseXmlNode</a></span>(Node node)</nobr>
         
         <div class="jd-descrdiv">Parse the given XML Node</div>
   
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            static
+            
+            Node</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/BaseXpathParser.html#selectNodeAndUnwrap(org.dom4j.Node, java.lang.String)">selectNodeAndUnwrap</a></span>(Node node, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> xpath)</nobr>
+        
+        <div class="jd-descrdiv">Select appropriate node based on xpath, will automatically look for "result" top-level element and alter xpath if
+ necessary</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            static
+            
+            <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/rundeck/api/parser/BaseXpathParser.html#unwrapXpath(org.dom4j.Node, java.lang.String)">unwrapXpath</a></span>(Node node, <a href="http://download.oracle.com/javase/6/docs/api/index.html?java/lang/String.html">String</a> xpath)</nobr>
+        
   </td></tr>
 
 
@@ -926,7 +1023,7 @@ From interface
 
 
 
-<A NAME="parseXmlNode(org.dom4j.Node)"></A>
+<A NAME="parse(org.dom4j.Node)"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -938,8 +1035,8 @@ From interface
          
         <a href="../../../../org/rundeck/api/domain/RundeckProject.html">RundeckProject</a>
       </span>
-      <span class="sympad">parseXmlNode</span>
-      <span class="normal">(Node node)</span>
+      <span class="sympad">parse</span>
+      <span class="normal">(Node projectNode)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -951,12 +1048,7 @@ From interface
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Parse the given XML Node</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Returns</h5>
-      <ul class="nolist"><li>any object holding the converted value
-</li></ul>
-  </div>
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
 
     </div>
 </div>

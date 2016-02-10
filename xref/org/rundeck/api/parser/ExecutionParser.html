@@ -43,79 +43,72 @@
 <a class="jxr_linenumber" name="33" href="#33">33</a>  <em class="jxr_javadoccomment"> * </em>
 <a class="jxr_linenumber" name="34" href="#34">34</a>  <em class="jxr_javadoccomment"> * @author Vincent Behar</em>
 <a class="jxr_linenumber" name="35" href="#35">35</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="36" href="#36">36</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/rundeck/api/parser/ExecutionParser.html">ExecutionParser</a> <strong class="jxr_keyword">implements</strong> XmlNodeParser&lt;RundeckExecution&gt; {
+<a class="jxr_linenumber" name="36" href="#36">36</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/rundeck/api/parser/ExecutionParser.html">ExecutionParser</a> <strong class="jxr_keyword">extends</strong> BaseXpathParser&lt;RundeckExecution&gt; {
 <a class="jxr_linenumber" name="37" href="#37">37</a>  
-<a class="jxr_linenumber" name="38" href="#38">38</a>      <strong class="jxr_keyword">private</strong> String xpath;
-<a class="jxr_linenumber" name="39" href="#39">39</a>  
-<a class="jxr_linenumber" name="40" href="#40">40</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../org/rundeck/api/parser/ExecutionParser.html">ExecutionParser</a>() {
-<a class="jxr_linenumber" name="41" href="#41">41</a>          <strong class="jxr_keyword">super</strong>();
-<a class="jxr_linenumber" name="42" href="#42">42</a>      }
-<a class="jxr_linenumber" name="43" href="#43">43</a>  
-<a class="jxr_linenumber" name="44" href="#44">44</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="45" href="#45">45</a>  <em class="jxr_javadoccomment">     * @param xpath of the execution element if it is not the root node</em>
-<a class="jxr_linenumber" name="46" href="#46">46</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="47" href="#47">47</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../org/rundeck/api/parser/ExecutionParser.html">ExecutionParser</a>(String xpath) {
-<a class="jxr_linenumber" name="48" href="#48">48</a>          <strong class="jxr_keyword">super</strong>();
-<a class="jxr_linenumber" name="49" href="#49">49</a>          <strong class="jxr_keyword">this</strong>.xpath = xpath;
-<a class="jxr_linenumber" name="50" href="#50">50</a>      }
-<a class="jxr_linenumber" name="51" href="#51">51</a>  
-<a class="jxr_linenumber" name="52" href="#52">52</a>      @Override
-<a class="jxr_linenumber" name="53" href="#53">53</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a> parseXmlNode(Node node) {
-<a class="jxr_linenumber" name="54" href="#54">54</a>          Node execNode = xpath != <strong class="jxr_keyword">null</strong> ? node.selectSingleNode(xpath) : node;
-<a class="jxr_linenumber" name="55" href="#55">55</a>  
-<a class="jxr_linenumber" name="56" href="#56">56</a>          <a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a> execution = <strong class="jxr_keyword">new</strong> <a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a>();
-<a class="jxr_linenumber" name="57" href="#57">57</a>  
-<a class="jxr_linenumber" name="58" href="#58">58</a>          execution.setId(Long.valueOf(execNode.valueOf(<span class="jxr_string">"@id"</span>)));
-<a class="jxr_linenumber" name="59" href="#59">59</a>          execution.setUrl(StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"@href"</span>)));
-<a class="jxr_linenumber" name="60" href="#60">60</a>          <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="61" href="#61">61</a>              execution.setStatus(ExecutionStatus.valueOf(StringUtils.replace(StringUtils.upperCase(execNode.valueOf(<span class="jxr_string">"@status"</span>)),<span class="jxr_string">"-"</span>,<span class="jxr_string">"_"</span>)));
-<a class="jxr_linenumber" name="62" href="#62">62</a>          } <strong class="jxr_keyword">catch</strong> (IllegalArgumentException e) {
-<a class="jxr_linenumber" name="63" href="#63">63</a>              execution.setStatus(<strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="64" href="#64">64</a>          }
-<a class="jxr_linenumber" name="65" href="#65">65</a>          execution.setDescription(StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"description"</span>)));
-<a class="jxr_linenumber" name="66" href="#66">66</a>          execution.setArgstring(StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"argstring"</span>)));
-<a class="jxr_linenumber" name="67" href="#67">67</a>          execution.setStartedBy(StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"user"</span>)));
-<a class="jxr_linenumber" name="68" href="#68">68</a>          execution.setAbortedBy(StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"abortedby"</span>)));
-<a class="jxr_linenumber" name="69" href="#69">69</a>          execution.setProject(StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"@project"</span>)));
-<a class="jxr_linenumber" name="70" href="#70">70</a>          String startedAt = StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"date-started/@unixtime"</span>));
-<a class="jxr_linenumber" name="71" href="#71">71</a>          <strong class="jxr_keyword">if</strong> (startedAt != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="72" href="#72">72</a>              execution.setStartedAt(<strong class="jxr_keyword">new</strong> Date(Long.valueOf(startedAt)));
-<a class="jxr_linenumber" name="73" href="#73">73</a>          }
-<a class="jxr_linenumber" name="74" href="#74">74</a>          String endedAt = StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"date-ended/@unixtime"</span>));
-<a class="jxr_linenumber" name="75" href="#75">75</a>          <strong class="jxr_keyword">if</strong> (endedAt != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="76" href="#76">76</a>              execution.setEndedAt(<strong class="jxr_keyword">new</strong> Date(Long.valueOf(endedAt)));
-<a class="jxr_linenumber" name="77" href="#77">77</a>          }
-<a class="jxr_linenumber" name="78" href="#78">78</a>  
-<a class="jxr_linenumber" name="79" href="#79">79</a>          Node jobNode = execNode.selectSingleNode(<span class="jxr_string">"job"</span>);
-<a class="jxr_linenumber" name="80" href="#80">80</a>          <strong class="jxr_keyword">if</strong> (jobNode != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="81" href="#81">81</a>              <a href="../../../../org/rundeck/api/domain/RundeckJob.html">RundeckJob</a> job = <strong class="jxr_keyword">new</strong> <a href="../../../../org/rundeck/api/parser/JobParser.html">JobParser</a>().parseXmlNode(jobNode);
-<a class="jxr_linenumber" name="82" href="#82">82</a>              execution.setJob(job);
-<a class="jxr_linenumber" name="83" href="#83">83</a>          }
-<a class="jxr_linenumber" name="84" href="#84">84</a>  
-<a class="jxr_linenumber" name="85" href="#85">85</a>          <strong class="jxr_keyword">final</strong> Node successfulNodes = execNode.selectSingleNode(<span class="jxr_string">"successfulNodes"</span>);
-<a class="jxr_linenumber" name="86" href="#86">86</a>          <strong class="jxr_keyword">if</strong> (successfulNodes != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="87" href="#87">87</a>              <strong class="jxr_keyword">final</strong> List&lt;RundeckNode&gt; rundeckNodes =
-<a class="jxr_linenumber" name="88" href="#88">88</a>                      <strong class="jxr_keyword">new</strong> ListParser&lt;RundeckNode&gt;(<strong class="jxr_keyword">new</strong> <a href="../../../../org/rundeck/api/parser/NodeParser.html">NodeParser</a>(), <span class="jxr_string">"successfulNodes/node"</span>)
-<a class="jxr_linenumber" name="89" href="#89">89</a>                              .parseXmlNode(execNode);
-<a class="jxr_linenumber" name="90" href="#90">90</a>              execution.setSuccessfulNodes(<strong class="jxr_keyword">new</strong> HashSet&lt;RundeckNodeIdentity&gt;(rundeckNodes));
-<a class="jxr_linenumber" name="91" href="#91">91</a>          }<strong class="jxr_keyword">else</strong>{
-<a class="jxr_linenumber" name="92" href="#92">92</a>              execution.setSuccessfulNodes(Collections.&lt;RundeckNodeIdentity&gt;emptySet());
-<a class="jxr_linenumber" name="93" href="#93">93</a>          }
-<a class="jxr_linenumber" name="94" href="#94">94</a>  
-<a class="jxr_linenumber" name="95" href="#95">95</a>          <strong class="jxr_keyword">final</strong> Node failedNodes = execNode.selectSingleNode(<span class="jxr_string">"failedNodes"</span>);
-<a class="jxr_linenumber" name="96" href="#96">96</a>          <strong class="jxr_keyword">if</strong> (failedNodes != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="97" href="#97">97</a>              <strong class="jxr_keyword">final</strong> List&lt;RundeckNode&gt; rundeckNodes =
-<a class="jxr_linenumber" name="98" href="#98">98</a>                      <strong class="jxr_keyword">new</strong> ListParser&lt;RundeckNode&gt;(<strong class="jxr_keyword">new</strong> <a href="../../../../org/rundeck/api/parser/NodeParser.html">NodeParser</a>(), <span class="jxr_string">"failedNodes/node"</span>)
-<a class="jxr_linenumber" name="99" href="#99">99</a>                              .parseXmlNode(execNode);
-<a class="jxr_linenumber" name="100" href="#100">100</a>             execution.setFailedNodes(<strong class="jxr_keyword">new</strong> HashSet&lt;RundeckNodeIdentity&gt;(rundeckNodes));
-<a class="jxr_linenumber" name="101" href="#101">101</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="102" href="#102">102</a>             execution.setFailedNodes(Collections.&lt;RundeckNodeIdentity&gt;emptySet());
-<a class="jxr_linenumber" name="103" href="#103">103</a>         }
-<a class="jxr_linenumber" name="104" href="#104">104</a> 
-<a class="jxr_linenumber" name="105" href="#105">105</a>         <strong class="jxr_keyword">return</strong> execution;
-<a class="jxr_linenumber" name="106" href="#106">106</a>     }
-<a class="jxr_linenumber" name="107" href="#107">107</a> 
-<a class="jxr_linenumber" name="108" href="#108">108</a> }
+<a class="jxr_linenumber" name="38" href="#38">38</a>  
+<a class="jxr_linenumber" name="39" href="#39">39</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../org/rundeck/api/parser/ExecutionParser.html">ExecutionParser</a>(<strong class="jxr_keyword">final</strong> String xpath) {
+<a class="jxr_linenumber" name="40" href="#40">40</a>          <strong class="jxr_keyword">super</strong>(xpath);
+<a class="jxr_linenumber" name="41" href="#41">41</a>      }
+<a class="jxr_linenumber" name="42" href="#42">42</a>  
+<a class="jxr_linenumber" name="43" href="#43">43</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../org/rundeck/api/parser/ExecutionParser.html">ExecutionParser</a>() {
+<a class="jxr_linenumber" name="44" href="#44">44</a>  
+<a class="jxr_linenumber" name="45" href="#45">45</a>      }
+<a class="jxr_linenumber" name="46" href="#46">46</a>  
+<a class="jxr_linenumber" name="47" href="#47">47</a>      @Override
+<a class="jxr_linenumber" name="48" href="#48">48</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a> parse(Node execNode) {
+<a class="jxr_linenumber" name="49" href="#49">49</a>          <a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a> execution = <strong class="jxr_keyword">new</strong> <a href="../../../../org/rundeck/api/domain/RundeckExecution.html">RundeckExecution</a>();
+<a class="jxr_linenumber" name="50" href="#50">50</a>  
+<a class="jxr_linenumber" name="51" href="#51">51</a>          execution.setId(Long.valueOf(execNode.valueOf(<span class="jxr_string">"@id"</span>)));
+<a class="jxr_linenumber" name="52" href="#52">52</a>          execution.setUrl(StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"@href"</span>)));
+<a class="jxr_linenumber" name="53" href="#53">53</a>          <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="54" href="#54">54</a>              execution.setStatus(ExecutionStatus.valueOf(StringUtils.replace(StringUtils.upperCase(execNode.valueOf(<span class="jxr_string">"@status"</span>)),<span class="jxr_string">"-"</span>,<span class="jxr_string">"_"</span>)));
+<a class="jxr_linenumber" name="55" href="#55">55</a>          } <strong class="jxr_keyword">catch</strong> (IllegalArgumentException e) {
+<a class="jxr_linenumber" name="56" href="#56">56</a>              execution.setStatus(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="57" href="#57">57</a>          }
+<a class="jxr_linenumber" name="58" href="#58">58</a>          execution.setDescription(StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"description"</span>)));
+<a class="jxr_linenumber" name="59" href="#59">59</a>          execution.setArgstring(StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"argstring"</span>)));
+<a class="jxr_linenumber" name="60" href="#60">60</a>          execution.setStartedBy(StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"user"</span>)));
+<a class="jxr_linenumber" name="61" href="#61">61</a>          execution.setAbortedBy(StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"abortedby"</span>)));
+<a class="jxr_linenumber" name="62" href="#62">62</a>          execution.setProject(StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"@project"</span>)));
+<a class="jxr_linenumber" name="63" href="#63">63</a>          String startedAt = StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"date-started/@unixtime"</span>));
+<a class="jxr_linenumber" name="64" href="#64">64</a>          <strong class="jxr_keyword">if</strong> (startedAt != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="65" href="#65">65</a>              execution.setStartedAt(<strong class="jxr_keyword">new</strong> Date(Long.valueOf(startedAt)));
+<a class="jxr_linenumber" name="66" href="#66">66</a>          }
+<a class="jxr_linenumber" name="67" href="#67">67</a>          String endedAt = StringUtils.trimToNull(execNode.valueOf(<span class="jxr_string">"date-ended/@unixtime"</span>));
+<a class="jxr_linenumber" name="68" href="#68">68</a>          <strong class="jxr_keyword">if</strong> (endedAt != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="69" href="#69">69</a>              execution.setEndedAt(<strong class="jxr_keyword">new</strong> Date(Long.valueOf(endedAt)));
+<a class="jxr_linenumber" name="70" href="#70">70</a>          }
+<a class="jxr_linenumber" name="71" href="#71">71</a>  
+<a class="jxr_linenumber" name="72" href="#72">72</a>          Node jobNode = execNode.selectSingleNode(<span class="jxr_string">"job"</span>);
+<a class="jxr_linenumber" name="73" href="#73">73</a>          <strong class="jxr_keyword">if</strong> (jobNode != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="74" href="#74">74</a>              <a href="../../../../org/rundeck/api/domain/RundeckJob.html">RundeckJob</a> job = <strong class="jxr_keyword">new</strong> <a href="../../../../org/rundeck/api/parser/JobParser.html">JobParser</a>().parseXmlNode(jobNode);
+<a class="jxr_linenumber" name="75" href="#75">75</a>              execution.setJob(job);
+<a class="jxr_linenumber" name="76" href="#76">76</a>          }
+<a class="jxr_linenumber" name="77" href="#77">77</a>  
+<a class="jxr_linenumber" name="78" href="#78">78</a>          <strong class="jxr_keyword">final</strong> Node successfulNodes = execNode.selectSingleNode(<span class="jxr_string">"successfulNodes"</span>);
+<a class="jxr_linenumber" name="79" href="#79">79</a>          <strong class="jxr_keyword">if</strong> (successfulNodes != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="80" href="#80">80</a>              <strong class="jxr_keyword">final</strong> List&lt;RundeckNode&gt; rundeckNodes =
+<a class="jxr_linenumber" name="81" href="#81">81</a>                      <strong class="jxr_keyword">new</strong> ListParser&lt;RundeckNode&gt;(<strong class="jxr_keyword">new</strong> <a href="../../../../org/rundeck/api/parser/NodeParser.html">NodeParser</a>(), <span class="jxr_string">"successfulNodes/node"</span>)
+<a class="jxr_linenumber" name="82" href="#82">82</a>                              .parseXmlNode(execNode);
+<a class="jxr_linenumber" name="83" href="#83">83</a>              execution.setSuccessfulNodes(<strong class="jxr_keyword">new</strong> HashSet&lt;RundeckNodeIdentity&gt;(rundeckNodes));
+<a class="jxr_linenumber" name="84" href="#84">84</a>          }<strong class="jxr_keyword">else</strong>{
+<a class="jxr_linenumber" name="85" href="#85">85</a>              execution.setSuccessfulNodes(Collections.&lt;RundeckNodeIdentity&gt;emptySet());
+<a class="jxr_linenumber" name="86" href="#86">86</a>          }
+<a class="jxr_linenumber" name="87" href="#87">87</a>  
+<a class="jxr_linenumber" name="88" href="#88">88</a>          <strong class="jxr_keyword">final</strong> Node failedNodes = execNode.selectSingleNode(<span class="jxr_string">"failedNodes"</span>);
+<a class="jxr_linenumber" name="89" href="#89">89</a>          <strong class="jxr_keyword">if</strong> (failedNodes != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="90" href="#90">90</a>              <strong class="jxr_keyword">final</strong> List&lt;RundeckNode&gt; rundeckNodes =
+<a class="jxr_linenumber" name="91" href="#91">91</a>                      <strong class="jxr_keyword">new</strong> ListParser&lt;RundeckNode&gt;(<strong class="jxr_keyword">new</strong> <a href="../../../../org/rundeck/api/parser/NodeParser.html">NodeParser</a>(), <span class="jxr_string">"failedNodes/node"</span>)
+<a class="jxr_linenumber" name="92" href="#92">92</a>                              .parseXmlNode(execNode);
+<a class="jxr_linenumber" name="93" href="#93">93</a>              execution.setFailedNodes(<strong class="jxr_keyword">new</strong> HashSet&lt;RundeckNodeIdentity&gt;(rundeckNodes));
+<a class="jxr_linenumber" name="94" href="#94">94</a>          } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="95" href="#95">95</a>              execution.setFailedNodes(Collections.&lt;RundeckNodeIdentity&gt;emptySet());
+<a class="jxr_linenumber" name="96" href="#96">96</a>          }
+<a class="jxr_linenumber" name="97" href="#97">97</a>  
+<a class="jxr_linenumber" name="98" href="#98">98</a>          <strong class="jxr_keyword">return</strong> execution;
+<a class="jxr_linenumber" name="99" href="#99">99</a>      }
+<a class="jxr_linenumber" name="100" href="#100">100</a> 
+<a class="jxr_linenumber" name="101" href="#101">101</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
