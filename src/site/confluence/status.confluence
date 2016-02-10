@@ -132,7 +132,9 @@ h2. Rundeck API version 14
 
 [Documentation of the Rundeck API version 14|http://rundeck.org/2.6.0/api/index.html]
 
-* TBD
+* Update deprecated endpoints for new URL path format - TBD
+    * when called with API v14 or later, the new endpoints will be used.
+* Add new endpoints - TBD
 
 h2. Rundeck API version 15
 
