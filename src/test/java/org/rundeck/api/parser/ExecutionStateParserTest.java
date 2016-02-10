@@ -40,4 +40,30 @@ public class ExecutionStateParserTest {
             Assert.assertTrue(expectedTargetNodes.contains(s));
         }
     }
+    @Test
+    public void testNoResultBasic(){
+        InputStream input = getClass().getResourceAsStream("execution-state1-noresult.xml");
+        Document document = ParserHelper.loadDocument(input);
+
+        RundeckExecutionState execution = new ExecutionStateParser("/result/executionState").parseXmlNode
+                (document);
+
+        Assert.assertEquals(149L, execution.getExecutionId());
+
+        HashSet<String> expectedTargetNodes = new HashSet<String>(Arrays.asList(
+                "node-111.qa.subgroup.mycompany.com",
+                "node-14.qa.subgroup.mycompany.com",
+                "node-6.qa.subgroup.mycompany.com"
+        ));
+
+        Assert.assertEquals(3, execution.getAllNodes().size());
+        for (RundeckNodeIdentity rundeckNodeIdentity : execution.getAllNodes()) {
+            Assert.assertTrue(expectedTargetNodes.contains(rundeckNodeIdentity.getName()));
+        }
+
+        Assert.assertEquals(3,execution.getNodeStates().size());
+        for (String s : execution.getNodeStates().keySet()) {
+            Assert.assertTrue(expectedTargetNodes.contains(s));
+        }
+    }
 }
