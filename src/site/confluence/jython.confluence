@@ -108,9 +108,13 @@ h2. Importing jobs
 
 {code}
 from org.rundeck.api import RundeckClient
-rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
+from org.rundeck.api.RundeckJobsImportBuilder
+from org.rundeck.api.FileType
 
-result = rundeck.importJobs("/tmp/jobs.xml", "xml")
+rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
+importer = RundeckJobsImportBuilder.builder().setFileType(FileType.XML).build()
+
+result = rundeck.importJobs("/tmp/jobs.xml", importer)
 print("%s jobs successfully imported, %s jobs skipped, and %s jobs failed" % (result.succeededJobs.size, result.skippedJobs.size, result.failedJobs.size))
 {code}
 

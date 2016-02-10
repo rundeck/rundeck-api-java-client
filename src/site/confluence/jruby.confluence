@@ -124,9 +124,13 @@ h2. Importing jobs
 
 {code}
 import org.rundeck.api.RundeckClient
+import org.rundeck.api.RundeckJobsImportBuilder
+import org.rundeck.api.FileType
 rundeck = RundeckClient.builder().url("http://localhost:4440").login("admin", "admin").build()
+importer = RundeckJobsImportBuilder.builder().setFileType(Java::OrgRundeckApi::FileType::XML).build()
 
-result = rundeck.importJobs("/tmp/jobs.xml", "xml")
+
+result = rundeck.importJobs("/tmp/jobs.xml", importer)
 puts "#{result.succeededJobs.size} jobs successfully imported, #{result.skippedJobs.size} jobs skipped, and #{result.failedJobs.size} jobs failed"
 {code}
 
