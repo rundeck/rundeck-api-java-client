@@ -1077,6 +1077,23 @@ public class RundeckClientTest {
         Assert.assertEquals(total, jobTest.getTotal());
     }
 
+
+    @Test
+    @Betamax(tape = "export_jobs_v14", mode = TapeMode.READ_ONLY)
+    public void exportJobs_v14() throws Exception {
+        RundeckClient client1 = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN", 14);
+        InputStream inputStream = client1.exportJobs(FileType.XML, "test", "job1", "");
+
+        File temp = File.createTempFile("test_export_jobs", ".xml");
+        temp.deleteOnExit();
+        try (FileOutputStream out = new FileOutputStream(temp)) {
+            IOUtils.copy(inputStream, out);
+        }
+        long length = temp.length();
+        temp.delete();
+        Assert.assertEquals(448, length);
+    }
+
     /**
      * Import jobs, xml contains project context
      * @throws Exception
