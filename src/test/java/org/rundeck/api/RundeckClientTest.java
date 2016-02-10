@@ -241,6 +241,19 @@ public class RundeckClientTest {
         final List<RundeckEvent> events = test.getEvents();
         Assert.assertEquals(3, events.size());
     }
+    @Test
+    @Betamax(tape = "get_history_v14",
+             mode=TapeMode.READ_ONLY
+    )
+    public void getHistory_v14() throws Exception {
+        final RundeckHistory test = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN", 14).getHistory("test");
+        Assert.assertEquals(20, test.getCount());
+        Assert.assertEquals(20, test.getMax());
+        Assert.assertEquals(0, test.getOffset());
+        Assert.assertEquals(60, test.getTotal());
+        final List<RundeckEvent> events = test.getEvents();
+        Assert.assertEquals(20, events.size());
+    }
 
     @Test
     @Betamax(tape = "get_history_joblist",
@@ -337,6 +350,24 @@ public class RundeckClientTest {
         Assert.assertEquals("admin", execution.getStartedBy());
         Assert.assertEquals(null, execution.getJob());
         Assert.assertEquals(null, execution.getAbortedBy());
+    }
+    @Test
+    @Betamax(tape = "get_executions_v14"
+             ,mode = TapeMode.READ_ONLY
+    )
+    public void getExecutionsV14() throws Exception {
+
+        RundeckClient client = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN", 14);
+
+
+        final PagedResults<RundeckExecution> jobTest = client.getExecutions(
+                ExecutionQuery.builder()
+                              .project("test")
+                              .build(),
+                10L,
+                0L
+        );
+        assertPageResults(jobTest, 10, 10, 10, 0, 60);
     }
     @Test
     @Betamax(tape = "get_executions",
@@ -1351,6 +1382,22 @@ public class RundeckClientTest {
         Assert.assertEquals("importJobsUUIDParamPreserveV9", rundeckJob.getName());
         Assert.assertEquals("testImportUUID", rundeckJob.getId());
     }
+    /**
+     * Running executions for all projects using API v14
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "running_executions_v14", mode = TapeMode.READ_ONLY)
+    public void runningExecutionsV14() throws Exception {
+        final RundeckClient client = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN", 14);
+        List<RundeckExecution> runningExecutions = client.getRunningExecutions();
+        Assert.assertEquals(2, runningExecutions.size());
+        RundeckExecution exec1 = runningExecutions.get(0);
+        Assert.assertEquals("test", exec1.getProject());
+        RundeckExecution exec2 = runningExecutions.get(1);
+        Assert.assertEquals("test", exec2.getProject());
+    }
+
     /**
      * Running executions for all projects using API v9
      * @throws Exception

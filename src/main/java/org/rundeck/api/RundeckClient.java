@@ -1656,14 +1656,15 @@ public class RundeckClient implements Serializable {
      */
     public PagedResults<RundeckExecution> getExecutions(ExecutionQuery query, Long max, Long offset)
         throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
-        if (!query.notBlank()) {
-            throw new IllegalArgumentException("Some execution query parameter must be set");
-        }
+
         AssertUtil.notBlank(query.getProject(), "project is required for execution query");
         ApiPathBuilder builder ;
         if (isApiAtLeast(Version.V14)) {
             builder = new ApiPathBuilder("/project/",query.getProject(),"/executions");
         } else {
+            if (!query.notBlank()) {
+                throw new IllegalArgumentException("Some execution query parameter must be set");
+            }
             builder = new ApiPathBuilder("/executions");
         }
 
