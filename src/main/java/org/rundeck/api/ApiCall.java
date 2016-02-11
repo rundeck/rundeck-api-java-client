@@ -341,17 +341,15 @@ class ApiCall {
             ArrayList<File> tempfiles = new ArrayList<>();
 
             //attach streams
-            try {
-                for (Entry<String, InputStream> attachment : apiPath.getAttachments().entrySet()) {
+            for (Entry<String, InputStream> attachment : apiPath.getAttachments().entrySet()) {
+                if(client.isUseIntermediateStreamFile()) {
                     //transfer to file
-                    File f = File.createTempFile("post-data", ".tmp");
-                    FileUtils.copyInputStreamToFile(attachment.getValue(),f);
-                    f.deleteOnExit();
+                    File f = copyToTempfile(attachment.getValue());
                     multipartEntityBuilder.addBinaryBody(attachment.getKey(), f);
                     tempfiles.add(f);
+                }else{
+                    multipartEntityBuilder.addBinaryBody(attachment.getKey(), attachment.getValue());
                 }
-            } catch (IOException e) {
-                throw new RundeckApiException("IO exception " + e.getMessage(), e);
             }
             if (tempfiles.size() > 0) {
                 handler = TempFileCleanupHandler.chain(handler, tempfiles);
@@ -370,11 +368,20 @@ class ApiCall {
                 throw new RundeckApiException("Unsupported encoding: " + e.getMessage(), e);
             }
         } else if (apiPath.getContentStream() != null && apiPath.getContentType() != null) {
-            InputStreamEntity entity = new InputStreamEntity(
-                    apiPath.getContentStream(),
-                    ContentType.create(apiPath.getContentType())
-            );
-            httpPost.setEntity(entity);
+            if(client.isUseIntermediateStreamFile()){
+                ArrayList<File> tempfiles = new ArrayList<>();
+                File f = copyToTempfile(apiPath.getContentStream());
+                tempfiles.add(f);
+                httpPost.setEntity(new FileEntity(f, ContentType.create(apiPath.getContentType())));
+
+                handler = TempFileCleanupHandler.chain(handler, tempfiles);
+            }else{
+                InputStreamEntity entity = new InputStreamEntity(
+                        apiPath.getContentStream(),
+                        ContentType.create(apiPath.getContentType())
+                );
+                httpPost.setEntity(entity);
+            }
         } else if (apiPath.getContents() != null && apiPath.getContentType() != null) {
             ByteArrayEntity bae = new ByteArrayEntity(
                     apiPath.getContents(),
@@ -394,6 +401,17 @@ class ApiCall {
         }
 
         return execute(httpPost, handler);
+    }
+
+    private File copyToTempfile(final InputStream stream) throws RundeckApiException {
+        try {
+            File f = File.createTempFile("post-data", ".tmp");
+            FileUtils.copyInputStreamToFile(stream, f);
+            f.deleteOnExit();
+            return f;
+        } catch (IOException e) {
+            throw new RundeckApiException("IO exception " + e.getMessage(), e);
+        }
     }
 
     /**

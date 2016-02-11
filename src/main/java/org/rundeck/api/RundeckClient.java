@@ -144,6 +144,15 @@ public class RundeckClient implements Serializable {
     private boolean sslHostnameVerifyAllowAll = false;
     private boolean sslCertificateTrustAllowSelfSigned = false;
     private boolean systemProxyEnabled = false;
+    private boolean useIntermediateStreamFile = false;
+
+    boolean isUseIntermediateStreamFile() {
+        return useIntermediateStreamFile;
+    }
+
+    void setUseIntermediateStreamFile(boolean useIntermediateStreamFile) {
+        this.useIntermediateStreamFile = useIntermediateStreamFile;
+    }
 
     void setToken(String token) {
         this.token = token;
