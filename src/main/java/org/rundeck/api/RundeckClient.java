@@ -1006,8 +1006,13 @@ public class RundeckClient implements Serializable {
             request = new ApiPathBuilder(JOBS_IMPORT);
         }
         request.param("format", rundeckJobsImport.getFileType())
-                .param("dupeOption", rundeckJobsImport.getImportMethod())
-                .attach("xmlBatch", rundeckJobsImport.getStream());
+                .param("dupeOption", rundeckJobsImport.getImportMethod());
+        if(isApiAtLeast(Version.V14)){
+            request.content(rundeckJobsImport.getFileType().getContentType(), rundeckJobsImport.getStream());
+        }else{
+            request.attach("xmlBatch", rundeckJobsImport.getStream());
+        }
+
         if(null!=rundeckJobsImport.getUuidImportBehavior()) {
             //API v9
             request.param("uuidOption", rundeckJobsImport.getUuidImportBehavior());

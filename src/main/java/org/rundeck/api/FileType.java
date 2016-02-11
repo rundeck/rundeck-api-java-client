@@ -17,9 +17,21 @@ package org.rundeck.api;
 
 /**
  * All supported types of files.
- * 
+ *
  * @author Vincent Behar
  */
 public enum FileType {
-    XML, YAML;
+    XML(FileType.APPLICATION_XML), YAML(FileType.APPLICATION_YAML);
+
+    public static final String APPLICATION_YAML = "application/yaml";
+    public static final String APPLICATION_XML = "application/xml";
+    String contentType;
+
+    FileType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    String getContentType() {
+        return contentType;
+    }
 }
