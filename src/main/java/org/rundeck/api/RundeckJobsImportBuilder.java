@@ -3,6 +3,7 @@ package org.rundeck.api;
 import org.rundeck.api.domain.RundeckJobsImportMethod;
 import org.rundeck.api.domain.RundeckJobsUUIDImportBehavior;
 
+import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -18,6 +19,7 @@ public class RundeckJobsImportBuilder {
     public RundeckJobsImportBuilder(final RundeckJobsImport original) {
         jobsImport = new DefaultJobsImport();
         jobsImport.setStream(original.getStream());
+        jobsImport.setFile(original.getFile());
         jobsImport.setFileType(original.getFileType());
         jobsImport.setProject(original.getProject());
         jobsImport.setImportMethod(original.getImportMethod());
@@ -48,6 +50,10 @@ public class RundeckJobsImportBuilder {
 
     public RundeckJobsImportBuilder setStream(final InputStream stream) {
         jobsImport.setStream(stream);
+        return this;
+    }
+    public RundeckJobsImportBuilder setFile(final File file) {
+        jobsImport.setFile(file);
         return this;
     }
 
