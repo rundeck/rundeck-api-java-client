@@ -1,0 +1,38 @@
+!tape
+name: get_jobs_v14
+interactions:
+- recorded: 2016-02-11T00:43:30.963Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/14/project/test/jobs
+    headers:
+      Accept: text/xml
+      Accept-Encoding: gzip,deflate
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: Rundeck API Java Client 14
+      X-Rundeck-Auth-Token: V4yhukF67G3tSOEvWYEh1ijROKfrULVN
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=gxcaoywrdmm71bfuu598o5mla;Path=/
+      X-Rundeck-API-Version: '15'
+      X-Rundeck-API-XML-Response-Wrapper: 'false'
+    body: |-
+      <jobs count='2'>
+        <job id='c713ab42-327e-4adc-9e9d-2cfb71b073f4' href='http://madmartigan.local:4440/api/15/job/c713ab42-327e-4adc-9e9d-2cfb71b073f4' permalink='http://madmartigan.local:4440/project/test/job/show/c713ab42-327e-4adc-9e9d-2cfb71b073f4'>
+          <name>job1</name>
+          <group />
+          <project>test</project>
+          <description>asdf</description>
+        </job>
+        <job id='2b668b07-e46d-4751-8205-2c96a12c6bf1' href='http://madmartigan.local:4440/api/15/job/2b668b07-e46d-4751-8205-2c96a12c6bf1' permalink='http://madmartigan.local:4440/project/test/job/show/2b668b07-e46d-4751-8205-2c96a12c6bf1'>
+          <name>job2</name>
+          <group />
+          <project>test</project>
+          <description>dxyz</description>
+        </job>
+      </jobs>

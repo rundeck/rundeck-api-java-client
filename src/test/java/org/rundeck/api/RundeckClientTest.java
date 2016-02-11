@@ -310,6 +310,24 @@ public class RundeckClientTest {
         }
         Assert.assertEquals(Arrays.asList("bob"), names);
     }
+
+    /**
+     * get jobs v14
+     */
+    @Test
+    @Betamax(tape = "get_jobs_v14")
+    public void getJobs_v14() throws Exception {
+        final RundeckClient client = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN", 14);
+
+        List<RundeckJob> jobList = client.getJobs("test");
+        Assert.assertEquals(2, jobList.size());
+        Assert.assertEquals("c713ab42-327e-4adc-9e9d-2cfb71b073f4", jobList.get(0).getId());
+        Assert.assertEquals("job1", jobList.get(0).getName());
+        Assert.assertEquals("asdf", jobList.get(0).getDescription());
+        Assert.assertEquals("2b668b07-e46d-4751-8205-2c96a12c6bf1", jobList.get(1).getId());
+        Assert.assertEquals("job2", jobList.get(1).getName());
+        Assert.assertEquals("dxyz", jobList.get(1).getDescription());
+    }
     @Test
     @Betamax(tape="get_execution")
     public void getExecution() throws  Exception{
