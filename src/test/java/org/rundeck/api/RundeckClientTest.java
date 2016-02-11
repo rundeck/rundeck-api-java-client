@@ -1133,6 +1133,41 @@ public class RundeckClientTest {
         Assert.assertEquals("test", rundeckJob.getProject());
     }
     /**
+     * Import jobs v14
+     */
+    @Test
+    @Betamax(tape = "import_jobs_v14")
+    public void importJobs_v14() throws Exception {
+        final RundeckClient client = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN", 14);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>test_import_jobs_v14</name>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                                                                     .setStream(stream)
+                                                                     .setFileType(FileType.XML)
+                                                                     .setJobsImportMethod(RundeckJobsImportMethod.UPDATE)
+                                                                     .setProject("test")
+                                                                     .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(0,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
+        Assert.assertEquals("test_import_jobs_v14", rundeckJob.getName());
+        Assert.assertEquals("test", rundeckJob.getProject());
+    }
+    /**
      * Import jobs api > v11
      * @throws Exception
      */
@@ -2241,7 +2276,10 @@ public class RundeckClientTest {
     }
 
     private RundeckClient createClient(final String token, int version) {
-        return createBuilder(token).version(version).build();
+        return createBuilder(token).version(version)
+                                   //use local file instead of direct stream to bypass a BetaMax issue
+                                   .useIntermediateStreamFile(true)
+                                   .build();
     }
 
     private RundeckClient createClient(String token) {

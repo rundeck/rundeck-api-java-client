@@ -1,0 +1,52 @@
+!tape
+name: import_jobs_v14
+interactions:
+- recorded: 2016-02-11T00:38:10.809Z
+  request:
+    method: POST
+    uri: http://rundeck.local:4440/api/14/project/test/jobs/import?format=xml&dupeOption=update
+    headers:
+      Accept: text/xml
+      Accept-Encoding: gzip,deflate
+      Content-Length: '270'
+      Content-Type: application/xml
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: Rundeck API Java Client 14
+      X-Rundeck-Auth-Token: V4yhukF67G3tSOEvWYEh1ijROKfrULVN
+    body: |-
+      <joblist>
+        <job>
+          <loglevel>INFO</loglevel>
+          <sequence keepgoing='false' strategy='node-first'>
+            <command>
+              <exec>echo hi</exec>
+            </command>
+          </sequence>
+          <description></description>
+          <name>test_import_jobs_v14</name>
+        </job>
+      </joblist>
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=u8gatuevzw8tn2jo5k1mywv8;Path=/
+      X-Rundeck-API-Version: '15'
+      X-Rundeck-API-XML-Response-Wrapper: 'true'
+    body: |-
+      <result success='true' apiversion='15'>
+        <succeeded count='1'>
+          <job index='1' href='http://madmartigan.local:4440/api/15/job/2b668b07-e46d-4751-8205-2c96a12c6bf1'>
+            <id>2b668b07-e46d-4751-8205-2c96a12c6bf1</id>
+            <name>test_import_jobs_v14</name>
+            <group></group>
+            <project>test</project>
+            <permalink>http://madmartigan.local:4440/project/test/job/show/2b668b07-e46d-4751-8205-2c96a12c6bf1</permalink>
+          </job>
+        </succeeded>
+        <failed count='0' />
+        <skipped count='0' />
+      </result>
