@@ -85,7 +85,7 @@ class ApiCall {
     public void ping() throws RundeckApiException {
         CloseableHttpClient httpClient = instantiateHttpClient();
         try {
-            HttpResponse response = httpClient.execute(new HttpGet(client.getUrl()));
+            HttpResponse response = httpClient.execute(new HttpGet(client.getUrl() + client.getApiEndpoint() + "/system/info" ));
             if (response.getStatusLine().getStatusCode() / 100 != 2) {
                 throw new RundeckApiException("Invalid HTTP response '" + response.getStatusLine() + "' when pinging "
                                               + client.getUrl());
