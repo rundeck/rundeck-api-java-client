@@ -84,8 +84,17 @@ class ApiCall {
      */
     public void ping() throws RundeckApiException {
         CloseableHttpClient httpClient = instantiateHttpClient();
+        String UrlToPing = null;
+        if (client.getToken() != null || client.getSessionID() != null) {
+            // The preauthenticated mode always returns a HTTP 403 if we make a
+            // call to the root URL of the Rundeck instance. Hence, make a call to
+            // /api/<version>/system/info instead
+            UrlToPing = client.getUrl() + client.getApiEndpoint() + "/system/info" ;
+        } else {
+            UrlToPing = client.getUrl() ;
+        }
         try {
-            HttpResponse response = httpClient.execute(new HttpGet(client.getUrl() + client.getApiEndpoint() + "/system/info" ));
+            HttpResponse response = httpClient.execute(new HttpGet(UrlToPing));
             if (response.getStatusLine().getStatusCode() / 100 != 2) {
                 throw new RundeckApiException("Invalid HTTP response '" + response.getStatusLine() + "' when pinging "
                                               + client.getUrl());
