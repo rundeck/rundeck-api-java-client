@@ -1,9 +1,9 @@
 
 h1. Using the Rundeck API from Groovy scripts
 
-Here are some examples of what you can do with this lib and a few lines of [Groovy|http://groovy.codehaus.org/].
+Here are some examples of what you can do with this lib and a few lines of [Groovy|http://groovy-lang.org/].
 
-We can use [Grape|http://groovy.codehaus.org/Grape] to download the lib (and its dependencies) from the [Maven Central Repository|http://search.maven.org/], so you don't have to install anything manually (except Groovy, of course).
+We can use [Grape|http://groovy-lang.org/Grape] to download the lib (and its dependencies) from the [Maven Central Repository|http://search.maven.org/], so you don't have to install anything manually (except Groovy, of course).
 
 h2. Basic usage
 
