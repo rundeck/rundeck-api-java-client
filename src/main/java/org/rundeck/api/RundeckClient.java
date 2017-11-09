@@ -95,6 +95,14 @@ public class RundeckClient implements Serializable {
         V11(11),
         V12(12),
         V13(13),
+        V14(14),
+        V15(15),
+        V16(16),
+        V17(17),
+        V18(18),
+        V19(19),
+        V20(20),
+        V21(21),
         ;
 
         private int versionNumber;
@@ -108,7 +116,7 @@ public class RundeckClient implements Serializable {
         }
     }
     /** Version of the API supported */
-    public static final transient int API_VERSION = Version.V13.getVersionNumber();
+    public static final transient int API_VERSION = Version.V21.getVersionNumber();
 
     private static final String API = "/api/";
 
@@ -1026,7 +1034,15 @@ public class RundeckClient implements Serializable {
     public RundeckJob getJob(String jobId) throws RundeckApiException, RundeckApiLoginException,
             RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(jobId, "jobId is mandatory to get the details of a job !");
-        return new ApiCall(this).get(new ApiPathBuilder("/job/", jobId), new JobParser("joblist/job"));
+
+        String path= getApiVersion() < Version.V18.getVersionNumber()
+                ? "/job/"+jobId
+                : "/job/"+jobId+"/info";
+
+        return new ApiCall(this).get(new ApiPathBuilder(path), new JobParser(getApiVersion() < Version.V18.getVersionNumber()
+                                                                                            ? "joblist/job"
+                                                                                            : "job"
+                                                                        ));
     }
 
     /**
@@ -1079,19 +1095,46 @@ public class RundeckClient implements Serializable {
     public RundeckExecution triggerJob(final RunJob jobRun)
             throws RundeckApiException, RundeckApiLoginException, RundeckApiTokenException, IllegalArgumentException {
         AssertUtil.notBlank(jobRun.getJobId(), "jobId is mandatory to trigger a job !");
-        ApiPathBuilder apiPath = new ApiPathBuilder("/job/", jobRun.getJobId(), "/run").param("argString",
-                ParametersUtil.generateArgString(jobRun.getOptions()))
-                .nodeFilters(jobRun.getNodeFilters());
-        if(null!=jobRun.getAsUser()) {
-            apiPath.param("asUser", jobRun.getAsUser());
-        }
-        return new ApiCall(this).get(
-                apiPath,
-                new ExecutionParser(
-                        "/executions/execution"
-                )
 
-        );
+        ApiPathBuilder apiPath = new ApiPathBuilder("/job/", jobRun.getJobId(), "/run");
+        String options= ParametersUtil.generateArgString(jobRun.getOptions());
+
+        if (this.getApiVersion() < Version.V13.getVersionNumber()) {
+            apiPath.param("argString",options)
+                    .nodeFilters(jobRun.getNodeFilters());
+            if(null!=jobRun.getAsUser()) {
+                apiPath.param("asUser", jobRun.getAsUser());
+            }
+
+            return new ApiCall(this).get(
+                    apiPath,
+                    new ExecutionParser(
+                            "/executions/execution"
+                    )
+
+            );
+        }else{
+            apiPath.field("argString",options)
+                    .nodeFilters(jobRun.getNodeFilters());
+            if(null!=jobRun.getAsUser()) {
+                apiPath.field("asUser", jobRun.getAsUser());
+            }
+
+            if((options == null || options.isEmpty()) && (jobRun.getAsUser()==null || jobRun.getAsUser().isEmpty()) ){
+                apiPath.emptyContent();
+            }
+
+            return new ApiCall(this).post(
+                    apiPath,
+                    new ExecutionParser(
+                            "/executions/execution"
+                    )
+
+            );
+        }
+
+
+
     }
 
 
