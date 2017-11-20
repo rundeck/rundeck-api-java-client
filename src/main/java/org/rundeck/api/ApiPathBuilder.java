@@ -46,6 +46,7 @@ class ApiPathBuilder {
 
     /** When POSTing, we can add attachments */
     private final Map<String, InputStream> attachments;
+    private final Map<String, File> fileAttachments;
     private final List<NameValuePair> form = new ArrayList<NameValuePair>();
     private Document xmlDocument;
     private InputStream contentStream;
@@ -67,6 +68,7 @@ class ApiPathBuilder {
     public ApiPathBuilder(String... paths) {
         apiPath = new StringBuilder();
         attachments = new HashMap<String, InputStream>();
+        fileAttachments = new HashMap<String, File>();
         paths(paths);
     }
 
@@ -127,7 +129,7 @@ class ApiPathBuilder {
      * by the "=" character. Also, the value will be url-encoded.
      *
      * @param key of the parameter. Must not be null or empty
-     * @param value of the parameter. May be null/empty/blank. Will be url-encoded.
+     * @param values of the parameter. May be null/empty/blank. Will be url-encoded.
      * @return this, for method chaining
      */
     public ApiPathBuilder param(final String key, final Collection<String> values) {
@@ -273,12 +275,26 @@ class ApiPathBuilder {
      * will only add the stream if it is not null.
      *
      * @param name of the attachment. Must not be null or empty
-     * @param stream. May be null
+     * @param stream May be null
      * @return this, for method chaining
      */
     public ApiPathBuilder attach(String name, InputStream stream) {
         if (stream != null) {
             attachments.put(name, stream);
+        }
+        return this;
+    }
+    /**
+     * When POSTing a request, add the given {@link File} as an attachment to the content of the request. This
+     * will only add the file if it is not null.
+     *
+     * @param name of the attachment. Must not be null or empty
+     * @param file May be null
+     * @return this, for method chaining
+     */
+    public ApiPathBuilder attach(String name, File file) {
+        if (file != null) {
+            fileAttachments.put(name, file);
         }
         return this;
     }
@@ -379,6 +395,7 @@ class ApiPathBuilder {
         return attachments;
     }
 
+
     @Override
     public String toString() {
         return apiPath.toString();
@@ -457,6 +474,10 @@ class ApiPathBuilder {
 
     public byte[] getContents() {
         return contents;
+    }
+
+    public Map<String, File> getFileAttachments() {
+        return fileAttachments;
     }
 
     /**

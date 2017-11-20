@@ -3,6 +3,7 @@ package org.rundeck.api;
 import org.rundeck.api.domain.RundeckJobsImportMethod;
 import org.rundeck.api.domain.RundeckJobsUUIDImportBehavior;
 
+import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -14,6 +15,11 @@ public interface RundeckJobsImport {
      * @return
      */
     public InputStream getStream();
+
+    /**
+     * @return the file
+     */
+    public File getFile();
 
     /**
      * Return the file type

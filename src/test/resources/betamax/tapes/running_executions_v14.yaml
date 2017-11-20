@@ -1,0 +1,38 @@
+!tape
+name: running_executions_v14
+interactions:
+- recorded: 2016-02-10T22:59:15.286Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/14/project/*/executions/running
+    headers:
+      Accept: text/xml
+      Accept-Encoding: gzip,deflate
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: Rundeck API Java Client 14
+      X-Rundeck-Auth-Token: V4yhukF67G3tSOEvWYEh1ijROKfrULVN
+  response:
+    status: 200
+    headers:
+      Content-Type: application/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=f5ixub2mdd0l149dfooc6wtso;Path=/
+      X-Rundeck-API-Version: '15'
+      X-Rundeck-API-XML-Response-Wrapper: 'false'
+    body: |-
+      <executions count='2' total='0' offset='0' max='20'>
+        <execution id='471' href='http://madmartigan.local:4440/api/15/execution/471' permalink='http://madmartigan.local:4440/project/test/execution/show/471' status='running' project='test'>
+          <user>admin</user>
+          <date-started unixtime='1455145137924'>2016-02-10T22:58:57Z</date-started>
+          <description>echo hi; sleep 90 ; echo bozo</description>
+          <argstring />
+        </execution>
+        <execution id='470' href='http://madmartigan.local:4440/api/15/execution/470' permalink='http://madmartigan.local:4440/project/test/execution/show/470' status='running' project='test'>
+          <user>admin</user>
+          <date-started unixtime='1455145130069'>2016-02-10T22:58:50Z</date-started>
+          <description>echo hi; sleep 90 ; echo bozo</description>
+          <argstring />
+        </execution>
+      </executions>

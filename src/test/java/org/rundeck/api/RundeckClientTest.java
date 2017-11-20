@@ -78,7 +78,7 @@ public class RundeckClientTest {
         Assert.assertEquals(RundeckClient.Version.V9.getVersionNumber(), blah.getApiVersion());
     }
     @Test
-    @Betamax(tape = "get_projects")
+    @Betamax(tape = "get_projects", mode = TapeMode.READ_ONLY)
     public void getProjects() throws Exception {
         List<RundeckProject> projects = client.getProjects();
         Assert.assertEquals(1, projects.size());
@@ -241,6 +241,19 @@ public class RundeckClientTest {
         final List<RundeckEvent> events = test.getEvents();
         Assert.assertEquals(3, events.size());
     }
+    @Test
+    @Betamax(tape = "get_history_v14",
+             mode=TapeMode.READ_ONLY
+    )
+    public void getHistory_v14() throws Exception {
+        final RundeckHistory test = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN", 14).getHistory("test");
+        Assert.assertEquals(20, test.getCount());
+        Assert.assertEquals(20, test.getMax());
+        Assert.assertEquals(0, test.getOffset());
+        Assert.assertEquals(60, test.getTotal());
+        final List<RundeckEvent> events = test.getEvents();
+        Assert.assertEquals(20, events.size());
+    }
 
     @Test
     @Betamax(tape = "get_history_joblist",
@@ -297,6 +310,24 @@ public class RundeckClientTest {
         }
         Assert.assertEquals(Arrays.asList("bob"), names);
     }
+
+    /**
+     * get jobs v14
+     */
+    @Test
+    @Betamax(tape = "get_jobs_v14")
+    public void getJobs_v14() throws Exception {
+        final RundeckClient client = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN", 14);
+
+        List<RundeckJob> jobList = client.getJobs("test");
+        Assert.assertEquals(2, jobList.size());
+        Assert.assertEquals("c713ab42-327e-4adc-9e9d-2cfb71b073f4", jobList.get(0).getId());
+        Assert.assertEquals("job1", jobList.get(0).getName());
+        Assert.assertEquals("asdf", jobList.get(0).getDescription());
+        Assert.assertEquals("2b668b07-e46d-4751-8205-2c96a12c6bf1", jobList.get(1).getId());
+        Assert.assertEquals("job2", jobList.get(1).getName());
+        Assert.assertEquals("dxyz", jobList.get(1).getDescription());
+    }
     @Test
     @Betamax(tape="get_execution")
     public void getExecution() throws  Exception{
@@ -337,6 +368,24 @@ public class RundeckClientTest {
         Assert.assertEquals("admin", execution.getStartedBy());
         Assert.assertEquals(null, execution.getJob());
         Assert.assertEquals(null, execution.getAbortedBy());
+    }
+    @Test
+    @Betamax(tape = "get_executions_v14"
+             ,mode = TapeMode.READ_ONLY
+    )
+    public void getExecutionsV14() throws Exception {
+
+        RundeckClient client = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN", 14);
+
+
+        final PagedResults<RundeckExecution> jobTest = client.getExecutions(
+                ExecutionQuery.builder()
+                              .project("test")
+                              .build(),
+                10L,
+                0L
+        );
+        assertPageResults(jobTest, 10, 10, 10, 0, 60);
     }
     @Test
     @Betamax(tape = "get_executions",
@@ -1046,6 +1095,23 @@ public class RundeckClientTest {
         Assert.assertEquals(total, jobTest.getTotal());
     }
 
+
+    @Test
+    @Betamax(tape = "export_jobs_v14", mode = TapeMode.READ_ONLY)
+    public void exportJobs_v14() throws Exception {
+        RundeckClient client1 = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN", 14);
+        InputStream inputStream = client1.exportJobs(FileType.XML, "test", "job1", "");
+
+        File temp = File.createTempFile("test_export_jobs", ".xml");
+        temp.deleteOnExit();
+        try (FileOutputStream out = new FileOutputStream(temp)) {
+            IOUtils.copy(inputStream, out);
+        }
+        long length = temp.length();
+        temp.delete();
+        Assert.assertEquals(448, length);
+    }
+
     /**
      * Import jobs, xml contains project context
      * @throws Exception
@@ -1082,6 +1148,41 @@ public class RundeckClientTest {
         Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
         RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
         Assert.assertEquals("job1", rundeckJob.getName());
+        Assert.assertEquals("test", rundeckJob.getProject());
+    }
+    /**
+     * Import jobs v14
+     */
+    @Test
+    @Betamax(tape = "import_jobs_v14")
+    public void importJobs_v14() throws Exception {
+        final RundeckClient client = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN", 14);
+        InputStream stream=new ByteArrayInputStream(
+                ("<joblist>\n" +
+                "  <job>\n" +
+                "    <loglevel>INFO</loglevel>\n" +
+                "    <sequence keepgoing='false' strategy='node-first'>\n" +
+                "      <command>\n" +
+                "        <exec>echo hi</exec>\n" +
+                "      </command>\n" +
+                "    </sequence>\n" +
+                "    <description></description>\n" +
+                "    <name>test_import_jobs_v14</name>\n" +
+                "  </job>\n" +
+                "</joblist>").getBytes("utf-8"));
+
+        final RundeckJobsImport jobsImport = RundeckJobsImportBuilder.builder()
+                                                                     .setStream(stream)
+                                                                     .setFileType(FileType.XML)
+                                                                     .setJobsImportMethod(RundeckJobsImportMethod.UPDATE)
+                                                                     .setProject("test")
+                                                                     .build();
+        RundeckJobsImportResult rundeckJobsImportResult = client.importJobs(jobsImport);
+        Assert.assertEquals(0,rundeckJobsImportResult.getFailedJobs().size());
+        Assert.assertEquals(0,rundeckJobsImportResult.getSkippedJobs().size());
+        Assert.assertEquals(1,rundeckJobsImportResult.getSucceededJobs().size());
+        RundeckJob rundeckJob = rundeckJobsImportResult.getSucceededJobs().get(0);
+        Assert.assertEquals("test_import_jobs_v14", rundeckJob.getName());
         Assert.assertEquals("test", rundeckJob.getProject());
     }
     /**
@@ -1165,7 +1266,7 @@ public class RundeckClientTest {
      * @throws Exception
      */
     @Test
-    @Betamax(tape = "import_jobs_project_param")
+    @Betamax(tape = "import_jobs_project_param", mode = TapeMode.READ_ONLY)
     public void importJobsProjectParam() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_4, 8);
         InputStream stream=new ByteArrayInputStream(
@@ -1201,7 +1302,7 @@ public class RundeckClientTest {
      * @throws Exception
      */
     @Test
-    @Betamax(tape = "import_jobs_project_param_override")
+    @Betamax(tape = "import_jobs_project_param_override", mode = TapeMode.READ_ONLY)
     public void importJobsProjectParamOverride() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_4, 8);
         InputStream stream=new ByteArrayInputStream(
@@ -1240,7 +1341,7 @@ public class RundeckClientTest {
      * @throws Exception
      */
     @Test
-    @Betamax(tape = "import_jobs_project_param_v7")
+    @Betamax(tape = "import_jobs_project_param_v7", mode = TapeMode.READ_ONLY)
     public void importJobsProjectParamV7() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_4, 7);
         InputStream stream=new ByteArrayInputStream(
@@ -1279,7 +1380,7 @@ public class RundeckClientTest {
      * @throws Exception
      */
     @Test
-    @Betamax(tape = "import_jobs_uuid_param_remove_v9")
+    @Betamax(tape = "import_jobs_uuid_param_remove_v9", mode = TapeMode.READ_ONLY)
     public void importJobsUUIDParamRemoveV9() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_6, 9);
         InputStream stream=new ByteArrayInputStream(
@@ -1318,7 +1419,7 @@ public class RundeckClientTest {
      * @throws Exception
      */
     @Test
-    @Betamax(tape = "import_jobs_uuid_param_preserve_v9")
+    @Betamax(tape = "import_jobs_uuid_param_preserve_v9", mode = TapeMode.READ_ONLY)
     public void importJobsUUIDParamPreserveV9() throws Exception {
         final RundeckClient client = createClient(TEST_TOKEN_6, 9);
         InputStream stream=new ByteArrayInputStream(
@@ -1351,6 +1452,22 @@ public class RundeckClientTest {
         Assert.assertEquals("importJobsUUIDParamPreserveV9", rundeckJob.getName());
         Assert.assertEquals("testImportUUID", rundeckJob.getId());
     }
+    /**
+     * Running executions for all projects using API v14
+     * @throws Exception
+     */
+    @Test
+    @Betamax(tape = "running_executions_v14", mode = TapeMode.READ_ONLY)
+    public void runningExecutionsV14() throws Exception {
+        final RundeckClient client = createClient("V4yhukF67G3tSOEvWYEh1ijROKfrULVN", 14);
+        List<RundeckExecution> runningExecutions = client.getRunningExecutions();
+        Assert.assertEquals(2, runningExecutions.size());
+        RundeckExecution exec1 = runningExecutions.get(0);
+        Assert.assertEquals("test", exec1.getProject());
+        RundeckExecution exec2 = runningExecutions.get(1);
+        Assert.assertEquals("test", exec2.getProject());
+    }
+
     /**
      * Running executions for all projects using API v9
      * @throws Exception
@@ -2177,7 +2294,10 @@ public class RundeckClientTest {
     }
 
     private RundeckClient createClient(final String token, int version) {
-        return createBuilder(token).version(version).build();
+        return createBuilder(token).version(version)
+                                   //use local file instead of direct stream to bypass a BetaMax issue
+                                   .useIntermediateStreamFile(true)
+                                   .build();
     }
 
     private RundeckClient createClient(String token) {

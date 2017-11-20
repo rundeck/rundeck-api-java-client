@@ -32,6 +32,12 @@ public class RundeckClientBuilder {
                     "false"
             )
     );
+    private boolean useIntermediateStreamFile = "true".equals(
+            System.getProperty(
+                    "rundeck.api.client.useIntermediateStreamFile",
+                    "false"
+            )
+    );
 
     RundeckClientBuilder(){
 
@@ -115,6 +121,16 @@ public class RundeckClientBuilder {
     }
 
     /**
+     * Specify whether InputStreams passed to requests should be temporarily written to a file,
+     * or used directly
+     * @param intermediateStreamFile true to write streams to a local file prior to use, false otherwise
+     */
+    public RundeckClientBuilder useIntermediateStreamFile(boolean intermediateStreamFile) {
+        this.useIntermediateStreamFile = intermediateStreamFile;
+        return this;
+    }
+
+    /**
      * Create the RundeckClient instance
      */
     public RundeckClient build() {
@@ -139,6 +155,7 @@ public class RundeckClientBuilder {
         client.setSslCertificateTrustAllowSelfSigned(sslCertificateTrustAllowSelfSigned);
         client.setSslHostnameVerifyAllowAll(sslHostnameVerifyAllowAll);
         client.setSystemProxyEnabled(systemProxyEnabled);
+        client.setUseIntermediateStreamFile(useIntermediateStreamFile);
 
         if (version > 0) {
             client.setApiVersion(version);

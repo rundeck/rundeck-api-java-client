@@ -15,6 +15,7 @@
  */
 package org.rundeck.api;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.*;
@@ -25,7 +26,6 @@ import org.apache.http.conn.ssl.*;
 import org.apache.http.entity.*;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
@@ -335,15 +335,31 @@ class ApiCall {
             httpPost.setHeader("Accept", apiPath.getAccept());
         }
         // POST a multi-part request, with all attachments
-        if (apiPath.getAttachments().size() > 0) {
-            MultipartEntityBuilder multipartEntityBuilder =
-                    MultipartEntityBuilder.create().setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        if (apiPath.getAttachments().size() > 0 || apiPath.getFileAttachments().size() > 0) {
+            MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
+            multipartEntityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+            ArrayList<File> tempfiles = new ArrayList<>();
+
+            //attach streams
             for (Entry<String, InputStream> attachment : apiPath.getAttachments().entrySet()) {
-                multipartEntityBuilder.addPart(
-                        attachment.getKey(),
-                        new InputStreamBody(attachment.getValue(), attachment.getKey())
-                );
+                if(client.isUseIntermediateStreamFile()) {
+                    //transfer to file
+                    File f = copyToTempfile(attachment.getValue());
+                    multipartEntityBuilder.addBinaryBody(attachment.getKey(), f);
+                    tempfiles.add(f);
+                }else{
+                    multipartEntityBuilder.addBinaryBody(attachment.getKey(), attachment.getValue());
+                }
             }
+            if (tempfiles.size() > 0) {
+                handler = TempFileCleanupHandler.chain(handler, tempfiles);
+            }
+
+            //attach files
+            for (Entry<String, File> attachment : apiPath.getFileAttachments().entrySet()) {
+                multipartEntityBuilder.addBinaryBody(attachment.getKey(), attachment.getValue());
+            }
+
             httpPost.setEntity(multipartEntityBuilder.build());
         } else if (apiPath.getForm().size() > 0) {
             try {
@@ -352,11 +368,20 @@ class ApiCall {
                 throw new RundeckApiException("Unsupported encoding: " + e.getMessage(), e);
             }
         } else if (apiPath.getContentStream() != null && apiPath.getContentType() != null) {
-            InputStreamEntity entity = new InputStreamEntity(
-                    apiPath.getContentStream(),
-                    ContentType.create(apiPath.getContentType())
-            );
-            httpPost.setEntity(entity);
+            if(client.isUseIntermediateStreamFile()){
+                ArrayList<File> tempfiles = new ArrayList<>();
+                File f = copyToTempfile(apiPath.getContentStream());
+                tempfiles.add(f);
+                httpPost.setEntity(new FileEntity(f, ContentType.create(apiPath.getContentType())));
+
+                handler = TempFileCleanupHandler.chain(handler, tempfiles);
+            }else{
+                InputStreamEntity entity = new InputStreamEntity(
+                        apiPath.getContentStream(),
+                        ContentType.create(apiPath.getContentType())
+                );
+                httpPost.setEntity(entity);
+            }
         } else if (apiPath.getContents() != null && apiPath.getContentType() != null) {
             ByteArrayEntity bae = new ByteArrayEntity(
                     apiPath.getContents(),
@@ -376,6 +401,17 @@ class ApiCall {
         }
 
         return execute(httpPost, handler);
+    }
+
+    private File copyToTempfile(final InputStream stream) throws RundeckApiException {
+        try {
+            File f = File.createTempFile("post-data", ".tmp");
+            FileUtils.copyInputStreamToFile(stream, f);
+            f.deleteOnExit();
+            return f;
+        } catch (IOException e) {
+            throw new RundeckApiException("IO exception " + e.getMessage(), e);
+        }
     }
 
     /**
@@ -610,6 +646,36 @@ class ApiCall {
                 return new ByteArrayInputStream(EntityUtils.toByteArray(response.getEntity()));
             } catch (IOException e) {
                 throw new RundeckApiException("Failed to consume entity and convert the inputStream", e);
+            }
+        }
+    }
+    /**
+     * Removes temp files after response
+     */
+    private static class TempFileCleanupHandler<T> extends  ChainHandler<T> {
+        List<File> files;
+
+        public TempFileCleanupHandler(final Handler<HttpResponse, T> chain, final List<File> files) {
+            super(chain);
+            this.files = files;
+        }
+
+        public static <T> TempFileCleanupHandler<T> chain(
+                final Handler<HttpResponse, T> chain,
+                final List<File> files
+        )
+        {
+            return new TempFileCleanupHandler<>(chain, files);
+        }
+
+        @Override
+        public T handle(final HttpResponse response) {
+            try {
+                return super.handle(response);
+            }finally {
+                for (File file : files) {
+                    file.delete();
+                }
             }
         }
     }

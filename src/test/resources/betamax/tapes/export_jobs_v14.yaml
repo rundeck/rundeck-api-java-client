@@ -1,0 +1,38 @@
+!tape
+name: export_jobs_v14
+interactions:
+- recorded: 2016-02-10T23:20:33.659Z
+  request:
+    method: GET
+    uri: http://rundeck.local:4440/api/14/project/test/jobs/export?format=xml&jobFilter=job1
+    headers:
+      Accept: text/xml
+      Accept-Encoding: gzip,deflate
+      Host: rundeck.local:4440
+      Proxy-Connection: Keep-Alive
+      User-Agent: Rundeck API Java Client 14
+      X-Rundeck-Auth-Token: V4yhukF67G3tSOEvWYEh1ijROKfrULVN
+  response:
+    status: 200
+    headers:
+      Content-Type: text/xml;charset=UTF-8
+      Expires: Thu, 01 Jan 1970 00:00:00 GMT
+      Server: Jetty(7.6.0.v20120127)
+      Set-Cookie: JSESSIONID=ilbqjx9fin691661esgzej16e;Path=/
+    body: |-
+      <joblist>
+        <job>
+          <description></description>
+          <executionEnabled>true</executionEnabled>
+          <id>c713ab42-327e-4adc-9e9d-2cfb71b073f4</id>
+          <loglevel>INFO</loglevel>
+          <name>job1</name>
+          <scheduleEnabled>true</scheduleEnabled>
+          <sequence keepgoing='false' strategy='node-first'>
+            <command>
+              <exec>echo hi</exec>
+            </command>
+          </sequence>
+          <uuid>c713ab42-327e-4adc-9e9d-2cfb71b073f4</uuid>
+        </job>
+      </joblist>
