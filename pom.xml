@@ -26,7 +26,7 @@
 
   <groupId>org.rundeck</groupId>
   <artifactId>rundeck-api-java-client</artifactId>
-  <version>13.2-SNAPSHOT</version>
+  <version>13.2</version>
 
   <name>Rundeck API - Java Client</name>
   <description>Java client for the Rundeck REST API</description>
@@ -74,7 +74,7 @@
     <url>https://github.com/rundeck/rundeck-api-java-client</url>
     <connection>scm:git:git://github.com/rundeck/rundeck-api-java-client.git</connection>
     <developerConnection>scm:git:git@github.com:rundeck/rundeck-api-java-client.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>rundeck-api-java-client-13.2</tag>
   </scm>
   <issueManagement>
     <system>GitHub</system>
@@ -147,7 +147,7 @@
     <!-- Doclet version -->
     <doclet.doclava.version>1.0.3</doclet.doclava.version>
       <!-- set empty property -->
-    <disableDoclint></disableDoclint>
+    <disableDoclint />
   </properties>
 
   <dependencies>
