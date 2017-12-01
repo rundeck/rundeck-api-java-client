@@ -26,7 +26,7 @@
 
   <groupId>org.rundeck</groupId>
   <artifactId>rundeck-api-java-client</artifactId>
-  <version>13.2</version>
+  <version>13.3-SNAPSHOT</version>
 
   <name>Rundeck API - Java Client</name>
   <description>Java client for the Rundeck REST API</description>
@@ -74,7 +74,7 @@
     <url>https://github.com/rundeck/rundeck-api-java-client</url>
     <connection>scm:git:git://github.com/rundeck/rundeck-api-java-client.git</connection>
     <developerConnection>scm:git:git@github.com:rundeck/rundeck-api-java-client.git</developerConnection>
-    <tag>rundeck-api-java-client-13.2</tag>
+    <tag>HEAD</tag>
   </scm>
   <issueManagement>
     <system>GitHub</system>
