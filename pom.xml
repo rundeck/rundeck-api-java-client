@@ -146,6 +146,8 @@
 
     <!-- Doclet version -->
     <doclet.doclava.version>1.0.3</doclet.doclava.version>
+      <!-- set empty property -->
+    <disableDoclint></disableDoclint>
   </properties>
 
   <dependencies>
@@ -276,6 +278,19 @@
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>${plugin.javadoc.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+              <configuration>
+                <additionalparam>${disableDoclint}</additionalparam>
+              </configuration>
+            </execution>
+          </executions>
+          <configuration>
+            <additionalparam>${disableDoclint}</additionalparam>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-pmd-plugin</artifactId>
@@ -362,6 +377,19 @@
     </extensions>
   </build>
 
+  <profiles>
+
+    <profile>
+      <id>disable-java8-doclint</id>
+      <activation>
+        <jdk>[1.8,)</jdk>
+      </activation>
+      <properties>
+        <!-- set property if >= java 8 -->
+        <disableDoclint>-Xdoclint:none</disableDoclint>
+      </properties>
+    </profile>
+  </profiles>
   <!-- Reports for the maven site -->
   <reporting>
     <plugins>
