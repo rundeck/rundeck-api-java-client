@@ -1,3 +1,11 @@
+# NO LONGER MAINTAINED
+
+This project is no longer maintained.  
+
+A new Java API library is available in the [rundeck-cli project](https://github.com/rundeck/rundeck-cli)
+
+See: <https://rundeck.github.io/rundeck-cli/javalib/>
+
 # Java client for the Rundeck REST API
 
 [![Build Status](https://travis-ci.org/rundeck/rundeck-api-java-client.svg?branch=master)](https://travis-ci.org/rundeck/rundeck-api-java-client)
